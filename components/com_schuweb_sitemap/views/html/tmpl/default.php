@@ -17,7 +17,7 @@ $params = $this->item->params;
 if ($this->displayer->canEdit) {
     $live_site = JURI::root();
     JHTML::_('behavior.framework', true);
-    $ajaxurl = "{$live_site}index.php?option=com_xmap&format=json&task=ajax.editElement&action=toggleElement&".JSession::getFormToken().'=1';
+    $ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&".JSession::getFormToken().'=1';
 
     $css = '.xmapexcl img{ border:0px; }'."\n";
     $css .= '.xmapexcloff { text-decoration:line-through; }';
@@ -46,9 +46,9 @@ if ($this->displayer->canEdit) {
             if (response.result == 'OK') {
                 var state = response.state;
                 if (state==0) {
-                    imgs[0].src='{$live_site}/components/com_xmap/assets/images/unpublished.png';
+                    imgs[0].src='{$live_site}/components/com_schuweb_sitemap/assets/images/unpublished.png';
                 } else {
-                    imgs[0].src='{$live_site}/components/com_xmap/assets/images/tick.png';
+                    imgs[0].src='{$live_site}/components/com_schuweb_sitemap/assets/images/tick.png';
                 }
             } else {
                 alert('The element couldn\\'t be published or upublished!');
@@ -60,7 +60,7 @@ if ($this->displayer->canEdit) {
     $doc->addScriptDeclaration ($js);
 }
 ?>
-<div id="xmap">
+<div id="Schuweb_Sitemap">
 <?php if ($params->get('show_page_heading', 1) && $params->get('page_heading') != '') : ?>
     <h1>
         <?php echo $this->escape($params->get('page_heading')); ?>

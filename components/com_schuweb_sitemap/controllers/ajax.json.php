@@ -12,13 +12,13 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.controller');
 
 /**
- * Xmap Ajax Controller
+ * Schuweb_Sitemap Ajax Controller
  *
- * @package      Xmap
- * @subpackage   com_xmap
+ * @package      Schuweb_Sitemap
+ * @subpackage   com_schuweb_sitemap
  * @since        2.0
  */
-class XmapControllerAjax extends JControllerLegacy
+class Schuweb_SitemapControllerAjax extends JControllerLegacy
 {
 
     public function editElement()
@@ -32,7 +32,7 @@ class XmapControllerAjax extends JControllerLegacy
         $result = new JRegistry('_default');
         $sitemapId = JREquest::getInt('id');
 
-        if (!$user->authorise('core.edit', 'com_xmap.sitemap.'.$sitemapId)) {
+        if (!$user->authorise('core.edit', 'com_schuweb_sitemap.sitemap.'.$sitemapId)) {
             $result->setValue('result', 'KO');
             $result->setValue('message', 'You are not authorized to perform this action!');
         } else {

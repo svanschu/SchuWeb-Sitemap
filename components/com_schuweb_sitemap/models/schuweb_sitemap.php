@@ -14,13 +14,13 @@ jimport('joomla.database.query');
 require_once(JPATH_COMPONENT . '/helpers/schuweb_sitemap.php');
 
 /**
- * Xmap Component Sitemap Model
+ * Schuweb_Sitemap Component Sitemap Model
  *
- * @package        Xmap
- * @subpackage     com_xmap
+ * @package        Schuweb_Sitemap
+ * @subpackage     com_schuweb_sitemap
  * @since          2.0
  */
-class XmapModelSitemap extends JModelItem
+class Schuweb_SitemapModelSitemap extends JModelItem
 {
 
     /**
@@ -28,7 +28,7 @@ class XmapModelSitemap extends JModelItem
      *
      * @var        string
      */
-    protected $_context = 'com_xmap.sitemap';
+    protected $_context = 'com_schuweb_sitemap.sitemap';
     protected $_extensions = null;
 
     static $items = array();
@@ -48,7 +48,7 @@ class XmapModelSitemap extends JModelItem
         if (!$pk) {
             $db = $this->getDbo();
             $query = $db->getQuery(true);
-            $query->select('id')->from('#__xmap_sitemap')->where('is_default=1');
+            $query->select('id')->from('#__schuweb_sitemap')->where('is_default=1');
             $db->setQuery($query);
             $pk = $db->loadResult();
         }
@@ -89,7 +89,7 @@ class XmapModelSitemap extends JModelItem
                 $query = $db->getQuery(true);
 
                 $query->select($this->getState('item.select', 'a.*'));
-                $query->from('#__xmap_sitemap AS a');
+                $query->from('#__schuweb_sitemap AS a');
 
                 $query->where('a.id = ' . (int) $pk);
 
@@ -115,12 +115,12 @@ class XmapModelSitemap extends JModelItem
                 }
 
                 if (empty($data)) {
-                    throw new Exception(JText::_('COM_XMAP_ERROR_SITEMAP_NOT_FOUND'));
+                    throw new Exception(JText::_('COM_SCHUWEB_SITEMAP_ERROR_SITEMAP_NOT_FOUND'));
                 }
 
                 // Check for published state if filter set.
                 if (is_numeric($published) && $data->state != $published) {
-                    throw new Exception(JText::_('COM_XMAP_ERROR_SITEMAP_NOT_FOUND'));
+                    throw new Exception(JText::_('COM_SCHUWEB_SITEMAP_ERROR_SITEMAP_NOT_FOUND'));
                 }
 
                 // Convert parameter fields to objects.
@@ -160,14 +160,14 @@ class XmapModelSitemap extends JModelItem
     public function getItems()
     {
         if ($item = $this->getItem()) {
-            return SchuwebSitemapHelper::getMenuItems($item->selections);
+            return Schuweb_SitemapHelper::getMenuItems($item->selections);
         }
         return false;
     }
 
     function getExtensions()
     {
-        return SchuwebSitemapHelper::getExtensions();
+        return Schuweb_SitemapHelper::getExtensions();
     }
 
     /**
@@ -188,7 +188,7 @@ class XmapModelSitemap extends JModelItem
         }
 
         $this->_db->setQuery(
-            'UPDATE #__xmap_sitemap' .
+            'UPDATE #__schuweb_sitemap' .
             ' SET views_' . $view . ' = views_' . $view . ' + 1, count_' . $view . ' = ' . $count . ', lastvisit_' . $view . ' = ' . JFactory::getDate()->toUnix() .
             ' WHERE id = ' . (int) $pk
         );
@@ -212,7 +212,7 @@ class XmapModelSitemap extends JModelItem
         if (self::$items !== NULL && isset(self::$items[$view])) {
             return;
         }
-        $query = "select * from #__xmap_items where view='$view' and sitemap_id=" . $pk;
+        $query = "select * from #__schuweb_sitemap_items where view='$view' and sitemap_id=" . $pk;
         $db->setQuery($query);
         $rows = $db->loadObjectList();
         self::$items[$view] = array();
@@ -248,9 +248,9 @@ class XmapModelSitemap extends JModelItem
             $sep = ';';
         }
         if (!$isNew) {
-            $query = 'UPDATE #__xmap_items SET properties=\'' . $db->escape($properties) . "' where uid='" . $db->escape($uid) . "' and itemid=$itemid and view='$view' and sitemap_id=" . $pk;
+            $query = 'UPDATE #__schuweb_sitemap_items SET properties=\'' . $db->escape($properties) . "' where uid='" . $db->escape($uid) . "' and itemid=$itemid and view='$view' and sitemap_id=" . $pk;
         } else {
-            $query = 'INSERT #__xmap_items (uid,itemid,view,sitemap_id,properties) values ( \'' . $db->escape($uid) . "',$itemid,'$view',$pk,'" . $db->escape($properties) . "')";
+            $query = 'INSERT #__schuweb_sitemap_items (uid,itemid,view,sitemap_id,properties) values ( \'' . $db->escape($uid) . "',$itemid,'$view',$pk,'" . $db->escape($properties) . "')";
         }
         $db->setQuery($query);
         //echo $db->getQuery();exit;
@@ -266,7 +266,7 @@ class XmapModelSitemap extends JModelItem
         $app = JFactory::getApplication('site');
         $sitemap = $this->getItem();
 
-        $displayer = new XmapDisplayer($app->getParams(), $sitemap);
+        $displayer = new Schuweb_SitemapDisplayer($app->getParams(), $sitemap);
 
         $excludedItems = $displayer->getExcludedItems();
         if (isset($excludedItems[$itemid])) {
@@ -289,7 +289,7 @@ class XmapModelSitemap extends JModelItem
         $str = $registry->toString();
 
         $db = JFactory::getDBO();
-        $query = "UPDATE #__xmap_sitemap set excluded_items='" . $db->escape($str) . "' where id=" . $sitemap->id;
+        $query = "UPDATE #__schuweb_sitemap set excluded_items='" . $db->escape($str) . "' where id=" . $sitemap->id;
         $db->setQuery($query);
         $db->query();
         return $state;

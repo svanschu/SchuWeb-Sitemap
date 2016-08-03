@@ -83,7 +83,7 @@
     }
     .editable {
         cursor:pointer;
-        background: url(components/com_xmap/images/arrow.gif) top right no-repeat;
+        background: url(components/com_schuweb_sitemap/images/arrow.gif) top right no-repeat;
         padding-right:18px;
         padding-right:18px;
         border:1px solid #ffffff;
@@ -266,7 +266,7 @@
     }
 
     function changeProperty(el,property) {
-        var myAjax = new Ajax('index.php?option=com_xmap&tmpl=component&task=editElement&action=changeProperty&sitemap='+sitemapid+'&uid='+divOptions.uid+'&itemid='+divOptions.itemid+'&property='+property+'&value='+el.innerHTML,{
+        var myAjax = new Ajax('index.php?option=com_schuweb_sitemap&tmpl=component&task=editElement&action=changeProperty&sitemap='+sitemapid+'&uid='+divOptions.uid+'&itemid='+divOptions.itemid+'&property='+property+'&value='+el.innerHTML,{
             onComplete: checkChangeResult.bind(divOptions)
         }).request();
         divOptions.cell.innerHTML=el.innerHTML;

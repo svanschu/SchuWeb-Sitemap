@@ -12,13 +12,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.component.controller');
 
 /**
- * Xmap Component Controller
+ * Schuweb_Sitemap Component Controller
  *
- * @package        Xmap
- * @subpackage     com_xmap
+ * @package        Schuweb_Sitemap
+ * @subpackage     com_schuweb_sitemap
  * @since          2.0
  */
-class XmapController extends JControllerLegacy
+class Schuweb_SitemapController extends JControllerLegacy
 {
 
     /**
@@ -34,9 +34,11 @@ class XmapController extends JControllerLegacy
     {
         $cachable = true;
 
-        $id         = JRequest::getInt('id');
-        $viewName   = JRequest::getCmd('view');
-        $viewLayout = JRequest::getCmd('layout', 'default');
+        $input = JFactory::getApplication()->input;
+
+        $id         = $input->get('id', null, 'INT');
+        $viewName   = $input->get('view');
+        $viewLayout = $input->get('layout', 'default');
 
         $user = JFactory::getUser();
 
@@ -47,8 +49,12 @@ class XmapController extends JControllerLegacy
         if ($viewName) {
             $document = JFactory::getDocument();
             $viewType = $document->getType();
+//DELETE
+print_r($viewType);
             $view = $this->getView($viewName, $viewType, '', array('base_path' => $this->basePath, 'layout' => $viewLayout));
+echo '<p>';print_r($view);
             $sitemapmodel = $this->getModel('Sitemap');
+print_r("<p>sitemapmodel: ");print_r($sitemapmodel);
             $view->setModel($sitemapmodel, true);
         }
 

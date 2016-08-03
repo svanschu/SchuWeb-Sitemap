@@ -23,7 +23,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 <xsl:template match="/">
 <html>
 <head>
-<title><?php echo JText::_('COM_XMAP_XML_FILE'); ?></title>
+<title><?php echo JText::_('COM_SCHUWEB_SITEMAP_XML_FILE'); ?></title>
 <script src="<?php echo JUri::base(); ?>media/system/js/mootools-core.js" type="text/javascript"></script>
 <script src="<?php echo JUri::base(); ?>media/system/js/mootools-more.js" type="text/javascript"></script>
 <style type="text/css">
@@ -48,14 +48,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
     }
     .sortup {
         background-position: right center;
-        background-image: url(<?php echo JUri::base(); ?>components/com_xmap/assets/images/sortup.gif);
+        background-image: url(<?php echo JUri::base(); ?>components/com_schuweb_sitemap/assets/images/sortup.gif);
         background-repeat: no-repeat;
         font-style:italic;
         white-space:pre;
     }
     .sortdown {
         background-position: right center;
-        background-image: url(<?php echo JUri::base(); ?>components/com_xmap/assets/images/sortdown.gif);
+        background-image: url(<?php echo JUri::base(); ?>components/com_schuweb_sitemap/assets/images/sortdown.gif);
         background-repeat: no-repeat;
         font-style:italic;
         white-space:pre;
@@ -105,7 +105,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
     }
     .editable {
         cursor:pointer;
-        background: url(<?php echo JUri::base(); ?>components/com_xmap/assets/images/arrow.gif) top right no-repeat;
+        background: url(<?php echo JUri::base(); ?>components/com_schuweb_sitemap/assets/images/arrow.gif) top right no-repeat;
         padding-right:18px;
         padding-right:18px;
         border:1px solid #ffffff;
@@ -134,13 +134,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
     #filter_options {border-radius: 5px; background-color:#fff;padding: 3px;}
     .toggle-excluded {
         width: 16px; height: 16px; display: inline-block; float: left; cursor: pointer;margin-right: 5px;
-        background: url(<?php echo JUri::base(); ?>components/com_xmap/assets/images/tick.png) no-repeat;
+        background: url(<?php echo JUri::base(); ?>components/com_schuweb_sitemap/assets/images/tick.png) no-repeat;
     }
     .excluded {
       text-decoration:line-through;
     }
     .excluded .toggle-excluded {
-        background: url(<?php echo JUri::base(); ?>components/com_xmap/assets/images/unpublished.png) no-repeat;
+        background: url(<?php echo JUri::base(); ?>components/com_schuweb_sitemap/assets/images/unpublished.png) no-repeat;
     }
     div.imagelist {
         border: 1px solid #ccc;
@@ -342,7 +342,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 
     function changeProperty(el,property) {
         new Request.JSON({
-            url: '<?php echo JRoute::_('index.php?option=com_xmap&format=json&task=ajax.editElement&action=changeProperty',false); ?>',
+            url: '<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=changeProperty',false); ?>',
             onComplete: checkChangeResult.bind(divOptions),
             method: 'get'
         }).send('<?php echo JSession::getFormToken(); ?>=1&id='+sitemapid+'&uid='+divOptions.uid+'&itemid='+divOptions.itemid+'&property='+property+'&value='+el.innerHTML);
@@ -354,7 +354,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
     function toggleExcluded(el,itemid, uid){
         row = $(el).getParent('tr');
         new Request.JSON({
-            url: '<?php echo JRoute::_('index.php?option=com_xmap&format=json&task=ajax.editElement&action=toggleElement',false); ?>',
+            url: '<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement',false); ?>',
             onComplete: checkToggleExcluded.bind(row),
             method: 'get'
         }).send('<?php echo JSession::getFormToken(); ?>=1&id='+sitemapid+'&uid='+uid+'&itemid='+itemid);
@@ -394,24 +394,24 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 <div id="header">
     <div id="title">
         <h1 id="head1"><?php echo $this->item->title; ?></h1>
-        <span class="number_urls"><?php echo JText::_('COM_XMAP_NUMBER_OF_URLS'); ?>: <xsl:value-of select="count(xna:urlset/xna:url)"></xsl:value-of></span>
+        <span class="number_urls"><?php echo JText::_('COM_SCHUWEB_SITEMAP_NUMBER_OF_URLS'); ?>: <xsl:value-of select="count(xna:urlset/xna:url)"></xsl:value-of></span>
     </div>
     <div id="instructions">
         <div>
-            <?php $sitemapUrl = 'index.php?option=com_xmap&view=xml&id='.$this->item->id; ?>
+            <?php $sitemapUrl = 'index.php?option=com_schuweb_sitemap&view=xml&id='.$this->item->id; ?>
             <?php if (!$this->user->get('id')): ?>
-            <p><?php echo JText::sprintf('COM_XMAP_LOGIN_AS_ADMIN_EDIT_SITEMAP', JRoute::_('index.php?option=com_users&view=login&return='.base64_encode($sitemapUrl))); ?></p>
+            <p><?php echo JText::sprintf('COM_SCHUWEB_SITEMAP_LOGIN_AS_ADMIN_EDIT_SITEMAP', JRoute::_('index.php?option=com_users&view=login&return='.base64_encode($sitemapUrl))); ?></p>
             <?php else: ?>
             <?php $sitemapUrl = JUri::base(true).'/'.str_replace('&','&amp;',$sitemapUrl); ?>
-            <p><?php echo JText::_('COM_XMAP_XML_SITEMAP_HELP'); ?></p>
-            <p dir="ltr"><b><?php echo JText::_('COM_XMAP_XML_SITEMAP_URL'); ?></b>: <?php echo $sitemapUrl; ?></p>
+            <p><?php echo JText::_('COM_SCHUWEB_SITEMAP_XML_SITEMAP_HELP'); ?></p>
+            <p dir="ltr"><b><?php echo JText::_('COM_SCHUWEB_SITEMAP_XML_SITEMAP_URL'); ?></b>: <?php echo $sitemapUrl; ?></p>
             <div id="filter_options">
-                <form method="get" action="<?php echo JRoute::_('index.php?option=com_xmap&view=xml'); ?>">
-                    <input type="hidden" name="option" value="com_xmap" />
+                <form method="get" action="<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&view=xml'); ?>">
+                    <input type="hidden" name="option" value="com_schuweb_sitemap" />
                     <input type="hidden" name="view" value="xml" />
                     <input type="hidden" name="id" value="<?php echo $this->item->id; ?>" />
-                    <label><input onClick="this.form.submit();"<?php echo ($showTitle? ' checked="checked"':''); ?> type="checkbox" value="1" name="filter_showtitle" /><?php echo JText::_('COM_XMAP_DISPLAY_TITLE'); ?></label>
-                    <label><input onClick="this.form.submit();"<?php echo ($showExcluded? ' checked="checked"':''); ?> type="checkbox" value="1" name="filter_showexcluded" /><?php echo JText::_('COM_XMAP_DISPLAY_EXCLUDED_ITEMS'); ?></label>
+                    <label><input onClick="this.form.submit();"<?php echo ($showTitle? ' checked="checked"':''); ?> type="checkbox" value="1" name="filter_showtitle" /><?php echo JText::_('COM_SCHUWEB_SITEMAP_DISPLAY_TITLE'); ?></label>
+                    <label><input onClick="this.form.submit();"<?php echo ($showExcluded? ' checked="checked"':''); ?> type="checkbox" value="1" name="filter_showexcluded" /><?php echo JText::_('COM_SCHUWEB_SITEMAP_DISPLAY_EXCLUDED_ITEMS'); ?></label>
                 </form>
             </div>
             <?php endif; ?>
@@ -421,11 +421,11 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 </div>
 <table id="table0" class="data">
     <tr class="header">
-        <td><?php echo ($showTitle? JText::_('COM_XMAP_TITLE').' / ' : ''); ?><?php echo JText::_('COM_XMAP_URL'); ?></td>
+        <td><?php echo ($showTitle? JText::_('COM_SCHUWEB_SITEMAP_TITLE').' / ' : ''); ?><?php echo JText::_('COM_SCHUWEB_SITEMAP_URL'); ?></td>
         <?php if (!$this->isImages): ?>
-        <td><?php echo JText::_('COM_XMAP_LASTMOD'); ?></td>
-        <td><?php echo JText::_('COM_XMAP_CHANGEFREQ'); ?></td>
-        <td><?php echo JText::_('COM_XMAP_PRIORITY'); ?></td>
+        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_LASTMOD'); ?></td>
+        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGEFREQ'); ?></td>
+        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?></td>
         <?php endif ?>
     </tr>
     <xsl:for-each select="xna:urlset/xna:url">

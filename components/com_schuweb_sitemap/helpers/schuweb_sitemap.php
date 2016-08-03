@@ -12,13 +12,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.database.query');
 
 /**
- * Xmap Component Sitemap Model
+ * Schuweb_Sitemap Component Sitemap Model
  *
- * @package        Xmap
- * @subpackage     com_xmap
+ * @package        Schuweb_Sitemap
+ * @subpackage     com_schuweb_sitemap
  * @since          2.0
  */
-class XmapHelper
+class Schuweb_SitemapHelper
 {
 
     public static function &getMenuItems($selections)
@@ -90,7 +90,7 @@ class XmapHelper
                     $item->priority = $menuOptions['priority'];
                     $item->changefreq = $menuOptions['changefreq'];
 
-                    SchuwebSitemapHelper::prepareMenuItem($item);
+                    Schuweb_SitemapHelper::prepareMenuItem($item);
                 } else {
                     $item->priority = null;
                     $item->changefreq = null;
@@ -122,7 +122,7 @@ class XmapHelper
         $query = $db->getQuery(true);
         $query->select('*');
         $query->from('#__extensions AS n');
-        $query->where('n.folder = \'xmap\'');
+        $query->where('n.folder = \'schuweb_sitemap\'');
         $query->where('n.enabled = 1');
 
         // Get the list of menu items.
@@ -150,9 +150,9 @@ class XmapHelper
      */
     public static function prepareMenuItem($item)
     {
-        $extensions = SchuwebSitemapHelper::getExtensions();
+        $extensions = Schuweb_SitemapHelper::getExtensions();
         if (!empty($extensions[$item->option])) {
-            $className = 'xmap_' . $item->option;
+            $className = 'schuweb_sitemap_' . $item->option;
             $obj = new $className;
             if (method_exists($obj, 'prepareMenuItem')) {
                 $obj->prepareMenuItem($item,$extensions[$item->option]->params);

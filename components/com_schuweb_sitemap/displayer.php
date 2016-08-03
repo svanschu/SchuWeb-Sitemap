@@ -9,7 +9,7 @@
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class XmapDisplayer {
+class Schuweb_SitemapDisplayer {
 
     /**
      *
@@ -153,7 +153,7 @@ class XmapDisplayer {
             $node->modified     = @$item->modified;
             $node->secure       = $item->params->get('secure');
 
-            // New on Xmap 2.0: send the menu params
+            // New on Schuweb_Sitemap 2.0: send the menu params
             $node->params =& $item->params;
 
             if ($node->home == 1) {
@@ -198,11 +198,11 @@ class XmapDisplayer {
                 if ( $node->option ) {
                     if ( !empty($this->jview->extensions[$node->option]) ) {
                          $node->uid = $node->option;
-                        $className = 'xmap_'.$node->option;
+                        $className = 'Schuweb_Sitemap_'.$node->option;
                         $result = call_user_func_array(array($className, 'getTree'),array(&$this,&$node,&$this->jview->extensions[$node->option]->params));
                     }
                 }
-                //XmapPlugins::printTree( $this, $node, $this->jview->extensions );    // Determine the menu entry's type and call it's handler
+                //Schuweb_SitemapPlugins::printTree( $this, $node, $this->jview->extensions );    // Determine the menu entry's type and call it's handler
             }
         }
         $this->changeLevel(-1);

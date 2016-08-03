@@ -9,11 +9,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
  * Content Component Route Helper
  *
- * @package        Xmap
- * @subpackage    com_xmap
+ * @package        Schuweb_Sitemap
+ * @subpackage    com_schuweb_sitemap
  * @since 2.0
  */
-class XmapRoute
+class Schuweb_SitemapRoute
 {
 
     /**
@@ -29,7 +29,7 @@ class XmapRoute
         );
 
         //Create the link
-        $link = 'index.php?option=com_xmap&view='.$view.'&id='. $id;
+        $link = 'index.php?option=com_schuweb_sitemap&view='.$view.'&id='. $id;
 
         if ($itemId = self::_findItemId($needles)) {
             $link .= '&Itemid='.$itemId;
@@ -46,7 +46,7 @@ class XmapRoute
         {
             self::$lookup = array();
 
-            $component    = &JComponentHelper::getComponent('com_xmap');
+            $component    = &JComponentHelper::getComponent('com_schuweb_sitemap');
             $menus        = &JApplication::getMenu('site', array());
             $items        = $menus->getItems('component_id', $component->id);
 
@@ -88,7 +88,7 @@ class XmapRoute
  *
  * @return    array    The URL arguments to use to assemble the subsequent URL.
  */
-function XmapBuildRoute(&$query)
+function Schuweb_SitemapBuildRoute(&$query)
 {
     $segments = array();
 
@@ -162,7 +162,7 @@ function XmapBuildRoute(&$query)
  *
  * @return    array    The URL attributes to be used by the application.
  */
-function XmapParseRoute($segments)
+function Schuweb_SitemapParseRoute($segments)
 {
     $vars = array();
 
