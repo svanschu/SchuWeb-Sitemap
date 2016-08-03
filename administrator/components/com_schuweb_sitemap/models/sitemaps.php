@@ -116,7 +116,7 @@ class Schuweb_SitemapModelSitemaps extends JModelList
                           'list.select',
                           'a.*')
         );
-        $query->from('#__xmap_sitemap AS a');
+        $query->from('#__schuweb_sitemap AS a');
 
         // Join over the asset groups.
         $query->select('ag.title AS access_level');
@@ -159,7 +159,7 @@ class Schuweb_SitemapModelSitemaps extends JModelList
         $query = $db->getQuery(true);
         $query->select('e.*');
         $query->from($db->quoteName('#__extensions'). 'AS e');
-        $query->join('INNER', '#__extensions AS p ON e.element=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'xmap\'');
+        $query->join('INNER', '#__extensions AS p ON e.element=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'');
         $query->where('e.type=\'component\' and e.enabled=1');
 
         $db->setQuery($query);

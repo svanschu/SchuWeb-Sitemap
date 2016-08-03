@@ -25,7 +25,7 @@ class JElementSitemap extends JElement
         $db        = JFactory::getDBO();
         $fieldName = $control_name.'['.$name.']';
         
-        $sql = "SELECT id, name from #__xmap_sitemap order by name";
+        $sql = "SELECT id, name from #__schuweb_sitemap order by name";
         $db->setQuery($sql);
         $rows = $db->loadObjectList();
 

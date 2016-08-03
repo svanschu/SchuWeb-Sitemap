@@ -1,4 +1,4 @@
-CREATE TABLE "#__xmap_sitemap" (
+CREATE TABLE "#__schuweb_sitemap" (
   "id" serial NOT NULL,
   "title" character varying(255) DEFAULT NULL,
   "alias" character varying(255) DEFAULT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE "#__xmap_sitemap" (
   PRIMARY KEY ("id")
 );
 
-CREATE TABLE "#__xmap_items" (
+CREATE TABLE "#__schuweb_sitemap_items" (
   "uid" character varying(100) NOT NULL,
   "itemid" integer NOT NULL,
   "view" character varying(10) NOT NULL,
@@ -30,5 +30,5 @@ CREATE TABLE "#__xmap_items" (
   PRIMARY KEY ("uid","itemid","view","sitemap_id")
 );
 
-CREATE INDEX "#__xmap_items_idx_uid" on "#__xmap_items" ("uid", "itemid");
-CREATE INDEX "#__xmap_items_idx_view" on "#__xmap_items" ("view");
+CREATE INDEX "#__schuweb_sitemap_items_idx_uid" on "#__schuweb_sitemap_items" ("uid", "itemid");
+CREATE INDEX "#__schuweb_sitemap_items_idx_view" on "#__schuweb_sitemap_items" ("view");

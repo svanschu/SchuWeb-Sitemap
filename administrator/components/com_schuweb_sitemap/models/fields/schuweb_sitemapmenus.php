@@ -17,7 +17,7 @@ require_once JPATH_LIBRARIES . '/joomla/form/fields/list.php';
  * @subpackage   com_schuweb_sitemap
  * @since        2.0
  */
-class JFormFieldXmapmenus extends JFormFieldList
+class JFormFieldSchuweb_Sitemapmenus extends JFormFieldList
 {
 
     /**
@@ -25,7 +25,7 @@ class JFormFieldXmapmenus extends JFormFieldList
      *
      * @var      string
      */
-    public $type = 'Xmapmenus';
+    public $type = 'Schuweb_Sitemap';
 
     /**
      * Method to get a list of options for a list input.

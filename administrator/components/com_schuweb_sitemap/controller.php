@@ -126,7 +126,7 @@ class Schuweb_SitemapController extends JControllerLegacy
         $db = JFactory::getDBO();
         $query  = $db->getQuery(true);
         $query->select('id');
-        $query->from($db->quoteName('#__xmap_sitemap'));
+        $query->from($db->quoteName('#__schuweb_sitemap'));
         $query->where('is_default=1');
         $db->setQuery($query);
         return $db->loadResult();

@@ -44,7 +44,7 @@ class JFormFieldModal_Sitemaps extends JFormField
         if ($this->value) {
             $db->setQuery(
                     'SELECT title' .
-                    ' FROM #__xmap_sitemap' .
+                    ' FROM #__schuweb_sitemap' .
                     ' WHERE id = ' . (int) $this->value
             );
             $title = $db->loadResult();

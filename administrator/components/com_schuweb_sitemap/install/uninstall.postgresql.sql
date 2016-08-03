@@ -1,2 +1,2 @@
-drop table "#__xmap_items";
-drop table "#__xmap_sitemap";
+drop table "#__schuweb_sitemap_items";
+drop table "#__schuweb_sitemap";

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class XmapTableSitemap extends JTable
+class SchuWeb_SitemapTableSitemap extends JTable
 {
 
     /**
@@ -98,7 +98,7 @@ class XmapTableSitemap extends JTable
      */
     function __construct(&$db)
     {
-        parent::__construct('#__xmap_sitemap', 'id', $db);
+        parent::__construct('#__schuweb_sitemap', 'id', $db);
     }
 
     /**
@@ -118,7 +118,7 @@ class XmapTableSitemap extends JTable
             $array['attribs'] = $registry->toString();
         }
 
-        if (isset($array['selections']) && is_array($array['selections'])) {
+        if (isset($array['selections']) && is_array($array['selections']) && $array['selections'][0] != null) {
             $selections = array();
             foreach ($array['selections'] as $i => $menu) {
                 $selections[$menu] = array(
@@ -226,7 +226,7 @@ class XmapTableSitemap extends JTable
 
         // Update the publishing state for rows with the given primary keys.
         $query =  $this->_db->getQuery(true)
-                       ->update($this->_db->quoteName('#__xmap_sitemap'))
+                       ->update($this->_db->quoteName('#__schuweb_sitemap'))
                        ->set($this->_db->quoteName('state').' = '. (int) $state)
                        ->where($where);
 

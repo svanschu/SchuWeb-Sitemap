@@ -11,13 +11,6 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-# For compatibility with older versions of Joola 2.5
-if (!class_exists('JViewLegacy')){
-    class JViewLegacy extends JView {
-
-    }
-}
-
 /**
  * @package     Xmap
  * @subpackage  com_schuweb_sitemap

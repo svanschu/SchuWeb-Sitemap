@@ -60,7 +60,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
      * @param    array               Configuration array for model. Optional.
      * @return   XmapTableSitemap    A database object
     */
-    public function getTable($type = 'Sitemap', $prefix = 'XmapTable', $config = array())
+    public function getTable($type = 'Sitemap', $prefix = 'SchuWeb_SitemapTable', $config = array())
     {
         return JTable::getInstance($type, $prefix, $config);
     }
@@ -198,7 +198,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
 
         if ($table->is_default) {
             $query =  $this->_db->getQuery(true)
-                           ->update($this->_db->quoteName('#__xmap_sitemap'))
+                           ->update($this->_db->quoteName('#__schuweb_sitemap'))
                            ->set($this->_db->quoteName('is_default').' = 0')
                            ->where($this->_db->quoteName('id').' <> '.$table->id);
 
@@ -238,7 +238,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
         if ($table->load($id)) {
             $db = JFactory::getDbo();
             $query = $db->getQuery(true)
-                        ->update($db->quoteName('#__xmap_sitemap'))
+                        ->update($db->quoteName('#__schuweb_sitemap'))
                         ->set($db->quoteName('is_default').' = 0')
                         ->where($db->quoteName('id').' <> '.$table->id);
             $this->_db->setQuery($query);
@@ -270,7 +270,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
         $db = JFactory::getDBO();
         $query  = $db->getQuery(true);
         $query->select('id');
-        $query->from($db->quoteName('#__xmap_sitemap'));
+        $query->from($db->quoteName('#__schuweb_sitemap'));
         $query->where('is_default=1');
         $db->setQuery($query);
         return $db->loadResult();
