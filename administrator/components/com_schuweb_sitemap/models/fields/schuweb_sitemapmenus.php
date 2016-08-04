@@ -111,9 +111,9 @@ class JFormFieldSchuweb_Sitemapmenus extends JFormFieldList
         $doc = JFactory::getDocument();
         $doc->addScriptDeclaration("
         window.addEvent('domready',function(){
-            \$\$('div.xmap-menu-options select').addEvent('mouseover',function(event){xmapMenusSortable.detach();})
-            \$\$('div.xmap-menu-options select').addEvent('mouseout',function(event){xmapMenusSortable.attach();})
-            var xmapMenusSortable = new Sortables(\$('ul_" . $this->inputId . "'),{
+            \$\$('div.schuwebsitemap-menu-options select').addEvent('mouseover',function(event){schuwebsitemapMenusSortable.detach();})
+            \$\$('div.schuwebsitemap-menu-options select').addEvent('mouseout',function(event){schuwebsitemapMenusSortable.attach();})
+            var schuwebsitemapMenusSortable = new Sortables(\$('ul_" . $this->inputId . "'),{
                 clone:true,
                 revert: true,
                 preventDefault: true,
@@ -148,11 +148,11 @@ class JFormFieldSchuweb_Sitemapmenus extends JFormFieldList
             $return .= '<li id="menu_' . $i . '">';
             $return .= '<input type="' . $type . '" id="' . $this->id . '_' . $i . '" name="' . $this->name . '" value="' . $option->value . '"' . $attributes . $selected . ' />';
             $return .= '<label for="' . $this->id . '_' . $i . '" class="menu_label">' . $option->text . '</label>';
-            $return .= '<div class="xmap-menu-options" id="menu_options_' . $i . '">';
-            $return .= '<label class="control-label">' . JText::_('XMAP_PRIORITY') . '</label>';
-            $return .= '<div class="controls">' . JHTML::_('xmap.priorities', $prioritiesName, ($selected ? $value[$option->value]['priority'] : '0.5'), $i) . '</div>';
-            $return .= '<label class="control-label">' . JText::_('XMAP_CHANGE_FREQUENCY') . '</label>';
-            $return .= '<div class="controls">' . JHTML::_('xmap.changefrequency', $changefreqName, ($selected ? $value[$option->value]['changefreq'] : 'weekly'), $i) . '</div>';
+            $return .= '<div class="schuwebsitemap-menu-options" id="menu_options_' . $i . '">';
+            $return .= '<label class="control-label">' . JText::_('SCHUWEB_SITEMAP_PRIORITY') . '</label>';
+            $return .= '<div class="controls">' . JHTML::_('schuweb_sitemap.priorities', $prioritiesName, ($selected ? $value[$option->value]['priority'] : '0.5'), $i) . '</div>';
+            $return .= '<label class="control-label">' . JText::_('SCHUWEB_SITEMAP_CHANGE_FREQUENCY') . '</label>';
+            $return .= '<div class="controls">' . JHTML::_('schuweb_sitemap.changefrequency', $changefreqName, ($selected ? $value[$option->value]['changefreq'] : 'weekly'), $i) . '</div>';
             $return .= '</div>';
             $return .= '</li>';
         }

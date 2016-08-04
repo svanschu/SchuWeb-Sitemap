@@ -82,7 +82,7 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
         JHTML::stylesheet('mootree.css', 'media/system/css/');
 
         $this->loadTemplate('class');
-        $displayer = new XmapNavigatorDisplayer($state->params, $this->item);
+        $displayer = new XmapNavigatorDisplayer($this->state->params, $this->item);
 
         parent::display($tpl);
     }
@@ -97,11 +97,11 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
 
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
-        $menuItems = Schuweb_SitemapHelper::getMenuItems($item->selections);
+        $menuItems = Schuweb_SitemapHelper::getMenuItems($this->item->selections);
         $extensions = Schuweb_SitemapHelper::getExtensions();
 
         $this->loadTemplate('class');
-        $nav = new XmapNavigatorDisplayer($state->params, $item);
+        $nav = new XmapNavigatorDisplayer($this->state->params, $this->item);
         $nav->setExtensions($extensions);
 
         $this->list = array();
@@ -143,8 +143,8 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
                     $parent->link = $link;
                     $parent->type = $node->type;
                     $parent->browserNav = $node->browserNav;
-                    $parent->priority = $item->selections->{$node->menutype}->priority;
-                    $parent->changefreq = $item->selections->{$node->menutype}->changefreq;
+                    $parent->priority = $this->item->selections->{$node->menutype}->priority;
+                    $parent->changefreq = $this->item->selections->{$node->menutype}->changefreq;
                     $parent->menutype = $node->menutype;
                     $parent->selectable = false;
                     $parent->expandible = true;

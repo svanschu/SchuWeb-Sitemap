@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 require_once(JPATH_COMPONENT_SITE.'/displayer.php');
 
-class XmapNavigatorDisplayer extends XmapDisplayer {
+class SchuWeb_SitemapNavigatorDisplayer extends SchuWeb_SitemapDisplayer {
 
     function __construct(&$config, &$sitemap) {
         $this->_list=array();
@@ -93,7 +93,7 @@ class XmapNavigatorDisplayer extends XmapDisplayer {
             if ( $option ) {
                 if ( !empty($extensions[$option]) ) {
                     $parent->uid = $option;
-                    $className = 'xmap_'.$option;
+                    $className = 'schuweb_sitemap_'.$option;
                     $result = call_user_func_array(array($className, 'getTree'),array(&$this,&$parent,$extensions[$option]->params));
                 }
             }
