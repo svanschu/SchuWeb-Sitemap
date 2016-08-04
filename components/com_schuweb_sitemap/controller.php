@@ -49,12 +49,11 @@ class Schuweb_SitemapController extends JControllerLegacy
         if ($viewName) {
             $document = JFactory::getDocument();
             $viewType = $document->getType();
-//DELETE
-print_r($viewType);
+
             $view = $this->getView($viewName, $viewType, '', array('base_path' => $this->basePath, 'layout' => $viewLayout));
-echo '<p>';print_r($view);
+
             $sitemapmodel = $this->getModel('Sitemap');
-print_r("<p>sitemapmodel: ");print_r($sitemapmodel);
+
             $view->setModel($sitemapmodel, true);
         }
 
