@@ -18,14 +18,12 @@ if(version_compare(JVERSION,'3.0.0','ge')) {
 }
 ?>
 <script type="text/javascript">
-<!--
-    function submitbutton(task)
-    {
-        if (task == 'sitemap.cancel' || document.formvalidator.isValid($('adminForm'))) {
-            submitform(task);
+    Joomla.submitbutton = function (task) {
+        if (task == 'sitemap.cancel' || document.formvalidator.isValid(document.id('sitemap-form'))) {
+            <?php echo $this->form->getField('introtext')->save(); ?>
+            Joomla.submitform(task, document.getElementById('sitemap-form'));
         }
     }
-// -->
 </script>
 <form action="<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&layout=edit&id='.$this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="row-fluid">
@@ -86,7 +84,7 @@ if(version_compare(JVERSION,'3.0.0','ge')) {
 
                 <div class="tab-pane" id="attrib-menus">
                     <div style="width:500px">
-                        <?php echo $this->form->getInput('selections'); ?>
+                        <?php echo $this->loadTemplate('menues'); ?>
                     </div>
                 </div>
                 <?php

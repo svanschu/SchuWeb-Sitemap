@@ -49,15 +49,41 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
             $this->item->created = JHtml::date($this->item->created, '%Y-%m-%d %H-%M-%S', $offset);
         }
 
+        $this->handleMenues();
+
         $this->_setToolbar();
 
-        if (version_compare($version->getShortVersion(), '3.0.0', '<')) {
-            $tpl = 'legacy';
-        }
         parent::display($tpl);
         JRequest::setVar('hidemainmenu', true);
     }
 
+    protected function handleMenues()
+    {
+        $menues = $this->get('Menues');
+        // remove non existing menutypes from selection
+        foreach ($this->item->selections as $menutype => $options)
+        {
+            if (!isset($menues[$menutype]))
+            {
+                unset($this->item->selections[$menutype]);
+            }
+        }
+        foreach ($menues as $menu)
+        {
+            if (isset($this->item->selections[$menu->menutype]))
+            {
+                $this->item->selections[$menu->menutype]['selected'] = true;
+                $this->item->selections[$menu->menutype]['title'] = $menu->title;
+                $this->item->selections[$menu->menutype]['menutype'] = $menu->menutype;
+            } else
+            {
+                $this->item->selections[$menu->menutype] = (array)$menu;
+                $this->item->selections[$menu->menutype]['selected'] = false;
+                $this->item->selections[$menu->menutype]['priority'] = 0.5;
+                $this->item->selections[$menu->menutype]['changefreq'] = 'weekly';
+            }
+        }
+    }
     /**
      * Display the view
      *

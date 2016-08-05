@@ -10,6 +10,8 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modeladmin');
 
+use Joomla\Registry\Registry;
+
 /**
  * Sitemap model.
  *
@@ -105,7 +107,12 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
         $registry->loadString($table->attribs);
         $value->attribs = $registry->toArray();
 
-        return $value;
+        $item = parent::getItem($pk);
+
+        $item->selections = new Registry($item->selections);
+        $item->selections = $item->selections->toArray();
+
+        return $item;
     }
 
     /**
@@ -254,6 +261,17 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
             $cache->clean();
             return true;
         }
+    }
+
+    public function getMenues()
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true)
+            ->select('m.*')
+            ->from('#__menu_types AS m')
+            ->order('m.title');
+        $db->setQuery($query);
+        return $db->loadObjectList('menutype');
     }
 
     /**

@@ -94,6 +94,11 @@ class SchuWeb_SitemapTableSitemap extends JTable
     var $lastvisit_html = 0;
 
     /**
+     * @var array
+     */
+    protected $_jsonEncode = array('params', 'selections');
+
+    /**
      * @param    JDatabase    A database connector object
      */
     function __construct(&$db)

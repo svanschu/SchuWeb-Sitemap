@@ -141,16 +141,12 @@
             filter="unset"/>
 
         <field
-            id="selections"
             name="selections"
-            type="schuweb_sitemapmenus"
+            type="list"
             label="SCHUWEB_SITEMAPMENUASSIGMENT_LABEL"
             description="SCHUWEB_SITEMAPMENUASSIGMENT_DESC"
             class="inputbox"
-            labelclass="control-label"
-            multiple="multiple"
-            array="true"
-            size="5"/>
+            multiple="multiple"/>
 
         <field
             id="selections_priority"
