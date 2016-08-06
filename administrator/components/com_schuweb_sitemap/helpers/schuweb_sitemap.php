@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * Xmap component helper.
  *
- * @package     Xmap
+ * @package     SchuWeb Sitemap
  * @subpackage  com_schuweb_sitemap
  * @since       2.0
  */

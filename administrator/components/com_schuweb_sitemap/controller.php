@@ -13,7 +13,7 @@ jimport('joomla.application.component.controller');
 /**
  * Component Controller
  *
- * @package     Xmap
+ * @package     SchuWeb Sitemap
  * @subpackage  com_schuweb_sitemap
  */
 class Schuweb_SitemapController extends JControllerLegacy
