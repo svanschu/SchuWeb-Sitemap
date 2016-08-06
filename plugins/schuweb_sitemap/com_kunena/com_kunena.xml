@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <extension type="plugin" group="xmap" version="1.6" method="upgrade">
-    <name>Xmap - Kunena Plugin</name>
-    <author>Guillermo Vargas</author>
+    <name>SchuWeb Sitemap - Kunena Plugin</name>
+    <author>Sven Schultschik | Guillermo Vargas</author>
     <creationDate>September 2007</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <authorEmail>guille@vargas.co.cr</authorEmail>
-    <authorUrl>joomla.vargas.co.cr</authorUrl>
+    <authorEmail>extensions@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.com</authorUrl>
     <version>3.0.0</version>
-    <description>Xmap Plugin for Kunena component</description>
+    <description>SchuWeb Sitemap Plugin for Kunena component</description>
     <files>
         <filename plugin="com_kunena">com_kunena.php</filename>
 		<filename>index.html</filename>
@@ -28,17 +28,17 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="include_topics" type="list" default="1" label="XMAP_KUNENA_SHOW_TOPICS_LABEL" description="XMAP_KUNENA_SHOW_TOPICS_DESC">
+                <field name="include_topics" type="list" default="1" label="SCHUWEB_SITEMAP_KUNENA_SHOW_TOPICS_LABEL" description="SCHUWEB_SITEMAP_KUNENA_SHOW_TOPICS_DESC">
                     <option value="0">SCHUWEB_SITEMAP_OPTION_NEVER</option>
                     <option value="1">SCHUWEB_SITEMAP_OPTION_ALWAYS</option>
                     <option value="2">SCHUWEB_SITEMAP_OPTION_XML_ONLY</option>
                     <option value="3">SCHUWEB_SITEMAP_OPTION_HTML_ONLY</option>
                 </field>
-                <field name="max_topics" type="text" default="" label="XMAP_KUNENA_MAX_TOPICS_LABEL" description="XMAP_KUNENA_MAX_TOPICS_DESC" />
-                <field name="max_age" type="text" default="" label="XMAP_KUNENA_NEWEST_THAN_LABEL" description="XMAP_KUNENA_NEWEST_THAN_DESC" />
+                <field name="max_topics" type="text" default="" label="SCHUWEB_SITEMAP_KUNENA_MAX_TOPICS_LABEL" description="SCHUWEB_SITEMAP_KUNENA_MAX_TOPICS_DESC" />
+                <field name="max_age" type="text" default="" label="SCHUWEB_SITEMAP_KUNENA_NEWEST_THAN_LABEL" description="SCHUWEB_SITEMAP_KUNENA_NEWEST_THAN_DESC" />
             </fieldset>
             <fieldset name="xml">
-                <field name="cat_priority" type="list" default="-1" label="XMAP_KUNENA_CATEGORY_PRIORITY_LABEL" description="XMAP_KUNENA_CATEGORY_PRIORITY_DESC">
+                <field name="cat_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_KUNENA_CATEGORY_PRIORITY_LABEL" description="SCHUWEB_SITEMAP_KUNENA_CATEGORY_PRIORITY_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="0.0">0.0</option>
                     <option value="0.1">0.1</option>
@@ -52,7 +52,7 @@
                     <option value="0.9">0.9</option>
                     <option value="1">1</option>
                 </field>
-                <field name="cat_changefreq" type="list" default="-1" label="XMAP_KUNENA_CATEGORY_CHANGEFREQ_LABEL" description="XMAP_KUNENA_CATEGORY_CHANGEFREQ_DESC">
+                <field name="cat_changefreq" type="list" default="-1" label="SCHUWEB_SITEMAP_KUNENA_CATEGORY_CHANGEFREQ_LABEL" description="SCHUWEB_SITEMAP_KUNENA_CATEGORY_CHANGEFREQ_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="always">SCHUWEB_SITEMAP_OPTION_ALWAYS</option>
                     <option value="hourly">SCHUWEB_SITEMAP_OPTION_HOURLY</option>
@@ -62,7 +62,7 @@
                     <option value="yearly">SCHUWEB_SITEMAP_OPTION_YEARLY</option>
                     <option value="never">SCHUWEB_SITEMAP_OPTION_NEVER</option>
                 </field>
-                <field name="topic_priority" type="list" default="-1" label="XMAP_KUNENA_TOPIC_PRIORITY_LABEL" description="XMAP_KUNENA_TOPIC_PRIORITY_DESC">
+                <field name="topic_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_KUNENA_TOPIC_PRIORITY_LABEL" description="SCHUWEB_SITEMAP_KUNENA_TOPIC_PRIORITY_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="0.0">0.0</option>
                     <option value="0.1">0.1</option>
@@ -76,7 +76,7 @@
                     <option value="0.9">0.9</option>
                     <option value="1">1</option>
                 </field>
-                <field name="topic_changefreq" type="list" default="-1" label="XMAP_KUNENA_TOPIC_CHANGEFREQ_LABEL" description="XMAP_KUNENA_TOPIC_CHANGEFREQ_DESC">
+                <field name="topic_changefreq" type="list" default="-1" label="SCHUWEB_SITEMAP_KUNENA_TOPIC_CHANGEFREQ_LABEL" description="SCHUWEB_SITEMAP_KUNENA_TOPIC_CHANGEFREQ_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="always">SCHUWEB_SITEMAP_OPTION_ALWAYS</option>
                     <option value="hourly">SCHUWEB_SITEMAP_OPTION_HOURLY</option>
