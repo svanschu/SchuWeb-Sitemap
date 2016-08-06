@@ -35,8 +35,6 @@ class Schuweb_SitemapViewSitemaps extends JViewLegacy
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
-        $version = new JVersion;
-
         $message = $this->get('ExtensionsMessage');
         if ( $message ) {
             JFactory::getApplication()->enqueueMessage($message);
@@ -50,9 +48,6 @@ class Schuweb_SitemapViewSitemaps extends JViewLegacy
 
         // We don't need toolbar in the modal window.
         if ($this->getLayout() !== 'modal') {
-            if (version_compare($version->getShortVersion(), '3.0.0', '<')) {
-                $tpl = 'legacy';
-            }
             $this->addToolbar();
         }
 
