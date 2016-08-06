@@ -21,7 +21,7 @@ $n = count($this->items);
             <label for="search">
                 <?php echo JText::_('JSearch_Filter_Label'); ?>
             </label>
-            <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('Xmap_Filter_Search_Desc'); ?>" />
+            <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('SCHUWEB_SITEMAP_Filter_Search_Desc'); ?>" />
 
             <button type="submit">
                 <?php echo JText::_('JSearch_Filter_Submit'); ?></button>
@@ -47,21 +47,21 @@ $n = count($this->items);
         <thead>
             <tr>
                 <th class="title">
-                    <?php echo JHtml::_('grid.sort', 'Xmap_Heading_Sitemap', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+                    <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_Sitemap', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                 </th>
                 <th width="5%">
-                    <?php echo JHtml::_('grid.sort', 'Xmap_Heading_Published', 'a.state', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+                    <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_Published', 'a.state', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                 </th>
                 <th width="10%">
                     <?php echo JHtml::_('grid.sort',  'JGrid_Heading_Access', 'access_level', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                 </th>
                 <th width="10%" nowrap="nowrap">
-                    <?php echo JText::_('Xmap_Heading_Html_Stats'); ?><br />
-                    (<?php echo JText::_('Xmap_Heading_Num_Links') . ' / '. JText::_('Xmap_Heading_Num_Hits') . ' / ' . JText::_('Xmap_Heading_Last_Visit'); ?>)
+                    <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Html_Stats'); ?><br />
+                    (<?php echo JText::_('SCHUWEB_SITEMAP_Heading_Num_Links') . ' / '. JText::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . ' / ' . JText::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>)
                 </th>
                 <th width="10%" nowrap="nowrap">
-                    <?php echo JText::_('Xmap_Heading_Xml_Stats'); ?><br />
-                    <?php echo JText::_('Xmap_Heading_Num_Links') . '/'. JText::_('Xmap_Heading_Num_Hits') . '/' . JText::_('Xmap_Heading_Last_Visit'); ?>
+                    <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Xml_Stats'); ?><br />
+                    <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Num_Links') . '/'. JText::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . '/' . JText::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>
                 </th>
                 <th width="1%" nowrap="nowrap">
                     <?php echo JHtml::_('grid.sort', 'JGrid_Heading_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>

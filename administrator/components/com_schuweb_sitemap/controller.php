@@ -72,7 +72,7 @@ class Schuweb_SitemapController extends JControllerLegacy
         }
 
         if (!$id) {
-            JError::raiseWarning(500, JText::_('Xmap_Not_Sitemap_Selected'));
+            JError::raiseWarning(500, JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'));
             return false;
         }
 
@@ -104,7 +104,7 @@ class Schuweb_SitemapController extends JControllerLegacy
         }
 
         if (!$id) {
-            JError::raiseWarning(500, JText::_('Xmap_Not_Sitemap_Selected'));
+            JError::raiseWarning(500, JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'));
             return false;
         }
 

@@ -171,7 +171,7 @@ class Schuweb_SitemapModelSitemaps extends JModelList
                 $sep = ', ';
             }
 
-            return JText::sprintf('XMAP_MESSAGE_EXTENSIONS_DISABLED',$extensionsNameList);
+            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED',$extensionsNameList);
         } else {
             return "";
         }

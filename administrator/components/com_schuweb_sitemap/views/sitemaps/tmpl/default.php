@@ -33,7 +33,7 @@ $version = new JVersion;
 <?php endif;?>
         <div id="filter-bar" class="btn-toolbar">
             <div class="filter-search btn-group pull-left">
-                <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('Xmap_Filter_Search_Desc'); ?>" />
+                <input type="text" name="filter_search" id="filter_search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('SCHUWEB_SITEMAP_Filter_Search_Desc'); ?>" />
             </div>
 
             <div class="btn-group pull-left hidden-phone">
@@ -49,24 +49,24 @@ $version = new JVersion;
                         <input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="if (typeof Joomla != 'undefined'){Joomla.checkAll(this)} else {checkAll(this)}" />
                     </th>
                     <th class="title">
-                        <?php echo JHtml::_('grid.sort', 'Xmap_Heading_Sitemap', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+                        <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_Sitemap', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
                     <th width="5%">
-                        <?php echo JHtml::_('grid.sort', 'Xmap_Heading_Published', 'a.state', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+                        <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_Published', 'a.state', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
                     <th width="10%">
-                        <?php echo JHtml::_('grid.sort',  'Xmap_Heading_Access', 'access_level', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+                        <?php echo JHtml::_('grid.sort',  'SCHUWEB_SITEMAP_Heading_Access', 'access_level', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
                     <th width="10%" class="nowrap">
-                        <?php echo JText::_('Xmap_Heading_Html_Stats'); ?><br />
-                        (<?php echo JText::_('Xmap_Heading_Num_Links') . ' / '. JText::_('Xmap_Heading_Num_Hits') . ' / ' . JText::_('Xmap_Heading_Last_Visit'); ?>)
+                        <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Html_Stats'); ?><br />
+                        (<?php echo JText::_('SCHUWEB_SITEMAP_Heading_Num_Links') . ' / '. JText::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . ' / ' . JText::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>)
                     </th>
                     <th width="10%" class="nowrap">
-                        <?php echo JText::_('Xmap_Heading_Xml_Stats'); ?><br />
-                        <?php echo JText::_('Xmap_Heading_Num_Links') . '/'. JText::_('Xmap_Heading_Num_Hits') . '/' . JText::_('Xmap_Heading_Last_Visit'); ?>
+                        <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Xml_Stats'); ?><br />
+                        <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Num_Links') . '/'. JText::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . '/' . JText::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>
                     </th>
                     <th width="1%" class="nowrap">
-                        <?php echo JHtml::_('grid.sort', 'Xmap_Heading_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+                        <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
                 </tr>
             </thead>
@@ -127,9 +127,9 @@ $version = new JVersion;
                                 <?php endif; ?>
                             <?php endif; ?>
                                 <?php if ($item->state): ?>
-                                    <small>[<a href="<?php echo $baseUrl. 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&id='.$item->id; ?>" target="_blank" title="<?php echo JText::_('XMAP_XML_LINK_TOOLTIP',true); ?>"><?php echo JText::_('XMAP_XML_LINK'); ?></a>]</small>
-                                    <small>[<a href="<?php echo $baseUrl. 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&news=1&id='.$item->id; ?>" target="_blank" title="<?php echo JText::_('XMAP_NEWS_LINK_TOOLTIP',true); ?>"><?php echo JText::_('XMAP_NEWS_LINK'); ?></a>]</small>
-                                    <small>[<a href="<?php echo $baseUrl. 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&images=1&id='.$item->id; ?>" target="_blank" title="<?php echo JText::_('XMAP_IMAGES_LINK_TOOLTIP',true); ?>"><?php echo JText::_('XMAP_IMAGES_LINK'); ?></a>]</small>
+                                    <small>[<a href="<?php echo $baseUrl. 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&id='.$item->id; ?>" target="_blank" title="<?php echo JText::_('SCHUWEB_SITEMAP_XML_LINK_TOOLTIP',true); ?>"><?php echo JText::_('SCHUWEB_SITEMAP_XML_LINK'); ?></a>]</small>
+                                    <small>[<a href="<?php echo $baseUrl. 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&news=1&id='.$item->id; ?>" target="_blank" title="<?php echo JText::_('SCHUWEB_SITEMAP_NEWS_LINK_TOOLTIP',true); ?>"><?php echo JText::_('SCHUWEB_SITEMAP_NEWS_LINK'); ?></a>]</small>
+                                    <small>[<a href="<?php echo $baseUrl. 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&images=1&id='.$item->id; ?>" target="_blank" title="<?php echo JText::_('SCHUWEB_SITEMAP_IMAGES_LINK_TOOLTIP',true); ?>"><?php echo JText::_('SCHUWEB_SITEMAP_IMAGES_LINK'); ?></a>]</small>
                                 <?php endif; ?>
                                      <br />
 									 <small>(<?php echo $this->escape($item->alias); ?>)</small>

@@ -73,11 +73,11 @@ class Schuweb_SitemapViewSitemaps extends JViewLegacy
         JToolBarHelper::custom('sitemap.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);
 
         $doc->addStyleDeclaration('.icon-48-sitemap {background-image: url(components/com_schuweb_sitemap/images/sitemap-icon.png);}');
-        JToolBarHelper::title(JText::_('XMAP_SITEMAPS_TITLE'), 'sitemap.png');
+        JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_SITEMAPS_TITLE'), 'sitemap.png');
         JToolBarHelper::custom('sitemaps.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_Publish', true);
         JToolBarHelper::custom('sitemaps.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 
-        JToolBarHelper::custom('sitemaps.setdefault', 'featured.png', 'featured_f2.png', 'XMAP_TOOLBAR_SET_DEFAULT', true);
+        JToolBarHelper::custom('sitemaps.setdefault', 'featured.png', 'featured_f2.png', 'SCHUWEB_SITEMAP_TOOLBAR_SET_DEFAULT', true);
 
         if ($state->get('filter.published') == -2) {
             JToolBarHelper::deleteList('', 'sitemaps.delete','JTOOLBAR_DELETE');

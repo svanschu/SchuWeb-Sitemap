@@ -196,7 +196,7 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
         $user = JFactory::getUser();
         $isNew = ($this->item->id == 0);
 
-        JToolBarHelper::title(JText::_('XMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'article-add.png');
+        JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'article-add.png');
 
         JToolBarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
         JToolBarHelper::save('sitemap.save', 'JTOOLBAR_SAVE');
