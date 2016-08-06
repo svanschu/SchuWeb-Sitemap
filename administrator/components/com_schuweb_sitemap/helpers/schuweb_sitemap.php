@@ -33,7 +33,7 @@ class Schuweb_SitemapHelper
         );
         JHtmlSidebar::addEntry(
             JText::_('SCHUWEB_SITEMAP_Submenu_Extensions'),
-            'index.php?option=com_plugins&view=plugins&filter_folder=xmap',
+            'index.php?option=com_plugins&view=plugins&filter_folder=schuweb_sitemap',
             $vName == 'extensions');
     }
 }
