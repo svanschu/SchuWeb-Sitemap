@@ -26,28 +26,14 @@ class Schuweb_SitemapHelper
      */
     public static function addSubmenu($vName)
     {
-        $version = new JVersion;
-
-        if (version_compare($version->getShortVersion(), '3.0.0', '<')) {
-            JSubMenuHelper::addEntry(
-                JText::_('SCHUWEB_SITEMAP_Submenu_Sitemaps'),
-                'index.php?option=com_schuweb_sitemap',
-                $vName == 'sitemaps'
-            );
-            JSubMenuHelper::addEntry(
-                JText::_('SCHUWEB_SITEMAP_Submenu_Extensions'),
-                'index.php?option=com_plugins&view=plugins&filter_folder=xmap',
-                $vName == 'extensions');
-        } else {
-            JHtmlSidebar::addEntry(
-                JText::_('SCHUWEB_SITEMAP_Submenu_Sitemaps'),
-                'index.php?option=com_schuweb_sitemap',
-                $vName == 'sitemaps'
-            );
-            JHtmlSidebar::addEntry(
-                JText::_('SCHUWEB_SITEMAP_Submenu_Extensions'),
-                'index.php?option=com_plugins&view=plugins&filter_folder=xmap',
-                $vName == 'extensions');
-        }
+        JHtmlSidebar::addEntry(
+            JText::_('SCHUWEB_SITEMAP_Submenu_Sitemaps'),
+            'index.php?option=com_schuweb_sitemap',
+            $vName == 'sitemaps'
+        );
+        JHtmlSidebar::addEntry(
+            JText::_('SCHUWEB_SITEMAP_Submenu_Extensions'),
+            'index.php?option=com_plugins&view=plugins&filter_folder=xmap',
+            $vName == 'extensions');
     }
 }
