@@ -6,7 +6,7 @@
             id="id"
             name="id"
             type="hidden"
-            label="SCHUWEB_SITEMAPID_LABEL"
+            label="SCHUWEB_SITEMAP_ID_LABEL"
             size="10"
             default="0"
             required="true"
@@ -40,8 +40,8 @@
             type="editor"
             class="inputbox"
             labelclass="control-label"
-            label="SCHUWEB_SITEMAPINTROTEXT_LABEL"
-            description="SCHUWEB_SITEMAPINTROTEXT_DESC"
+            label="SCHUWEB_SITEMAP_INTROTEXT_LABEL"
+            description="SCHUWEB_SITEMAP_INTROTEXT_DESC"
             filter="safehtml"
             default=""/>
 
@@ -75,8 +75,8 @@
             id="created"
             name="created"
             type="calendar"
-            label="SCHUWEB_SITEMAPCREATED_LABEL"
-            description="SCHUWEB_SITEMAPCREATED_DESC"
+            label="SCHUWEB_SITEMAP__CREATED_LABEL"
+            description="SCHUWEB_SITEMAP__CREATED_DESC"
             class="inputbox"
             labelclass="control-label"
             size="16"
@@ -96,8 +96,8 @@
             id="count_html"
             name="hits"
             type="text"
-            label="SCHUWEB_SITEMAPHITSHTML_LABEL"
-            description="SCHUWEB_SITEMAPHITS_DESC"
+            label="SCHUWEB_SITEMAP__HITSHTML_LABEL"
+            description="SCHUWEB_SITEMAP__HITS_DESC"
             class="readonly"
             labelclass="control-label"
             size="6"
@@ -108,8 +108,8 @@
             id="count_xml"
             name="hits"
             type="text"
-            label="SCHUWEB_SITEMAPHITSXML_LABEL"
-            description="SCHUWEB_SITEMAPHITS_DESC"
+            label="SCHUWEB_SITEMAP__HITSXML_LABEL"
+            description="SCHUWEB_SITEMAP__HITS_DESC"
             class="readonly"
             labelclass="control-label"
             size="6"
@@ -120,8 +120,8 @@
             id="visits_html"
             name="visits_html"
             type="text"
-            label="SCHUWEB_SITEMAPVISITSHTML_LABEL"
-            description="SCHUWEB_SITEMAPHITS_DESC"
+            label="SCHUWEB_SITEMAP__VISITSHTML_LABEL"
+            description="SCHUWEB_SITEMAP__HITS_DESC"
             class="readonly"
             labelclass="control-label"
             size="6"
@@ -132,8 +132,8 @@
             id="visits_xml"
             name="visits_xml"
             type="text"
-            label="SCHUWEB_SITEMAPVISITSXML_LABEL"
-            description="SCHUWEB_SITEMAPHITS_DESC"
+            label="SCHUWEB_SITEMAP__VISITSXML_LABEL"
+            description="SCHUWEB_SITEMAP__HITS_DESC"
             class="readonly"
             labelclass="control-label"
             size="6"
@@ -143,8 +143,8 @@
         <field
             name="selections"
             type="list"
-            label="SCHUWEB_SITEMAPMENUASSIGMENT_LABEL"
-            description="SCHUWEB_SITEMAPMENUASSIGMENT_DESC"
+            label="SCHUWEB_SITEMAP__MENUASSIGMENT_LABEL"
+            description="SCHUWEB_SITEMAP__MENUASSIGMENT_DESC"
             class="inputbox"
             multiple="multiple"/>
 
@@ -168,15 +168,15 @@
     </fields>
 
     <fields name="attribs">
-        <fieldset name="general" label="SCHUWEB_SITEMAPFIELDSET_OPTIONS">
+        <fieldset name="general" label="SCHUWEB_SITEMAP_FIELDSET_OPTIONS">
 
             <field
                 name="showintro"
                 type="radio"
                 class="btn-group"
                 labelclass="control-label"
-                label="SCHUWEB_SITEMAPATTRIBS_SHOW_INTRO_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_SHOW_INTRO_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_SHOW_INTRO_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_SHOW_INTRO_DESC"
                 default="1">
                 <option
                     value="0">No</option>
@@ -188,8 +188,8 @@
                 name="show_menutitle"
                 type="radio"
                 class="btn-group"
-                label="SCHUWEB_SITEMAPATTRIBS_SHOW_MENU_TITLE_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_SHOW_MENU_TITLE_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_SHOW_MENU_TITLE_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_SHOW_MENU_TITLE_DESC"
                 labelclass="control-label"
                 default="1">
                 <option
@@ -202,25 +202,25 @@
                 name="classname"
                 type="text"
                 default=""
-                label="SCHUWEB_SITEMAPATTRIBS_CLASSNAME_LABEL"
+                label="SCHUWEB_SITEMAP_ATTRIBS_CLASSNAME_LABEL"
                 labelclass="control-label"
-                description="SCHUWEB_SITEMAPATTRIBS_CLASSNAME_DESC" />
+                description="SCHUWEB_SITEMAP_ATTRIBS_CLASSNAME_DESC" />
 
             <field
                 name="columns"
                 type="text"
                 default=""
                 labelclass="control-label"
-                label="SCHUWEB_SITEMAPATTRIBS_COLUMNS_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_COLUMNS_DESC" />
+                label="SCHUWEB_SITEMAP_ATTRIBS_COLUMNS_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_COLUMNS_DESC" />
 
             <field
                 name="exlinks"
                 type="radio"
                 class="btn-group"
                 labelclass="control-label"
-                label="SCHUWEB_SITEMAPATTRIBS_EXTERNAL_LINKS_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_EXTERNAL_LINKS_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_DESC"
                 default="1">
                 <option
                     value="0">No</option>
@@ -231,8 +231,8 @@
             <field
                 name="exlinks"
                 type="list"
-                label="SCHUWEB_SITEMAPATTRIBS_EXTERNAL_LINKS_IMAGE_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_EXTERNAL_LINKS_IMAGE_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_IMAGE_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_IMAGE_DESC"
                 labelclass="control-label"
                 default="1">
                 <option
@@ -261,8 +261,8 @@
                 name="compress_xml"
                 type="radio"
                 class="btn-group"
-                label="SCHUWEB_SITEMAPATTRIBS_COMPRESS_XML_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_COMPRESS_XML_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_COMPRESS_XML_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_COMPRESS_XML_DESC"
                 labelclass="control-label"
                 default="1">
                 <option
@@ -275,8 +275,8 @@
                 name="beautify_xml"
                 type="radio"
                 class="btn-group"
-                label="SCHUWEB_SITEMAPATTRIBS_BEAUTIFY_XML_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_BEAUTIFY_XML_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_BEAUTIFY_XML_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_BEAUTIFY_XML_DESC"
                 labelclass="control-label"
                 default="1">
                 <option
@@ -289,8 +289,8 @@
                 name="include_link"
                 type="radio"
                 class="btn-group"
-                label="SCHUWEB_SITEMAPATTRIBS_INCLUDE_LINK_LABEL"
-                description="SCHUWEB_SITEMAPATTRIBS_INCLUDE_LINK_DESC"
+                label="SCHUWEB_SITEMAP_ATTRIBS_INCLUDE_LINK_LABEL"
+                description="SCHUWEB_SITEMAP_ATTRIBS_INCLUDE_LINK_DESC"
                 labelclass="control-label"
                 default="1">
                 <option
@@ -300,21 +300,21 @@
             </field>
         </fieldset>
 
-        <fieldset name="news" label="SCHUWEB_SITEMAPFIELDSET_NEWS_OPTIONS">
+        <fieldset name="news" label="SCHUWEB_SITEMAP_FIELDSET_NEWS_OPTIONS">
           <field
               name="news_publication_name"
               type="text"
               default=""
               labelclass="control-label"
-              label="SCHUWEB_SITEMAPATTRIBS_NEWS_PUBLICATION_NAME_LABEL"
-              description="SCHUWEB_SITEMAPATTRIBS_NEWS_PUBLICATION_NAME_DESC" />
+              label="SCHUWEB_SITEMAP_ATTRIBS_NEWS_PUBLICATION_NAME_LABEL"
+              description="SCHUWEB_SITEMAP_ATTRIBS_NEWS_PUBLICATION_NAME_DESC" />
 <!--
           <field
               name="news_posts_keywords"
               type="text"
               default=""
-              label="SCHUWEB_SITEMAPATTRIBS_NEWS_POSTS_KEYWORDS_LABEL"
-              description="SCHUWEB_SITEMAPATTRIBS_NEWS_POSTS_KEYWORDS_DESC" />
+              label="SCHUWEB_SITEMAP_ATTRIBS_NEWS_POSTS_KEYWORDS_LABEL"
+              description="SCHUWEB_SITEMAP_ATTRIBS_NEWS_POSTS_KEYWORDS_DESC" />
 -->
         </fieldset>
     </fields>

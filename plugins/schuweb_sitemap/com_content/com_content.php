@@ -20,7 +20,7 @@ require_once JPATH_SITE . '/components/com_content/helpers/query.php';
  * for other component, I suggest you to take a look to another plugis as
  * they are usually most simple. ;)
  */
-class xmap_com_content
+class schuweb_sitemap_com_content
 {
     /**
      * This function is called before a menu item is printed. We use it to set the
