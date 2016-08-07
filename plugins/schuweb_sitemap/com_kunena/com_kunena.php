@@ -12,6 +12,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\Utilities\ArrayHelper;
+
 /** Handles Kunena forum structure */
 class schuweb_sitemap_com_kunena
 {
@@ -22,22 +24,6 @@ class schuweb_sitemap_com_kunena
 
     static $profile;
     static $config;
-
-    static function prepareMenuItem($node, &$params)
-    {
-        $link_query = parse_url($node->link);
-        parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $catid = intval(JArrayHelper::getValue($link_vars, 'catid', 0));
-        $id = intval(JArrayHelper::getValue($link_vars, 'id', 0));
-        $func = JArrayHelper::getValue($link_vars, 'func', '', '');
-        if ($func = 'showcat' && $catid) {
-            $node->uid = 'com_kunenac' . $catid;
-            $node->expandible = false;
-        } elseif ($func = 'view' && $id) {
-            $node->uid = 'com_kunenaf' . $id;
-            $node->expandible = false;
-        }
-    }
 
     static function getTree($xmap, $parent, &$params)
     {
@@ -63,14 +49,14 @@ class schuweb_sitemap_com_kunena
         }
 
         parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $view = JArrayHelper::getValue($link_vars, 'view', '');
+        $view = ArrayHelper::getValue($link_vars, 'view', '');
 
         switch ($view) {
             case 'showcat':
             case 'category':
                 $link_query = parse_url($parent->link);
                 parse_str(html_entity_decode($link_query['query']), $link_vars);
-                $catid = JArrayHelper::getValue($link_vars, 'catid', 0);
+                $catid = ArrayHelper::getValue($link_vars, 'catid', 0);
                 break;
             case 'listcat':
             case 'entrypage':
@@ -80,15 +66,15 @@ class schuweb_sitemap_com_kunena
                 return true;   // Do not expand links to posts
         }
 
-        $include_topics = JArrayHelper::getValue($params, 'include_topics', 1);
+        $include_topics = ArrayHelper::getValue($params, 'include_topics', 1);
         $include_topics = ($include_topics == 1
             || ($include_topics == 2 && $xmap->view == 'xml')
             || ($include_topics == 3 && $xmap->view == 'html')
             || $xmap->view == 'navigator');
         $params['include_topics'] = $include_topics;
 
-        $priority = JArrayHelper::getValue($params, 'cat_priority', $parent->priority);
-        $changefreq = JArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
+        $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
+        $changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
         if ($priority == '-1')
             $priority = $parent->priority;
         if ($changefreq == '-1')
@@ -98,8 +84,8 @@ class schuweb_sitemap_com_kunena
         $params['cat_changefreq'] = $changefreq;
         $params['groups'] = implode(',', $user->getAuthorisedViewLevels());
 
-        $priority = JArrayHelper::getValue($params, 'topic_priority', $parent->priority);
-        $changefreq = JArrayHelper::getValue($params, 'topic_changefreq', $parent->changefreq);
+        $priority = ArrayHelper::getValue($params, 'topic_priority', $parent->priority);
+        $changefreq = ArrayHelper::getValue($params, 'topic_changefreq', $parent->changefreq);
         if ($priority == '-1')
             $priority = $parent->priority;
 
@@ -110,7 +96,7 @@ class schuweb_sitemap_com_kunena
         $params['topic_changefreq'] = $changefreq;
 
         if ($include_topics) {
-            $ordering = JArrayHelper::getValue($params, 'topics_order', 'ordering');
+            $ordering = ArrayHelper::getValue($params, 'topics_order', 'ordering');
             if (!in_array($ordering, array('id', 'ordering', 'time', 'subject', 'hits')))
                 $ordering = 'ordering';
             $params['topics_order'] = 't.`' . $ordering . '`';
@@ -118,11 +104,11 @@ class schuweb_sitemap_com_kunena
 
             $params['limit'] = '';
             $params['days'] = '';
-            $limit = JArrayHelper::getValue($params, 'max_topics', '');
+            $limit = ArrayHelper::getValue($params, 'max_topics', '');
             if (intval($limit))
                 $params['limit'] = ' LIMIT ' . $limit;
 
-            $days = JArrayHelper::getValue($params, 'max_age', '');
+            $days = ArrayHelper::getValue($params, 'max_age', '');
             $params['days'] = false;
             if (intval($days))
                 $params['days'] = ($xmap->now - (intval($days) * 86400));
