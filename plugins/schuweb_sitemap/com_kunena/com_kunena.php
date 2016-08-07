@@ -138,12 +138,7 @@ class schuweb_sitemap_com_kunena
      */
     static function getCategoryTree($xmap, $parent, &$params, $parentCat)
     {
-        $db = JFactory::getDBO();
-
         // Load categories
-        // Kunena 2.0+
-        $catlink = 'index.php?option=com_kunena&view=category&catid=%s&Itemid=' . $parent->id;
-        $toplink = 'index.php?option=com_kunena&view=topic&catid=%s&id=%s&Itemid=' . $parent->id;
 
         // kimport('kunena.forum.category.helper');
         $categories = KunenaForumCategoryHelper::getChildren($parentCat);
@@ -158,7 +153,7 @@ class schuweb_sitemap_com_kunena
             $node->name = $cat->name;
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
-            $node->link = sprintf($catlink, $cat->id);
+            $node->link = 'index.php?option=com_kunena&view=category&catid=' . $cat->id;
             $node->expandible = true;
             $node->secure = $parent->secure;
             if ($xmap->printNode($node) !== FALSE) {
@@ -185,7 +180,7 @@ class schuweb_sitemap_com_kunena
                 $node->priority = $params['topic_priority'];
                 $node->changefreq = $params['topic_changefreq'];
                 $node->modified = intval(@$topic->last_post_time ? $topic->last_post_time : $topic->time);
-                $node->link = sprintf($toplink, (@$topic->category_id ? $topic->category_id : $topic->catid), $topic->id);
+                $node->link = 'index.php?option=com_kunena&view=topic&catid=' . $topic->category_id . '&id=' . $topic->id;
                 $node->expandible = false;
                 $node->secure = $parent->secure;
                 if ($xmap->printNode($node) !== FALSE) {
