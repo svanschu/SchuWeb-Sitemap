@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
-<extension type="plugin" group="xmap" version="1.6" method="upgrade">
+<extension type="plugin" group="schuweb_sitemap" version="3.0" method="upgrade">
     <name>SchuWeb Sitemap - Kunena Plugin</name>
     <author>Sven Schultschik | Guillermo Vargas</author>
     <creationDate>September 2007</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>extensions@schultschik.de</authorEmail>
-    <authorUrl>extensions.schultschik.com</authorUrl>
+    <authorUrl>extensions.schultschik.de</authorUrl>
     <version>3.0.0</version>
     <description>SchuWeb Sitemap Plugin for Kunena component</description>
     <files>
