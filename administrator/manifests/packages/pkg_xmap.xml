@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension type="package" version="1.6">
-    <name>Xmap Package</name>
-    <packagename>xmap</packagename>
+<extension type="package" version="3.0">
+    <name>SchuWeb Sitemap Package</name>
+    <packagename>schuweb_sitemap</packagename>
     <version>2.3.3</version>
-    <url>http://www.jooxmap.com</url>
-    <packager>Joomla! Vargas</packager>
-    <packagerurl>http://www.jooxmap.com</packagerurl>
+    <url>http://extensions.schultschik.de</url>
+    <packager>SchuWeb</packager>
+    <packagerurl>http://extensions.schultschik.de</packagerurl>
     <description>The Site Map generator for Joomla!</description>
     <files folder="packages">
-        <file type="component" id="com_xmap">com_xmap.zip</file>
-        <file type="plugin" id="com_content" group="xmap">plg_com_content.zip</file>
-        <file type="plugin" id="com_kunena" group="xmap">plg_com_kunena.zip</file>
-        <file type="plugin" id="com_sobipro" group="xmap">plg_com_sobipro.zip</file>
-        <file type="plugin" id="com_mtree" group="xmap">plg_com_mtree.zip</file>
-        <file type="plugin" id="com_virtuemart" group="xmap">plg_com_virtuemart.zip</file>
-        <file type="plugin" id="com_weblinks" group="xmap">plg_com_weblinks.zip</file>
-        <file type="plugin" id="com_k2" group="xmap">plg_com_k2.zip</file>
+        <file type="component" id="com_schuweb_sitemap">com_xmap.zip</file>
+        <file type="plugin" id="com_content" group="schuweb_sitemap">plg_com_content.zip</file>
+        <file type="plugin" id="com_kunena" group="schuweb_sitemap">plg_com_kunena.zip</file>
+        <file type="plugin" id="com_sobipro" group="schuweb_sitemap">plg_com_sobipro.zip</file>
+        <!--file type="plugin" id="com_mtree" group="schuweb_sitemap">plg_com_mtree.zip</file>
+        <file type="plugin" id="com_virtuemart" group="schuweb_sitemap">plg_com_virtuemart.zip</file>
+        <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_com_weblinks.zip</file>
+        <file type="plugin" id="com_k2" group="schuweb_sitemap">plg_com_k2.zip</file-->
     </files>
 </extension>
