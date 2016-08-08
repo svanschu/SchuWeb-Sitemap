@@ -10,7 +10,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-/** Adds support for SobiPro categories to Xmap */
+use Joomla\Utilities\ArrayHelper;
+
 class schuweb_sitemap_com_sobipro
 {
 
@@ -24,7 +25,7 @@ class schuweb_sitemap_com_sobipro
     {
         $link_query = parse_url($node->link);
         parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $sid = JArrayHelper::getValue($link_vars, 'sid', 0);
+        $sid = ArrayHelper::getValue($link_vars, 'sid', 0);
 
         $db = JFactory::getDbo();
         $db->setQuery('SELECT * FROM `#__sobipro_object` where id=' . (int)$sid);
@@ -51,8 +52,8 @@ class schuweb_sitemap_com_sobipro
 
         $link_query = parse_url($parent->link);
         parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $sid = JArrayHelper::getValue($link_vars, 'sid', 1);
-        $task = JArrayHelper::getValue($link_vars, 'task', null);
+        $sid = ArrayHelper::getValue($link_vars, 'sid', 1);
+        $task = ArrayHelper::getValue($link_vars, 'task', null);
 
         if (in_array($task, array('search', 'entry.add'))) {
             return;
@@ -72,15 +73,15 @@ class schuweb_sitemap_com_sobipro
         self::$sectionConfig = self::getSectionConfig($sectionId);
 
 
-        $include_entries = JArrayHelper::getValue($params, 'include_entries', 1);
+        $include_entries = ArrayHelper::getValue($params, 'include_entries', 1);
         $include_entries = ($include_entries == 1
             || ($include_entries == 2 && $xmap->view == 'xml')
             || ($include_entries == 3 && $xmap->view == 'html')
             || $xmap->view == 'navigator');
         $params['include_entries'] = $include_entries;
 
-        $priority = JArrayHelper::getValue($params, 'cat_priority', $parent->priority);
-        $changefreq = JArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
+        $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
+        $changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
 
         if ($priority == '-1')
             $priority = $parent->priority;
@@ -90,8 +91,8 @@ class schuweb_sitemap_com_sobipro
         $params['cat_priority'] = $priority;
         $params['cat_changefreq'] = $changefreq;
 
-        $priority = JArrayHelper::getValue($params, 'entry_priority', $parent->priority);
-        $changefreq = JArrayHelper::getValue($params, 'entry_changefreq', $parent->changefreq);
+        $priority = ArrayHelper::getValue($params, 'entry_priority', $parent->priority);
+        $changefreq = ArrayHelper::getValue($params, 'entry_changefreq', $parent->changefreq);
 
         if ($priority == '-1')
             $priority = $parent->priority;
@@ -102,11 +103,11 @@ class schuweb_sitemap_com_sobipro
         $params['entry_changefreq'] = $changefreq;
 
         $date = JFactory::getDate();
-        $params['now'] = $date->toMySql();
+        $params['now'] = $date->toSql();
 
         if ($include_entries) {
-            $ordering = JArrayHelper::getValue($params, 'entries_order', 'b.position');
-            $orderdir = JArrayHelper::getValue($params, 'entries_orderdir', 'ASC');
+            $ordering = ArrayHelper::getValue($params, 'entries_order', 'b.position');
+            $orderdir = ArrayHelper::getValue($params, 'entries_orderdir', 'ASC');
             if (!in_array($ordering, array('b.position', 'a.counter', 'b.validSince', 'a.updatedTime'))) {
                 $ordering = 'b.position';
             }
@@ -117,11 +118,11 @@ class schuweb_sitemap_com_sobipro
 
             $params['limit'] = '';
             $params['days'] = '';
-            $limit = JArrayHelper::getValue($params, 'max_entries', '');
+            $limit = ArrayHelper::getValue($params, 'max_entries', '');
             if (intval($limit))
                 $params['limit'] = ' LIMIT ' . $limit;
 
-            $days = JArrayHelper::getValue($params, 'max_age', '');
+            $days = ArrayHelper::getValue($params, 'max_age', '');
             if (intval($days))
                 $params['days'] = ' AND a.publish_up >=\'' . strftime("%Y-%m-%d %H:%M:%S", $xmap->now - ($days * 86400)) . "' ";
         }
@@ -130,18 +131,22 @@ class schuweb_sitemap_com_sobipro
     }
 
     /** SobiPro support */
-    function getCategoryTree($xmap, $parent, $sid, &$params)
+    static function getCategoryTree($xmap, $parent, $sid, &$params)
     {
-        $database =& JFactory::getDBO();
+        $database = JFactory::getDBO();
 
         $query =
-            "SELECT a.id,a.nid, a.name, b.pid as pid "
-            . "\n FROM #__sobipro_object AS a, #__sobipro_relations AS b "
+            "SELECT a.id,a.nid, a.name, b.pid as pid, c.sValue as name "
+            . "\n FROM #__sobipro_object AS a, #__sobipro_relations AS b, #__sobipro_language as c "
             . "\n WHERE a.parent=$sid"
             . "   AND a.oType='category'"
             . "   AND b.oType=a.oType"
             . "   AND a.state=1 "
             . "   AND a.approved=1 "
+            . "   AND c.sKey='name'"
+            . "   AND c.language='en-GB'"
+            . "   AND c.oType='category'"
+            . "   AND c.id=a.id"
             . "\n AND a.id=b.id "
             . "\n ORDER BY b.position ASC";
 
@@ -157,14 +162,13 @@ class schuweb_sitemap_com_sobipro
             $node->browserNav = $parent->browserNav;
             $node->name = html_entity_decode($row->name);
             $node->modified = $modified;
-            #$node->link = 'index.php?option=com_sobipro&sid='.$row->id.':'.trim( SPLang::urlSafe( $row->name ) ).'&Itemid='.$parent->id;
             $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'title' => $row->name), false, false);
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
             $node->expandible = true;
             $node->secure = $parent->secure;
             if ($xmap->printNode($node) !== FALSE) {
-                schuweb_sitemap_com_sobipro::getCategoryTree($xmap, $parent, $row->id, $params);
+                self::getCategoryTree($xmap, $parent, $row->id, $params);
             }
         }
 
@@ -198,7 +202,6 @@ class schuweb_sitemap_com_sobipro
                 $node->changefreq = $params['entry_changefreq'];
                 $node->expandible = false;
                 $node->secure = $parent->secure;
-                # $node->link = 'index.php?option=com_sobipro&pid='.$row->catid . '&sid=' . $row->id.':'.trim( SPLang::urlSafe( $row->name )).'&Itemid='.$parent->id;
                 $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'pid' => $row->catid, 'title' => $row->name), false, false);
                 $xmap->printNode($node);
             }
