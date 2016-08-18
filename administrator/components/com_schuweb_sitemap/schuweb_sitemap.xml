@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension method="upgrade" version="3.6" type="component">
     <name>com_schuweb_sitemap</name>
-    <creationDate>2011-04-10</creationDate>
-    <author>Guillermo Vargas</author>
+    <creationDate>sw.build.date</creationDate>
+    <author>Sven Schultschik | Guillermo Vargas</author>
     <copyright>This component is released under the GNU/GPL License</copyright>
     <authorEmail>guille@vargas.co.cr</authorEmail>
     <authorUrl></authorUrl>
-    <version>2.3.4</version>
+    <version>sw.build.version</version>
     <license>GNU/GPL</license>
     <description>Xmap - Sitemap Generator for Joomla!</description>
     <install folder="admin">
@@ -81,6 +81,6 @@
         </images>
     </administration>
     <updateservers>
-        <server type="extension" priority="1" name="Xmap Update Site">https://raw.github.com/guilleva/Xmap/master/xmap-update.xml</server>
+        <!--server type="extension" priority="1" name="Xmap Update Site">https://raw.github.com/guilleva/Xmap/master/xmap-update.xml</server-->
     </updateservers>
 </extension>

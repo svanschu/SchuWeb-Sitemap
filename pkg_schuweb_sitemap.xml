@@ -2,16 +2,17 @@
 <extension type="package" version="3.0">
     <name>SchuWeb Sitemap Package</name>
     <packagename>schuweb_sitemap</packagename>
-    <version>2.3.3</version>
+    <date>sw.build.date</date>
+    <version>sw.build.version</version>
     <url>http://extensions.schultschik.de</url>
-    <packager>SchuWeb</packager>
+    <packager>SchuWeb Sitemap</packager>
     <packagerurl>http://extensions.schultschik.de</packagerurl>
     <description>The Site Map generator for Joomla!</description>
     <files folder="packages">
-        <file type="component" id="com_schuweb_sitemap">com_xmap.zip</file>
-        <file type="plugin" id="com_content" group="schuweb_sitemap">plg_com_content.zip</file>
-        <file type="plugin" id="com_kunena" group="schuweb_sitemap">plg_com_kunena.zip</file>
-        <file type="plugin" id="com_sobipro" group="schuweb_sitemap">plg_com_sobipro.zip</file>
+        <file type="component" id="com_schuweb_sitemap">com_schuweb_sitemap_sw.build.version_sw.build.date.zip</file>
+        <file type="plugin" id="com_content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.date.zip</file>
+        <file type="plugin" id="com_kunena" group="schuweb_sitemap">plg_kunena_sw.build.version_sw.build.date.zip</file>
+        <file type="plugin" id="com_sobipro" group="schuweb_sitemap">plg_sobipro_sw.build.version_sw.build.date.zip</file>
         <!--file type="plugin" id="com_mtree" group="schuweb_sitemap">plg_com_mtree.zip</file>
         <file type="plugin" id="com_virtuemart" group="schuweb_sitemap">plg_com_virtuemart.zip</file>
         <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_com_weblinks.zip</file>

@@ -2,12 +2,12 @@
 <extension type="plugin" group="schuweb_sitemap" version="3.0" method="upgrade">
     <name>SchuWeb Sitemap - SobiPro Plugin</name>
     <author>Sven Schultschik | Guillermo Vargas</author>
-    <creationDate>07/15/2011</creationDate>
+    <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>extensions@schultschik.de</authorEmail>
     <authorUrl>extensions.schultschik.de</authorUrl>
-    <version>2.0.2</version>
+    <version>sw.build.version</version>
     <description>SchuWeb Sitemap Plugin for SobiPro component</description>
     <files>
         <filename plugin="com_sobipro">com_sobipro.php</filename>
