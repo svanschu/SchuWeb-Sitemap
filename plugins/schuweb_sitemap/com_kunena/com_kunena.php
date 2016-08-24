@@ -139,7 +139,7 @@ class schuweb_sitemap_com_kunena
             $node->name = $cat->name;
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
-            $node->link = 'index.php?option=com_kunena&view=category&catid=' . $cat->id;
+            $node->link = KunenaRoute::normalize('index.php?option=com_kunena&view=category&catid=' . $cat->id);
             $node->expandible = true;
             $node->secure = $parent->secure;
             if ($xmap->printNode($node) !== FALSE) {
@@ -166,7 +166,7 @@ class schuweb_sitemap_com_kunena
                 $node->priority = $params['topic_priority'];
                 $node->changefreq = $params['topic_changefreq'];
                 $node->modified = intval(@$topic->last_post_time ? $topic->last_post_time : $topic->time);
-                $node->link = 'index.php?option=com_kunena&view=topic&catid=' . $topic->category_id . '&id=' . $topic->id;
+                $node->link = KunenaRoute::normalize('index.php?option=com_kunena&view=topic&catid=' . $topic->category_id . '&id=' . $topic->id);
                 $node->expandible = false;
                 $node->secure = $parent->secure;
                 if ($xmap->printNode($node) !== FALSE) {
