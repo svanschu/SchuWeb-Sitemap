@@ -12,8 +12,10 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 header('Content-Type: text/xml; charset="utf-8"');
 header('Content-Disposition: inline');
 
-$showTitle = $this->canEdit && JRequest::getBool('filter_showtitle', 0);
-$showExcluded = $this->canEdit && JRequest::getBool('filter_showexcluded', 0);
+$jinput = JFactory::getApplication()->input;
+
+$showTitle = $this->canEdit && $jinput->getBool('filter_showtitle', 0);
+$showExcluded = $this->canEdit && $jinput->getBool('filter_showexcluded', 0);
 
 echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 ?>

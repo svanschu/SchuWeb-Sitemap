@@ -28,11 +28,12 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
     {
         // Initialise variables.
         $this->app = JFactory::getApplication();
+        $jinput = $this->app->input;
         $this->user = JFactory::getUser();
         $doc = JFactory::getDocument();
 
         // Get view related request variables.
-        $this->print = JRequest::getBool('print');
+        $this->print = $jinput->getBool('print');
 
         // Get model data.
         $this->state = $this->get('State');
@@ -43,7 +44,7 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
-            JError::raiseWarning(500, implode("\n", $errors));
+            JFactory::$application->enqueueMessage(implode("\n", $errors), 'warning');
             return false;
         }
 
@@ -63,16 +64,14 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
         // If a guest user, they may be able to log in to view the full article
         // TODO: Does this satisfy the show not auth setting?
         if (!$this->item->params->get('access-view')) {
-            if ($user->get('guest')) {
+            if ($this->user->get('guest')) {
                 // Redirect to login
-                $uri = JFactory::getURI();
-                $app->redirect(
-                    'index.php?option=com_users&view=login&return=' . base64_encode($uri),
-                    JText::_('Schuweb_Sitemap_Error_Login_to_view_sitemap')
+                $uri = JUri::getInstance();
+                $this->app->redirect('index.php?option=com_users&view=login&return=' . base64_encode($uri), JText::_('Schuweb_Sitemap_Error_Login_to_view_sitemap')
                 );
                 return;
             } else {
-                JError::raiseWarning(403, JText::_('Schuweb_Sitemap_Error_Not_auth'));
+                $this->app->enqueueMessage(JText::_('Schuweb_Sitemap_Error_Not_auth'), 'warning');
                 return;
             }
         }
@@ -113,11 +112,11 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
                 if ($menu->query['view'] == 'html' && $menu->query['id'] == $this->item->id) {
                     $title = $menu->title;
                     if (empty($title)) {
-                        $title = $app->getCfg('sitename');
-                    } else if ($app->getCfg('sitename_pagetitles', 0) == 1) {
-                        $title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
-                    } else if ($app->getCfg('sitename_pagetitles', 0) == 2) {
-                        $title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+                        $title = $app->get('sitename');
+                    } else if ($app->get('sitename_pagetitles', 0) == 1) {
+                        $title = JText::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+                    } else if ($app->get('sitename_pagetitles', 0) == 2) {
+                        $title = JText::sprintf('JPAGETITLE', $title, $app->get('sitename'));
                     }
                     // set meta description and keywords from menu item's params
                     $params = new JRegistry();
@@ -129,7 +128,7 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
         }
         $this->document->setTitle($title);
 
-        if ($app->getCfg('MetaTitle') == '1') {
+        if ($app->get('MetaTitle') == '1') {
             $this->document->setMetaData('title', $title);
         }
 

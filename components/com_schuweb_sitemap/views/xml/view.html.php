@@ -31,8 +31,9 @@ class Schuweb_SitemapViewXml extends JViewLegacy
         // Initialise variables.
         $app = JFactory::getApplication();
         $this->user = JFactory::getUser();
-        $isNewsSitemap = JRequest::getInt('news',0);
-        $this->isImages = JRequest::getInt('images',0);
+        $jinput = $app->input;
+        $isNewsSitemap = $jinput->getInt('news',0);
+        $this->isImages = $jinput->getInt('images',0);
 
         $model = $this->getModel('Sitemap');
         $this->setModel($model);
@@ -64,7 +65,7 @@ class Schuweb_SitemapViewXml extends JViewLegacy
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
-            JError::raiseWarning(500, implode("\n", $errors));
+            $app->enqueueMessage(implode("\n", $errors), 'warning');
             return false;
         }
 
@@ -80,14 +81,14 @@ class Schuweb_SitemapViewXml extends JViewLegacy
         if (!$this->item->params->get('access-view')) {
             if ($this->user->get('guest')) {
                 // Redirect to login
-                $uri = JFactory::getURI();
+                $uri = JUri::getInstance();
                 $app->redirect(
                     'index.php?option=com_users&view=login&return=' . base64_encode($uri),
                     JText::_('Schuweb_Sitemap_Error_Login_to_view_sitemap')
                 );
                 return;
             } else {
-                JError::raiseWarning(403, JText::_('Schuweb_Sitemap_Error_Not_auth'));
+                $app->enqueueMessage(JText::_('Schuweb_Sitemap_Error_Not_auth'), 'warning');
                 return;
             }
         }
@@ -120,9 +121,9 @@ class Schuweb_SitemapViewXml extends JViewLegacy
 
         if ($doCompression) {
             $data = ob_get_contents();
-            JResponse::setBody($data);
+            $app->setBody($data);
             @ob_end_clean();
-            echo JResponse::toString(true);
+            echo $app->toString(true);
         }
         $this->recreateBuffering();
         exit;

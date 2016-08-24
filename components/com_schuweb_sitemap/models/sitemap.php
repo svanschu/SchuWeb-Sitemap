@@ -41,8 +41,9 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     {
         $app = JFactory::getApplication('site');
 
+        $jinput = $app->input;
         // Load state from the request.
-        $pk = JRequest::getInt('id');
+        $pk = $jinput->getInt('id');
 
         // If not sitemap specified, select the default one
         if (!$pk) {
@@ -55,7 +56,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
 
         $this->setState('sitemap.id', $pk);
 
-        $offset = JRequest::getInt('limitstart');
+        $offset = $jinput->getInt('limitstart');
         $this->setState('list.offset', $offset);
 
         // Load the parameters.
@@ -110,10 +111,6 @@ class Schuweb_SitemapModelSitemap extends JModelItem
 
                 $data = $this->_db->loadObject();
 
-                if ($error = $this->_db->getErrorMsg()) {
-                    throw new Exception($error);
-                }
-
                 if (empty($data)) {
                     throw new Exception(JText::_('COM_SCHUWEB_SITEMAP_ERROR_SITEMAP_NOT_FOUND'));
                 }
@@ -149,7 +146,8 @@ class Schuweb_SitemapModelSitemap extends JModelItem
 
                 $this->_item[$pk] = $data;
             } catch (Exception $e) {
-                $this->setError($e->getMessage());
+                JFactory::getApplication()->enqueueMessage(JText::_($e->getMessage()), 'error');
+
                 $this->_item[$pk] = false;
             }
         }
@@ -182,7 +180,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
         // Initialize variables.
         $pk = (int) $this->getState('sitemap.id');
 
-        $view = JRequest::getCmd('view', 'html');
+        $view = JFactory::$application->input->getCmd('view', 'html');
         if ($view != 'xml' && $view != 'html') {
             return false;
         }
@@ -193,8 +191,10 @@ class Schuweb_SitemapModelSitemap extends JModelItem
             ' WHERE id = ' . (int) $pk
         );
 
-        if (!$this->_db->query()) {
-            $this->setError($this->_db->getErrorMsg());
+        try {
+            $this->_db->execute();
+        } catch (RuntimeException $e) {
+            JFactory::$application->enqueueMessage(JText::_($e->getMessage()), 'error');
             return false;
         }
 
@@ -204,8 +204,9 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     public function getSitemapItems($view=null)
     {
         if (!isset($view)) {
-            $view = JRequest::getCmd('view');
+            $view = JFactory::$application->input->getCmd('view');
         }
+
         $db = JFactory::getDBO();
         $pk = (int) $this->getState('sitemap.id');
 
@@ -253,8 +254,8 @@ class Schuweb_SitemapModelSitemap extends JModelItem
             $query = 'INSERT #__schuweb_sitemap_items (uid,itemid,view,sitemap_id,properties) values ( \'' . $db->escape($uid) . "',$itemid,'$view',$pk,'" . $db->escape($properties) . "')";
         }
         $db->setQuery($query);
-        //echo $db->getQuery();exit;
-        if ($db->query()) {
+
+        if ($db->execute()) {
             return true;
         } else {
             return false;
@@ -291,7 +292,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
         $db = JFactory::getDBO();
         $query = "UPDATE #__schuweb_sitemap set excluded_items='" . $db->escape($str) . "' where id=" . $sitemap->id;
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
         return $state;
     }
 

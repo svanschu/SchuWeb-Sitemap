@@ -47,7 +47,7 @@ class Schuweb_SitemapRoute
             self::$lookup = array();
 
             $component    = &JComponentHelper::getComponent('com_schuweb_sitemap');
-            $menus        = &JApplication::getMenu('site', array());
+            $menus        = &JMenu::getInstance('site', array());
             $items        = $menus->getItems('component_id', $component->id);
 
             foreach ($items as &$item)

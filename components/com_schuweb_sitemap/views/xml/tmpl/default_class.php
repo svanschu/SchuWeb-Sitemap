@@ -51,8 +51,10 @@ class Schuweb_SitemapXmlDisplayer extends Schuweb_SitemapDisplayer
             $this->defaultLanguage = $matches[1];
         }
 
-        $this->showTitle = JRequest::getBool('filter_showtitle', 0);
-        $this->showExcluded = JRequest::getBool('filter_showexcluded', 0);
+        $jinput = JFactory::getApplication()->input;
+
+        $this->showTitle = $jinput->getBool('filter_showtitle', 0);
+        $this->showExcluded = $jinput->getBool('filter_showexcluded', 0);
 
         $db = JFactory::getDbo();
         $this->nullDate = $db->getNullDate();
@@ -83,7 +85,7 @@ class Schuweb_SitemapXmlDisplayer extends Schuweb_SitemapDisplayer
         }
 
         // Get the item's URL
-        $link = JRoute::_($node->link, true, @$node->secure == 0 ? (JFactory::getURI()->isSSL() ? 1 : -1) : $node->secure);
+        $link = JRoute::_($node->link, true, @$node->secure == 0 ? (JUri::getInstance()->isSSL() ? 1 : -1) : $node->secure);
 
         if (!isset($node->browserNav))
             $node->browserNav = 0;

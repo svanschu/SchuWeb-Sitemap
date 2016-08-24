@@ -30,17 +30,18 @@ class Schuweb_SitemapControllerAjax extends JControllerLegacy
         $user = JFactory::getUser();
         $groups = array_keys(JUserHelper::getUserGroups($user->get('id')));
         $result = new JRegistry('_default');
-        $sitemapId = JREquest::getInt('id');
+        $jinput = JFactory::$application->input;
+        $sitemapId = $jinput->getInt('id');
 
-        if (!$user->authorise('core.edit', 'com_schuweb_sitemap.sitemap.'.$sitemapId)) {
+        if (!$user->authorise('core.edit', 'com_schuweb_sitemap.sitemap.' . $sitemapId)) {
             $result->setValue('result', 'KO');
             $result->setValue('message', 'You are not authorized to perform this action!');
         } else {
             $model = $this->getModel('sitemap');
             if ($model->getItem()) {
-                $action = JRequest::getCmd('action', '');
-                $uid = JRequest::getCmd('uid', '');
-                $itemid = JRequest::getInt('itemid', '');
+                $action = $jinput->getCmd('action', '');
+                $uid = $jinput->getCmd('uid', '');
+                $itemid = $jinput->getInt('itemid', '');
                 switch ($action) {
                     case 'toggleElement':
                         if ($uid && $itemid) {
@@ -48,9 +49,9 @@ class Schuweb_SitemapControllerAjax extends JControllerLegacy
                         }
                         break;
                     case 'changeProperty':
-                        $uid = JRequest::getCmd('uid', '');
-                        $property = JRequest::getCmd('property', '');
-                        $value = JRequest::getCmd('value', '');
+                        $uid = $jinput->getCmd('uid', '');
+                        $property = $jinput->getCmd('property', '');
+                        $value = $jinput->getCmd('value', '');
                         if ($uid && $itemid && $uid && $property) {
                             $state = $model->chageItemPropery($uid, $itemid, 'xml', $property, $value);
                         }

@@ -55,14 +55,13 @@ class Schuweb_SitemapHelper
                 $query->where('n.language in ('.$db->quote(JFactory::getLanguage()->getTag()).','.$db->quote('*').')');
             }
 
-            // Get the list of menu items.
-            $db->setQuery($query);
-            $tmpList = $db->loadObjectList('id');
-            $list[$menutype] = array();
-
-            // Check for a database error.
-            if ($db->getErrorNum()) {
-                JError::raiseWarning(021, $db->getErrorMsg());
+            try {
+                // Get the list of menu items.
+                $db->setQuery($query);
+                $tmpList = $db->loadObjectList('id');
+                $list[$menutype] = array();
+            } catch (RuntimeException $e) {
+                $app->enqueueMessage(JText::_($e->getMessage()), 'error');
                 return array();
             }
 
