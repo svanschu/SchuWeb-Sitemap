@@ -8,7 +8,7 @@
 
 defined('_JEXEC') or die;
 
-$name = JRequest::getCmd('e_name');
+$name = JFactory::$application->input->getCmd('e_name');
 
 $doc =& JFactory::getDocument();
 $doc->addScriptDeclaration('

@@ -80,12 +80,12 @@ class SchuWeb_SitemapNavigatorDisplayer extends SchuWeb_SitemapDisplayer {
             if ( preg_match('#^/?index.php.*option=(com_[^&]+)#',$parent->link,$matches) ) {
                 $option = $matches[1];
             }
-            $Itemid = JRequest::getInt('Itemid');
+            $Itemid = JFactory::$application->input->getInt('Itemid');
             if (!$option && $Itemid) {
                 $item = $items->getItem($Itemid);
                 $link_query = parse_url( $item->link );
                 parse_str( html_entity_decode($link_query['query']), $link_vars);
-                $option = JArrayHelper::getValue($link_vars,'option','');
+                $option = ArrayHelper::getValue($link_vars,'option','');
                 if ( $option ) {
                     $parent->link = $item->link;
                 }
@@ -102,7 +102,7 @@ class SchuWeb_SitemapNavigatorDisplayer extends SchuWeb_SitemapDisplayer {
     }
 
     function &getParam($arr, $name, $def) {
-        $var = JArrayHelper::getValue( $arr, $name, $def, '' );
+        $var = ArrayHelper::getValue( $arr, $name, $def, '' );
         return $var;
     }
 }

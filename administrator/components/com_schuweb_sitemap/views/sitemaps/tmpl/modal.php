@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.tooltip');
 
-$function = JRequest::getVar('function', 'jSelectSitemap');
+$function = JFactory::$application->input->getVar('function', 'jSelectSitemap');
 $n = count($this->items);
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&view=sitemaps');?>" method="post" name="adminForm">

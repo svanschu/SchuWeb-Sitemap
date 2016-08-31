@@ -64,11 +64,6 @@ class JFormFieldSchuweb_Sitemapmenus extends JFormFieldList
             }
         }
 
-        // Check for a database error.
-        if ($db->getErrorNum()) {
-            JError::raiseWarning(500, $db->getErrorMsg());
-        }
-
         $options = array_merge(
                        parent::getOptions(),
                        $options
