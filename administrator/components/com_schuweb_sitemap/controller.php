@@ -36,10 +36,12 @@ class Schuweb_SitemapController extends JControllerLegacy
         // Get the document object.
         $document = JFactory::getDocument();
 
+        $jinput = JFactory::$application->input;
+
         // Set the default view name and format from the Request.
-        $vName = JRequest::getWord('view', 'sitemaps');
+        $vName = $jinput->getWord('view', 'sitemaps');
         $vFormat = $document->getType();
-        $lName = JRequest::getWord('layout', 'default');
+        $lName = $jinput->getWord('layout', 'default');
 
         // Get and render the view.
         if ($view = $this->getView($vName, $vFormat)) {
@@ -51,7 +53,7 @@ class Schuweb_SitemapController extends JControllerLegacy
             $view->setLayout($lName);
 
             // Push document object into the view.
-            $view->assignRef('document', $document);
+            $view->document = &$document;
 
             $view->display();
 
@@ -63,16 +65,17 @@ class Schuweb_SitemapController extends JControllerLegacy
         $db = JFactory::getDBO();
         $document = JFactory::getDocument();
         $app = JFactory::getApplication('administrator');
+        $jinput = $app->input;
 
-        $id = JRequest::getInt('sitemap', 0);
-        $link = urldecode(JRequest::getVar('link', ''));
-        $name = JRequest::getCmd('e_name', '');
+        $id = $jinput->getInt('sitemap', 0);
+        $link = urldecode($jinput->getVar('link', ''));
+        $name = $jinput->getCmd('e_name', '');
         if (!$id) {
             $id = $this->getDefaultSitemapId();
         }
 
         if (!$id) {
-            JError::raiseWarning(500, JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'));
+            $app->enqueueMessage(JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'), 'warning');
             return false;
         }
 
@@ -84,7 +87,7 @@ class Schuweb_SitemapController extends JControllerLegacy
         $view->setModel($model, true);
 
         // Push document object into the view.
-        $view->assignRef('document', $document);
+        $view->document = &$document;
 
         $view->navigator();
     }
@@ -95,16 +98,17 @@ class Schuweb_SitemapController extends JControllerLegacy
         $db = JFactory::getDBO();
         $document = JFactory::getDocument();
         $app = JFactory::getApplication('administrator');
+        $jinput = $app->input;
 
-        $id = JRequest::getInt('sitemap', 0);
-        $link = urldecode(JRequest::getVar('link', ''));
-        $name = JRequest::getCmd('e_name', '');
+        $id = $jinput->getInt('sitemap', 0);
+        $link = urldecode($jinput->getVar('link', ''));
+        $name = $jinput->getCmd('e_name', '');
         if (!$id) {
             $id = $this->getDefaultSitemapId();
         }
 
         if (!$id) {
-            JError::raiseWarning(500, JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'));
+            $app->enqueueMessage(JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'), 'warning');
             return false;
         }
 
@@ -116,7 +120,7 @@ class Schuweb_SitemapController extends JControllerLegacy
         $view->setModel($model, true);
 
         // Push document object into the view.
-        $view->assignRef('document', $document);
+        $view->document = &$document;
 
         $view->navigatorLinks();
     }
@@ -124,7 +128,7 @@ class Schuweb_SitemapController extends JControllerLegacy
     private function getDefaultSitemapId()
     {
         $db = JFactory::getDBO();
-        $query  = $db->getQuery(true);
+        $query = $db->getQuery(true);
         $query->select('id');
         $query->from($db->quoteName('#__schuweb_sitemap'));
         $query->where('is_default=1');
