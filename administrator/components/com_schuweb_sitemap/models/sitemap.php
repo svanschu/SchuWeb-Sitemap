@@ -44,13 +44,13 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
         $app = JFactory::getApplication('administrator');
 
         // Load the User state.
-        if (!($pk = (int) $app->getUserState('com_schuweb_sitemap.edit.sitemap.id'))) {
-            $pk = (int) JRequest::getInt('id');
+        if (!($pk = (int)$app->getUserState('com_schuweb_sitemap.edit.sitemap.id'))) {
+            $pk = (int)$app->input->getInt('id');
         }
         $this->setState('sitemap.id', $pk);
 
         // Load the parameters.
-        $params    = JComponentHelper::getParams('com_schuweb_sitemap');
+        $params = JComponentHelper::getParams('com_schuweb_sitemap');
         $this->setState('params', $params);
     }
 
@@ -61,7 +61,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
      * @param    string              A prefix for the table class name. Optional.
      * @param    array               Configuration array for model. Optional.
      * @return   XmapTableSitemap    A database object
-    */
+     */
     public function getTable($type = 'Sitemap', $prefix = 'SchuWeb_SitemapTable', $config = array())
     {
         return JTable::getInstance($type, $prefix, $config);
@@ -86,21 +86,14 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
         // Attempt to load the row.
         $return = $table->load($pk);
 
-        // Check for a table object error.
-        if ($return === false && $table->getError()) {
-            $this->setError($table->getError());
-            return $false;
-        }
-
         // Prime required properties.
-        if (empty($table->id))
-        {
+        if (empty($table->id)) {
             // Prepare data for a new record.
         }
 
         // Convert to the JObject before adding other data.
         $value = $table->getProperties(1);
-        $value = JArrayHelper::toObject($value, 'JObject');
+        $value = ArrayHelper::toObject($value, 'JObject');
 
         // Convert the params field to an array.
         $registry = new JRegistry;
@@ -118,8 +111,8 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
     /**
      * Method to get the record form.
      *
-     * @param    array      $data        Data for the form.
-     * @param    boolean    $loadData    True if the form is to load its own data (default case), false if not.
+     * @param    array $data Data for the form.
+     * @param    boolean $loadData True if the form is to load its own data (default case), false if not.
      * @return   mixed                   A JForm object on success, false on failure
      * @since    2.0
      */
@@ -162,11 +155,13 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
      */
     public function save($data)
     {
+        $app = JFactory::$application;
+
         // Initialise variables;
-        $dispatcher = JDispatcher::getInstance();
-        $table      = $this->getTable();
-        $pk         = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('sitemap.id');
-        $isNew      = true;
+        $dispatcher = JEventDispatcher::getInstance();
+        $table = $this->getTable();
+        $pk = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('sitemap.id');
+        $isNew = true;
 
         // Load the row if saving an existing record.
         if ($pk > 0) {
@@ -176,7 +171,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
 
         // Bind the data.
         if (!$table->bind($data)) {
-            $this->setError(JText::sprintf('JERROR_TABLE_BIND_FAILED', $table->getError()));
+            $app->enqueueMessage(JText::sprintf('JERROR_TABLE_BIND_FAILED', $table->getError()), 'error');
             return false;
         }
 
@@ -185,7 +180,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
 
         // Check the data.
         if (!$table->check()) {
-            $this->setError($table->getError());
+            $app->enqueueMessage($table->getError(), 'error');
             return false;
         }
 
@@ -193,27 +188,24 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
             // Check if there is no default sitemap. Then, set it as default if not
             $result = $this->getDefaultSitemapId();
             if (!$result) {
-                $table->is_default=1;
+                $table->is_default = 1;
             }
         }
 
         // Store the data.
         if (!$table->store()) {
-            $this->setError($table->getError());
+            $app->enqueueMessage($table->getError(), 'error');
             return false;
         }
 
         if ($table->is_default) {
-            $query =  $this->_db->getQuery(true)
-                           ->update($this->_db->quoteName('#__schuweb_sitemap'))
-                           ->set($this->_db->quoteName('is_default').' = 0')
-                           ->where($this->_db->quoteName('id').' <> '.$table->id);
+            $query = $this->_db->getQuery(true)
+                ->update($this->_db->quoteName('#__schuweb_sitemap'))
+                ->set($this->_db->quoteName('is_default') . ' = 0')
+                ->where($this->_db->quoteName('id') . ' <> ' . $table->id);
 
             $this->_db->setQuery($query);
-            if (!$this->_db->query()) {
-                $this->setError($table->_db->getErrorMsg());
-                return false;
-            }
+            $this->_db->execute();
         }
 
         // Clean the cache.
@@ -245,14 +237,11 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
         if ($table->load($id)) {
             $db = JFactory::getDbo();
             $query = $db->getQuery(true)
-                        ->update($db->quoteName('#__schuweb_sitemap'))
-                        ->set($db->quoteName('is_default').' = 0')
-                        ->where($db->quoteName('id').' <> '.$table->id);
+                ->update($db->quoteName('#__schuweb_sitemap'))
+                ->set($db->quoteName('is_default') . ' = 0')
+                ->where($db->quoteName('id') . ' <> ' . $table->id);
             $this->_db->setQuery($query);
-            if (!$this->_db->query()) {
-                $this->setError($table->_db->getErrorMsg());
-                return false;
-            }
+            $this->_db->execute();
             $table->is_default = 1;
             $table->store();
 
@@ -286,7 +275,7 @@ class Schuweb_SitemapModelSitemap extends JModelAdmin
     private function getDefaultSitemapId()
     {
         $db = JFactory::getDBO();
-        $query  = $db->getQuery(true);
+        $query = $db->getQuery(true);
         $query->select('id');
         $query->from($db->quoteName('#__schuweb_sitemap'));
         $query->where('is_default=1');

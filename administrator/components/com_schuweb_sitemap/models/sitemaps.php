@@ -61,7 +61,7 @@ class Schuweb_SitemapModelSitemaps extends JModelList
     protected function populateState($ordering = null, $direction = null)
     {
         // Adjust the context to support modal layouts.
-        if ($layout = JRequest::getVar('layout')) {
+        if ($layout = JFactory::$application->input->getVar('layout')) {
             $this->context .= '.'.$layout;
         }
 

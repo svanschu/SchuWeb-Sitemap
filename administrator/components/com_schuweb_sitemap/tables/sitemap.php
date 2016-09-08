@@ -157,16 +157,17 @@ class SchuWeb_SitemapTableSitemap extends JTable
      */
     function check()
     {
+        $app = JFactory::$application;
 
         if (empty($this->title)) {
-            $this->setError(JText::_('Sitemap must have a title'));
+            $app->enqueueMessage(JText::_('Sitemap must have a title'), 'error');
             return false;
         }
 
         if (empty($this->alias)) {
             $this->alias = $this->title;
         }
-        $this->alias = JApplication::stringURLSafe($this->alias);
+        $this->alias = JApplicationHelper::stringURLSafe($this->alias);
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
             $datenow = &JFactory::getDate();
@@ -209,18 +210,17 @@ class SchuWeb_SitemapTableSitemap extends JTable
         $k = $this->_tbl_key;
 
         // Sanitize input.
-        JArrayHelper::toInteger($pks);
-        $userId = (int) $userId;
-        $state = (int) $state;
+        ArrayHelper::toInteger($pks);
+        $userId = (int)$userId;
+        $state = (int)$state;
 
         // If there are no primary keys set check to see if the instance key is set.
         if (empty($pks)) {
             if ($this->$k) {
                 $pks = array($this->$k);
-            }
-            // Nothing to set publishing state on, return false.
+            } // Nothing to set publishing state on, return false.
             else {
-                $this->setError(JText::_('No_Rows_Selected'));
+                JFactory::$application->enqueueMessage(JText::_('No_Rows_Selected'), 'error');
                 return false;
             }
         }
@@ -228,28 +228,20 @@ class SchuWeb_SitemapTableSitemap extends JTable
         // Build the WHERE clause for the primary keys.
         $where = $k . '=' . implode(' OR ' . $k . '=', $pks);
 
-
         // Update the publishing state for rows with the given primary keys.
-        $query =  $this->_db->getQuery(true)
-                       ->update($this->_db->quoteName('#__schuweb_sitemap'))
-                       ->set($this->_db->quoteName('state').' = '. (int) $state)
-                       ->where($where);
+        $query = $this->_db->getQuery(true)
+            ->update($this->_db->quoteName('#__schuweb_sitemap'))
+            ->set($this->_db->quoteName('state') . ' = ' . (int)$state)
+            ->where($where);
 
         $this->_db->setQuery($query);
-        $this->_db->query();
-
-        // Check for a database error.
-        if ($this->_db->getErrorNum()) {
-            $this->setError($this->_db->getErrorMsg());
-            return false;
-        }
+        $this->_db->execute();
 
         // If the JTable instance value is in the list of primary keys that were set, set the instance.
         if (in_array($this->$k, $pks)) {
             $this->state = $state;
         }
 
-        $this->setError('');
         return true;
     }
 

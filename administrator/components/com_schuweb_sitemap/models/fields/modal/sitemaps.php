@@ -48,10 +48,6 @@ class JFormFieldModal_Sitemaps extends JFormField
                     ' WHERE id = ' . (int) $this->value
             );
             $title = $db->loadResult();
-
-            if ($error = $db->getErrorMsg()) {
-                JError::raiseWarning(500, $error);
-            }
         } else {
             $title = '';
         }

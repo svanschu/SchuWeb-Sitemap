@@ -38,13 +38,13 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
-            JError::raiseError(500, implode("\n", $errors));
+            $app->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 
         JHTML::stylesheet('administrator/components/com_schuweb_sitemap/css/xmap.css');
         // Convert dates from UTC
-        $offset = $app->getCfg('offset');
+        $offset = $app->get('offset');
         if (intval($this->item->created)) {
             $this->item->created = JHtml::date($this->item->created, '%Y-%m-%d %H-%M-%S', $offset);
         }
@@ -54,29 +54,24 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
         $this->_setToolbar();
 
         parent::display($tpl);
-        JRequest::setVar('hidemainmenu', true);
+        $app->input->setVar('hidemainmenu', true);
     }
 
     protected function handleMenues()
     {
         $menues = $this->get('Menues');
         // remove non existing menutypes from selection
-        foreach ($this->item->selections as $menutype => $options)
-        {
-            if (!isset($menues[$menutype]))
-            {
+        foreach ($this->item->selections as $menutype => $options) {
+            if (!isset($menues[$menutype])) {
                 unset($this->item->selections[$menutype]);
             }
         }
-        foreach ($menues as $menu)
-        {
-            if (isset($this->item->selections[$menu->menutype]))
-            {
+        foreach ($menues as $menu) {
+            if (isset($this->item->selections[$menu->menutype])) {
                 $this->item->selections[$menu->menutype]['selected'] = true;
                 $this->item->selections[$menu->menutype]['title'] = $menu->title;
                 $this->item->selections[$menu->menutype]['menutype'] = $menu->menutype;
-            } else
-            {
+            } else {
                 $this->item->selections[$menu->menutype] = (array)$menu;
                 $this->item->selections[$menu->menutype]['selected'] = false;
                 $this->item->selections[$menu->menutype]['priority'] = 0.5;
@@ -84,6 +79,7 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
             }
         }
     }
+
     /**
      * Display the view
      *
@@ -100,7 +96,7 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
         # $extensions = XmapHelper::getExtensions();
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
-            JError::raiseError(500, implode("\n", $errors));
+            $app->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 
@@ -115,11 +111,12 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
 
     function navigatorLinks($tpl = null)
     {
+        $input = JFactory::$application->input;
 
         require_once(JPATH_COMPONENT_SITE . '/helpers/schuweb_sitemap.php');
-        $link = urldecode(JRequest::getVar('link', ''));
-        $name = JRequest::getCmd('e_name', '');
-        $Itemid = JRequest::getInt('Itemid');
+        $link = urldecode($input->getVar('link', ''));
+        $name = $input->getCmd('e_name', '');
+        $Itemid = $input->getInt('Itemid');
 
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
@@ -161,7 +158,7 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
             if ($Itemid) {
                 // Expand a menu Item
                 $items = &JSite::getMenu();
-                $node = & $items->getItem($Itemid);
+                $node = &$items->getItem($Itemid);
                 if (isset($menuItems[$node->menutype])) {
                     $parent->name = $node->title;
                     $parent->id = $node->id;

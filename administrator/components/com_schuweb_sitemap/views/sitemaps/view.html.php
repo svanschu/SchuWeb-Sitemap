@@ -31,18 +31,18 @@ class Schuweb_SitemapViewSitemaps extends JViewLegacy
             Schuweb_SitemapHelper::addSubmenu('sitemaps');
         }
 
-        $this->state      = $this->get('State');
-        $this->items      = $this->get('Items');
+        $this->state = $this->get('State');
+        $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
         $message = $this->get('ExtensionsMessage');
-        if ( $message ) {
+        if ($message) {
             JFactory::getApplication()->enqueueMessage($message);
         }
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
-            JError::raiseError(500, implode("\n", $errors));
+            JFactory::$application->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 
@@ -75,15 +75,14 @@ class Schuweb_SitemapViewSitemaps extends JViewLegacy
         JToolBarHelper::custom('sitemaps.setdefault', 'featured.png', 'featured_f2.png', 'SCHUWEB_SITEMAP_TOOLBAR_SET_DEFAULT', true);
 
         if ($state->get('filter.published') == -2) {
-            JToolBarHelper::deleteList('', 'sitemaps.delete','JTOOLBAR_DELETE');
-        }
-        else {
-            JToolBarHelper::trash('sitemaps.trash','JTOOLBAR_TRASH');
+            JToolBarHelper::deleteList('', 'sitemaps.delete', 'JTOOLBAR_DELETE');
+        } else {
+            JToolBarHelper::trash('sitemaps.trash', 'JTOOLBAR_TRASH');
         }
         JToolBarHelper::divider();
 
 
-        if (class_exists('JHtmlSidebar')){
+        if (class_exists('JHtmlSidebar')) {
             JHtmlSidebar::addFilter(
                 JText::_('JOPTION_SELECT_PUBLISHED'),
                 'filter_published',

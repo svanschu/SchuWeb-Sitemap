@@ -42,15 +42,17 @@ class Schuweb_SitemapControllerSitemaps extends JControllerAdmin
      */
     function setDefault()
     {
+        $app = JFactory::$application;
+        $input = $app->input;
         // Check for request forgeries
-        JRequest::checkToken() or die('Invalid Token');
+        $input->checkToken() or die('Invalid Token');
 
         // Get items to publish from the request.
-        $cid = JRequest::getVar('cid', 0, '', 'array');
+        $cid = $input->getVar('cid', 0, '', 'array');
         $id  = @$cid[0];
 
         if (!$id) {
-            JError::raiseWarning(500, JText::_('Select an item to set as default'));
+            $app->enqueueMessage(JText::_('Select an item to set as default'), 'warning');
         }
         else
         {
@@ -59,7 +61,7 @@ class Schuweb_SitemapControllerSitemaps extends JControllerAdmin
 
             // Publish the items.
             if (!$model->setDefault($id)) {
-                JError::raiseWarning(500, $model->getError());
+                $app->enqueueMessage($model->getError(), 'warning');
             }
         }
 
