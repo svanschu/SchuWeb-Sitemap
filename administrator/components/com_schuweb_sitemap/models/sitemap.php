@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modeladmin');
 
 use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Sitemap model.
