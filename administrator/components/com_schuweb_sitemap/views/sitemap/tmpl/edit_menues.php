@@ -9,21 +9,21 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
 ?>
-<table class="table table-striped" id="menueList">
+<table class="adminlist table table-striped">
     <thead>
     <tr>
-        <th width="1%" class="nowrap center hidden-phone">
+        <th width="1%">
         </th>
-        <th width="1%" class="nowrap center">
+        <th width="1%">
             <?php echo JHtml::_('grid.checkall'); ?>
         </th>
         <th class="title">
             <?php echo JText::_('JGLOBAL_TITLE'); ?>
         </th>
-        <th class="nowrap hidden-phone">
+        <th>
             <?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?>
         </th>
-        <th class="nowrap hidden-phone">
+        <th>
             <?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGE_FREQUENCY'); ?>
         </th>
     </tr>
