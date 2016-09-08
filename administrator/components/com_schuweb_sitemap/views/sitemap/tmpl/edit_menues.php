@@ -30,7 +30,7 @@ JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
     </thead>
     <tbody>
     <?php foreach ($this->item->selections as $i => $menu): ?>
-        <tr>
+        <tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
             <td class="center hidden-phone">
                 <span class="sortable-handler">
                     <i class="icon-menu"></i>
