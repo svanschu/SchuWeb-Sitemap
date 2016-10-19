@@ -39,7 +39,7 @@ JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
             <td width="1%" class="center">
                 <input type="checkbox" id="cb<?php echo $i; ?>"
                        name="jform[selections][<?php echo $menu['menutype']; ?>][enabled]"
-                       value="1" <?php echo $menu['selected'] ? 'checked="checked"' : ''; ?> />
+                       value="1" <?php if (isset($menu['enabled'])) {echo $menu['enabled'] ? 'checked="checked"' : '';} ?> />
             </td>
             <td class="nowrap has-context">
                 <label for="cb<?php echo $i; ?>"><?php echo $this->escape($menu['title']); ?></label>
