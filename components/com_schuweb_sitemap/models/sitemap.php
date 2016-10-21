@@ -32,6 +32,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     protected $_extensions = null;
 
     static $items = array();
+
     /**
      * Method to auto-populate the model state.
      *
@@ -79,7 +80,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     {
         // Initialize variables.
         $db = $this->getDbo();
-        $pk = (!empty($pk)) ? $pk : (int) $this->getState('sitemap.id');
+        $pk = (!empty($pk)) ? $pk : (int)$this->getState('sitemap.id');
 
         if ($this->_item === null) {
             $this->_item = array();
@@ -92,12 +93,12 @@ class Schuweb_SitemapModelSitemap extends JModelItem
                 $query->select($this->getState('item.select', 'a.*'));
                 $query->from('#__schuweb_sitemap AS a');
 
-                $query->where('a.id = ' . (int) $pk);
+                $query->where('a.id = ' . (int)$pk);
 
                 // Filter by published state.
                 $published = $this->getState('filter.published');
                 if (is_numeric($published)) {
-                    $query->where('a.state = ' . (int) $published);
+                    $query->where('a.state = ' . (int)$published);
                 }
 
                 // Filter by access level.
@@ -130,6 +131,13 @@ class Schuweb_SitemapModelSitemap extends JModelItem
                 $registry = new JRegistry('_default');
                 $registry->loadString($data->selections);
                 $data->selections = $registry->toArray();
+
+                // only display the Menüs which are activated
+                foreach ($data->selections as $key => $selection) {
+                    if (is_null($selection["enabled"]) || $selection["enabled"] != 1) {
+                        unset($data->selections[$key]);
+                    }
+                }
 
                 // Compute access permissions.
                 if ($access) {
@@ -178,7 +186,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     public function hit($count)
     {
         // Initialize variables.
-        $pk = (int) $this->getState('sitemap.id');
+        $pk = (int)$this->getState('sitemap.id');
 
         $view = JFactory::$application->input->getCmd('view', 'html');
         if ($view != 'xml' && $view != 'html') {
@@ -188,7 +196,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
         $this->_db->setQuery(
             'UPDATE #__schuweb_sitemap' .
             ' SET views_' . $view . ' = views_' . $view . ' + 1, count_' . $view . ' = ' . $count . ', lastvisit_' . $view . ' = ' . JFactory::getDate()->toUnix() .
-            ' WHERE id = ' . (int) $pk
+            ' WHERE id = ' . (int)$pk
         );
 
         try {
@@ -201,14 +209,14 @@ class Schuweb_SitemapModelSitemap extends JModelItem
         return true;
     }
 
-    public function getSitemapItems($view=null)
+    public function getSitemapItems($view = null)
     {
         if (!isset($view)) {
             $view = JFactory::$application->input->getCmd('view');
         }
 
         $db = JFactory::getDBO();
-        $pk = (int) $this->getState('sitemap.id');
+        $pk = (int)$this->getState('sitemap.id');
 
         if (self::$items !== NULL && isset(self::$items[$view])) {
             return;
@@ -235,7 +243,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     {
         $items = $this->getSitemapItems($view);
         $db = JFactory::getDBO();
-        $pk = (int) $this->getState('sitemap.id');
+        $pk = (int)$this->getState('sitemap.id');
 
         $isNew = false;
         if (empty($items[$view][$itemid][$uid])) {
@@ -271,7 +279,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
 
         $excludedItems = $displayer->getExcludedItems();
         if (isset($excludedItems[$itemid])) {
-            $excludedItems[$itemid] = (array) $excludedItems[$itemid];
+            $excludedItems[$itemid] = (array)$excludedItems[$itemid];
         }
         if (!$displayer->isExcluded($itemid, $uid)) {
             $excludedItems[$itemid][] = $uid;
