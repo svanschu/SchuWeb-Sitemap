@@ -102,7 +102,7 @@ class schuweb_sitemap_com_kunena
             $params['topics_order'] = 't.`' . $ordering . '`';
             $params['include_pagination'] = ($xmap->view == 'xml');
 
-            $params['limit'] = '';
+            $params['limit'] = 0;
             $params['days'] = '';
             $limit = ArrayHelper::getValue($params, 'max_topics', '');
             if (intval($limit))
@@ -151,7 +151,13 @@ class schuweb_sitemap_com_kunena
             // Kunena 2.0+
             // kimport('kunena.forum.topic.helper');
             // TODO: orderby parameter is missing:
-            $topics = KunenaForumTopicHelper::getLatestTopics($parentCat, 0, $params['limit'], array('starttime', $params['days']));
+            $tparams = array();
+            if ($params['days'] != '')
+                $tparams['starttime'] = $params['days'];
+            if ($params['limit'] < 1)
+                $tparams['nolimit'] = true;
+
+            $topics = KunenaForumTopicHelper::getLatestTopics($parentCat, 0, $params['limit'], $tparams);
             if (count($topics) == 2 && is_numeric($topics[0])) {
                 $topics = $topics[1];
             }
