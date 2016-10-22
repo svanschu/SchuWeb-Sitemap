@@ -106,7 +106,7 @@ class schuweb_sitemap_com_kunena
             $params['days'] = '';
             $limit = ArrayHelper::getValue($params, 'max_topics', '');
             if (intval($limit))
-                $params['limit'] = ' LIMIT ' . $limit;
+                $params['limit'] = $limit;
 
             $days = ArrayHelper::getValue($params, 'max_age', '');
             $params['days'] = false;
