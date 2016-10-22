@@ -21,10 +21,10 @@ JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
             <?php echo JText::_('JGLOBAL_TITLE'); ?>
         </th>
         <th>
-            <?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?>
+            <?php echo JText::_('SCHUWEB_SITEMAP_PRIORITY'); ?>
         </th>
         <th>
-            <?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGE_FREQUENCY'); ?>
+            <?php echo JText::_('SCHUWEB_SITEMAP_CHANGE_FREQUENCY'); ?>
         </th>
     </tr>
     </thead>

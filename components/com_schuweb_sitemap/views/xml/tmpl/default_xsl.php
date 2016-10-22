@@ -426,8 +426,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
         <td><?php echo ($showTitle? JText::_('COM_SCHUWEB_SITEMAP_TITLE').' / ' : ''); ?><?php echo JText::_('COM_SCHUWEB_SITEMAP_URL'); ?></td>
         <?php if (!$this->isImages): ?>
         <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_LASTMOD'); ?></td>
-        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGEFREQ'); ?></td>
-        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?></td>
+        <td><?php echo JText::_('SCHUWEB_SITEMAP_CHANGEFREQ'); ?></td>
+        <td><?php echo JText::_('SCHUWEB_SITEMAP_PRIORITY'); ?></td>
         <?php endif ?>
     </tr>
     <xsl:for-each select="xna:urlset/xna:url">
