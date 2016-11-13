@@ -135,6 +135,8 @@ class schuweb_sitemap_com_sobipro
     {
         $database = JFactory::getDBO();
 
+        $lang = JFactory::getLanguage();
+
         $query =
             "SELECT a.id,a.nid, a.name, b.pid as pid, c.sValue as name "
             . "\n FROM #__sobipro_object AS a, #__sobipro_relations AS b, #__sobipro_language as c "
@@ -144,7 +146,7 @@ class schuweb_sitemap_com_sobipro
             . "   AND a.state=1 "
             . "   AND a.approved=1 "
             . "   AND c.sKey='name'"
-            . "   AND c.language='en-GB'"
+            . "   AND c.language='" . $database->escape($lang->getTag()) . "'"
             . "   AND c.oType='category'"
             . "   AND c.id=a.id"
             . "\n AND a.id=b.id "
