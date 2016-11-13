@@ -12,13 +12,13 @@ defined( '_JEXEC' ) or die();
 jimport('joomla.application.component.view');
 
 /**
- * HTML Site map View class for the Schuweb_Sitemap component
+ * HTML Site map View class for the SchuWeb_Sitemap component
  *
- * @package         Schuweb_Sitemap
+ * @package         SchuWeb_Sitemap
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class Schuweb_SitemapViewHtml extends JViewLegacy
+class SchuWeb_SitemapViewHtml extends JViewLegacy
 {
 
     protected $state;
@@ -58,7 +58,7 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
         $params = &$this->state->params;
         $offset = $this->state->get('page.offset');
         if ($params->get('include_css', 0)){
-            $doc->addStyleSheet(JURI::root().'components/com_schuweb_sitemap/assets/css/Schuweb_Sitemap.css');
+            $doc->addStyleSheet(JURI::root().'components/com_schuweb_sitemap/assets/css/SchuWeb_Sitemap.css');
         }
 
         // If a guest user, they may be able to log in to view the full article
@@ -67,11 +67,11 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
             if ($this->user->get('guest')) {
                 // Redirect to login
                 $uri = JUri::getInstance();
-                $this->app->redirect('index.php?option=com_users&view=login&return=' . base64_encode($uri), JText::_('Schuweb_Sitemap_Error_Login_to_view_sitemap')
+                $this->app->redirect('index.php?option=com_users&view=login&return=' . base64_encode($uri), JText::_('SchuWeb_Sitemap_Error_Login_to_view_sitemap')
                 );
                 return;
             } else {
-                $this->app->enqueueMessage(JText::_('Schuweb_Sitemap_Error_Not_auth'), 'warning');
+                $this->app->enqueueMessage(JText::_('SchuWeb_Sitemap_Error_Not_auth'), 'warning');
                 return;
             }
         }
@@ -83,7 +83,7 @@ class Schuweb_SitemapViewHtml extends JViewLegacy
 
         // Load the class used to display the sitemap
         $this->loadTemplate('class');
-        $this->displayer = new Schuweb_SitemapHtmlDisplayer($params, $this->item);
+        $this->displayer = new SchuWeb_SitemapHtmlDisplayer($params, $this->item);
 
         $this->displayer->setJView($this);
         $this->displayer->canEdit = $this->canEdit;

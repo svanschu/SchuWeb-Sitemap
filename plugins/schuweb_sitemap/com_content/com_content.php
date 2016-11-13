@@ -84,11 +84,11 @@ class schuweb_sitemap_com_content
 
                     $text = @$item->introtext . @$item->fulltext;
                     if ($params['add_images']) {
-                        $node->images = Schuweb_SitemapHelper::getImages($text,JArrayHelper::getValue($params, 'max_images', 1000));
+                        $node->images = SchuWeb_SitemapHelper::getImages($text,JArrayHelper::getValue($params, 'max_images', 1000));
                     }
 
                     if ($params['add_pagebreaks']) {
-                        $node->subnodes = Schuweb_SitemapHelper::getPagebreaks($text,$node->link);
+                        $node->subnodes = SchuWeb_SitemapHelper::getPagebreaks($text,$node->link);
                         $node->expandible = (count($node->subnodes) > 0); // This article has children
                     }
                 }
@@ -254,7 +254,7 @@ class schuweb_sitemap_com_content
                     $parent->slug = $row->alias ? ($id . ':' . $row->alias) : $id;
                     $parent->link = ContentHelperRoute::getArticleRoute($parent->slug, $row->catid);
 
-                    $subnodes = Schuweb_SitemapHelper::getPagebreaks($row->introtext.$row->fulltext,$parent->link);
+                    $subnodes = SchuWeb_SitemapHelper::getPagebreaks($row->introtext.$row->fulltext,$parent->link);
                     self::printNodes($xmap, $parent, $params, $subnodes);
                 }
 
@@ -432,11 +432,11 @@ class schuweb_sitemap_com_content
                 // Add images to the article
                 $text = @$item->introtext . @$item->fulltext;
                 if ($params['add_images']) {
-                    $node->images = Schuweb_SitemapHelper::getImages($text,$params['max_images']);
+                    $node->images = SchuWeb_SitemapHelper::getImages($text,$params['max_images']);
                 }
 
                 if ($params['add_pagebreaks']) {
-                    $subnodes = Schuweb_SitemapHelper::getPagebreaks($text,$node->link);
+                    $subnodes = SchuWeb_SitemapHelper::getPagebreaks($text,$node->link);
                     $node->expandible = (count($subnodes) > 0); // This article has children
                 }
 

@@ -12,13 +12,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.database.query');
 
 /**
- * Schuweb_Sitemap Component Sitemap Model
+ * SchuWeb_Sitemap Component Sitemap Model
  *
- * @package        Schuweb_Sitemap
+ * @package        SchuWeb_Sitemap
  * @subpackage     com_schuweb_sitemap
  * @since          2.0
  */
-class Schuweb_SitemapHelper
+class SchuWeb_SitemapHelper
 {
 
     public static function &getMenuItems($selections)
@@ -89,7 +89,7 @@ class Schuweb_SitemapHelper
                     $item->priority = $menuOptions['priority'];
                     $item->changefreq = $menuOptions['changefreq'];
 
-                    Schuweb_SitemapHelper::prepareMenuItem($item);
+                    SchuWeb_SitemapHelper::prepareMenuItem($item);
                 } else {
                     $item->priority = null;
                     $item->changefreq = null;
@@ -149,7 +149,7 @@ class Schuweb_SitemapHelper
      */
     public static function prepareMenuItem($item)
     {
-        $extensions = Schuweb_SitemapHelper::getExtensions();
+        $extensions = SchuWeb_SitemapHelper::getExtensions();
         if (!empty($extensions[$item->option])) {
             $className = 'schuweb_sitemap_' . $item->option;
             $obj = new $className;

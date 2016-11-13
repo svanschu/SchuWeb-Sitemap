@@ -14,7 +14,7 @@ jimport('joomla.application.component.view');
  * @package    Xmap
  * @subpackage com_schuweb_sitemap
  */
-class Schuweb_SitemapViewSitemap extends JViewLegacy
+class SchuWeb_SitemapViewSitemap extends JViewLegacy
 {
 
     protected $item;
@@ -120,8 +120,8 @@ class Schuweb_SitemapViewSitemap extends JViewLegacy
 
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
-        $menuItems = Schuweb_SitemapHelper::getMenuItems($this->item->selections);
-        $extensions = Schuweb_SitemapHelper::getExtensions();
+        $menuItems = SchuWeb_SitemapHelper::getMenuItems($this->item->selections);
+        $extensions = SchuWeb_SitemapHelper::getExtensions();
 
         $this->loadTemplate('class');
         $nav = new XmapNavigatorDisplayer($this->state->params, $this->item);

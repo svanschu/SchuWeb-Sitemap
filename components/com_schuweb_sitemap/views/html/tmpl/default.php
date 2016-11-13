@@ -60,7 +60,7 @@ if ($this->displayer->canEdit) {
     $doc->addScriptDeclaration ($js);
 }
 ?>
-<div id="Schuweb_Sitemap">
+<div id="SchuWeb_Sitemap">
 <?php if ($params->get('show_page_heading', 1) && $params->get('page_heading') != '') : ?>
     <h1>
         <?php echo $this->escape($params->get('page_heading')); ?>

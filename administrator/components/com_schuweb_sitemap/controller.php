@@ -16,7 +16,7 @@ jimport('joomla.application.component.controller');
  * @package     SchuWeb Sitemap
  * @subpackage  com_schuweb_sitemap
  */
-class Schuweb_SitemapController extends JControllerLegacy
+class SchuWeb_SitemapController extends JControllerLegacy
 {
 
     function __construct()

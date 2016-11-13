@@ -14,13 +14,13 @@ jimport('joomla.database.query');
 require_once(JPATH_COMPONENT . '/helpers/schuweb_sitemap.php');
 
 /**
- * Schuweb_Sitemap Component Sitemap Model
+ * SchuWeb_Sitemap Component Sitemap Model
  *
- * @package        Schuweb_Sitemap
+ * @package        SchuWeb_Sitemap
  * @subpackage     com_schuweb_sitemap
  * @since          2.0
  */
-class Schuweb_SitemapModelSitemap extends JModelItem
+class SchuWeb_SitemapModelSitemap extends JModelItem
 {
 
     /**
@@ -166,14 +166,14 @@ class Schuweb_SitemapModelSitemap extends JModelItem
     public function getItems()
     {
         if ($item = $this->getItem()) {
-            return Schuweb_SitemapHelper::getMenuItems($item->selections);
+            return SchuWeb_SitemapHelper::getMenuItems($item->selections);
         }
         return false;
     }
 
     function getExtensions()
     {
-        return Schuweb_SitemapHelper::getExtensions();
+        return SchuWeb_SitemapHelper::getExtensions();
     }
 
     /**
@@ -275,7 +275,7 @@ class Schuweb_SitemapModelSitemap extends JModelItem
         $app = JFactory::getApplication('site');
         $sitemap = $this->getItem();
 
-        $displayer = new Schuweb_SitemapDisplayer($app->getParams(), $sitemap);
+        $displayer = new SchuWeb_SitemapDisplayer($app->getParams(), $sitemap);
 
         $excludedItems = $displayer->getExcludedItems();
         if (isset($excludedItems[$itemid])) {

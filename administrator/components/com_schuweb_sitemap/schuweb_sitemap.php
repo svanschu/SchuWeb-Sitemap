@@ -15,11 +15,11 @@ jimport('joomla.form.form');
 JForm::addFieldPath( JPATH_COMPONENT.'/models/fields' );
 
 // Register helper class
-JLoader::register('Schuweb_SitemapHelper', dirname(__FILE__) . '/helpers/schuweb_sitemap.php');
+JLoader::register('SchuWeb_SitemapHelper', dirname(__FILE__) . '/helpers/schuweb_sitemap.php');
 
 // Include dependancies
 jimport('joomla.application.component.controller');
 
-$controller = JControllerLegacy::getInstance('Schuweb_Sitemap');
+$controller = JControllerLegacy::getInstance('SchuWeb_Sitemap');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

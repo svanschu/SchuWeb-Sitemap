@@ -8,6 +8,8 @@
 // no direct access
 defined('_JEXEC') or die;
 
+use Joomla\Utilities\ArrayHelper;
+
 /**
  * @package         Xmap
  * @subpackage      com_schuweb_sitemap

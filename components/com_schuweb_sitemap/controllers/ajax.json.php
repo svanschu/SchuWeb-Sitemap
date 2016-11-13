@@ -12,13 +12,13 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.controller');
 
 /**
- * Schuweb_Sitemap Ajax Controller
+ * SchuWeb_Sitemap Ajax Controller
  *
- * @package      Schuweb_Sitemap
+ * @package      SchuWeb_Sitemap
  * @subpackage   com_schuweb_sitemap
  * @since        2.0
  */
-class Schuweb_SitemapControllerAjax extends JControllerLegacy
+class SchuWeb_SitemapControllerAjax extends JControllerLegacy
 {
 
     public function editElement()

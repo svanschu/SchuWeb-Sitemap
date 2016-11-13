@@ -6,27 +6,27 @@
  * more info under: http://www.w3schools.com/css/css_list.asp
  */
 
-#Schuweb_Sitemap ul {
+#SchuWeb_Sitemap ul {
     display : block;
     list-style : none;
     margin : 0;
     padding : 0;
 }
-#Schuweb_Sitemap ul li {
+#SchuWeb_Sitemap ul li {
     margin : 0;
     padding : 0;
     background : transparent;
 }
-#Schuweb_Sitemap a img {
+#SchuWeb_Sitemap a img {
     border : none;
 }
-#Schuweb_Sitemap ul.level_0 ul {
+#SchuWeb_Sitemap ul.level_0 ul {
     list-style : inside square;
     padding : 0;
 }
-#Schuweb_Sitemap ul.level_1 li {
+#SchuWeb_Sitemap ul.level_1 li {
     padding : 0 1em 0 1em;
 }
-#Schuweb_Sitemap .active {
+#SchuWeb_Sitemap .active {
     font-style : italic;
 }

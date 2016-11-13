@@ -19,7 +19,7 @@ use Joomla\Utilities\ArrayHelper;
  * @package       Xmap
  * @subpackage    com_schuweb_sitemap
  */
-class Schuweb_SitemapModelSitemap extends JModelAdmin
+class SchuWeb_SitemapModelSitemap extends JModelAdmin
 {
     protected $_context = 'com_schuweb_sitemap';
 

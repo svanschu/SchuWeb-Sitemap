@@ -12,13 +12,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.component.controller');
 
 /**
- * Schuweb_Sitemap Component Controller
+ * SchuWeb_Sitemap Component Controller
  *
- * @package        Schuweb_Sitemap
+ * @package        SchuWeb_Sitemap
  * @subpackage     com_schuweb_sitemap
  * @since          2.0
  */
-class Schuweb_SitemapController extends JControllerLegacy
+class SchuWeb_SitemapController extends JControllerLegacy
 {
 
     /**

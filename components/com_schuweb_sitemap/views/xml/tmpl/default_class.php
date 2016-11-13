@@ -10,7 +10,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 require_once(JPATH_COMPONENT . '/displayer.php');
 
-class Schuweb_SitemapXmlDisplayer extends Schuweb_SitemapDisplayer
+class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
 {
 
     /**

@@ -16,7 +16,7 @@ jimport('joomla.application.component.controlleradmin');
  * @subpackage  com_schuweb_sitemap
  * @since       2.0
  */
-class Schuweb_SitemapControllerSitemaps extends JControllerAdmin
+class SchuWeb_SitemapControllerSitemaps extends JControllerAdmin
 {
 
     protected $text_prefix = 'com_schuweb_sitemap_SITEMAPS';
@@ -77,7 +77,7 @@ class Schuweb_SitemapControllerSitemaps extends JControllerAdmin
      * @return    JModel
      * @since    2.0
      */
-    public function getModel($name = 'Sitemap', $prefix = 'XmapModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Sitemap', $prefix = 'SchuWeb_SitemapModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
 

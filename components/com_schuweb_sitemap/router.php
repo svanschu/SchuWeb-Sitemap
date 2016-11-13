@@ -9,11 +9,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
  * Content Component Route Helper
  *
- * @package        Schuweb_Sitemap
+ * @package        SchuWeb_Sitemap
  * @subpackage    com_schuweb_sitemap
  * @since 2.0
  */
-class Schuweb_SitemapRoute
+class SchuWeb_SitemapRoute
 {
 
     /**
@@ -88,7 +88,7 @@ class Schuweb_SitemapRoute
  *
  * @return    array    The URL arguments to use to assemble the subsequent URL.
  */
-function Schuweb_SitemapBuildRoute(&$query)
+function SchuWeb_SitemapBuildRoute(&$query)
 {
     $segments = array();
 
@@ -162,7 +162,7 @@ function Schuweb_SitemapBuildRoute(&$query)
  *
  * @return    array    The URL attributes to be used by the application.
  */
-function Schuweb_SitemapParseRoute($segments)
+function SchuWeb_SitemapParseRoute($segments)
 {
     $vars = array();
 

@@ -18,7 +18,7 @@ jimport('joomla.database.query');
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class Schuweb_SitemapModelSitemaps extends JModelList
+class SchuWeb_SitemapModelSitemaps extends JModelList
 {
     /**
      * Constructor.

@@ -15,7 +15,7 @@ JTable::addIncludePath( JPATH_COMPONENT . '/tables' );
  * @package       Xmap
  * @subpackage    com_schuweb_sitemap
  */
-abstract class JHtmlSchuweb_Sitemap
+abstract class JHtmlSchuWeb_Sitemap
 {
 
     /**

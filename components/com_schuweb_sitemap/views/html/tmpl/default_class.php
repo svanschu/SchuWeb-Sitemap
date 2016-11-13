@@ -11,7 +11,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 require_once(JPATH_COMPONENT.'/displayer.php');
 
-class Schuweb_SitemapHtmlDisplayer extends Schuweb_SitemapDisplayer {
+class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
 
     var $level = -1;
     var $_openList = '';

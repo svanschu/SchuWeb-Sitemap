@@ -16,7 +16,7 @@ jimport('joomla.application.component.view');
  * @subpackage  com_schuweb_sitemap
  * @since       2.0
  */
-class Schuweb_SitemapViewSitemaps extends JViewLegacy
+class SchuWeb_SitemapViewSitemaps extends JViewLegacy
 {
     protected $state;
     protected $items;
@@ -28,7 +28,7 @@ class Schuweb_SitemapViewSitemaps extends JViewLegacy
     public function display($tpl = null)
     {
         if ($this->getLayout() !== 'modal') {
-            Schuweb_SitemapHelper::addSubmenu('sitemaps');
+            SchuWeb_SitemapHelper::addSubmenu('sitemaps');
         }
 
         $this->state = $this->get('State');

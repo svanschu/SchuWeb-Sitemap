@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_schuweb_sitemap
  * @since       2.0
  */
-class Schuweb_SitemapHelper
+class SchuWeb_SitemapHelper
 {
     /**
      * Configure the Linkbar.

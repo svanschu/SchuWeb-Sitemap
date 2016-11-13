@@ -16,7 +16,7 @@ jimport('joomla.application.component.controllerform');
  * @subpackage  com_schuweb_sitemap
  * @since       2.0
  */
-class Schuweb_SitemapControllerSitemap extends JControllerForm
+class SchuWeb_SitemapControllerSitemap extends JControllerForm
 {
     /**
      * Method override to check if the user can edit an existing record.

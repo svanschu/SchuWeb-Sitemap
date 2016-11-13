@@ -12,13 +12,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.application.component.view');
 
 /**
- * XML Sitemap View class for the Schuweb_Sitemap component
+ * XML Sitemap View class for the SchuWeb_Sitemap component
  *
- * @package      Schuweb_Sitemap
+ * @package      SchuWeb_Sitemap
  * @subpackage   com_schuweb_sitemap
  * @since        2.0
  */
-class Schuweb_SitemapViewXml extends JViewLegacy
+class SchuWeb_SitemapViewXml extends JViewLegacy
 {
 
     protected $state;
@@ -84,11 +84,11 @@ class Schuweb_SitemapViewXml extends JViewLegacy
                 $uri = JUri::getInstance();
                 $app->redirect(
                     'index.php?option=com_users&view=login&return=' . base64_encode($uri),
-                    JText::_('Schuweb_Sitemap_Error_Login_to_view_sitemap')
+                    JText::_('SchuWeb_Sitemap_Error_Login_to_view_sitemap')
                 );
                 return;
             } else {
-                $app->enqueueMessage(JText::_('Schuweb_Sitemap_Error_Not_auth'), 'warning');
+                $app->enqueueMessage(JText::_('SchuWeb_Sitemap_Error_Not_auth'), 'warning');
                 return;
             }
         }
@@ -100,7 +100,7 @@ class Schuweb_SitemapViewXml extends JViewLegacy
 
         // Load the class used to display the sitemap
         $this->loadTemplate('class');
-        $this->displayer = new Schuweb_SitemapXmlDisplayer($params, $this->item);
+        $this->displayer = new SchuWeb_SitemapXmlDisplayer($params, $this->item);
 
         $this->displayer->setJView($this);
 

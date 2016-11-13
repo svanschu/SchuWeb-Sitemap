@@ -13,7 +13,7 @@ jimport('joomla.application.component.controller');
 
 require_once(JPATH_COMPONENT.'/displayer.php');
 
-$controller = JControllerLegacy::getInstance('Schuweb_Sitemap');
+$controller = JControllerLegacy::getInstance('SchuWeb_Sitemap');
 $task = JFactory::getApplication()->input->get('task');
 $controller->execute($task);
 $controller->redirect();
