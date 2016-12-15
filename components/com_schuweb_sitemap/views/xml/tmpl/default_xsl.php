@@ -425,7 +425,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
     <tr class="header">
         <td><?php echo ($showTitle? JText::_('COM_SCHUWEB_SITEMAP_TITLE').' / ' : ''); ?><?php echo JText::_('COM_SCHUWEB_SITEMAP_URL'); ?></td>
         <?php if (!$this->isImages): ?>
-        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_LASTMOD'); ?></td>
+            <?php if ($this->item->params->get('xmlLastMod') != 0) : ?>
+            <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_LASTMOD'); ?></td>
+            <?php endif ?>
         <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGEFREQ'); ?></td>
         <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?></td>
         <?php endif ?>
@@ -455,7 +457,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
                 </xsl:if>
             </td>
             <?php if (!$this->isImages): ?>
+            <?php if ($this->item->params->get('xmlLastMod') != 0) : ?>
             <td><xsl:value-of select="xna:lastmod"/></td>
+            <?php endif; ?>
             <?php if ($this->canEdit): ?>
             <td class="editable" onClick="showOptions(this,'changefreq','{$UID}','{$ItemID}',event);" ><xsl:value-of select="xna:changefreq"/></td>
             <td class="editable" onClick="showOptions(this,'priority','{$UID}','{$ItemID}',event);"><xsl:value-of select="xna:priority"/></td>

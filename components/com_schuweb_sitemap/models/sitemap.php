@@ -127,15 +127,19 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
                 $data->params = clone $this->getState('params');
                 $data->params->merge($registry);
 
+
                 // Convert the selections field to an array.
                 $registry = new JRegistry('_default');
                 $registry->loadString($data->selections);
                 $data->selections = $registry->toArray();
 
+                $lastmod = $data->params->get('xmlLastMod');
                 // only display the Menüs which are activated
                 foreach ($data->selections as $key => $selection) {
                     if (is_null($selection["enabled"]) || $selection["enabled"] != 1) {
                         unset($data->selections[$key]);
+                    } else {
+                        $data->selections[$key]["lastmod"] =  $lastmod;
                     }
                 }
 

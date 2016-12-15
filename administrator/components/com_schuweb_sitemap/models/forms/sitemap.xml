@@ -300,6 +300,20 @@
             </field>
         </fieldset>
 
+        <fieldset name="xmlOptions" label="SCHUWEB_SITEMAP_FIELDSET_XML_OPTIONS">
+            <field
+                name="xmlLastMod"
+                type="radio"
+                class="btn-group"
+                label="SCHUWEB_SITEMAP_XML_LAST_MOD"
+                description="SCHUWEB_SITEMAP_XML_LAST_MOD_DESC"
+                labelclass="control-label"
+                default="1">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
+        </fieldset>
+
         <fieldset name="news" label="SCHUWEB_SITEMAP_FIELDSET_NEWS_OPTIONS">
           <field
               name="news_publication_name"

@@ -152,6 +152,7 @@ class SchuWeb_SitemapDisplayer {
             $node->option       = $item->option;
             $node->modified     = @$item->modified;
             $node->secure       = $item->params->get('secure');
+            $node->lastmod      = $item->lastmod;
 
             // New on SchuWeb_Sitemap 2.0: send the menu params
             $node->params =& $item->params;

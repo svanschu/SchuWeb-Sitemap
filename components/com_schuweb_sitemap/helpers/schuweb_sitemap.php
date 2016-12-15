@@ -85,14 +85,15 @@ class SchuWeb_SitemapHelper
                 $item->params = $params;
 
                 if ($item->type != 'separator') {
-
                     $item->priority = $menuOptions['priority'];
                     $item->changefreq = $menuOptions['changefreq'];
+                    $item->lastmod = $menuOptions['lastmod'];
 
                     SchuWeb_SitemapHelper::prepareMenuItem($item);
                 } else {
                     $item->priority = null;
                     $item->changefreq = null;
+                    $item->lastmod = null;
                 }
 
                 if ($item->parent_id > 1) {

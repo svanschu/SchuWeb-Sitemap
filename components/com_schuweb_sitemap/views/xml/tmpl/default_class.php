@@ -117,16 +117,19 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
                 echo '<uid>', $node->uid, '</uid>' . "\n";
                 echo '<itemid>', $node->id, '</itemid>' . "\n";
             }
-            $modified = (isset($node->modified) && $node->modified != FALSE && $node->modified != $this->nullDate && $node->modified != -1) ? $node->modified : NULL;
-            if (!$modified && $this->isNews) {
-                $modified = time();
-            }
-            if ($modified && !is_numeric($modified)){
-                $date =  new JDate($modified);
-                $modified = $date->toUnix();
-            }
-            if ($modified) {
-                $modified = gmdate('Y-m-d\TH:i:s\Z', $modified);
+            $modified = null;
+            if ($node->lastmod != 0) {
+                $modified = (isset($node->modified) && $node->modified != FALSE && $node->modified != $this->nullDate && $node->modified != -1) ? $node->modified : NULL;
+                if (!$modified && $this->isNews) {
+                    $modified = time();
+                }
+                if ($modified && !is_numeric($modified)) {
+                    $date = new JDate($modified);
+                    $modified = $date->toUnix();
+                }
+                if ($modified) {
+                    $modified = gmdate('Y-m-d\TH:i:s\Z', $modified);
+                }
             }
 
             // If this is not a news sitemap
