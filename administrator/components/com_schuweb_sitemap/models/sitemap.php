@@ -143,6 +143,8 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
             $data = $this->getItem();
         }
 
+        $data->attribs = json_decode($data->attribs, true);
+
         return $data;
     }
 
