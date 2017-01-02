@@ -169,6 +169,7 @@ class schuweb_sitemap_com_sobipro
             $node->changefreq = $params['cat_changefreq'];
             $node->expandible = true;
             $node->secure = $parent->secure;
+            $node->lastmod = $parent->lastmod;
             if ($xmap->printNode($node) !== FALSE) {
                 self::getCategoryTree($xmap, $parent, $row->id, $params);
             }
@@ -205,6 +206,7 @@ class schuweb_sitemap_com_sobipro
                 $node->expandible = false;
                 $node->secure = $parent->secure;
                 $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'pid' => $row->catid, 'title' => $row->name), false, false);
+                $node->lastmod = $parent->lastmod;
                 $xmap->printNode($node);
             }
 

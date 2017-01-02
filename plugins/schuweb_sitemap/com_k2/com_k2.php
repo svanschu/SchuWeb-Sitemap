@@ -315,6 +315,7 @@ class xmap_com_k2
 
         $node->priority = $params['priority'];
         $node->changefreq = $params['changefreq'];
+        $node->lastmod = $parent->lastmod;
 
         if ($iscat)
         {

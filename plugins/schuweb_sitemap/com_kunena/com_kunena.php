@@ -142,6 +142,7 @@ class schuweb_sitemap_com_kunena
             $node->link = KunenaRoute::normalize('index.php?option=com_kunena&view=category&catid=' . $cat->id);
             $node->expandible = true;
             $node->secure = $parent->secure;
+            $node->lastmod = $parent->lastmod;
             if ($xmap->printNode($node) !== FALSE) {
                 schuweb_sitemap_com_kunena::getCategoryTree($xmap, $parent, $params, $cat->id);
             }
@@ -175,6 +176,7 @@ class schuweb_sitemap_com_kunena
                 $node->link = KunenaRoute::normalize('index.php?option=com_kunena&view=topic&catid=' . $topic->category_id . '&id=' . $topic->id);
                 $node->expandible = false;
                 $node->secure = $parent->secure;
+                $node->lastmod = $parent->lastmod;
                 if ($xmap->printNode($node) !== FALSE) {
                     // Pagination will not work with K2.0, revisit this when that version is out and stable
                     if ($params['include_pagination'] && isset($topic->msgcount) && $topic->msgcount > self::$config->messages_per_page) {
@@ -192,6 +194,7 @@ class schuweb_sitemap_com_kunena
                             $subnode->changefreq = $node->changefreq;
                             $subnode->modified = $node->modified;
                             $subnode->secure = $node->secure;
+                            $subnode->lastmod = $node->lastmod;
                             $xmap->printNode($subnode);
                         }
                     }

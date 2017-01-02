@@ -310,6 +310,7 @@ class schuweb_sitemap_com_content
                 $node->name = $item->title;
                 $node->expandible = true;
                 $node->secure = $parent->secure;
+                $node->lastmod = $parent->lastmod;
                 // TODO: Should we include category name or metakey here?
                 // $node->keywords = $item->metakey;
                 $node->newsItem = 0;
@@ -419,6 +420,7 @@ class schuweb_sitemap_com_content
                 // $node->keywords = $item->metakey;
                 $node->newsItem = 1;
                 $node->language = $item->language;
+                $node->lastmod = $parent->lastmod;
 
                 // For the google news we should use te publication date instead
                 // the last modification date. See
@@ -462,6 +464,7 @@ class schuweb_sitemap_com_content
             $subnode->priority = $params['art_priority'];
             $subnode->changefreq = $params['art_changefreq'];
             $subnode->secure = $parent->secure;
+            $subnode->lastmod = $parent->lastmod;
             $xmap->printNode($subnode);
         }
         $xmap->changeLevel(-1);

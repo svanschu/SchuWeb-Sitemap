@@ -115,6 +115,7 @@ class xmap_com_mtree
             $node->changefreq = $params['cat_changefreq'];
             $node->expandible = true;
             $node->secure = $parent->secure;
+            $node->lastmod = $parent->lastmod;
 
             if ( $xmap->printNode($node) !== FALSE) {
                 xmap_com_mtree::getMtreeCategory($xmap,$parent,$params,$row->cat_id);
@@ -152,6 +153,7 @@ class xmap_com_mtree
                 $node->changefreq = $params['link_changefreq'];
                 $node->expandible = false;
                 $node->secure = $parent->secure;
+                $node->lastmod = $parent->lastmod;
                 $xmap->printNode($node);
             }
         }
