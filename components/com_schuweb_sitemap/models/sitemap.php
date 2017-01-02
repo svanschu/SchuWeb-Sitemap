@@ -136,10 +136,10 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
                 $lastmod = $data->params->get('xmlLastMod');
                 // only display the Menüs which are activated
                 foreach ($data->selections as $key => $selection) {
-                    if (is_null($selection["enabled"]) || $selection["enabled"] != 1) {
+                    if (!isset($selection["enabled"]) || is_null($selection["enabled"]) || $selection["enabled"] != 1) {
                         unset($data->selections[$key]);
                     } else {
-                        $data->selections[$key]["lastmod"] =  $lastmod;
+                        $data->selections[$key]["lastmod"] = $lastmod;
                     }
                 }
 
