@@ -4,11 +4,11 @@
     <creationDate>sw.build.date</creationDate>
     <author>Sven Schultschik | Guillermo Vargas</author>
     <copyright>This component is released under the GNU/GPL License</copyright>
-    <authorEmail>guille@vargas.co.cr</authorEmail>
-    <authorUrl></authorUrl>
+    <authorEmail>sven@schultschik.de</authorEmail>
+    <authorUrl>www.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <license>GNU/GPL</license>
-    <description>Xmap - Sitemap Generator for Joomla!</description>
+    <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
     <install folder="admin">
         <sql>
             <file driver="mysql" charset="utf8">install/install.utf8.sql</file>
