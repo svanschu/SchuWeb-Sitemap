@@ -62,14 +62,11 @@ class SchuWeb_SitemapController extends JControllerLegacy
 
     function navigator()
     {
-        $db = JFactory::getDBO();
         $document = JFactory::getDocument();
         $app = JFactory::getApplication('administrator');
         $jinput = $app->input;
 
         $id = $jinput->getInt('sitemap', 0);
-        $link = urldecode($jinput->getVar('link', ''));
-        $name = $jinput->getCmd('e_name', '');
         if (!$id) {
             $id = $this->getDefaultSitemapId();
         }
@@ -94,15 +91,11 @@ class SchuWeb_SitemapController extends JControllerLegacy
 
     function navigatorLinks()
     {
-
-        $db = JFactory::getDBO();
         $document = JFactory::getDocument();
         $app = JFactory::getApplication('administrator');
         $jinput = $app->input;
 
         $id = $jinput->getInt('sitemap', 0);
-        $link = urldecode($jinput->getVar('link', ''));
-        $name = $jinput->getCmd('e_name', '');
         if (!$id) {
             $id = $this->getDefaultSitemapId();
         }
