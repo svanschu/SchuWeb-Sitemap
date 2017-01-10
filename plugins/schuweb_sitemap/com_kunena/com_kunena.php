@@ -4,13 +4,12 @@
  * @author Guillermo Vargas, http://www.jooxmap.com
  * @author Sven Schultschik, http://extensions.schultschik.de
  * @email extensions@schultschik.de
- * @version $Id$
  * @package SchuWeb Sitemap
  * @license GNU/GPL
  * @description SchuWeb Sitemap plugin for Kunena Forum Component.
  */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 use Joomla\Utilities\ArrayHelper;
 

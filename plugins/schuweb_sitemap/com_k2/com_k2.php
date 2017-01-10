@@ -33,7 +33,7 @@
 * # 1.2    2013/01/31  Comatiable with joomla 3.0 and k2 2.6.3 - Mohammad Hasani Eghtedar (m.h.eghtedar@gmail.com)
 */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 /** Adds support for K2  to Xmap */
 class xmap_com_k2

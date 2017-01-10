@@ -5,7 +5,7 @@
  * @license             GNU General Public License version 2 or later; see LICENSE.txt
  * @author              Guillermo Vargas (guille@vargas.co.cr)
  */
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 require_once JPATH_SITE . '/components/com_content/helpers/route.php';
 require_once JPATH_SITE . '/components/com_content/helpers/query.php';

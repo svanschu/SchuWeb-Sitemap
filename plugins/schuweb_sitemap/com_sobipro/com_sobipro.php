@@ -2,13 +2,12 @@
 /**
  * @author Guillermo Vargas guille@vargas.co.cr
  * @author Sven Schultschik extensions@schultschik.de
- * @version $Id$
  * @package schuweb_sitemap
  * @license GNU/GPL
  * @authorSite extensions.schultschik.de
  */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 use Joomla\Utilities\ArrayHelper;
 

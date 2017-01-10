@@ -8,7 +8,7 @@
  * @license GNU/GPL
  * @description Xmap plugin for Joomla's web links component
  */
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined( '_JEXEC' ) or die;
 
 class xmap_com_weblinks
 {

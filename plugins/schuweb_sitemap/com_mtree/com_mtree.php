@@ -6,7 +6,7 @@
  * @author              Guillermo Vargas (guille@vargas.co.cr)
  */
 
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 /** Handles Mosets Tree component */
 class xmap_com_mtree
