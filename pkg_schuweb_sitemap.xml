@@ -7,6 +7,7 @@
     <url>http://extensions.schultschik.de</url>
     <packager>SchuWeb Sitemap</packager>
     <packagerurl>http://extensions.schultschik.de</packagerurl>
+    <license>GNU/GPL</license>
     <description>The Site Map generator for Joomla!</description>
     <files folder="packages">
         <file type="component" id="com_schuweb_sitemap">com_schuweb_sitemap_sw.build.version_sw.build.date.zip</file>
