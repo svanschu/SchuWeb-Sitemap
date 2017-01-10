@@ -295,7 +295,6 @@ class schuweb_sitemap_com_content
                . ( $xmap->view != 'xml' ? "\n ORDER BY " . $orderby . "" : '' );
 
         $db->setQuery($query);
-        #echo nl2br(str_replace('#__','jos_',$db->getQuery()));exit;
         $items = $db->loadObjectList();
 
         if (count($items) > 0) {
@@ -353,8 +352,6 @@ class schuweb_sitemap_com_content
         // We do not do ordering for XML sitemap.
         if ($xmap->view != 'xml') {
             $orderby = self::buildContentOrderBy($parent->params,$parent->id,$Itemid);
-            //$orderby = !empty($menuparams['orderby']) ? $menuparams['orderby'] : (!empty($menuparams['orderby_sec']) ? $menuparams['orderby_sec'] : 'rdate' );
-            //$orderby = self::orderby_sec($orderby);
         }
 
         if ($params['include_archived']) {
