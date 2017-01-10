@@ -65,10 +65,7 @@ class SchuWeb_SitemapNavigatorDisplayer extends SchuWeb_SitemapDisplayer
                     if ($item->home) {
                         $node->link = JURI::root();
                     } elseif (substr($item->link, 0, 9) == 'index.php' && $item->type != 'url') {
-                        if ($item->type == 'menulink') {// For Joomla 1.5 SEF compatibility
-                            $params = new JParameter($item->params);
-                            $node->link = 'index.php?Itemid=' . $params->get('menu_item');
-                        } elseif (strpos($item->link, 'Itemid=') === FALSE) {
+                        if (strpos($item->link, 'Itemid=') === FALSE) {
                             $node->link = 'index.php?Itemid=' . $node->id;
                         }
                     } elseif ($item->type == 'separator') {
