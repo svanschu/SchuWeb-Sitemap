@@ -149,7 +149,7 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
                     $data->params->set('access-view', true);
                 } else {
                     // If no access filter is set, the layout takes some responsibility for display of limited information.
-                    $user = &JFactory::getUser();
+                    $user = JFactory::getUser();
                     $groups = $user->authorisedLevels();
 
                     $data->params->set('access-view', in_array($data->access, $groups));
