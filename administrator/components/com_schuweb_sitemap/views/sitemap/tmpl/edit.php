@@ -71,7 +71,7 @@ if (version_compare(JVERSION, '3.0.0', 'ge')) {
                 </div>
             <?php endforeach; ?>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php endforeach; ?>
+        <?php endforeach;?>
     </div>
     <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>

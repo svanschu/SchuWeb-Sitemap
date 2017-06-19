@@ -172,7 +172,7 @@ class SchuWeb_SitemapTableSitemap extends JTable
         $this->alias = JApplicationHelper::stringURLSafe($this->alias);
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $datenow = &JFactory::getDate();
+            $datenow = JFactory::getDate();
             $this->alias = $datenow->format("Y-m-d-H-i-s");
         }
 
