@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updates>
     <update>
-        <name>Xmap</name>
-        <description>Xmap - Sitemap Generator for Joomla!</description>
-        <element>com_xmap</element>
-        <type>component</type>
-        <version>2.3.4</version>
-        <infourl title="Xmap 2.3.4">http://www.jooxmap.com/downloads.html</infourl>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>package</type>
+        <version>3.0.0.B3</version>
+        <infourl title="SchuWeb Sitemap 3.0.0">https://svanschu.github.io/SchuWeb-Sitemap/</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">http://www.jooxmap.com/downloads/finish/1-xmap/4-xmap-component.html</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/3.0.0.B3/pkg_schuweb_sitemap_3.0.0.B3_20170110.zip</downloadurl>
         </downloads>
         <tags>
-            <tag>stable</tag>
+            <tag>beta</tag>
         </tags>
-        <maintainer>Xmap</maintainer>
-        <maintainerurl>http://www.jooxmap.com</maintainerurl>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
         <section>frs</section>
-        <targetplatform name="joomla" version="2.5" />
-    </update>
-    <update>
-        <name>Xmap</name>
-        <description>Xmap - Sitemap Generator for Joomla!</description>
-        <element>com_xmap</element>
-        <type>component</type>
-        <version>2.3.4</version>
-        <infourl title="Xmap 2.3.4">http://www.jooxmap.com/downloads.html</infourl>
-        <downloads>
-            <downloadurl type="full" format="zip">http://www.jooxmap.com/downloads/finish/1-xmap/4-xmap-component.html</downloadurl>
-        </downloads>
-        <tags>
-            <tag>stable</tag>
-        </tags>
-        <maintainer>Xmap</maintainer>
-        <maintainerurl>http://www.jooxmap.com</maintainerurl>
-        <section>frs</section>
-        <targetplatform name="joomla" version="3.0" />
+        <targetplatform name="joomla" version="3.6" />
+        <php_minimum>7</php_minimum>
     </update>
 </updates>
