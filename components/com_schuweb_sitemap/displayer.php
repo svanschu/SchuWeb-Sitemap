@@ -153,6 +153,8 @@ class SchuWeb_SitemapDisplayer {
             $node->modified     = @$item->modified;
             $node->secure       = $item->params->get('secure');
             $node->lastmod      = $item->lastmod;
+            $node->xmlInsertChangeFreq = $item->xmlInsertChangeFreq;
+            $node->xmlInsertPriority = $item->xmlInsertPriority;
 
             // New on SchuWeb_Sitemap 2.0: send the menu params
             $node->params =& $item->params;

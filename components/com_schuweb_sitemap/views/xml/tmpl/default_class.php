@@ -6,7 +6,7 @@
  * @author        Guillermo Vargas (guille@vargas.co.cr)
  */
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 require_once(JPATH_COMPONENT . '/displayer.php');
 
@@ -47,7 +47,7 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
         $this->uids = array();
 
         $this->defaultLanguage = strtolower(JFactory::getLanguage()->getTag());
-        if (preg_match('/^([a-z]+)-.*/',$this->defaultLanguage,$matches) && !in_array($this->defaultLanguage, array(' zh-cn',' zh-tw')) ) {
+        if (preg_match('/^([a-z]+)-.*/', $this->defaultLanguage, $matches) && !in_array($this->defaultLanguage, array(' zh-cn', ' zh-tw'))) {
             $this->defaultLanguage = $matches[1];
         }
 
@@ -68,7 +68,7 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
     function printNode(&$node)
     {
         $node->isExcluded = false;
-        if ($this->isExcluded($node->id,$node->uid)) {
+        if ($this->isExcluded($node->id, $node->uid)) {
             if (!$this->showExcluded || !$this->canEdit) {
                 return false;
             }
@@ -91,7 +91,8 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
             $node->browserNav = 0;
 
         if ($node->browserNav != 3   // ignore "no link"
-                && empty($this->_links[$link])) { // ignore links that have been added already
+            && empty($this->_links[$link])
+        ) { // ignore links that have been added already
             $this->count++;
             $this->_links[$link] = 1;
 
@@ -102,17 +103,21 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
                 $node->changefreq = 'daily';
 
             // Get the chancefrequency and priority for this item
-            $changefreq = $this->getProperty('changefreq', $node->changefreq, $node->id, 'xml', $node->uid);
-            $priority = $this->getProperty('priority', $node->priority, $node->id, 'xml', $node->uid);
+            $changefreq = null;
+            if ($node->xmlInsertChangeFreq != 0)
+                $changefreq = $this->getProperty('changefreq', $node->changefreq, $node->id, 'xml', $node->uid);
+            $priority = null;
+            if ($node->xmlInsertPriority != 0)
+                $priority = $this->getProperty('priority', $node->priority, $node->id, 'xml', $node->uid);
 
             echo '<url>' . "\n";
             echo '<loc>', $link, '</loc>' . "\n";
             if ($this->canEdit) {
                 if ($this->showTitle) {
-                    echo '<title><![CDATA['.$node->name.']]></title>' . "\n";
+                    echo '<title><![CDATA[' . $node->name . ']]></title>' . "\n";
                 }
                 if ($this->showExcluded) {
-                    echo '<rowclass>',($node->isExcluded? 'excluded':''),'</rowclass>';
+                    echo '<rowclass>', ($node->isExcluded ? 'excluded' : ''), '</rowclass>';
                 }
                 echo '<uid>', $node->uid, '</uid>' . "\n";
                 echo '<itemid>', $node->id, '</itemid>' . "\n";
@@ -145,16 +150,18 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
                             echo '<image:title />';
                         }
                         if (isset($image->license) && $image->license) {
-                            echo '<image:license>',str_replace('&', '&amp;',html_entity_decode($image->license, ENT_NOQUOTES, 'UTF-8')),'</image:license>',"\n";
+                            echo '<image:license>', str_replace('&', '&amp;', html_entity_decode($image->license, ENT_NOQUOTES, 'UTF-8')), '</image:license>', "\n";
                         }
                         echo '</image:image>', "\n";
                     }
                 } else {
-                    if ($modified){
+                    if ($modified) {
                         echo '<lastmod>', $modified, '</lastmod>' . "\n";
                     }
-                    echo '<changefreq>', $changefreq, '</changefreq>' . "\n";
-                    echo '<priority>', $priority, '</priority>' . "\n";
+                    if ($changefreq)
+                        echo '<changefreq>', $changefreq, '</changefreq>' . "\n";
+                    if ($priority)
+                        echo '<priority>', $priority, '</priority>' . "\n";
                 }
             } else {
                 if (isset($node->keywords)) {
@@ -168,12 +175,12 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
                 }
 
                 echo "<news:news>\n";
-                echo '<news:publication>'."\n";
-                echo '  <news:name>'.(htmlspecialchars($this->sitemap->params->get('news_publication_name'))).'</news:name>'."\n";
-                echo '  <news:language>'.$node->language.'</news:language>'."\n";
-                echo '</news:publication>'."\n";
+                echo '<news:publication>' . "\n";
+                echo '  <news:name>' . (htmlspecialchars($this->sitemap->params->get('news_publication_name'))) . '</news:name>' . "\n";
+                echo '  <news:language>' . $node->language . '</news:language>' . "\n";
+                echo '</news:publication>' . "\n";
                 echo '<news:publication_date>', $modified, '</news:publication_date>' . "\n";
-                echo '<news:title><![CDATA['.$node->name.']]></news:title>' . "\n";
+                echo '<news:title><![CDATA[' . $node->name . ']]></news:title>' . "\n";
                 if ($keywords) {
                     echo '<news:keywords>', $keywords, '</news:keywords>' . "\n";
                 }
@@ -190,9 +197,9 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
      *
      * @param string $property The property that is needed
      * @param string $value The default value if the property is not found
-     * @param int $Itemid   The menu item id
-     * @param string $view  (xml / html)
-     * @param int $uid      Unique id of the element on the sitemap
+     * @param int $Itemid The menu item id
+     * @param string $view (xml / html)
+     * @param int $uid Unique id of the element on the sitemap
      *                      (the id asigned by the extension)
      * @return string
      */

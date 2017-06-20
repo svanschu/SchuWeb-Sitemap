@@ -312,6 +312,28 @@
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </field>
+            <field
+                name="xmlInsertChangeFreq"
+                type="radio"
+                class="btn-group"
+                label="SCHUWEB_SITEMAP_CHANGE_FREQUENCY"
+                description="SCHUWEB_SITEMAP_CHANGE_FREQUENCY_DESC"
+                labelclass="control-label"
+                default="1">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
+            <field
+                name="xmlInsertPriority"
+                type="radio"
+                class="btn-group"
+                label="SCHUWEB_SITEMAP_PRIORITY"
+                description="SCHUWEB_SITEMAP_PRIORITY_DESC2"
+                labelclass="control-label"
+                default="1">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
         </fieldset>
 
         <fieldset name="news" label="SCHUWEB_SITEMAP_FIELDSET_NEWS_OPTIONS">

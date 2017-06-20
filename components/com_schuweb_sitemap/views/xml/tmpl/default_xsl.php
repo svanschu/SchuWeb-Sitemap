@@ -426,10 +426,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
         <td><?php echo ($showTitle? JText::_('COM_SCHUWEB_SITEMAP_TITLE').' / ' : ''); ?><?php echo JText::_('COM_SCHUWEB_SITEMAP_URL'); ?></td>
         <?php if (!$this->isImages): ?>
             <?php if ($this->item->params->get('xmlLastMod') != 0) : ?>
-            <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_LASTMOD'); ?></td>
+                <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_LASTMOD'); ?></td>
             <?php endif ?>
-        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGEFREQ'); ?></td>
-        <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?></td>
+            <?php if ($this->item->params->get('xmlInsertChangeFreq') != 0) : ?>
+                <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_CHANGEFREQ'); ?></td>
+            <?php endif; ?>
+            <?php if ($this->item->params->get('xmlInsertPriority') != 0) : ?>
+                <td><?php echo JText::_('COM_SCHUWEB_SITEMAP_PRIORITY'); ?></td>
+            <?php endif ?>
         <?php endif ?>
     </tr>
     <xsl:for-each select="xna:urlset/xna:url">
@@ -458,14 +462,18 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
             </td>
             <?php if (!$this->isImages): ?>
             <?php if ($this->item->params->get('xmlLastMod') != 0) : ?>
-            <td><xsl:value-of select="xna:lastmod"/></td>
+                <td><xsl:value-of select="xna:lastmod"/></td>
             <?php endif; ?>
             <?php if ($this->canEdit): ?>
             <td class="editable" onClick="showOptions(this,'changefreq','{$UID}','{$ItemID}',event);" ><xsl:value-of select="xna:changefreq"/></td>
             <td class="editable" onClick="showOptions(this,'priority','{$UID}','{$ItemID}',event);"><xsl:value-of select="xna:priority"/></td>
             <?php else: ?>
-            <td><xsl:value-of select="xna:changefreq"/></td>
-            <td><xsl:value-of select="xna:priority"/></td>
+                <?php if ($this->item->params->get('xmlInsertChangeFreq') != 0) : ?>
+                    <td><xsl:value-of select="xna:changefreq"/></td>
+                <?php endif; ?>
+                <?php if ($this->item->params->get('xmlInsertPriority') != 0) : ?>
+                    <td><xsl:value-of select="xna:priority"/></td>
+                <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
         </tr>

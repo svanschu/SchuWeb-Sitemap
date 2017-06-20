@@ -134,12 +134,16 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
                 $data->selections = $registry->toArray();
 
                 $lastmod = $data->params->get('xmlLastMod');
+                $xmlInsertChangeFreq = $data->params->get('xmlInsertChangeFreq');
+                $xmlInsertPriority = $data->params->get('xmlInsertPriority');
                 // only display the Menüs which are activated
                 foreach ($data->selections as $key => $selection) {
                     if (!isset($selection["enabled"]) || is_null($selection["enabled"]) || $selection["enabled"] != 1) {
                         unset($data->selections[$key]);
                     } else {
                         $data->selections[$key]["lastmod"] = $lastmod;
+                        $data->selections[$key]["xmlInsertChangeFreq"] = $xmlInsertChangeFreq;
+                        $data->selections[$key]["xmlInsertPriority"] =$xmlInsertPriority;
                     }
                 }
 

@@ -88,12 +88,16 @@ class SchuWeb_SitemapHelper
                     $item->priority = $menuOptions['priority'];
                     $item->changefreq = $menuOptions['changefreq'];
                     $item->lastmod = $menuOptions['lastmod'];
+                    $item->xmlInsertChangeFreq = $menuOptions['xmlInsertChangeFreq'];
+                    $item->xmlInsertPriority = $menuOptions['xmlInsertPriority'];
 
                     SchuWeb_SitemapHelper::prepareMenuItem($item);
                 } else {
                     $item->priority = null;
                     $item->changefreq = null;
                     $item->lastmod = null;
+                    $item->xmlInsertChangeFreq = null;
+                    $item->xmlInsertPriority = null;
                 }
 
                 if ($item->parent_id > 1) {
