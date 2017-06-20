@@ -17,6 +17,6 @@
         <maintainerurl>http://www.schultschik.de</maintainerurl>
         <section>frs</section>
         <targetplatform name="joomla" version="3.6" />
-        <php_minimum>7</php_minimum>
+        <php_minimum>5.6</php_minimum>
     </update>
 </updates>
