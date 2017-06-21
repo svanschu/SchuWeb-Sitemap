@@ -2,7 +2,8 @@
 <extension type="package" version="3.0" method="upgrade">
     <name>SchuWeb Sitemap Package</name>
     <packagename>schuweb_sitemap</packagename>
-    <date>sw.build.date</date>
+    <creationDate>sw.build.date</creationDate>
+    <author>Sven Schultschik</author>
     <version>sw.build.version</version>
     <url>http://extensions.schultschik.de</url>
     <packager>SchuWeb Sitemap</packager>
