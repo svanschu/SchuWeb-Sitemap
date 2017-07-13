@@ -298,6 +298,14 @@
                 <option
                     value="1">Yes</option>
             </field>
+
+            <field
+                name="cache_control"
+                type="text"
+                default=""
+                label="SCHUWEB_SITEMAP_ATTRIBS_CACHE_CONTROL_LABEL"
+                labelclass="control-label"
+                description="SCHUWEB_SITEMAP_ATTRIBS_CACHE_CONTROL_DESC" />
         </fieldset>
 
         <fieldset name="xmlOptions" label="SCHUWEB_SITEMAP_FIELDSET_XML_OPTIONS">
