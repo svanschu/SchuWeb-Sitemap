@@ -298,14 +298,6 @@
                 <option
                     value="1">Yes</option>
             </field>
-
-            <field
-                name="cache_control"
-                type="text"
-                default=""
-                label="SCHUWEB_SITEMAP_ATTRIBS_CACHE_CONTROL_LABEL"
-                labelclass="control-label"
-                description="SCHUWEB_SITEMAP_ATTRIBS_CACHE_CONTROL_DESC" />
         </fieldset>
 
         <fieldset name="xmlOptions" label="SCHUWEB_SITEMAP_FIELDSET_XML_OPTIONS">
@@ -339,6 +331,53 @@
                 description="SCHUWEB_SITEMAP_PRIORITY_DESC2"
                 labelclass="control-label"
                 default="1">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
+        </fieldset>
+
+        <fieldset name="httpCache" label="SCHUWEB_SITEMAP_CACHE_CONTROL">
+
+            <field
+                    name="cacheControl"
+                    type="radio"
+                    class="btn-group"
+                    label="SCHUWEB_SITEMAP_CACHE_CONTROL_CHANGE"
+                    description="SCHUWEB_SITEMAP_CACHE_CONTROL_DESC"
+                    labelclass="control-label"
+                    default="1">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
+
+            <field
+                    name="cacheControlUseChangeFrequency"
+                    type="radio"
+                    class="btn-group"
+                    label="SCHUWEB_SITEMAP_CACHE_CONTROL_CHANGE_FREQUENCY_AS_MAX_AGE"
+                    description="SCHUWEB_SITEMAP_CACHE_CONTROL_CHANGE_FREQUENCY_AS_MAX_AGE_DESC"
+                    labelclass="control-label"
+                    default="1">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
+
+            <field
+                    name="cacheControlMaxAge"
+                    type="text"
+                    default=""
+                    labelclass="control-label"
+                    label="SCHUWEB_SITEMAP_CACHE_CONTROL_MAX_AGE"
+                    description="SCHUWEB_SITEMAP_CACHE_CONTROL_MAX_AGE_DESC" />
+
+            <field
+                    name="cacheControlPublic"
+                    type="radio"
+                    class="btn-group"
+                    label="SCHUWEB_SITEMAP_CACHE_CONTROL_PUBLIC"
+                    description="SCHUWEB_SITEMAP_CACHE_CONTROL_PUBLIC_DESC"
+                    labelclass="control-label"
+                    default="1">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </field>

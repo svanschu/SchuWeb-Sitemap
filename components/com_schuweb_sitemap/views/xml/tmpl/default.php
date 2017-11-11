@@ -16,8 +16,23 @@ $live_site = substr_replace(JURI::root(), "", -1, 1);
 
 header('Content-type: text/xml; charset=utf-8');
 
-if ($cacheControl = $this->item->params->get('cache_control', "")) {
+if ($params->get('cacheControl', 1) == 1) {
+    $cacheControl = '';
+
+    if ($params->get('cacheControlPublic', 1) == 0) {
+        $cacheControl = 'private, ';
+    }
+
+    if ($params->get('cacheControlUseChangeFrequency', 1) == 1) {
+//TODO
+    } else {
+        if ($maxAge = $params->getInt('cacheControlMaxAge', 0) > 0) {
+            $cacheControl += 'max-age=' + $maxAge;
+        }
+    }
     header('Cache-Control: ' . $cacheControl);
+} else {
+    header('Cache-Control: no-cache');
 }
 
 $jinput = JFactory::getApplication()->input;
