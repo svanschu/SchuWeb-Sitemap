@@ -16,6 +16,10 @@ $live_site = substr_replace(JURI::root(), "", -1, 1);
 
 header('Content-type: text/xml; charset=utf-8');
 
+if ($cacheControl = $this->item->params->get('cache_control', "")) {
+    header('Cache-Control: ' . $cacheControl);
+}
+
 $jinput = JFactory::getApplication()->input;
 
 echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
