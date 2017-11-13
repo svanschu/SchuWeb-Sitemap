@@ -24,7 +24,7 @@ if ($params->get('cacheControl', 1) == 1) {
     }
 
     if ($params->get('cacheControlUseChangeFrequency', 1) == 1) {
-//TODO
+        $cacheControl += 'max-age=' + $this->changeFreq;
     } else {
         if ($maxAge = $params->getInt('cacheControlMaxAge', 0) > 0) {
             $cacheControl += 'max-age=' + $maxAge;

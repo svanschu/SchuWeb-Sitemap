@@ -63,6 +63,39 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
         $this->sitemapItems = $this->get('SitemapItems');
         $this->extensions = $this->get('Extensions');
 
+        $freq = 31536000;
+        foreach ($this->items as $item) {
+            foreach ($item as $iitem) {
+                foreach ($iitem->items as $iitems) {
+                    switch ($iitems->changefreq) {
+                        case "never":
+                        case "yearly":
+                            if ($freq > 31536000)
+                                $freq = 31536000;
+                            break;
+                        case "monthly":
+                            if ($freq > 18144000)
+                                $freq = 18144000;
+                            break;
+                        case "weekly":
+                            if ($freq > 604800)
+                                $freq = 604800;
+                            break;
+                        case "daily": //60 Sekunden x 60 Minuten x 24 Stunden
+                            if ($freq > 86400)
+                                $freq = 86400;
+                            break;
+                        case "hourly":
+                            if ($freq > 3600)
+                                $freq = 3600;
+                            break;
+                    }
+                }
+            }
+        }
+
+        $this->changeFreq = $freq;
+
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             $app->enqueueMessage(implode("\n", $errors), 'warning');
