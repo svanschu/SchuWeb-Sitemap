@@ -83,17 +83,16 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
     {
         // Initialise variables.
         $pk = (!empty($pk)) ? $pk : (int)$this->getState('sitemap.id');
-        $false = false;
 
         // Get a row instance.
         $table = $this->getTable();
 
         // Attempt to load the row.
-        $return = $table->load($pk);
+        $table->load($pk);
 
         // Prime required properties.
         if (empty($table->id)) {
-            // Prepare data for a new record.
+            //TODO Prepare data for a new record.
         }
 
         // Convert to the JObject before adding other data.
