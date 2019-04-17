@@ -1,9 +1,9 @@
 <?php
 /**
  * @version       $Id$
- * @copyright     Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright     Copyright (C) 2019 SchuWeb Extensions, Sven Schultschik
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Guillermo Vargas (guille@vargas.co.cr)
+ * @author        Sven Schultschik
  */
 // no direct access
 defined('_JEXEC') or die;
@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 use Joomla\Utilities\ArrayHelper;
 
 /**
- * @package         Xmap
+ * @package         Joomla
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
@@ -108,15 +108,18 @@ class SchuWeb_SitemapTableSitemap extends JTable
         parent::__construct('#__schuweb_sitemap', 'id', $db);
     }
 
-    /**
-     * Overloaded bind function
-     *
-     * @access      public
-     * @param       array $hash named array
-     * @return      null|string  null is operation was satisfactory, otherwise returns an error
-     * @see         JTable:bind
-     * @since       2.0
-     */
+	/**
+	 * Overloaded bind function
+	 *
+	 * @access      public
+	 *
+	 * @param array hash named $array
+	 * @param string $ignore
+	 *
+	 * @return      null|string  null is operation was satisfactory, otherwise returns an error
+	 * @see         JTable:bind
+	 * @since       2.0
+	 */
     function bind($array, $ignore = '')
     {
         if (isset($array['attribs']) && is_array($array['attribs'])) {
