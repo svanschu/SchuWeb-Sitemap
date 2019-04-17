@@ -36,14 +36,13 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         $this->item = $this->get('Item');
         $this->form = $this->get('Form');
 
-        $version = new JVersion;
-
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             $app->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
 
+        //Not deprecated, because we only use the file option
         JHTML::stylesheet('administrator/components/com_schuweb_sitemap/css/xmap.css');
         // Convert dates from UTC
         $offset = $app->get('offset');
@@ -51,7 +50,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
             $this->item->created = JHtml::date($this->item->created, '%Y-%m-%d %H-%M-%S', $offset);
         }
 
-        $this->handleMenues();
+        $this->handleMenus();
 
         $this->_setToolbar();
 
@@ -59,16 +58,16 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         $app->input->setVar('hidemainmenu', true);
     }
 
-    protected function handleMenues()
+    private function handleMenus()
     {
-        $menues = $this->get('Menues');
-        // remove non existing menutypes from selection
+        $menus = $this->get('Menus');
+        // remove not anymore existing menus (menutypes) from selection
         foreach ($this->item->selections as $menutype => $options) {
-            if (!isset($menues[$menutype])) {
+            if (!isset($menus[$menutype])) {
                 unset($this->item->selections[$menutype]);
             }
         }
-        foreach ($menues as $menu) {
+        foreach ($menus as $menu) {
             if (isset($this->item->selections[$menu->menutype])) {
                 $this->item->selections[$menu->menutype]['selected'] = true;
                 $this->item->selections[$menu->menutype]['title'] = $menu->title;
@@ -94,8 +93,6 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         $this->state = $this->get('State');
         $this->item = $this->get('Item');
 
-        # $menuItems = XmapHelper::getMenuItems($item->selections);
-        # $extensions = XmapHelper::getExtensions();
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             $app->enqueueMessage(implode("\n", $errors), 'error');
@@ -106,7 +103,6 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         JHTML::stylesheet('mootree.css', 'media/system/css/');
 
         $this->loadTemplate('class');
-        $displayer = new XmapNavigatorDisplayer($this->state->params, $this->item);
 
         parent::display($tpl);
     }

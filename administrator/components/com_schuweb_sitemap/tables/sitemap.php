@@ -134,7 +134,6 @@ class SchuWeb_SitemapTableSitemap extends JTable
                 $selections[$menu] = array(
                     'priority' => $array['selections_priority'][$i],
                     'changefreq' => $array['selections_changefreq'][$i],
-                    'ordering' => $i
                 );
             }
 

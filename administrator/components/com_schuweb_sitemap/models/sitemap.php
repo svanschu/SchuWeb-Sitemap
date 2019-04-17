@@ -113,6 +113,17 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
         return $item;
     }
 
+	public function getMenus()
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->select('m.*')
+			->from('#__menu_types AS m')
+			->order('m.title');
+		$db->setQuery($query);
+		return $db->loadObjectList('menutype');
+	}
+
     /**
      * Method to get the record form.
      *
@@ -257,17 +268,6 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
             $cache->clean();
             return true;
         }
-    }
-
-    public function getMenues()
-    {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true)
-            ->select('m.*')
-            ->from('#__menu_types AS m')
-            ->order('m.title');
-        $db->setQuery($query);
-        return $db->loadObjectList('menutype');
     }
 
     /**
