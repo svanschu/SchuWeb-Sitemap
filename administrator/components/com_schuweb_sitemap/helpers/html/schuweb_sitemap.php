@@ -12,8 +12,10 @@ defined('_JEXEC') or die;
 JTable::addIncludePath( JPATH_COMPONENT . '/tables' );
 
 /**
- * @package       Xmap
+ * @package       Joomla
  * @subpackage    com_schuweb_sitemap
+ *
+ * @since 2
  */
 abstract class JHtmlSchuWeb_Sitemap
 {
@@ -22,6 +24,8 @@ abstract class JHtmlSchuWeb_Sitemap
      * @param    string  $name
      * @param    string  $value
      * @param    int     $j
+     * @return JHtmlSelect
+     * @since 2
      */
     public static function priorities($name, $value = '0.5', $j)
     {
@@ -32,11 +36,14 @@ abstract class JHtmlSchuWeb_Sitemap
         return JHtml::_('select.genericlist', $options, $name, null, 'value', 'text', $value, $name.$j);
     }
 
-    /**
-     * @param    string  $name
-     * @param    string  $value
-     * @param    int     $j
-     */
+	/**
+	 * @param string $name
+	 * @param string $value
+	 * @param int    $j
+	 *
+	 * @return JHtmlSelect
+	 * @since 2
+	 */
     public static function changefrequency($name, $value = 'weekly', $j)
     {
         // Array of options

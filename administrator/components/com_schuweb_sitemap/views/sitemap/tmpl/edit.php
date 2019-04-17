@@ -48,7 +48,7 @@ if (version_compare(JVERSION, '3.0.0', 'ge')) {
         <?php echo JHtml::_('bootstrap.endTab'); ?>
 
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'attrib-menus', JText::_('SCHUWEB_SITEMAP_FIELDSET_MENUS')); ?>
-        <?php echo $this->loadTemplate('menues'); ?>
+        <?php echo $this->loadTemplate('menus'); ?>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
 
         <?php

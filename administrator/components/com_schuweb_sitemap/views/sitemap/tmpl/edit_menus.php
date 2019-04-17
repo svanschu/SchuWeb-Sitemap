@@ -1,19 +1,16 @@
 <?php
 /**
- * @author
- * @link
- * @copyright
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @version       $Id$
+ * @copyright     Copyright (C) 2019 SchuWeb Extensions, Sven Schultschik
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
+ * @author        Sven Schultschik
  */
 defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
 ?>
 <table class="adminlist table table-striped">
     <thead>
     <tr>
-        <th width="1%">
-        </th>
         <th width="1%">
             <?php echo JHtml::_('grid.checkall'); ?>
         </th>
@@ -29,13 +26,10 @@ JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($this->item->selections as $i => $menu): ?>
-        <tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid; ?>">
-            <td class="center hidden-phone">
-                <span class="sortable-handler">
-                    <i class="icon-menu"></i>
-                </span>
-            </td>
+    <?php
+    $i = 0;
+    foreach ($this->item->selections as $key => $menu): ?>
+        <tr class="row<?php echo $i % 2; ?>">
             <td width="1%" class="center">
                 <input type="checkbox" id="cb<?php echo $i; ?>"
                        name="jform[selections][<?php echo $menu['menutype']; ?>][enabled]"
@@ -51,6 +45,7 @@ JHtml::_('sortablelist.sortable', 'menueList', 'adminForm', 'asc', false);
                 <?php echo JHTML::_('schuweb_sitemap.changefrequency', 'jform[selections][' . $menu['menutype'] . '][changefreq]', $menu['changefreq'], $i); ?>
             </td>
         </tr>
-    <?php endforeach; ?>
+    <?php $i++;
+    endforeach; ?>
     </tbody>
 </table>
