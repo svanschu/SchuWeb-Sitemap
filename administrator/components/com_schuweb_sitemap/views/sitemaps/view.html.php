@@ -67,7 +67,7 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
         JToolBarHelper::addNew('sitemap.add');
         JToolBarHelper::custom('sitemap.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);
 
-        $doc->addStyleDeclaration('.icon-48-sitemap {background-image: url(components/com_schuweb_sitemap/images/sitemap-icon.png);}');
+       // $doc->addStyleDeclaration('.icon-48-sitemap {background-image: url(components/com_schuweb_sitemap/images/sitemap-icon.png);}');
         JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_SITEMAPS_TITLE'), 'sitemap.png');
         JToolBarHelper::custom('sitemaps.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_Publish', true);
         JToolBarHelper::custom('sitemaps.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
@@ -79,7 +79,6 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
         } else {
             JToolBarHelper::trash('sitemaps.trash', 'JTOOLBAR_TRASH');
         }
-        JToolBarHelper::divider();
 
 
         if (class_exists('JHtmlSidebar')) {

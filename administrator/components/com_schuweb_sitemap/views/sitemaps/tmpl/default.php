@@ -45,27 +45,27 @@ $version = new JVersion;
         <table class="adminlist table table-striped">
             <thead>
                 <tr>
-                    <th width="20">
+                    <th width="20" class="center">
                         <input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="if (typeof Joomla != 'undefined'){Joomla.checkAll(this)} else {checkAll(this)}" />
                     </th>
                     <th class="title">
                         <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_Sitemap', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
-                    <th width="5%">
+                    <th width="5%" class="center">
                         <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_Published', 'a.state', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
-                    <th width="10%">
+                    <th width="10%" class="center">
                         <?php echo JHtml::_('grid.sort',  'SCHUWEB_SITEMAP_Heading_Access', 'access_level', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
-                    <th width="10%" class="nowrap">
+                    <th width="10%" class="nowrap center">
                         <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Html_Stats'); ?><br />
                         (<?php echo JText::_('SCHUWEB_SITEMAP_Heading_Num_Links') . ' / '. JText::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . ' / ' . JText::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>)
                     </th>
-                    <th width="10%" class="nowrap">
+                    <th width="10%" class="nowrap center">
                         <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Xml_Stats'); ?><br />
                         <?php echo JText::_('SCHUWEB_SITEMAP_Heading_Num_Links') . '/'. JText::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . '/' . JText::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>
                     </th>
-                    <th width="1%" class="nowrap">
+                    <th width="1%" class="nowrap center">
                         <?php echo JHtml::_('grid.sort', 'SCHUWEB_SITEMAP_Heading_ID', 'a.id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
                     </th>
                 </tr>
@@ -153,11 +153,10 @@ $version = new JVersion;
             <?php endforeach; ?>
             </tbody>
         </table>
-
-        <input type="hidden" name="task" value="" />
-        <input type="hidden" name="boxchecked" value="0" />
-        <input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>" />
-        <input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>" />
-        <?php echo JHtml::_('form.token'); ?>
     </div>
+    <input type="hidden" name="task" value=""/>
+    <input type="hidden" name="boxchecked" value="0"/>
+    <input type="hidden" name="filter_order" value="<?php echo $this->state->get('list.ordering'); ?>"/>
+    <input type="hidden" name="filter_order_Dir" value="<?php echo $this->state->get('list.direction'); ?>"/>
+	<?php echo JHtml::_('form.token'); ?>
 </form>
