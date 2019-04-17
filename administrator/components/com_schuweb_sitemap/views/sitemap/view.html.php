@@ -136,9 +136,9 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
                 $node = new stdClass;
                 $node->uid = "menu-" . $menutype;
                 $node->menutype = $menutype;
-                $node->ordering = $item->selections->$menutype->ordering;
-                $node->priority = $item->selections->$menutype->priority;
-                $node->changefreq = $item->selections->$menutype->changefreq;
+                $node->ordering = $this->item->selections->$menutype->ordering;
+                $node->priority = $this->item->selections->$menutype->priority;
+                $node->changefreq = $this->item->selections->$menutype->changefreq;
                 $node->browserNav = 3;
                 $node->type = 'separator';
                 if (!$node->name = $nav->getMenuTitle($menutype, @$menu->module)) {
