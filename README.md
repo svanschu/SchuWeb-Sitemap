@@ -5,6 +5,9 @@ This project continuous the great, simple and lightweight sitemap extension for 
 
 Many thanks to Vargas, the original creator of Xmap, who discontinued the development of the extension.
 
+## Demo
+A small demo you can see at: [demo.schultschik.com](http://demo.schultschik.com/schuweb-sitemap)
+
 ## Support
 You have trouble using the extension? Write an issue here at github or see the [support website](https://extensions.schultschik.com/support) which other possibilities you have.
 
