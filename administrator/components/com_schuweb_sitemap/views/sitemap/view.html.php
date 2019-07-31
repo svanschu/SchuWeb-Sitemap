@@ -43,7 +43,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         }
 
         //Not deprecated, because we only use the file option
-        JHTML::stylesheet('administrator/components/com_schuweb_sitemap/css/xmap.css');
+        JHTML::stylesheet('administrator/components/com_schuweb_sitemap/css/schuweb_sitemap.css');
         // Convert dates from UTC
         $offset = $app->get('offset');
         if (intval($this->item->created)) {
