@@ -32,7 +32,7 @@
 					<option value="2">SCHUWEB_SITEMAP_OPTION_XML_ONLY</option>
 					<option value="3">SCHUWEB_SITEMAP_OPTION_HTML_ONLY</option>
 				</field>
-				<!-- not yet supported on Xmap 2
+				<!-- not yet supported on SchuWeb Sitemap 2
 				<field name="include_product_images" type="list" default="0" label="Include Product Images" description="Should we include product images in the sitemap?">
 					<option value="0">No</option>
 					<option value="1">Yes</option>
