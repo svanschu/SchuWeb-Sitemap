@@ -10,6 +10,7 @@
     <packagerurl>http://extensions.schultschik.de</packagerurl>
     <license>GNU/GPL</license>
     <description>The Site Map generator for Joomla!</description>
+    <scriptfile>install.script.php</scriptfile>
     <files folder="packages">
         <file type="component" id="com_schuweb_sitemap">com_schuweb_sitemap_sw.build.version_sw.build.date.zip</file>
         <file type="plugin" id="com_content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.date.zip</file>
