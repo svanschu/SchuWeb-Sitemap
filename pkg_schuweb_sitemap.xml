@@ -16,7 +16,7 @@
         <file type="plugin" id="com_content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.date.zip</file>
         <file type="plugin" id="com_kunena" group="schuweb_sitemap">plg_kunena_sw.build.version_sw.build.date.zip</file>
         <file type="plugin" id="com_sobipro" group="schuweb_sitemap">plg_sobipro_sw.build.version_sw.build.date.zip</file>
-        <file type="plugin" id="com_virtuemart" group="schuweb_sitemap">plg_com_virtuemart.build.version_sw.build.date.zip</file>
+        <file type="plugin" id="com_virtuemart" group="schuweb_sitemap">plg_virtuemart_sw.build.version_sw.build.date.zip</file>
         <!--file type="plugin" id="com_mtree" group="schuweb_sitemap">plg_com_mtree.zip</file>
         <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_com_weblinks.zip</file>
         <file type="plugin" id="com_k2" group="schuweb_sitemap">plg_com_k2.zip</file-->
