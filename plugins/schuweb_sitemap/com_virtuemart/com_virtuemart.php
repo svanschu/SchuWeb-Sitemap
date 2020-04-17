@@ -1,17 +1,19 @@
 <?php
 /**
  * @author Guillermo Vargas, http://www.jooxmap.com
- * @email guille@vargas.co.cr
- * @version $Id: com_virtuemart.php 154 2011-04-09 23:44:12Z guilleva $
- * @package Xmap
- * @license GNU/GPL
- * @description Xmap plugin for Virtuemart component
+ * @author Sven Schultschik, http://extensions.schultschik.com
+ * @version $Id$
+ * @package SchuWeb_Sitemap
+ * @license             GNU General Public License version 2 or later
+ * @copyright           Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
  */
+
+use Joomla\Utilities\ArrayHelper;
 
 defined( '_JEXEC' ) or die;
 
 /** Adds support for Virtuemart categories to Xmap */
-class SCHUWEB_SITEMAP_com_virtuemart
+class schuweb_sitemap_com_virtuemart
 {
 	protected static $categoryModel;
 	protected static $productModel;
@@ -31,8 +33,8 @@ class SCHUWEB_SITEMAP_com_virtuemart
 
 		parse_str(html_entity_decode($link_query['query']), $link_vars);
 
-		$catid  = JArrayHelper::getValue($link_vars, 'virtuemart_category_id', 0);
-		$prodid = JArrayHelper::getValue($link_vars, 'virtuemart_product_id', 0);
+		$catid  = ArrayHelper::getValue($link_vars, 'virtuemart_category_id', 0);
+		$prodid = ArrayHelper::getValue($link_vars, 'virtuemart_product_id', 0);
 
 		if (!$catid)
 		{
@@ -60,22 +62,27 @@ class SCHUWEB_SITEMAP_com_virtuemart
 		}
 	}
 
-	/** Get the content tree for this kind of content */
-	static function getTree($xmap, $parent, &$params)
+    /**
+     * Get the content tree for this kind of content
+     * @param $sitemap
+     * @param $parent
+     * @param $params
+     * @return bool
+     *
+     * @since 1.0
+     */
+	static function getTree($sitemap, $parent, &$params)
 	{
 		self::initialize();
-
-		$app  = JFactory::getApplication();
-		$menu = $app->getMenu();
 
 		$link_query = parse_url($parent->link);
 
 		parse_str(html_entity_decode($link_query['query']), $link_vars);
 
-		$catid            = intval(JArrayHelper::getValue($link_vars, 'virtuemart_category_id', 0));
-		$params['Itemid'] = intval(JArrayHelper::getValue($link_vars, 'Itemid', $parent->id));
+		$catid            = intval(ArrayHelper::getValue($link_vars, 'virtuemart_category_id', 0));
+		$params['Itemid'] = intval(ArrayHelper::getValue($link_vars, 'Itemid', $parent->id));
 
-		$view = JArrayHelper::getValue($link_vars, 'view', '');
+		$view = ArrayHelper::getValue($link_vars, 'view', '');
 
 		// we currently support only categories
 		if (!in_array($view, array('categories','category')))
@@ -83,17 +90,17 @@ class SCHUWEB_SITEMAP_com_virtuemart
 			return true;
 		}
 
-		$include_products = JArrayHelper::getValue($params, 'include_products', 1);
+		$include_products = ArrayHelper::getValue($params, 'include_products', 1);
 		$include_products = ( $include_products == 1
-			|| ( $include_products == 2 && $xmap->view == 'xml')
-			|| ( $include_products == 3 && $xmap->view == 'html'));
+			|| ( $include_products == 2 && $sitemap->view == 'xml')
+			|| ( $include_products == 3 && $sitemap->view == 'html'));
 
 		$params['include_products']          = $include_products;
-		$params['include_product_images']    = (JArrayHelper::getValue($params, 'include_product_images', 1) && $xmap->view == 'xml');
-		$params['product_image_license_url'] = trim(JArrayHelper::getValue($params, 'product_image_license_url', ''));
+		$params['include_product_images']    = (ArrayHelper::getValue($params, 'include_product_images', 1) && $sitemap->view == 'xml');
+		$params['product_image_license_url'] = trim(ArrayHelper::getValue($params, 'product_image_license_url', ''));
 
-		$priority   = JArrayHelper::getValue($params, 'cat_priority', $parent->priority);
-		$changefreq = JArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
+		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
+		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
 
 		if ($priority == '-1')
 		{
@@ -108,8 +115,8 @@ class SCHUWEB_SITEMAP_com_virtuemart
 		$params['cat_priority']   = $priority;
 		$params['cat_changefreq'] = $changefreq;
 
-		$priority   = JArrayHelper::getValue($params, 'prod_priority', $parent->priority);
-		$changefreq = JArrayHelper::getValue($params, 'prod_changefreq', $parent->changefreq);
+		$priority   = ArrayHelper::getValue($params, 'prod_priority', $parent->priority);
+		$changefreq = ArrayHelper::getValue($params, 'prod_changefreq', $parent->changefreq);
 
 		if ($priority == '-1')
 		{
@@ -124,16 +131,21 @@ class SCHUWEB_SITEMAP_com_virtuemart
 		$params['prod_priority']   = $priority;
 		$params['prod_changefreq'] = $changefreq;
 
-		SCHUWEB_SITEMAP_com_virtuemart::getCategoryTree($xmap, $parent, $params, $catid);
+		self::getCategoryTree($sitemap, $parent, $params, $catid);
 
 		return true;
 	}
 
-	/** Virtuemart support */
-	static function getCategoryTree($xmap, $parent, &$params, $catid=0)
+    /** Virtuemart support
+     * @param $sitemap
+     * @param $parent
+     * @param $params
+     * @param int $catid
+     *
+     * @since 1.0
+     */
+	static function getCategoryTree($sitemap, $parent, &$params, $catid=0)
 	{
-		$database = JFactory::getDBO();
-
 		if (!isset($urlBase))
 		{
 			$urlBase = JURI::base();
@@ -143,7 +155,7 @@ class SCHUWEB_SITEMAP_com_virtuemart
 		$cache    = JFactory::getCache('com_virtuemart','callback');
 		$children = $cache->call( array( 'VirtueMartModelCategory', 'getChildCategoryList' ),$vendorId, $catid );
 
-		$xmap->changeLevel(1);
+		$sitemap->changeLevel(1);
 
 		foreach ($children as $row)
 		{
@@ -158,13 +170,13 @@ class SCHUWEB_SITEMAP_com_virtuemart
 			$node->expandible = true;
 			$node->link       = 'index.php?option=com_virtuemart&amp;view=category&amp;virtuemart_category_id=' . $row->virtuemart_category_id . '&amp;Itemid='.$parent->id;
 
-			if ($xmap->printNode($node) !== FALSE)
+			if ($sitemap->printNode($node) !== FALSE)
 			{
-				SCHUWEB_SITEMAP_com_virtuemart::getCategoryTree($xmap, $parent, $params, $row->virtuemart_category_id);
+				self::getCategoryTree($sitemap, $parent, $params, $row->virtuemart_category_id);
 			}
 		}
 
-		$xmap->changeLevel(-1);
+		$sitemap->changeLevel(-1);
 
 		if ($params['include_products'] && $catid != 0)
 		{
@@ -175,7 +187,7 @@ class SCHUWEB_SITEMAP_com_virtuemart
 				self::$categoryModel->addImages($products,1);
 			}
 
-			$xmap->changeLevel(1);
+			$sitemap->changeLevel(1);
 
 			foreach ($products as $row)
 			{
@@ -208,10 +220,10 @@ class SCHUWEB_SITEMAP_com_virtuemart
 					}
 				}
 
-				$xmap->printNode($node);
+				$sitemap->printNode($node);
 			}
 
-			$xmap->changeLevel(-1);
+			$sitemap->changeLevel(-1);
 		}
 	}
 

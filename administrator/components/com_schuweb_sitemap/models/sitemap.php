@@ -1,7 +1,7 @@
 <?php
 /**
  * @version      $Id$
- * @copyright    Copyright (C) 2005 - 2010 Open Source Matters, Inc. All rights reserved.
+ * @copyright    Copyright (C) 2019 SchuWeb Extensions Sven Schultschik, All rights reserved.
  * @license      GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -55,41 +55,44 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
         $this->setState('params', $params);
     }
 
-    /**
-     * Returns a Table object, always creating it.
-     *
-     * @param    type                The table type to instantiate
-     * @param    string              A prefix for the table class name. Optional.
-     * @param    array               Configuration array for model. Optional.
-     * @return   XmapTableSitemap    A database object
-     */
+	/**
+	 * Returns a Table object, always creating it.
+	 *
+	 * @param string $type   The table type to instantiate
+	 * @param string $prefix A prefix for the table class name. Optional.
+	 * @param array  $config Configuration array for model. Optional.
+	 *
+	 * @return bool|Table A database object
+	 * @since   2
+	 */
     public function getTable($type = 'Sitemap', $prefix = 'SchuWeb_SitemapTable', $config = array())
     {
         return JTable::getInstance($type, $prefix, $config);
     }
 
-    /**
-     * Method to get a single record.
-     *
-     * @param    integer    The id of the primary key.
-     *
-     * @return   mixed      Object on success, false on failure.
-     */
+	/**
+	 * Method to get a single record.
+	 *
+	 * @param integer    The id of the primary key.
+	 *
+	 * @return   mixed      Object on success, false on failure.
+	 * @throws Exception
+	 * @since 1
+	 */
     public function getItem($pk = null)
     {
         // Initialise variables.
         $pk = (!empty($pk)) ? $pk : (int)$this->getState('sitemap.id');
-        $false = false;
 
         // Get a row instance.
         $table = $this->getTable();
 
         // Attempt to load the row.
-        $return = $table->load($pk);
+        $table->load($pk);
 
         // Prime required properties.
         if (empty($table->id)) {
-            // Prepare data for a new record.
+            //TODO Prepare data for a new record.
         }
 
         // Convert to the JObject before adding other data.
@@ -108,6 +111,17 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
 
         return $item;
     }
+
+	public function getMenus()
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->select('m.*')
+			->from('#__menu_types AS m')
+			->order('m.title');
+		$db->setQuery($query);
+		return $db->loadObjectList('menutype');
+	}
 
     /**
      * Method to get the record form.
@@ -253,17 +267,6 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
             $cache->clean();
             return true;
         }
-    }
-
-    public function getMenues()
-    {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true)
-            ->select('m.*')
-            ->from('#__menu_types AS m')
-            ->order('m.title');
-        $db->setQuery($query);
-        return $db->loadObjectList('menutype');
     }
 
     /**

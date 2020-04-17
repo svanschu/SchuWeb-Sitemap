@@ -2,9 +2,9 @@
 /**
 * @author Martin Herbst - http://www.mherbst.de
 * @email webmaster@mherbst.de
-* @package Xmap
+* @package SchuWeb Sitemap
 * @license GNU/GPL
-* @description Xmap plugin for K2 component
+* @description SchuWeb Sitemap plugin for K2 component
 *
 * Changes:
 * + 0.51   2009/08/21  Do not show deleted items resp. categories
@@ -35,7 +35,7 @@
 
 defined('_JEXEC') or die;
 
-/** Adds support for K2  to Xmap */
+/** Adds support for K2  to SchuWeb Sitemap */
 class xmap_com_k2
 {
     static $maxAccess = 0;
