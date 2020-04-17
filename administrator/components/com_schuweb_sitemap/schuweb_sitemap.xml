@@ -79,7 +79,4 @@
             <folder>images</folder>
         </images>
     </administration>
-    <updateservers>
-        <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap.xml</server>
-    </updateservers>
 </extension>
