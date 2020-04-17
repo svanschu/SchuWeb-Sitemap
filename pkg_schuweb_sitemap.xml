@@ -21,4 +21,7 @@
         <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_com_weblinks.zip</file>
         <file type="plugin" id="com_k2" group="schuweb_sitemap">plg_com_k2.zip</file-->
     </files>
+    <updateservers>
+        <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap.xml</server>
+    </updateservers>
 </extension>
