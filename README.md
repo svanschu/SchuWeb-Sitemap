@@ -8,6 +8,9 @@ Many thanks to Vargas, the original creator of Xmap, who discontinued the develo
 ## Demo
 A small demo you can see at: [demo.schultschik.com](http://demo.schultschik.com/schuweb-sitemap)
 
+## Docu
+The documentation can be found on the project website https://extensions.schultschik.com/documentation/
+
 ## Support
 You have trouble using the extension? Write an issue here at github or see the [support website](https://extensions.schultschik.com/support) which other possibilities you have.
 
