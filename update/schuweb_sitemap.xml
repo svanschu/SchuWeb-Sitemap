@@ -4,7 +4,7 @@
         <name>SchuWeb Sitemap</name>
         <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>com_schuweb_sitemap</element>
-        <type>package</type>
+        <type>component</type>
         <version>3.1.0</version>
         <infourl title="SchuWeb Sitemap 3.1.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-3-1-0</infourl>
         <downloads>
@@ -15,7 +15,6 @@
         </tags>
         <maintainer>Sven Schultschik</maintainer>
         <maintainerurl>http://www.schultschik.de</maintainerurl>
-        <section>frs</section>
         <targetplatform name="joomla" version="3.[6789]" />
         <php_minimum>5.6</php_minimum>
     </update>
@@ -23,7 +22,7 @@
         <name>SchuWeb Sitemap</name>
         <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>com_schuweb_sitemap</element>
-        <type>package</type>
+        <type>component</type>
         <version>3.0.0</version>
         <infourl title="SchuWeb Sitemap 3.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-3-0-0</infourl>
         <downloads>
@@ -34,7 +33,6 @@
         </tags>
         <maintainer>Sven Schultschik</maintainer>
         <maintainerurl>http://www.schultschik.de</maintainerurl>
-        <section>frs</section>
         <targetplatform name="joomla" version="3.[6789]" />
         <php_minimum>5.6</php_minimum>
     </update>
