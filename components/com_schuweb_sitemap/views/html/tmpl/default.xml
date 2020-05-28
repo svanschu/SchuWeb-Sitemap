@@ -17,21 +17,4 @@
                 description="COM_SCHUWEB_SITEMAP_SELECT_A_SITEMAP" />
         </fieldset>
     </fields>
-
-    <!-- Add fields to the parameters object for the layout. -->
-    <fields name="params">
-        <!-- Basic options. -->
-        <fieldset name="basic"
-            label="COM_SCHUWEB_SITEMAP_ATTRIBS_SITEMAP_SETTINGS_LABEL">
-            <field
-            name="include_css"
-            type="list"
-            default="0"
-            label="COM_SCHUWEB_SITEMAP_INCLUDE_CSS_LABEL"
-            description="COM_SCHUWEB_SITEMAP_INCLUDE_CSS_DESC">
-                <option value="1">JYES</option>
-                <option value="0">JNO</option>
-            </field>
-        </fieldset>
-    </fields>
 </metadata>
