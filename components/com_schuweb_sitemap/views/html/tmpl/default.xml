@@ -13,8 +13,8 @@
                 type="modal_sitemaps"
                 default=""
                 required="true"
-                label="COM_SCHUWEB_SITEMAP_SELECT_AN_SITEMAP"
-                description="COM_SCHUWEB_SITEMAP_SELECT_A_SITEMAP" />
+                label="COM_SCHUWEB_SITEMAP_SELECT_A_SITEMAP"
+                description="COM_SCHUWEB_SITEMAP_SELECT_A_SITEMAP_DESC" />
         </fieldset>
     </fields>
 </metadata>
