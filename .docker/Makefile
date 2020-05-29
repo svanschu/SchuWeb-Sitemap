@@ -1,5 +1,5 @@
 sitemap-dev-php74-up:
-	sudo UID=${UID} GID=${UID} docker-compose -f sitemap-dev-php7.4/docker-compose.yml up -d
+	sudo docker-compose -f sitemap-dev-php7.4/docker-compose.yml up -d
 sitemap-dev-php74-stop:
 	sudo docker-compose -f sitemap-dev-php7.4/docker-compose.yml stop
 sitemap-dev-php74-install:
@@ -16,3 +16,7 @@ sitemap-dev-php74-install:
 	sudo ln -sf /src/plugins/schuweb_sitemap/com_sobipro/language/en-GB.plg_schuweb_sitemap_com_sobipro.ini ${CURDIR}/sitemap-dev-php7.4/public/administrator/language/en-GB/
 	sudo ln -sf /src/plugins/schuweb_sitemap/com_virtuemart/language/en-GB.plg_schuweb_sitemap_com_virtuemart.ini ${CURDIR}/sitemap-dev-php7.4/public/administrator/language/en-GB/
 	sudo ln -sf /src/plugins/schuweb_sitemap/com_weblinks/language/en-GB.plg_schuweb_sitemap_com_weblinks.ini ${CURDIR}/sitemap-dev-php7.4/public/administrator/language/en-GB/
+updateTest-php7.4-up:
+	sudo docker-compose -f updateTest-php7.4/docker-compose.yml up -d
+updateTest-php7.4-stop:
+	sudo docker-compose -f updateTest-php7.4/docker-compose.yml stop
