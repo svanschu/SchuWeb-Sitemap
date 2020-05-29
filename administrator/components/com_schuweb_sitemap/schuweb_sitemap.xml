@@ -21,6 +21,7 @@
             <file driver="postgresql" charset="utf8">install/uninstall.postgresql.sql</file>
         </sql>
     </uninstall>
+    <scriptfile>extension.script.php</scriptfile>
     <files folder="front">
         <filename>controller.php</filename>
         <filename>displayer.php</filename>
