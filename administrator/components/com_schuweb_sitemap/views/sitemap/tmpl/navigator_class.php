@@ -39,7 +39,7 @@ class SchuWeb_SitemapNavigatorDisplayer extends SchuWeb_SitemapDisplayer
 
     function &expandLink(&$parent)
     {
-        $items = &JSite::getMenu();
+        $items = JSite::getMenu();
         $extensions = &$this->_extensions;
         $rows = null;
         if (strpos($parent->link, '-menu-') === 0) {
