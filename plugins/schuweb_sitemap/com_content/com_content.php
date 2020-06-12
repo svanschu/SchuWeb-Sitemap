@@ -306,6 +306,11 @@ class schuweb_sitemap_com_content
                 $node->browserNav = $parent->browserNav;
                 $node->priority = $params['cat_priority'];
                 $node->changefreq = $params['cat_changefreq'];
+
+                $attribs = json_decode($xmap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
                 $node->name = $item->title;
                 $node->expandible = true;
                 $node->secure = $parent->secure;
@@ -409,6 +414,11 @@ class schuweb_sitemap_com_content
                 $node->browserNav = $parent->browserNav;
                 $node->priority = $params['art_priority'];
                 $node->changefreq = $params['art_changefreq'];
+
+                $attribs = json_decode($xmap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
                 $node->name = $item->title;
                 $node->modified = $item->modified;
                 $node->expandible = false;
@@ -460,6 +470,11 @@ class schuweb_sitemap_com_content
             $subnode->browserNav = $parent->browserNav;
             $subnode->priority = $params['art_priority'];
             $subnode->changefreq = $params['art_changefreq'];
+
+            $attribs = json_decode($xmap->sitemap->attribs);
+            $subnode->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+            $subnode->xmlInsertPriority = $attribs->xmlInsertPriority;
+
             $subnode->secure = $parent->secure;
             $subnode->lastmod = $parent->lastmod;
             $xmap->printNode($subnode);
