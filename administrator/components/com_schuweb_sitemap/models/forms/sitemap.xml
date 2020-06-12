@@ -364,7 +364,7 @@
 
             <field
                     name="cacheControlMaxAge"
-                    type="text"
+                    type="number"
                     default=""
                     labelclass="control-label"
                     label="SCHUWEB_SITEMAP_CACHE_CONTROL_MAX_AGE"
