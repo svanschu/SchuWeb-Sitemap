@@ -116,6 +116,11 @@ class xmap_com_weblinks
             $node->link = WeblinksHelperRoute::getCategoryRoute($cat);
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
+
+            $attribs = json_decode($xmap->sitemap->attribs);
+            $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+            $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
             $node->expandible = true;
             if ($xmap->printNode($node) !== FALSE) {
                 xmap_com_weblinks::getCategoryTree($xmap, $parent, $params, $cat);
@@ -152,6 +157,11 @@ class xmap_com_weblinks
                 }
                 $node->priority = $params['link_priority'];
                 $node->changefreq = $params['link_changefreq'];
+
+                $attribs = json_decode($xmap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
                 $node->expandible = false;
                 $xmap->printNode($node);
             }

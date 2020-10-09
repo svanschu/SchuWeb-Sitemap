@@ -317,6 +317,10 @@ class xmap_com_k2
         $node->changefreq = $params['changefreq'];
         $node->lastmod = $parent->lastmod;
 
+        $attribs = json_decode($xmap->sitemap->attribs);
+        $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+        $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
         if ($iscat)
         {
             $xmap->IDS .= "|c".$row->id;
@@ -336,7 +340,7 @@ class xmap_com_k2
 
     static function &getParam($arr, $name, $def)
     {
-        $var = JArrayHelper::getValue( $arr, $name, $def, '' );
+        $var = ArrayHelper::getValue( $arr, $name, $def, '' );
         return $var;
     }
 

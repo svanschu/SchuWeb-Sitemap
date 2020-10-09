@@ -1,0 +1,40 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    mariadb:
+      image: mariadb:5.5
+      container_name: updatetest-mariadb
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./db:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=sitemap
+        - MYSQL_DATABASE=sitemap
+        - MYSQL_USER=sitemap
+        - MYSQL_PASSWORD=sitemap
+      ports:
+        - "5558:3306"
+
+    webserver:
+      image: nginx:alpine
+      container_name: updatetest-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "5555:80"
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      container_name: updatetest-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./../..:/src
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+

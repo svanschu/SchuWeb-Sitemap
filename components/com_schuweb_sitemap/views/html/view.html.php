@@ -57,9 +57,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
         // Create a shortcut to the paramemters.
         $params = &$this->state->params;
         $offset = $this->state->get('page.offset');
-        if ($params->get('include_css', 0)){
-            $doc->addStyleSheet(JURI::root().'components/com_schuweb_sitemap/assets/css/SchuWeb_Sitemap.css');
-        }
 
         // If a guest user, they may be able to log in to view the full article
         // TODO: Does this satisfy the show not auth setting?

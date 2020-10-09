@@ -104,11 +104,13 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
 
             // Get the chancefrequency and priority for this item
             $changefreq = null;
-            if ($node->xmlInsertChangeFreq != 0)
-                $changefreq = $this->getProperty('changefreq', $node->changefreq, $node->id, 'xml', $node->uid);
+            if (isset($node->xmlInsertChangeFreq))
+                if ($node->xmlInsertChangeFreq != 0)
+                    $changefreq = $this->getProperty('changefreq', $node->changefreq, $node->id, 'xml', $node->uid);
             $priority = null;
-            if ($node->xmlInsertPriority != 0)
-                $priority = $this->getProperty('priority', $node->priority, $node->id, 'xml', $node->uid);
+            if (isset($node->xmlInsertPriority))
+                if ($node->xmlInsertPriority != 0)
+                    $priority = $this->getProperty('priority', $node->priority, $node->id, 'xml', $node->uid);
 
             echo '<url>' . "\n";
             echo '<loc>', $link, '</loc>' . "\n";

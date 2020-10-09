@@ -86,6 +86,7 @@
         <copy file="${src}/administrator/components/com_schuweb_sitemap/schuweb_sitemap.xml" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
         <copy file="${src}/pkg_schuweb_sitemap.xml" todir="${builddir}/tmp" />
         <copy file="${src}/install.script.php" todir="${builddir}/tmp" />
+        <copy file="${src}/extension.script.php" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
         <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
             <fileset refid="schuweb_sitemap_plugins"/>
         </copy>

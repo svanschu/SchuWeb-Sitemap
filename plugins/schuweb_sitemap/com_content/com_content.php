@@ -42,16 +42,15 @@ class schuweb_sitemap_com_content
         }
 
         parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $view = JArrayHelper::getValue($link_vars, 'view', '');
-        $layout = JArrayHelper::getValue($link_vars, 'layout', '');
-        $id = JArrayHelper::getValue($link_vars, 'id', 0);
+        $view = ArrayHelper::getValue($link_vars, 'view', '');
+        $layout = ArrayHelper::getValue($link_vars, 'layout', '');
+        $id = ArrayHelper::getValue($link_vars, 'id', 0);
 
         //----- Set add_images param
-        $params['add_images'] = JArrayHelper::getValue($params, 'add_images', 0);
+        $params['add_images'] = ArrayHelper::getValue($params, 'add_images', 0);
 
         //----- Set add pagebreaks param
-        $add_pagebreaks = JArrayHelper::getValue($params, 'add_pagebreaks', 1);
-        $params['add_pagebreaks'] = JArrayHelper::getValue($params, 'add_pagebreaks', 1);
+        $params['add_pagebreaks'] = ArrayHelper::getValue($params, 'add_pagebreaks', 1);
 
         switch ($view) {
             case 'category':
@@ -85,7 +84,7 @@ class schuweb_sitemap_com_content
 
                     $text = @$item->introtext . @$item->fulltext;
                     if ($params['add_images']) {
-                        $node->images = SchuWeb_SitemapHelper::getImages($text,JArrayHelper::getValue($params, 'max_images', 1000));
+                        $node->images = SchuWeb_SitemapHelper::getImages($text,ArrayHelper::getValue($params, 'max_images', 1000));
                     }
 
                     if ($params['add_pagebreaks']) {
@@ -173,8 +172,8 @@ class schuweb_sitemap_com_content
             || $xmap->view == 'navigator');
         $params['add_pagebreaks'] = $add_pagebreaks;
 
-        if ($params['add_pagebreaks'] && !defined('_XMAP_COM_CONTENT_LOADED')) {
-            define('_XMAP_COM_CONTENT_LOADED',1);  // Load it just once
+        if ($params['add_pagebreaks'] && !defined('_SCHUWEBSITEMAP_COM_CONTENT_LOADED')) {
+            define('_SCHUWEBSITEMAP_COM_CONTENT_LOADED',1);  // Load it just once
             $lang = JFactory::getLanguage();
             $lang->load('plg_content_pagebreak');
         }
@@ -306,6 +305,11 @@ class schuweb_sitemap_com_content
                 $node->browserNav = $parent->browserNav;
                 $node->priority = $params['cat_priority'];
                 $node->changefreq = $params['cat_changefreq'];
+
+                $attribs = json_decode($xmap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
                 $node->name = $item->title;
                 $node->expandible = true;
                 $node->secure = $parent->secure;
@@ -409,6 +413,11 @@ class schuweb_sitemap_com_content
                 $node->browserNav = $parent->browserNav;
                 $node->priority = $params['art_priority'];
                 $node->changefreq = $params['art_changefreq'];
+
+                $attribs = json_decode($xmap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
                 $node->name = $item->title;
                 $node->modified = $item->modified;
                 $node->expandible = false;
@@ -460,6 +469,11 @@ class schuweb_sitemap_com_content
             $subnode->browserNav = $parent->browserNav;
             $subnode->priority = $params['art_priority'];
             $subnode->changefreq = $params['art_changefreq'];
+
+            $attribs = json_decode($xmap->sitemap->attribs);
+            $subnode->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+            $subnode->xmlInsertPriority = $attribs->xmlInsertPriority;
+
             $subnode->secure = $parent->secure;
             $subnode->lastmod = $parent->lastmod;
             $xmap->printNode($subnode);

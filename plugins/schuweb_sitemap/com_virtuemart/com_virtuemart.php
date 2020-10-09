@@ -167,6 +167,11 @@ class schuweb_sitemap_com_virtuemart
 			$node->name       = stripslashes($row->category_name);
 			$node->priority   = $params['cat_priority'];
 			$node->changefreq = $params['cat_changefreq'];
+
+            $attribs = json_decode($sitemap->sitemap->attribs);
+            $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+            $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
 			$node->expandible = true;
 			$node->link       = 'index.php?option=com_virtuemart&amp;view=category&amp;virtuemart_category_id=' . $row->virtuemart_category_id . '&amp;Itemid='.$parent->id;
 
@@ -198,6 +203,11 @@ class schuweb_sitemap_com_virtuemart
 				$node->browserNav = $parent->browserNav;
 				$node->priority   = $params['prod_priority'];
 				$node->changefreq = $params['prod_changefreq'];
+
+                $attribs = json_decode($sitemap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
 				$node->name       = $row->product_name;
 				$node->modified   = strtotime($row->modified_on);
 				$node->expandible = false;

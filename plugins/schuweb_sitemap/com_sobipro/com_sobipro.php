@@ -166,6 +166,11 @@ class schuweb_sitemap_com_sobipro
             $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'title' => $row->name), false, false);
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
+
+            $attribs = json_decode($xmap->sitemap->attribs);
+            $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+            $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
             $node->expandible = true;
             $node->secure = $parent->secure;
             $node->lastmod = $parent->lastmod;
@@ -202,6 +207,11 @@ class schuweb_sitemap_com_sobipro
                 $node->modified = $row->modified ? $row->modified : $row->publish_up;
                 $node->priority = $params['entry_priority'];
                 $node->changefreq = $params['entry_changefreq'];
+
+                $attribs = json_decode($xmap->sitemap->attribs);
+                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
                 $node->expandible = false;
                 $node->secure = $parent->secure;
                 $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'pid' => $row->catid, 'title' => $row->name), false, false);
