@@ -152,8 +152,7 @@ class schuweb_sitemap_com_virtuemart
 		}
 
 		$vendorId = 1;
-		$cache    = JFactory::getCache('com_virtuemart','callback');
-		$children = $cache->call( array( 'VirtueMartModelCategory', 'getChildCategoryList' ),$vendorId, $catid );
+		$children = VmModel::getModel('category')->getChildCategoryList($vendorId, $catid);
 
 		$sitemap->changeLevel(1);
 
