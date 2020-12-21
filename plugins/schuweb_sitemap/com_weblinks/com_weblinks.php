@@ -10,7 +10,7 @@
  */
 defined( '_JEXEC' ) or die;
 
-class xmap_com_weblinks
+class schuweb_sitemap_com_weblinks
 {
 
     static private $_initialized = false;
@@ -99,7 +99,7 @@ class xmap_com_weblinks
 
         $params['count_clicks'] = $weblinks_params->get('count_clicks');
 
-        xmap_com_weblinks::getCategoryTree($xmap, $parent, $params, $category);
+        schuweb_sitemap_com_weblinks::getCategoryTree($xmap, $parent, $params, $category);
     }
 
     static function getCategoryTree($xmap, $parent, &$params, $category)
@@ -123,7 +123,7 @@ class xmap_com_weblinks
 
             $node->expandible = true;
             if ($xmap->printNode($node) !== FALSE) {
-                xmap_com_weblinks::getCategoryTree($xmap, $parent, $params, $cat);
+                schuweb_sitemap_com_weblinks::getCategoryTree($xmap, $parent, $params, $cat);
             }
         }
         $xmap->changeLevel(-1);
