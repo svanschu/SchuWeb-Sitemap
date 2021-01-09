@@ -24,4 +24,6 @@ Thank you to [Guillermo Vargas](https://github.com/guilleva) too, who originally
 ## Donation
 Want to support the project? 
 
+![GitHub Sponsors](https://img.shields.io/github/sponsors/svanschu?style=social)
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green)](https://paypal.me/SchuWeb?locale.x=de_DE)
