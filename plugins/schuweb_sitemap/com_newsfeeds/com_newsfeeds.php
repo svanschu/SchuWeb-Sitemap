@@ -4,11 +4,13 @@
  * @author Martin Podolak
  * @email martinp@disroot.org
  * @version $Id: com_newsfeeds.php
- * @package Xmap
+ * @package SchuWeb Sitemap
  * @license GNU/GPL
- * @description Xmap plugin for Joomla's newsfeeds component
+ * @description SchuWeb Sitemap plugin for Joomla's newsfeeds component
  */
 defined( '_JEXEC' ) or die;
+
+use Joomla\Utilities\ArrayHelper;
 
 class schuweb_sitemap_com_newsfeeds
 {
@@ -21,11 +23,11 @@ class schuweb_sitemap_com_newsfeeds
 
     static function prepareMenuItem($node, &$params)
     {
-        $newsfeed_query = parse_url($node->newsfeed);
+        $newsfeed_query = parse_url($node->link);
         parse_str(html_entity_decode($newsfeed_query['query']), $newsfeed_vars);
-        $view = JArrayHelper::getValue($newsfeed_vars, 'view', '');
+        $view = ArrayHelper::getValue($newsfeed_vars, 'view', '');
         if ($view == 'newsfeed') {
-            $id = intval(JArrayHelper::getValue($newsfeed_vars, 'id', 0));
+            $id = intval(ArrayHelper::getValue($newsfeed_vars, 'id', 0));
             if ($id) {
                 $node->uid = 'com_newsfeedsi' . $id;
                 $node->expandible = false;
@@ -34,44 +36,44 @@ class schuweb_sitemap_com_newsfeeds
             $node->uid = 'com_newsfeedscategories';
             $node->expandible = true;
         } elseif ($view == 'category') {
-            $catid = intval(JArrayHelper::getValue($newsfeed_vars, 'id', 0));
+            $catid = intval(ArrayHelper::getValue($newsfeed_vars, 'id', 0));
             $node->uid = 'com_newsfeedsc' . $catid;
             $node->expandible = true;
         }
     }
 
-    static function getTree($xmap, $parent, &$params)
+    static function getTree($sitemap, $parent, &$params)
     {
         self::initialize($params);
 
         $app = JFactory::getApplication();
         $newsfeeds_params = $app->getParams('com_newsfeeds');
 
-        $newsfeed_query = parse_url($parent->newsfeed);
+        $newsfeed_query = parse_url($parent->link);
         parse_str(html_entity_decode($newsfeed_query['query']), $newsfeed_vars);
-        $view = JArrayHelper::getValue($newsfeed_vars, 'view', 0);
+        $view = ArrayHelper::getValue($newsfeed_vars, 'view', 0);
 
         $app = JFactory::getApplication();
         $menu = $app->getMenu();
         $menuparams = $menu->getParams($parent->id);
 
         if ($view == 'category') {
-            $catid = intval(JArrayHelper::getValue($newsfeed_vars, 'id', 0));
+            $catid = intval(ArrayHelper::getValue($newsfeed_vars, 'id', 0));
         } elseif ($view == 'categories') {
             $catid = 0;
         } else { // Only expand category menu items
             return;
         }
 
-        $include_newsfeeds = JArrayHelper::getValue($params, 'include_newsfeeds', 1, '');
+        $include_newsfeeds = ArrayHelper::getValue($params, 'include_newsfeeds', 1, '');
         $include_newsfeeds = ( $include_newsfeeds == 1
-            || ( $include_newsfeeds == 2 && $xmap->view == 'xml')
-            || ( $include_newsfeeds == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ( $include_newsfeeds == 2 && $sitemap->view == 'xml')
+            || ( $include_newsfeeds == 3 && $sitemap->view == 'html')
+            || $sitemap->view == 'navigator');
         $params['include_newsfeeds'] = $include_newsfeeds;
 
-        $priority = JArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
-        $changefreq = JArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq, '');
+        $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
+        $changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq, '');
         if ($priority == '-1')
             $priority = $parent->priority;
         if ($changefreq == '-1')
@@ -80,8 +82,8 @@ class schuweb_sitemap_com_newsfeeds
         $params['cat_priority'] = $priority;
         $params['cat_changefreq'] = $changefreq;
 
-        $priority = JArrayHelper::getValue($params, 'newsfeed_priority', $parent->priority, '');
-        $changefreq = JArrayHelper::getValue($params, 'newsfeed_changefreq', $parent->changefreq, '');
+        $priority = ArrayHelper::getValue($params, 'newsfeed_priority', $parent->priority, '');
+        $changefreq = ArrayHelper::getValue($params, 'newsfeed_changefreq', $parent->changefreq, '');
         if ($priority == '-1')
             $priority = $parent->priority;
 
@@ -99,7 +101,7 @@ class schuweb_sitemap_com_newsfeeds
 
         $params['count_clicks'] = $newsfeeds_params->get('count_clicks');
 
-        schuweb_sitemap_com_newsfeeds::getCategoryTree($xmap, $parent, $params, $category);
+        schuweb_sitemap_com_newsfeeds::getCategoryTree($sitemap, $parent, $params, $category);
     }
 
     static function getCategoryTree($xmap, $parent, &$params, $category)
@@ -113,7 +115,7 @@ class schuweb_sitemap_com_newsfeeds
             $node->id = $parent->id;
             $node->uid = $parent->uid . 'c' . $cat->id;
             $node->name = $cat->title;
-            $node->newsfeed = NewsfeedsHelperRoute::getCategoryRoute($cat);
+            $node->link = NewsfeedsHelperRoute::getCategoryRoute($cat);
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
@@ -131,7 +133,7 @@ class schuweb_sitemap_com_newsfeeds
         if ($params['include_newsfeeds']) { //view=category&catid=...
             $newsfeedsModel = new NewsfeedsModelCategory();
             $newsfeedsModel->getState(); // To force the populate state
-            $newsfeedsModel->setState('list.limit', JArrayHelper::getValue($params, 'max_newsfeeds', NULL));
+            $newsfeedsModel->setState('list.limit', ArrayHelper::getValue($params, 'max_newsfeeds', NULL));
             $newsfeedsModel->setState('list.start', 0);
             $newsfeedsModel->setState('list.ordering', 'ordering');
             $newsfeedsModel->setState('list.direction', 'ASC');
@@ -145,15 +147,15 @@ class schuweb_sitemap_com_newsfeeds
                 $node = new stdclass;
                 $node->id = $parent->id;
                 $node->uid = $parent->uid . 'i' . $newsfeed->id;
-                $node->name = $newsfeed->title;
+                $node->name = $newsfeed->name;
 
                 // Find the Itemid
                 $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/','$1',NewsfeedsHelperRoute::getNewsfeedRoute($newsfeed->id, $category->id)));
 
                 if ($item_params->get('count_clicks', $params['count_clicks']) == 1) {
-                    $node->newsfeed = 'index.php?option=com_newsfeeds&task=newsfeed.go&id='. $newsfeed->id.'&Itemid='.($Itemid ? $Itemid : $parent->id);
+                    $node->link = 'index.php?option=com_newsfeeds&task=newsfeed.go&id='. $newsfeed->id.'&Itemid='.($Itemid ? $Itemid : $parent->id);
                 } else {
-                    $node->newsfeed = $newsfeed->url;
+                    $node->link = $newsfeed->link;
                 }
                 $node->priority = $params['newsfeed_priority'];
                 $node->changefreq = $params['newsfeed_changefreq'];
