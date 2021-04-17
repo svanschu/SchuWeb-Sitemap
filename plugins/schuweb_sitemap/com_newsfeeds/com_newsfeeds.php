@@ -1,13 +1,11 @@
 <?php
-
 /**
- * @author Martin Podolak
- * @email martinp@disroot.org
- * @version $Id: com_newsfeeds.php
  * @package SchuWeb Sitemap
- * @license GNU/GPL
- * @description SchuWeb Sitemap plugin for Joomla's newsfeeds component
- */
+ *
+ * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.schultschik.de
+ **/
 defined( '_JEXEC' ) or die;
 
 use Joomla\Utilities\ArrayHelper;
