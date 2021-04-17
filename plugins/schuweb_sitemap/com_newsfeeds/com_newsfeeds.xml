@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <extension type="plugin" group="schuweb_sitemap" version="1.6" method="upgrade">
 	<name>SchuWeb Sitemap - Newsfeeds Plugin</name>
-    <author>Martin Podolak</author>
+    <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <authorEmail>martinp@disroot.org</authorEmail>
-    <authorUrl></authorUrl>
+    <authorEmail>sven@schultschik.de</authorEmail>
+    <authorUrl>www.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_NF_PLUGIN_DESCRIPTION</description>
     <files>
@@ -14,9 +14,6 @@
         <filename>index.html</filename>
     </files>
     <languages folder="language">
-        <!--
-        these files will be installed in the administrator/language folder.
-        -->
         <language tag="en-GB">en-GB.plg_schuweb_sitemap_com_newsfeeds.ini</language>
         <language tag="nl-NL">nl-NL.plg_schuweb_sitemap_com_newsfeeds.ini</language>
         <language tag="ru-RU">ru-RU.plg_schuweb_sitemap_com_newsfeeds.ini</language>
