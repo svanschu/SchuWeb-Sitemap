@@ -125,12 +125,7 @@ class schuweb_sitemap_com_zoo {
 		}
 
 		if ($params['include_items'] ){
-
-			// commented out as non-functioning - Matt Faulds
-			//	if ($params['items_title'] != "" && $schuweb_sitemap->view == 'html') {
-			//		echo "<".$params['items_title_tag'].">".$params['items_title']."</".$params['items_title_tag'].">";
-			//	}
-
+		{
 			// get items info from database
 			// basically it select those items that are published now (publish_up is less then now, meaning it's in past)
 			// and not unpublished yet (either not have publish_down date set, or that date is in future)
@@ -147,10 +142,14 @@ class schuweb_sitemap_com_zoo {
 			$schuweb_sitemap->changeLevel(1);
 			foreach($items as $item) {
 
-				// Added by Matt Faulds to allow SEF urls
-				if(!($Itemid = self::_find('frontpage',$appid)->id) AND !($Itemid = self::_find('category',$appid)->id)) {
-					$Itemid = self::_find('item',$item->id)->id;
+				if (is_null($menuitem = self::_find('frontpage', $appid)))
+				{
+					if (is_null($menuitem = self::_find('category', $appid)))
+					{
+						is_null($menuitem = self::_find('item', $item->id));
+					}
 				}
+				$Itemid = $menuitem->id;
 
 				// if we are making news map, we should ignore items older then 3 days
 				if ($schuweb_sitemap->isNews && strtotime($item->publish_up) < ($schuweb_sitemap->now - (3 * 86400))) {
@@ -185,7 +184,7 @@ class schuweb_sitemap_com_zoo {
 
 		if (self::$_menu_items == null) {
 			$menu_items	= $app->object->create('JSite')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
-			print_r($menu_items);
+			$menu_items = $app->object->create('JSite')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
 			$menu_items = $menu_items ? $menu_items : array();
 
 			self::$_menu_items = array_fill_keys(array('category', 'frontpage', 'item'), array());
@@ -202,12 +201,16 @@ class schuweb_sitemap_com_zoo {
 						break;
 				}
 			}
-		} else {
-			echo '<p>'.$type."  ==> ".$id;
-			print_r(self::$_menu_items);
 		}
 
-		return @self::$_menu_items[$type][$id];
+		if (array_key_exists($type, self::$_menu_items) && array_key_exists($id, self::$_menu_items[$type]))
+		{
+			return self::$_menu_items[$type][$id];
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 }
