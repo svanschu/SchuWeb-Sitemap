@@ -19,7 +19,7 @@
         <file type="plugin" id="com_virtuemart" group="schuweb_sitemap">plg_virtuemart_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_com_weblinks_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="com_newsfeeds" group="schuweb_sitemap">plg_com_newsfeeds_sw.build.version_sw.build.dstamp.zip</file>
-        <!--file type="plugin" id="com_k2" group="schuweb_sitemap">plg_com_k2.zip</file-->
+        <file type="plugin" id="com_zoo" group="schuweb_sitemap">plg_com_zoo_sw.build.version_sw.build.dstamp.zip</file>
     </files>
     <updateservers>
         <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap.xml</server>
