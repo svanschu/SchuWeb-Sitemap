@@ -149,7 +149,7 @@ class schuweb_sitemap_com_zoo {
 
 				// Added by Matt Faulds to allow SEF urls
 				if(!($Itemid = self::_find('frontpage',$appid)->id) AND !($Itemid = self::_find('category',$appid)->id)) {
-					$Itemid = self::_find('item',$appid)->id;
+					$Itemid = self::_find('item',$item->id)->id;
 				}
 
 				// if we are making news map, we should ignore items older then 3 days
