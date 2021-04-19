@@ -1,10 +1,11 @@
 <?php
 /**
- * @version             $Id$
- * @copyright           Copyright (C) 2020 SchuWebExt Sven Schultschik
- * @license             GNU General Public License version 2 or later; see LICENSE.txt
- * @author              Sven Schultschik (schuwebext@schultschik.de)
- */
+ * @package SchuWeb Sitemap
+ *
+ * @Copyright (C) 2020-2021 Sven Schultschik. All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.schultschik.de
+ **/
 defined('_JEXEC') or die;
 
 use \Joomla\Utilities\ArrayHelper;
