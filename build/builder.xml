@@ -11,7 +11,9 @@
     <!-- Version number of build -->
     <property name="build.version" value="0.0.0" override="true"/>
     <!-- get the date for build -->
-    <tstamp prefix="build.date"/>
+    <tstamp prefix="build.date">
+        <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
+    </tstamp>
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
     <property name="builddir" value="./../../packages/${extension_name}" override="true"/>
     <!-- Declare Project src files -->
@@ -52,6 +54,21 @@
         </zip>
         <zip destfile="${builddir}/tmp/packages/plg_virtuemart_${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_virtuemart">
+                <include name="**"/>
+            </fileset>
+        </zip>
+        <zip destfile="${builddir}/tmp/packages/plg_newsfeeds_${build.version}_${build.date.DSTAMP}.zip">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_newsfeeds">
+                <include name="**"/>
+            </fileset>
+        </zip>
+        <zip destfile="${builddir}/tmp/packages/plg_weblinks_${build.version}_${build.date.DSTAMP}.zip">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_weblinks">
+                <include name="**"/>
+            </fileset>
+        </zip>
+        <zip destfile="${builddir}/tmp/packages/plg_zoo_${build.version}_${build.date.DSTAMP}.zip">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_zoo">
                 <include name="**"/>
             </fileset>
         </zip>
@@ -99,7 +116,8 @@
             <filterchain>
                 <replaceregexp>
                     <regexp pattern="sw\.build\.version" replace="${build.version}"/>
-                    <regexp pattern="sw\.build\.date" replace="${build.date.DSTAMP}"/>
+                    <regexp pattern="sw\.build\.date" replace="${build.date.DATE}"/>
+                    <regexp pattern="sw\.build\.dstamp" replace="${build.date.DSTAMP}"/>
                 </replaceregexp>
             </filterchain>
         </reflexive>

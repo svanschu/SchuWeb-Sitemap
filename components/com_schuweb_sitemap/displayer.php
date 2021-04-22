@@ -112,6 +112,17 @@ class SchuWeb_SitemapDisplayer {
             . "LIMIT 1"
         );
         $module = $db->loadObject();
+
+        if (empty($module)){
+        	$query = $db->getQuery(true);
+        	$query->select($db->quoteName('title'))
+		        ->from($db->quoteName('#__menu_types'))
+		        ->where($db->quoteName('menutype') .' = ' .$db->quote($menutype));
+        	$db->setQuery($query);
+        }
+
+	    $module = $db->loadObject();
+
         if ($module) {
             $title = $module->title;
         }

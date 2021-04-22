@@ -1,16 +1,15 @@
 <?php
 /**
- * @author Guillermo Vargas, http://www.jooxmap.com
- * @author Sven Schultschik, http://extensions.schultschik.com
- * @version $Id$
- * @package SchuWeb_Sitemap
- * @license             GNU General Public License version 2 or later
- * @copyright           Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
- */
-
-use Joomla\Utilities\ArrayHelper;
+ * @package SchuWeb Sitemap
+ *
+ * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.schultschik.de
+ **/
 
 defined( '_JEXEC' ) or die;
+
+use Joomla\Utilities\ArrayHelper;
 
 /** Adds support for Virtuemart categories to Xmap */
 class schuweb_sitemap_com_virtuemart
@@ -166,6 +165,7 @@ class schuweb_sitemap_com_virtuemart
 			$node->name       = stripslashes($row->category_name);
 			$node->priority   = $params['cat_priority'];
 			$node->changefreq = $params['cat_changefreq'];
+			$node->lastmod = $parent->lastmod;
 
             $attribs = json_decode($sitemap->sitemap->attribs);
             $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
@@ -210,6 +210,7 @@ class schuweb_sitemap_com_virtuemart
 				$node->name       = $row->product_name;
 				$node->modified   = strtotime($row->modified_on);
 				$node->expandible = false;
+				$node->lastmod = $parent->lastmod;
 				$node->link       = 'index.php?option=com_virtuemart&amp;view=productdetails&amp;virtuemart_product_id=' . $row->virtuemart_product_id . '&amp;virtuemart_category_id=' . $row->virtuemart_category_id . '&amp;Itemid=' . $parent->id;
 
 				if ($params['include_product_images'])
