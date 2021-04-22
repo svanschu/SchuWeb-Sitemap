@@ -126,7 +126,13 @@ class schuweb_sitemap_com_zoo
 				$node->link       = 'index.php?option=com_zoo&amp;task=category&amp;category_id=' . $cat->id . '&amp;Itemid=' . $Itemid;
 				$node->priority   = $params['cat_priority'];
 				$node->changefreq = $params['cat_changefreq'];
+
+				$attribs = json_decode($schuweb_sitemap->sitemap->attribs);
+				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+				$node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
 				$node->expandible = true;
+				$node->lastmod = $parent->lastmod;
 				$schuweb_sitemap->printNode($node);
 			}
 			$schuweb_sitemap->changeLevel(-1);
@@ -137,7 +143,7 @@ class schuweb_sitemap_com_zoo
 			// get items info from database
 			// basically it select those items that are published now (publish_up is less then now, meaning it's in past)
 			// and not unpublished yet (either not have publish_down date set, or that date is in future)
-			$queryi = 'SELECT i.id, i.name, i.publish_up ,i.application_id' .
+			$queryi = 'SELECT i.id, i.name, i.publish_up ,i.application_id ,i.modified' .
 				' FROM #__zoo_item i' .
 				' WHERE i.application_id= ' . $appid .
 				' AND DATEDIFF( i.publish_up, NOW( ) ) <=0' .
@@ -171,8 +177,14 @@ class schuweb_sitemap_com_zoo
 				$node->link       = 'index.php?option=com_zoo&amp;task=item&amp;item_id=' . $item->id . '&amp;Itemid=' . $Itemid;
 				$node->priority   = $params['item_priority'];
 				$node->changefreq = $params['item_changefreq'];
+
+				$attribs = json_decode($schuweb_sitemap->sitemap->attribs);
+				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+				$node->xmlInsertPriority = $attribs->xmlInsertPriority;
+
 				$node->expandible = true;
-				$node->modified   = strtotime($item->publish_up);
+				$node->lastmod = $parent->lastmod;
+				$node->modified   = strtotime($item->modified);
 				$node->newsItem   = 1; // if we are making news map and it get this far, it's news
 				$schuweb_sitemap->printNode($node);
 
