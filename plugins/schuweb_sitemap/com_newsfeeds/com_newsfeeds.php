@@ -6,6 +6,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.schultschik.de
  **/
+
 defined( '_JEXEC' ) or die;
 
 use Joomla\Utilities\ArrayHelper;
@@ -102,12 +103,10 @@ class schuweb_sitemap_com_newsfeeds
         schuweb_sitemap_com_newsfeeds::getCategoryTree($sitemap, $parent, $params, $category);
     }
 
-    static function getCategoryTree($xmap, $parent, &$params, $category)
+    static function getCategoryTree($sitemap, $parent, &$params, $category)
     {
-        $db = JFactory::getDBO();
-
         $children = $category->getChildren();
-        $xmap->changeLevel(1);
+        $sitemap->changeLevel(1);
         foreach ($children as $cat) {
             $node = new stdclass;
             $node->id = $parent->id;
@@ -117,16 +116,19 @@ class schuweb_sitemap_com_newsfeeds
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
-            $attribs = json_decode($xmap->sitemap->attribs);
+            $attribs = json_decode($sitemap->sitemap->attribs);
             $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
             $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
+	        $node->lastmod = $parent->lastmod;
+	        $node->modified = $cat->modified_time;
+
             $node->expandible = true;
-            if ($xmap->printNode($node) !== FALSE) {
-                schuweb_sitemap_com_newsfeeds::getCategoryTree($xmap, $parent, $params, $cat);
+            if ($sitemap->printNode($node) !== FALSE) {
+                schuweb_sitemap_com_newsfeeds::getCategoryTree($sitemap, $parent, $params, $cat);
             }
         }
-        $xmap->changeLevel(-1);
+        $sitemap->changeLevel(-1);
 
         if ($params['include_newsfeeds']) { //view=category&catid=...
             $newsfeedsModel = new NewsfeedsModelCategory();
@@ -137,7 +139,7 @@ class schuweb_sitemap_com_newsfeeds
             $newsfeedsModel->setState('list.direction', 'ASC');
             $newsfeedsModel->setState('category.id', $category->id);
             $newsfeeds = $newsfeedsModel->getItems();
-            $xmap->changeLevel(1);
+            $sitemap->changeLevel(1);
             foreach ($newsfeeds as $newsfeed) {
                 $item_params = new JRegistry;
                 $item_params->loadString($newsfeed->params);
@@ -158,14 +160,17 @@ class schuweb_sitemap_com_newsfeeds
                 $node->priority = $params['newsfeed_priority'];
                 $node->changefreq = $params['newsfeed_changefreq'];
 
-                $attribs = json_decode($xmap->sitemap->attribs);
+	            $node->lastmod = $parent->lastmod;
+	            $node->modified = $newsfeed->modified;
+
+	            $attribs = json_decode($sitemap->sitemap->attribs);
                 $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
                 $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
                 $node->expandible = false;
-                $xmap->printNode($node);
+                $sitemap->printNode($node);
             }
-            $xmap->changeLevel(-1);
+            $sitemap->changeLevel(-1);
         }
     }
 
