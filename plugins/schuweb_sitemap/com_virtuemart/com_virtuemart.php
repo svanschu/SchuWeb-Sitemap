@@ -1,16 +1,15 @@
 <?php
 /**
- * @author Guillermo Vargas, http://www.jooxmap.com
- * @author Sven Schultschik, http://extensions.schultschik.com
- * @version $Id$
- * @package SchuWeb_Sitemap
- * @license             GNU General Public License version 2 or later
- * @copyright           Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
- */
-
-use Joomla\Utilities\ArrayHelper;
+ * @package SchuWeb Sitemap
+ *
+ * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.schultschik.de
+ **/
 
 defined( '_JEXEC' ) or die;
+
+use Joomla\Utilities\ArrayHelper;
 
 /** Adds support for Virtuemart categories to Xmap */
 class schuweb_sitemap_com_virtuemart
