@@ -1,13 +1,11 @@
 <?php
-
 /**
- * @author Guillermo Vargas, http://www.jooxmap.com
- * @author Sven Schultschik, http://extensions.schultschik.de
- * @email extensions@schultschik.de
  * @package SchuWeb Sitemap
- * @license GNU/GPL
- * @description SchuWeb Sitemap plugin for Kunena Forum Component.
- */
+ *
+ * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.schultschik.de
+ **/
 
 defined('_JEXEC') or die;
 
@@ -24,9 +22,9 @@ class schuweb_sitemap_com_kunena
     static $profile;
     static $config;
 
-    static function getTree($xmap, $parent, &$params)
+    static function getTree($sitemap, $parent, &$params)
     {
-        if ($xmap->isNews) // This component does not provide news content. don't waste time/resources
+        if ($sitemap->isNews) // This component does not provide news content. don't waste time/resources
             return false;
 
         // Make sure that we can load the kunena api
@@ -67,9 +65,9 @@ class schuweb_sitemap_com_kunena
 
         $include_topics = ArrayHelper::getValue($params, 'include_topics', 1);
         $include_topics = ($include_topics == 1
-            || ($include_topics == 2 && $xmap->view == 'xml')
-            || ($include_topics == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ($include_topics == 2 && $sitemap->view == 'xml')
+            || ($include_topics == 3 && $sitemap->view == 'html')
+            || $sitemap->view == 'navigator');
         $params['include_topics'] = $include_topics;
 
         $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
@@ -99,7 +97,7 @@ class schuweb_sitemap_com_kunena
             if (!in_array($ordering, array('id', 'ordering', 'time', 'subject', 'hits')))
                 $ordering = 'ordering';
             $params['topics_order'] = 't.`' . $ordering . '`';
-            $params['include_pagination'] = ($xmap->view == 'xml');
+            $params['include_pagination'] = ($sitemap->view == 'xml');
 
             $params['limit'] = 0;
             $params['days'] = '';
@@ -110,18 +108,18 @@ class schuweb_sitemap_com_kunena
             $days = ArrayHelper::getValue($params, 'max_age', '');
             $params['days'] = false;
             if (intval($days))
-                $params['days'] = ($xmap->now - (intval($days) * 86400));
+                $params['days'] = ($sitemap->now - (intval($days) * 86400));
         }
 
         $params['table_prefix'] = '#__kunena';
 
-        schuweb_sitemap_com_kunena::getCategoryTree($xmap, $parent, $params, $catid);
+        schuweb_sitemap_com_kunena::getCategoryTree($sitemap, $parent, $params, $catid);
     }
 
     /*
      * Builds the Kunena's tree
      */
-    static function getCategoryTree($xmap, $parent, &$params, $parentCat)
+    static function getCategoryTree($sitemap, $parent, &$params, $parentCat)
     {
         // Load categories
 
@@ -129,7 +127,7 @@ class schuweb_sitemap_com_kunena
         $categories = KunenaForumCategoryHelper::getChildren($parentCat);
 
         /* get list of categories */
-        $xmap->changeLevel(1);
+        $sitemap->changeLevel(1);
         foreach ($categories as $cat) {
             $node = new stdclass;
             $node->id = $parent->id;
@@ -139,16 +137,19 @@ class schuweb_sitemap_com_kunena
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
-            $attribs = json_decode($xmap->sitemap->attribs);
+            $attribs = json_decode($sitemap->sitemap->attribs);
             $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
             $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
             $node->link = KunenaRoute::normalize('index.php?option=com_kunena&view=category&catid=' . $cat->id);
             $node->expandible = true;
             $node->secure = $parent->secure;
+
             $node->lastmod = $parent->lastmod;
-            if ($xmap->printNode($node) !== FALSE) {
-                schuweb_sitemap_com_kunena::getCategoryTree($xmap, $parent, $params, $cat->id);
+            $node->modified = intval($cat->last_post_time);
+
+            if ($sitemap->printNode($node) !== FALSE) {
+                schuweb_sitemap_com_kunena::getCategoryTree($sitemap, $parent, $params, $cat->id);
             }
         }
 
@@ -177,7 +178,7 @@ class schuweb_sitemap_com_kunena
                 $node->priority = $params['topic_priority'];
                 $node->changefreq = $params['topic_changefreq'];
 
-                $attribs = json_decode($xmap->sitemap->attribs);
+                $attribs = json_decode($sitemap->sitemap->attribs);
                 $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
                 $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
@@ -186,7 +187,7 @@ class schuweb_sitemap_com_kunena
                 $node->expandible = false;
                 $node->secure = $parent->secure;
                 $node->lastmod = $parent->lastmod;
-                if ($xmap->printNode($node) !== FALSE) {
+                if ($sitemap->printNode($node) !== FALSE) {
                     // Pagination will not work with K2.0, revisit this when that version is out and stable
                     if ($params['include_pagination'] && isset($topic->msgcount) && $topic->msgcount > self::$config->messages_per_page) {
                         $msgPerPage = self::$config->messages_per_page;
@@ -208,13 +209,13 @@ class schuweb_sitemap_com_kunena
                             $subnode->modified = $node->modified;
                             $subnode->secure = $node->secure;
                             $subnode->lastmod = $node->lastmod;
-                            $xmap->printNode($subnode);
+                            $sitemap->printNode($subnode);
                         }
                     }
                 }
             }
         }
-        $xmap->changeLevel(-1);
+        $sitemap->changeLevel(-1);
     }
 
     private static function loadKunenaApi()
