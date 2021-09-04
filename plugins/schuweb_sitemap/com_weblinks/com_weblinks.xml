@@ -5,8 +5,8 @@
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <authorEmail>guille@vargas.co.cr</authorEmail>
-    <authorUrl>joomla.vargas.co.cr</authorUrl>
+    <authorEmail>extensions@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_WL_PLUGIN_DESCRIPTION</description>
     <files>
