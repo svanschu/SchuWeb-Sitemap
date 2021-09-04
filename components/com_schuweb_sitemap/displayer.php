@@ -93,41 +93,52 @@ class SchuWeb_SitemapDisplayer {
         $this->jview = $view;
     }
 
-    public function getMenuTitle($menutype,$module='mod_menu')
-    {
-        $app = JFactory::getApplication();
-        $db = JFactory::getDbo();
-        $title = $extra = '';
+	public function getMenuTitle($menutype, $module = 'mod_menu')
+	{
+		$app   = JFactory::getApplication();
+		$db    = JFactory::getDbo();
 
-        // Filter by language
-        if ($app->getLanguageFilter()) {
-            $extra = ' AND language in ('.$db->quote(JFactory::getLanguage()->getTag()).','.$db->quote('*').')';
-        }
+		$userLevelsImp = implode(',', $this->userLevels);
 
-        $db->setQuery(
-             "SELECT * FROM #__modules WHERE module='{$module}' AND params "
-            ."LIKE '%\"menutype\":\"{$menutype}\"%' AND access IN (".implode(',',$this->userLevels).") "
-            ."AND published=1 AND client_id=0 "
-            . $extra
-            . "LIMIT 1"
-        );
-        $module = $db->loadObject();
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('title'))
+			->from($db->quoteName('#__modules'))
+			->where($db->quoteName('module') . ' = ' . $db->quote($module))
+			->where($db->quoteName('params') . ' LIKE ' . $db->quote('%menutype:' . $menutype . '%'))
+			->where($db->quoteName('access') . ' IN (' . $db->quote($userLevelsImp) . ')')
+			->where($db->quoteName('published') . ' = 1')
+			->where($db->quoteName('client_id') . ' = 0');
+		// Filter by language
+		if ($app->getLanguageFilter())
+		{
+			$query->where($db->quoteName('language') . ' IN (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+		}
+		$query->setLimit('1');
 
-        if (empty($module)){
-        	$query = $db->getQuery(true);
-        	$query->select($db->quoteName('title'))
-		        ->from($db->quoteName('#__menu_types'))
-		        ->where($db->quoteName('menutype') .' = ' .$db->quote($menutype));
-        	$db->setQuery($query);
-        }
+		$db->setQuery($query);
 
-	    $module = $db->loadObject();
+		$module = $db->loadObject();
 
-        if ($module) {
-            $title = $module->title;
-        }
-        return $title;
-    }
+		if (empty($module))
+		{
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName('title'))
+				->from($db->quoteName('#__menu_types'))
+				->where($db->quoteName('menutype') . ' = ' . $db->quote($menutype));
+			$db->setQuery($query);
+
+			$module = $db->loadObject();
+		}
+
+		$title = '';
+		
+		if ($module)
+		{
+			$title = $module->title;
+		}
+
+		return $title;
+	}
 
     protected function startMenu(&$node)
     {
