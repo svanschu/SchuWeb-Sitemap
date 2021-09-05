@@ -53,7 +53,7 @@ class JFormFieldModal_Sitemaps extends JFormField
         }
 
         if (empty($title)) {
-            $title = JText::_('com_schuweb_sitemap_SELECT_AN_SITEMAP');
+            $title = JText::_('com_schuweb_sitemap_SELECT_A_SITEMAP');
         }
 
         $doc->addScriptDeclaration(
