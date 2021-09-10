@@ -10,12 +10,9 @@ defined('_JEXEC') or die;
 // Include the component HTML helpers.
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
-// Load the tooltip behavior.
-JHtml::_('behavior.formvalidator');
-JHtml::_('formbehavior.chosen', 'select');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&layout=edit&id=' . $this->item->id); ?>"
-      method="post" name="adminForm" id="adminForm" class="form-validate">
+      method="post" name="adminForm" id="adminForm">
     <?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
     <!-- Begin Content -->
     <div class="form-horizontal">
