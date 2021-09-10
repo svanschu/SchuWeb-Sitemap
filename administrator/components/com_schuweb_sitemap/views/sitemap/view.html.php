@@ -53,7 +53,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         $this->_setToolbar();
 
         parent::display($tpl);
-        $app->input->setVar('hidemainmenu', true);
+        $app->input->set('hidemainmenu', true);
     }
 
     private function handleMenus()
@@ -153,7 +153,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
             $parent = new stdClass;
             if ($Itemid) {
                 // Expand a menu Item
-                $items = &JSite::getMenu();
+                $items = JSite::getMenu();
                 $node = &$items->getItem($Itemid);
                 if (isset($menuItems[$node->menutype])) {
                     $parent->name = $node->title;
@@ -186,7 +186,6 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
      */
     function _setToolbar()
     {
-        $user = JFactory::getUser();
         $isNew = ($this->item->id == 0);
 
         JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'article-add.png');

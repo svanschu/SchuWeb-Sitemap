@@ -1,9 +1,9 @@
 <?php
 /**
  * @version          $Id$
- * @copyright        Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright        Copyright (C) 2021 Sven Schultschik. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
- * @author           Guillermo Vargas (guille@vargas.co.cr)
+ * @author           Sven Schultschik (sven@schultschik.de)
  */
 defined('_JEXEC') or die;
 
@@ -11,20 +11,9 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
 // Load the tooltip behavior.
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-if (version_compare(JVERSION, '3.0.0', 'ge')) {
-    JHtml::_('formbehavior.chosen', 'select');
-}
+JHtml::_('behavior.formvalidator');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
-<script type="text/javascript">
-    Joomla.submitbutton = function (task) {
-        if (task == 'sitemap.cancel' || document.formvalidator.isValid(document.id('sitemap-form'))) {
-            <?php echo $this->form->getField('introtext')->save(); ?>
-            Joomla.submitform(task, document.getElementById('sitemap-form'));
-        }
-    }
-</script>
 <form action="<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&layout=edit&id=' . $this->item->id); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
