@@ -148,19 +148,33 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
      * @return    mixed    The data for the form.
      * @since    1.6
      */
-    protected function loadFormData()
-    {
-        // Check the session for previously entered form data.
-        $data = JFactory::getApplication()->getUserState('com_schuweb_sitemap.edit.sitemap.data', array());
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = JFactory::getApplication()->getUserState('com_schuweb_sitemap.edit.sitemap.data', array());
 
-        if (empty($data)) {
-            $data = $this->getItem();
-        }
+		if (empty($data))
+		{
+			$data = $this->getItem();
+		}
 
-        $data->attribs = json_decode($data->attribs, true);
+		if (is_array($data))
+		{
+			if (!is_array($data['attribs']))
+			{
+				$data['attribs'] = json_decode($data['attribs'], true);
+			}
+		}
+		else
+		{
+			if (!is_array($data->attribs))
+			{
+				$data->attribs = json_decode($data->attribs, true);
+			}
+		}
 
-        return $data;
-    }
+		return $data;
+	}
 
 
     /**
