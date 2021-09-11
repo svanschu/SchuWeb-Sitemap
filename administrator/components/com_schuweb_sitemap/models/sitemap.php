@@ -189,15 +189,12 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
         $app = JFactory::$application;
 
         // Initialise variables;
-        $dispatcher = JEventDispatcher::getInstance();
         $table = $this->getTable();
         $pk = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('sitemap.id');
-        $isNew = true;
 
         // Load the row if saving an existing record.
         if ($pk > 0) {
             $table->load($pk);
-            $isNew = false;
         }
 
         // Bind the data.
