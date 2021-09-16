@@ -7,9 +7,14 @@
  */
 defined('_JEXEC') or die;
 
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-require_once JPATH_SITE . '/components/com_content/helpers/query.php';
+if (version_compare(JVERSION, '4', 'lt'))
+{
+	require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+	require_once JPATH_SITE . '/components/com_content/helpers/query.php';
+}
 
+use \Joomla\Component\Content\Site\Helper\RouteHelper;
+use \Joomla\Component\Content\Site\Helper\QueryHelper;
 use \Joomla\Utilities\ArrayHelper;
 /**
  * Handles standard Joomla's Content articles/categories
@@ -517,8 +522,14 @@ class schuweb_sitemap_com_content
         $articleOrderby     = $menuParams->get('orderby_sec', 'rdate');
         $articleOrderDate   = $menuParams->get('order_date');
         //$categoryOrderby  = $menuParams->def('orderby_pri', '');
-        $secondary      = ContentHelperQuery::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
-        //$primary      = ContentHelperQuery::orderbyPrimary($categoryOrderby);
+	    if (version_compare(JVERSION, '4', 'lt'))
+	    {
+		    $secondary = ContentHelperQuery::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
+		    //$primary      = ContentHelperQuery::orderbyPrimary($categoryOrderby);
+	    } else {
+		    $secondary = QueryHelper::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
+		    //$primary      = QueryHelper::orderbyPrimary($categoryOrderby);
+	    }
 
         //$orderby .= $primary . ' ' . $secondary . ' a.created ';
         $orderby .=  $secondary . ' a.created ';
