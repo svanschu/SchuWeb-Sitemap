@@ -16,7 +16,13 @@ $params = $this->item->params;
 
 if ($this->displayer->canEdit) {
     $live_site = JURI::root();
-    JHTML::_('behavior.framework', true);
+    if (version_compare(JVERSION, '4', 'lt'))
+    {
+	    JHTML::_('behavior.framework', true);
+    } else {
+        //TODO  Frontend logedin publish buttons don't work #75
+        // https://github.com/svanschu/SchuWeb-Sitemap/issues/75
+    }
     $ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&".JSession::getFormToken().'=1';
 
     $css = '.xmapexcl img{ border:0px; }'."\n";
