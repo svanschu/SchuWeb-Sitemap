@@ -271,15 +271,16 @@ class schuweb_sitemap_com_content
      * Get all content items within a content category.
      * Returns an array of all contained content items.
      *
-     * @param object  $xmap
+     * @param object  $sitemap
      * @param object  $parent   the menu item
      * @param int     $catid    the id of the category to be expanded
      * @param array   $params   an assoc array with the params for this plugin on Xmap
      * @param int     $itemid   the itemid to use for this category's children
      */
-    static function expandCategory($xmap, $parent, $catid, &$params, $itemid)
+    static function expandCategory($sitemap, $parent, $catid, &$params, $itemid)
     {
         $db = JFactory::getDBO();
+		$query = $db->getQuery(true);
 
         $where = array('a.parent_id = ' . $catid . ' AND a.published = 1 AND a.extension=\'com_content\'');
 
@@ -291,18 +292,26 @@ class schuweb_sitemap_com_content
             $where[] = 'a.access IN (' . $params['groups'] . ') ';
         }
 
-        $orderby = 'a.lft';
-        $query = 'SELECT a.id, a.title, a.alias, a.access, a.path AS route, '
-               . 'a.created_time created, a.modified_time modified '
-               . 'FROM #__categories AS a '
-               . 'WHERE '. implode(' AND ',$where)
-               . ( $xmap->view != 'xml' ? "\n ORDER BY " . $orderby . "" : '' );
+	    $columns = array(
+		    $db->quoteName('a.id'),
+		    $db->quoteName('a.title'),
+		    $db->quoteName('a.alias'),
+		    $db->quoteName('a.access'),
+		    $db->quoteName('a.path') . 'AS route',
+		    $db->quoteName('a.created_time') . 'AS created',
+		    $db->quoteName('a.modified_time') . 'AS modified'
+	    );
+	    $query->select($columns)
+		    ->from($db->quoteName('#__categories') . 'AS a')
+		    ->where($where);
+	    if ($sitemap->view != 'xml')
+		    $query->order('a.lft');
 
         $db->setQuery($query);
         $items = $db->loadObjectList();
 
         if (count($items) > 0) {
-            $xmap->changeLevel(1);
+            $sitemap->changeLevel(1);
             foreach ($items as $item) {
                 $node = new stdclass();
                 $node->id = $parent->id;
@@ -311,7 +320,7 @@ class schuweb_sitemap_com_content
                 $node->priority = $params['cat_priority'];
                 $node->changefreq = $params['cat_changefreq'];
 
-                $attribs = json_decode($xmap->sitemap->attribs);
+                $attribs = json_decode($sitemap->sitemap->attribs);
                 $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
                 $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
@@ -325,7 +334,7 @@ class schuweb_sitemap_com_content
 
                 // For the google news we should use te publication date instead
                 // the last modification date. See
-                if ($xmap->isNews || !$item->modified)
+                if ($sitemap->isNews || !$item->modified)
                     $item->modified = $item->created;
 
                 $node->slug = $item->route ? ($item->id . ':' . $item->route) : $item->id;
@@ -336,81 +345,105 @@ class schuweb_sitemap_com_content
                 } else {
                     $node->itemid = preg_replace('/.*Itemid=([0-9]+).*/','$1',$node->link);
                 }
-                if ($xmap->printNode($node)) {
-                    self::expandCategory($xmap, $parent, $item->id, $params, $node->itemid);
+                if ($sitemap->printNode($node)) {
+                    self::expandCategory($sitemap, $parent, $item->id, $params, $node->itemid);
                 }
             }
-            $xmap->changeLevel(-1);
+            $sitemap->changeLevel(-1);
         }
 
         // Include Category's content
-        self::includeCategoryContent($xmap, $parent, $catid, $params, $itemid);
+        self::includeCategoryContent($sitemap, $parent, $catid, $params, $itemid);
         return true;
     }
 
-    /**
-     * Get all content items within a content category.
-     * Returns an array of all contained content items.
-     *
-     * @since 2.0
-     */
-    static function includeCategoryContent($xmap, $parent, $catid, &$params,$Itemid)
+	/**
+	 * Get all content items within a content category.
+	 * Returns an array of all contained content items.
+	 *
+	 * @throws Exception
+	 * @since 2.0
+	 */
+    static function includeCategoryContent($sitemap, $parent, $catid, &$params, $Itemid)
     {
         $db = JFactory::getDBO();
 
-        // We do not do ordering for XML sitemap.
-        if ($xmap->view != 'xml') {
-            $orderby = self::buildContentOrderBy($parent->params,$parent->id,$Itemid);
-        }
+		$query = $db->getQuery(true);
 
-        if ($params['include_archived']) {
-            $where = array('(a.state = 1 or a.state = 2)');
-        } else {
-            $where = array('a.state = 1');
-        }
+		$columns = array(
+		    $db->quoteName('a.id'),
+		    $db->quoteName('a.title'),
+		    $db->quoteName('a.alias'),
+		    $db->quoteName('a.catid'),
+		    $db->quoteName('a.created') . ' AS created',
+		    $db->quoteName('a.modified') . ' AS modified',
+		    $db->quoteName('a.language')
+	    );
 
-        if ($catid=='featured') {
-            $where[] = 'a.featured=1';
-        } elseif ($catid=='archived') {
-            $where = array('a.state=2');
-        } elseif(is_numeric($catid)) {
-            $where[] = 'a.catid='.(int) $catid;
-        }
+	    if ($params['add_images'] || $params['add_pagebreaks'])
+	    {
+		    $columns[] = $db->quoteName('a.introtext');
+		    $columns[] = $db->quoteName('a.fulltext');
+	    }
 
-        if ($params['max_art_age'] || $xmap->isNews) {
-            $days = (($xmap->isNews && ($params['max_art_age'] > 3 || !$params['max_art_age'])) ? 3 : $params['max_art_age']);
-            $where[] = "( a.created >= '"
-                      . date('Y-m-d H:i:s', time() - $days * 86400) . "' ) ";
-        }
+	    $query->select($columns)
+	        ->from($db->quoteName('#__content') . ' AS a');
 
-        if ($params['language_filter'] ) {
-            $where[] = 'a.language in ('.$db->quote(JFactory::getLanguage()->getTag()).','.$db->quote('*').')';
-        }
+	    if ($catid == 'featured')
+		    $query->leftJoin($db->quoteName('#__content_frontpage') . ' AS fp ON ' . $db->quoteName('a.id') . ' = ' . $db->quoteName('fp.content_id'));
 
-        if (!$params['show_unauth'] ){
-            $where[] = 'a.access IN (' . $params['groups'] . ') ';
-        }
+	    if ($catid != 'archived')
+		    if ($params['include_archived'])
+		    {
+			    $query->andWhere(array('(a.state = 1 or a.state = 2)'));
+		    }
+		    else
+		    {
+			    $query->where($db->quoteName('a.state') . ' = 1');
+		    }
 
-        $query = 'SELECT a.id, a.title, a.alias, a.catid, '
-               . 'a.created created, a.modified modified'
-               . ',a.language'
-               . (($params['add_images'] || $params['add_pagebreaks']) ? ',a.introtext, a.fulltext ' : ' ')
-               . 'FROM #__content AS a '
-               . ($catid =='featured'? 'LEFT JOIN #__content_frontpage AS fp ON a.id = fp.content_id ' : ' ')
-               . 'WHERE ' . implode(' AND ',$where) . ' AND '
-               . '      (a.publish_up = ' . $params['nullDate']
-               . ' OR a.publish_up <= ' . $params['nowDate'] . ') AND '
-               . '      (a.publish_down = ' . $params['nullDate']
-               . ' OR a.publish_down >= ' . $params['nowDate'] . ') '
-               . ( $xmap->view != 'xml' ? "\n ORDER BY $orderby  " : '' )
-               . ( $params['max_art'] ? "\n LIMIT {$params['max_art']}" : '');
+	    if ($catid=='featured') {
+			$query->where($db->qn('a.featured').'=1');
+	    } elseif ($catid=='archived') {
+		    $query->where($db->qn('a.state').'=2');
+	    } elseif(is_numeric($catid)) {
+		    $query->where($db->qn('a.catid').'='.(int) $catid);
+	    }
+
+	    if ($params['max_art_age'] || $sitemap->isNews) {
+		    $days = (($sitemap->isNews && ($params['max_art_age'] > 3 || !$params['max_art_age'])) ? 3 : $params['max_art_age']);
+		    $query->where($db->qn('a.created').'>='. date('Y-m-d H:i:s', time() - $days * 86400));
+	    }
+
+	    if ($params['language_filter'] ) {
+		    $query->where($db->qn('a.language').' in ('.$db->quote(JFactory::getLanguage()->getTag()).','.$db->quote('*').')');
+	    }
+
+	    if (!$params['show_unauth'] ){
+		    $query->where($db->qn('a.access').'IN (' . $params['groups'] . ')');
+	    }
+
+	    if (version_compare(JVERSION, '4', 'lt'))
+	    {
+		    $query->andWhere(array($db->quoteName('a.publish_up') . '=' . $params['nullDate'], $db->quoteName('a.publish_up') . '<=' . $params['nowDate']))
+			    ->andWhere(array($db->quoteName('a.publish_down') . '=' . $params['nullDate'], $db->quoteName('a.publish_down') . '>=' . $params['nowDate']));
+	    } else {
+		    $query->andWhere(array($db->quoteName('a.publish_up') . 'IS NULL'  , $db->quoteName('a.publish_up') . '<=' . $params['nowDate']))
+			    ->andWhere(array($db->quoteName('a.publish_down') . 'IS NULL' , $db->quoteName('a.publish_down') . '>=' . $params['nowDate']));
+	    }
+
+		if ($sitemap->view != 'xml')
+			$query->order(self::buildContentOrderBy($parent->params,$parent->id,$Itemid));
+
+		if ($params['max_art'])
+			$query->setLimit($params['max_art']);
 
         $db->setQuery($query);
-        //echo nl2br(str_replace('#__','mgbj2_',$db->getQuery()));
+
         $items = $db->loadObjectList();
 
         if (count($items) > 0) {
-            $xmap->changeLevel(1);
+            $sitemap->changeLevel(1);
             foreach ($items as $item) {
                 $node = new stdclass();
                 $node->id = $parent->id;
@@ -419,7 +452,7 @@ class schuweb_sitemap_com_content
                 $node->priority = $params['art_priority'];
                 $node->changefreq = $params['art_changefreq'];
 
-                $attribs = json_decode($xmap->sitemap->attribs);
+                $attribs = json_decode($sitemap->sitemap->attribs);
                 $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
                 $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
@@ -435,7 +468,7 @@ class schuweb_sitemap_com_content
 
                 // For the google news we should use te publication date instead
                 // the last modification date. See
-                if ($xmap->isNews || !$node->modified)
+                if ($sitemap->isNews || !$node->modified)
                     $node->modified = $item->created;
 
                 $node->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
@@ -454,11 +487,11 @@ class schuweb_sitemap_com_content
                     $node->expandible = (count($subnodes) > 0); // This article has children
                 }
 
-                if ($xmap->printNode($node) && $node->expandible) {
-                    self::printNodes($xmap, $parent, $params, $subnodes);
+                if ($sitemap->printNode($node) && $node->expandible) {
+                    self::printNodes($sitemap, $parent, $params, $subnodes);
                 }
             }
-            $xmap->changeLevel(-1);
+            $sitemap->changeLevel(-1);
         }
         return true;
     }
@@ -486,16 +519,18 @@ class schuweb_sitemap_com_content
         $xmap->changeLevel(-1);
     }
 
-    /**
-     * Generates the order by part of the query according to the
-     * menu/component/user settings. It checks if the current user
-     * has already changed the article's ordering column in the frontend
-     *
-     * @param JRegistry $params
-     * @param int $parentId
-     * @param int $itemid
-     * @return string
-     */
+	/**
+	 * Generates the order by part of the query according to the
+	 * menu/component/user settings. It checks if the current user
+	 * has already changed the article's ordering column in the frontend
+	 *
+	 * @param   JRegistry  $params
+	 * @param   int        $parentId
+	 * @param   int        $itemid
+	 *
+	 * @return string
+	 * @throws Exception
+	 */
     static function buildContentOrderBy(&$params,$parentId,$itemid)
     {
         $app    = JFactory::getApplication('site');
