@@ -2,7 +2,9 @@
 /**
  * @package SchuWeb Sitemap
  *
- * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @version             sw.build.version
+ * @author Sven Schultschik
+ * @copyright (C) 2010-2021 Sven Schultschik. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.schultschik.de
  **/
@@ -10,6 +12,8 @@
 defined( '_JEXEC' ) or die;
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Component\Newsfeeds\Site\Model\CategoryModel;
+use Joomla\Component\Newsfeeds\Site\Helper\RouteHelper;
 
 class schuweb_sitemap_com_newsfeeds
 {
@@ -112,7 +116,12 @@ class schuweb_sitemap_com_newsfeeds
             $node->id = $parent->id;
             $node->uid = $parent->uid . 'c' . $cat->id;
             $node->name = $cat->title;
-            $node->link = NewsfeedsHelperRoute::getCategoryRoute($cat);
+	        if (version_compare(JVERSION, '4', 'lt'))
+	        {
+		        $node->link = NewsfeedsHelperRoute::getCategoryRoute($cat);
+	        }else{
+		        $node->link = RouteHelper::getCategoryRoute($cat);
+	        }
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
@@ -131,7 +140,13 @@ class schuweb_sitemap_com_newsfeeds
         $sitemap->changeLevel(-1);
 
         if ($params['include_newsfeeds']) { //view=category&catid=...
-            $newsfeedsModel = new NewsfeedsModelCategory();
+	        if (version_compare(JVERSION, '4', 'lt'))
+	        {
+		        $newsfeedsModel = new NewsfeedsModelCategory();
+	        } else
+	        {
+		        $newsfeedsModel = new CategoryModel();
+	        }
             $newsfeedsModel->getState(); // To force the populate state
             $newsfeedsModel->setState('list.limit', ArrayHelper::getValue($params, 'max_newsfeeds', NULL));
             $newsfeedsModel->setState('list.start', 0);
@@ -150,7 +165,13 @@ class schuweb_sitemap_com_newsfeeds
                 $node->name = $newsfeed->name;
 
                 // Find the Itemid
-                $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/','$1',NewsfeedsHelperRoute::getNewsfeedRoute($newsfeed->id, $category->id)));
+	            if (version_compare(JVERSION, '4', 'lt'))
+	            {
+		            $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/','$1',NewsfeedsHelperRoute::getNewsfeedRoute($newsfeed->id, $category->id)));
+	            }else{
+		            $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/','$1',RouteHelper::getNewsfeedRoute($newsfeed->id, $category->id)));
+	            }
+
 
                 if ($item_params->get('count_clicks', $params['count_clicks']) == 1) {
                     $node->link = 'index.php?option=com_newsfeeds&task=newsfeed.go&id='. $newsfeed->id.'&Itemid='.($Itemid ? $Itemid : $parent->id);
@@ -181,7 +202,10 @@ class schuweb_sitemap_com_newsfeeds
         }
 
         self::$_initialized = true;
-        require_once JPATH_SITE.'/components/com_newsfeeds/models/category.php';
-        require_once JPATH_SITE.'/components/com_newsfeeds/helpers/route.php';
+	    if (version_compare(JVERSION, '4', 'lt'))
+	    {
+		    require_once JPATH_SITE . '/components/com_newsfeeds/models/category.php';
+		    require_once JPATH_SITE . '/components/com_newsfeeds/helpers/route.php';
+	    }
     }
 }

@@ -1,9 +1,10 @@
 <?php
 /**
  * @version             sw.build.version
- * @copyright           Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
- * @license             GNU General Public License version 2 or later; see LICENSE.txt
- * @author              Guillermo Vargas (guille@vargas.co.cr)
+ * @copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @author Sven Schultschik
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.schultschik.de
  */
 defined('_JEXEC') or die;
 
