@@ -395,7 +395,7 @@ class schuweb_sitemap_com_content
 	    if ($catid != 'archived')
 		    if ($params['include_archived'])
 		    {
-			    $query->andWhere(array('(a.state = 1 or a.state = 2)'));
+			    $query->where('(' . $db->qn('a.state') . ' = 1 or ' . $db->qn('a.state') . '= 2 )');
 		    }
 		    else
 		    {
