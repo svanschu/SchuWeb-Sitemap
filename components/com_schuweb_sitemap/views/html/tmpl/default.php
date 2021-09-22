@@ -73,28 +73,6 @@ if ($this->displayer->canEdit) {
     </h1>
 <?php endif; ?>
 
-<?php if ($params->get('access-edit') || $params->get('show_title') ||  $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
-    <ul>
-    <?php if (!$this->print) : ?>
-        <?php if ($params->get('show_print_icon')) : ?>
-        <li>
-            <?php echo JHtml::_('icon.print_popup',  $this->item, $params); ?>
-        </li>
-        <?php endif; ?>
-
-        <?php if ($params->get('show_email_icon')) : ?>
-        <li>
-            <?php echo JHtml::_('icon.email',  $this->item, $params); ?>
-        </li>
-        <?php endif; ?>
-    <?php else : ?>
-        <li>
-            <?php echo JHtml::_('icon.print_screen',  $this->item, $params); ?>
-        </li>
-    <?php endif; ?>
-    </ul>
-<?php endif; ?>
-
 <?php if ($params->get('showintro', 1) )  : ?>
     <?php echo $this->item->introtext; ?>
 <?php endif; ?>

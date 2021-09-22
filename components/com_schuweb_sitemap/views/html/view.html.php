@@ -22,7 +22,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
 {
 
     protected $state;
-    protected $print;
 
     function display($tpl = null)
     {
@@ -30,9 +29,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
         $this->app = JFactory::getApplication();
         $jinput = $this->app->input;
         $this->user = JFactory::getUser();
-
-        // Get view related request variables.
-        $this->print = $jinput->getBool('print');
 
         // Get model data.
         $this->state = $this->get('State');
@@ -125,10 +121,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
 
         if ($app->get('MetaTitle') == '1') {
             $this->document->setMetaData('title', $title);
-        }
-
-        if ($this->print) {
-            $this->document->setMetaData('robots', 'noindex, nofollow');
         }
     }
 
