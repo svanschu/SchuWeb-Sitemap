@@ -10,6 +10,8 @@
 defined( '_JEXEC' ) or die;
 
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Component\Weblinks\Site\Helper\RouteHelper;
+use Joomla\Component\Weblinks\Site\Model\CategoryModel;
 
 class schuweb_sitemap_com_weblinks
 {
@@ -114,7 +116,13 @@ class schuweb_sitemap_com_weblinks
             $node->id = $parent->id;
             $node->uid = $parent->uid . 'c' . $cat->id;
             $node->name = $cat->title;
+	        if (version_compare(JVERSION, '4', 'lt'))
+	        {
             $node->link = WeblinksHelperRoute::getCategoryRoute($cat);
+	        }else{
+
+	        $node->link = RouteHelper::getCategoryRoute($cat);
+	        }
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
@@ -133,7 +141,12 @@ class schuweb_sitemap_com_weblinks
         $sitemap->changeLevel(-1);
 
         if ($params['include_links']) { //view=category&catid=...
-            $linksModel = new WeblinksModelCategory();
+	        if (version_compare(JVERSION, '4', 'lt'))
+	        {
+		        $linksModel = new WeblinksModelCategory();
+	        } else {
+		        $linksModel = new CategoryModel();
+	        }
             $linksModel->getState(); // To force the populate state
             $linksModel->setState('list.limit', ArrayHelper::getValue($params, 'max_links', NULL));
             $linksModel->setState('list.start', 0);
@@ -152,7 +165,12 @@ class schuweb_sitemap_com_weblinks
                 $node->name = $link->title;
 
                 // Find the Itemid
-                $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/','$1',WeblinksHelperRoute::getWeblinkRoute($link->id, $category->id)));
+	            if (version_compare(JVERSION, '4', 'lt'))
+	            {
+		            $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', WeblinksHelperRoute::getWeblinkRoute($link->id, $category->id)));
+	            } else {
+		            $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getWeblinkRoute($link->id, $category->id)));
+	            }
 
                 if ($item_params->get('count_clicks', $params['count_clicks']) == 1) {
                     $node->link = 'index.php?option=com_weblinks&task=weblink.go&id='. $link->id.'&Itemid='.($Itemid ? $Itemid : $parent->id);
@@ -183,7 +201,10 @@ class schuweb_sitemap_com_weblinks
         }
 
         self::$_initialized = true;
-        require_once JPATH_SITE.'/components/com_weblinks/models/category.php';
-        require_once JPATH_SITE.'/components/com_weblinks/helpers/route.php';
+	    if (version_compare(JVERSION, '4', 'lt'))
+	    {
+		    require_once JPATH_SITE . '/components/com_weblinks/models/category.php';
+		    require_once JPATH_SITE . '/components/com_weblinks/helpers/route.php';
+	    }
     }
 }
