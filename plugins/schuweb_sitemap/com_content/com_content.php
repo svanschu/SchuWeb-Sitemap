@@ -411,9 +411,10 @@ class schuweb_sitemap_com_content
 		    $query->where($db->qn('a.catid').'='.(int) $catid);
 	    }
 
-	    if ($params['max_art_age'] || $sitemap->isNews) {
+	    if ($params['max_art_age'] || $sitemap->isNews)
+	    {
 		    $days = (($sitemap->isNews && ($params['max_art_age'] > 3 || !$params['max_art_age'])) ? 3 : $params['max_art_age']);
-		    $query->where($db->qn('a.created').'>='. date('Y-m-d H:i:s', time() - $days * 86400));
+		    $query->where($db->qn('a.created') . '>=' . $db->q(date('Y-m-d H:i:s', time() - $days * 86400)));
 	    }
 
 	    if ($params['language_filter'] ) {
