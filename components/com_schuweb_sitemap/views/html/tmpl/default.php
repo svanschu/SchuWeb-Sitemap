@@ -13,23 +13,21 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 
 // Create shortcut to parameters.
 $params = $this->item->params;
+if (version_compare(JVERSION, '4', 'lt'))
+{
+	if ($this->displayer->canEdit)
+	{
+		$live_site = JURI::root();
 
-if ($this->displayer->canEdit) {
-    $live_site = JURI::root();
-    if (version_compare(JVERSION, '4', 'lt'))
-    {
-	    JHTML::_('behavior.framework', true);
-    } else {
-        //TODO  Frontend logedin publish buttons don't work #75
-        // https://github.com/svanschu/SchuWeb-Sitemap/issues/75
-    }
-    $ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&".JSession::getFormToken().'=1';
+		JHTML::_('behavior.framework', true);
 
-    $css = '.xmapexcl img{ border:0px; }'."\n";
-    $css .= '.xmapexcloff { text-decoration:line-through; }';
-    //$css .= "\n.".$this->item->classname .' li {float:left;}';
+		$ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&" . JSession::getFormToken() . '=1';
 
-    $js = "
+		$css = '.xmapexcl img{ border:0px; }' . "\n";
+		$css .= '.xmapexcloff { text-decoration:line-through; }';
+		//$css .= "\n.".$this->item->classname .' li {float:left;}';
+
+		$js = "
         window.addEvent('domready',function (){
             $$('.xmapexcl').each(function(el){
                 el.onclick = function(){
@@ -61,9 +59,10 @@ if ($this->displayer->canEdit) {
             }
         }";
 
-    $doc = JFactory::getDocument();
-    $doc->addStyleDeclaration ($css);
-    $doc->addScriptDeclaration ($js);
+		$doc = JFactory::getDocument();
+		$doc->addStyleDeclaration($css);
+		$doc->addScriptDeclaration($js);
+	}
 }
 ?>
 <div id="SchuWeb_Sitemap">
