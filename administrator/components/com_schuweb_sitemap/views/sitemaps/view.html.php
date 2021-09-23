@@ -27,9 +27,11 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
      */
     public function display($tpl = null)
     {
-        if ($this->getLayout() !== 'modal') {
-            SchuWeb_SitemapHelper::addSubmenu('sitemaps');
-        }
+	    if ($this->getLayout() !== 'modal')
+	    {
+		    JHtmlSidebar::addEntry(JText::_('SCHUWEB_SITEMAP_Submenu_Sitemaps'), 'index.php?option=com_schuweb_sitemap', true);
+		    JHtmlSidebar::addEntry(JText::_('SCHUWEB_SITEMAP_Submenu_Extensions'), 'index.php?option=com_plugins&view=plugins&filter_folder=schuweb_sitemap');
+	    }
 
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
