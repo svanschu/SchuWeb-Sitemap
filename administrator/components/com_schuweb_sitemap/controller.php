@@ -22,8 +22,6 @@ class SchuWeb_SitemapController extends JControllerLegacy
     function __construct()
     {
         parent::__construct();
-
-        $this->registerTask('navigator-links', 'navigatorLinks');
     }
 
     /**
@@ -59,74 +57,4 @@ class SchuWeb_SitemapController extends JControllerLegacy
 
         }
     }
-
-    function navigator()
-    {
-        $document = JFactory::getDocument();
-        $app = JFactory::getApplication('administrator');
-        $jinput = $app->input;
-
-        $id = $jinput->getInt('sitemap', 0);
-        if (!$id) {
-            $id = $this->getDefaultSitemapId();
-        }
-
-        if (!$id) {
-            $app->enqueueMessage(JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'), 'warning');
-            return false;
-        }
-
-        $app->setUserState('com_schuweb_sitemap.edit.sitemap.id', $id);
-
-        $view = $this->getView('sitemap', $document->getType());
-        $model = $this->getModel('Sitemap');
-        $view->setLayout('navigator');
-        $view->setModel($model, true);
-
-        // Push document object into the view.
-        $view->document = &$document;
-
-        $view->navigator();
-    }
-
-    function navigatorLinks()
-    {
-        $document = JFactory::getDocument();
-        $app = JFactory::getApplication('administrator');
-        $jinput = $app->input;
-
-        $id = $jinput->getInt('sitemap', 0);
-        if (!$id) {
-            $id = $this->getDefaultSitemapId();
-        }
-
-        if (!$id) {
-            $app->enqueueMessage(JText::_('SCHUWEB_SITEMAP_Not_Sitemap_Selected'), 'warning');
-            return false;
-        }
-
-        $app->setUserState('com_schuweb_sitemap.edit.sitemap.id', $id);
-
-        $view = $this->getView('sitemap', $document->getType());
-        $model = $this->getModel('Sitemap');
-        $view->setLayout('navigator');
-        $view->setModel($model, true);
-
-        // Push document object into the view.
-        $view->document = &$document;
-
-        $view->navigatorLinks();
-    }
-
-    private function getDefaultSitemapId()
-    {
-        $db = JFactory::getDBO();
-        $query = $db->getQuery(true);
-        $query->select('id');
-        $query->from($db->quoteName('#__schuweb_sitemap'));
-        $query->where('is_default=1');
-        $db->setQuery($query);
-        return $db->loadResult();
-    }
-
 }

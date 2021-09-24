@@ -66,8 +66,7 @@ class schuweb_sitemap_com_kunena
         $include_topics = ArrayHelper::getValue($params, 'include_topics', 1);
         $include_topics = ($include_topics == 1
             || ($include_topics == 2 && $sitemap->view == 'xml')
-            || ($include_topics == 3 && $sitemap->view == 'html')
-            || $sitemap->view == 'navigator');
+            || ($include_topics == 3 && $sitemap->view == 'html'));
         $params['include_topics'] = $include_topics;
 
         $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);

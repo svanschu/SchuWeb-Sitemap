@@ -137,24 +137,21 @@ class schuweb_sitemap_com_content
         $expand_categories = ArrayHelper::getValue($params, 'expand_categories', 1);
         $expand_categories = ( $expand_categories == 1
             || ( $expand_categories == 2 && $xmap->view == 'xml')
-            || ( $expand_categories == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ( $expand_categories == 3 && $xmap->view == 'html'));
         $params['expand_categories'] = $expand_categories;
 
         //----- Set expand_featured param
         $expand_featured = ArrayHelper::getValue($params, 'expand_featured', 1);
         $expand_featured = ( $expand_featured == 1
             || ( $expand_featured == 2 && $xmap->view == 'xml')
-            || ( $expand_featured == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ( $expand_featured == 3 && $xmap->view == 'html'));
         $params['expand_featured'] = $expand_featured;
 
         //----- Set expand_featured param
         $include_archived = ArrayHelper::getValue($params, 'include_archived', 2);
         $include_archived = ( $include_archived == 1
             || ( $include_archived == 2 && $xmap->view == 'xml')
-            || ( $include_archived == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ( $include_archived == 3 && $xmap->view == 'html'));
         $params['include_archived'] = $include_archived;
 
         //----- Set show_unauth param
@@ -174,8 +171,7 @@ class schuweb_sitemap_com_content
         $add_pagebreaks = ArrayHelper::getValue($params, 'add_pagebreaks', 1);
         $add_pagebreaks = ( $add_pagebreaks == 1
             || ( $add_pagebreaks == 2 && $xmap->view == 'xml')
-            || ( $add_pagebreaks == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ( $add_pagebreaks == 3 && $xmap->view == 'html'));
         $params['add_pagebreaks'] = $add_pagebreaks;
 
         if ($params['add_pagebreaks'] && !defined('_SCHUWEBSITEMAP_COM_CONTENT_LOADED')) {

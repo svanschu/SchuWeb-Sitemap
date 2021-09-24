@@ -43,15 +43,13 @@ class schuweb_sitemap_com_zoo
 		$include_categories           = ArrayHelper::getValue($params, 'include_categories', 1, '');
 		$include_categories           = ($include_categories == 1
 			|| ($include_categories == 2 && $schuweb_sitemap->view == 'xml')
-			|| ($include_categories == 3 && $schuweb_sitemap->view == 'html')
-			|| $schuweb_sitemap->view == 'navigator');
+			|| ($include_categories == 3 && $schuweb_sitemap->view == 'html'));
 		$params['include_categories'] = $include_categories;
 
 		$include_items           = ArrayHelper::getValue($params, 'include_items', 1, '');
 		$include_items           = ($include_items == 1
 			|| ($include_items == 2 && $schuweb_sitemap->view == 'xml')
-			|| ($include_items == 3 && $schuweb_sitemap->view == 'html')
-			|| $schuweb_sitemap->view == 'navigator');
+			|| ($include_items == 3 && $schuweb_sitemap->view == 'html'));
 		$params['include_items'] = $include_items;
 
 		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');

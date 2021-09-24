@@ -71,8 +71,7 @@ class schuweb_sitemap_com_newsfeeds
         $include_newsfeeds = ArrayHelper::getValue($params, 'include_newsfeeds', 1, '');
         $include_newsfeeds = ( $include_newsfeeds == 1
             || ( $include_newsfeeds == 2 && $sitemap->view == 'xml')
-            || ( $include_newsfeeds == 3 && $sitemap->view == 'html')
-            || $sitemap->view == 'navigator');
+            || ( $include_newsfeeds == 3 && $sitemap->view == 'html'));
         $params['include_newsfeeds'] = $include_newsfeeds;
 
         $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');

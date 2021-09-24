@@ -69,8 +69,7 @@ class schuweb_sitemap_com_weblinks
         $include_links = ArrayHelper::getValue($params, 'include_links', 1, '');
         $include_links = ( $include_links == 1
             || ( $include_links == 2 && $sitemap->view == 'xml')
-            || ( $include_links == 3 && $sitemap->view == 'html')
-            || $sitemap->view == 'navigator');
+            || ( $include_links == 3 && $sitemap->view == 'html'));
         $params['include_links'] = $include_links;
 
         $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
