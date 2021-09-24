@@ -1,19 +1,20 @@
 <?php
 /**
  * @version             sw.build.version
- * @copyright           Copyright (C) 2016 - 2017 Sven Schultschik. All rights reserved.
- * @copyright           Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright           Copyright (C) 2016 - 2021 Sven Schultschik. All rights reserved.
  * @license             GNU General Public License version 2 or later; see LICENSE.txt
  * @author              Sven Schultschik (https://extensions.schultschik.com)
- * @author              Guillermo Vargas (guille@vargas.co.cr)
  */
 // no direct access
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Language\Text;
+
 jimport('joomla.application.component.view');
 
 /**
- * @package    Xmap
+ * @package    SchuWeb Sitemap
  * @subpackage com_schuweb_sitemap
  */
 class SchuWeb_SitemapViewSitemap extends JViewLegacy
@@ -50,7 +51,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
 
         $this->handleMenus();
 
-        $this->_setToolbar();
+        $this->addToolbar();
 
         parent::display($tpl);
         $app->input->set('hidemainmenu', true);
@@ -184,19 +185,45 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
      *
      * @access    private
      */
-    function _setToolbar()
-    {
-        $isNew = ($this->item->id == 0);
+	function addToolbar()
+	{
+		$isNew = ($this->item->id == 0);
 
-        JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'article-add.png');
+		if (version_compare(JVERSION, '4', 'lt'))
+		{
+			JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'article-add.png');
+			JToolBarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
+			JToolBarHelper::save('sitemap.save', 'JTOOLBAR_SAVE');
+			JToolBarHelper::save2new('sitemap.save2new');
+			if (!$isNew)
+			{
+				JToolBarHelper::save2copy('sitemap.save2copy');
+			}
+			JToolBarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
+		}
+		else
+		{
+			ToolBarHelper::title(Text::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'sitemap fa-sitemap');
+			ToolbarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
 
-        JToolBarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
-        JToolBarHelper::save('sitemap.save', 'JTOOLBAR_SAVE');
-        JToolBarHelper::save2new('sitemap.save2new');
-        if (!$isNew) {
-            JToolBarHelper::save2copy('sitemap.save2copy');
-        }
-        JToolBarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
-    }
-
+			$toolbarButtons[] = ['save', 'sitemap.save'];
+			$toolbarButtons[] = ['save2new', 'sitemap.save2new'];
+			if (!$isNew)
+			{
+				$toolbarButtons[] = ['save2copy', 'sitemap.save2copy'];
+			}
+			ToolbarHelper::saveGroup(
+				$toolbarButtons,
+				'btn-success'
+			);
+			if ($isNew)
+			{
+				ToolbarHelper::cancel('sitemap.cancel');
+			}
+			else
+			{
+				ToolbarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
+			}
+		}
+	}
 }
