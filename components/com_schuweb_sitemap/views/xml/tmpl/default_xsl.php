@@ -405,7 +405,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
             <p><?php echo JText::sprintf('COM_SCHUWEB_SITEMAP_LOGIN_AS_ADMIN_EDIT_SITEMAP', JRoute::_('index.php?option=com_users&view=login&return='.base64_encode($sitemapUrl))); ?></p>
             <?php else: ?>
             <?php $sitemapUrl = JUri::base(true).'/'.str_replace('&','&amp;',$sitemapUrl); ?>
-            <p><?php echo JText::_('COM_SCHUWEB_SITEMAP_XML_SITEMAP_HELP'); ?></p>
+            <p><?php echo JText::sprintf('COM_SCHUWEB_SITEMAP_XML_SITEMAP_HELP', 'https://extensions.schultschik.com/documentation/schuweb-sitemap', 'https://extensions.schultschik.com/support'); ?></p>
             <p dir="ltr"><b><?php echo JText::_('COM_SCHUWEB_SITEMAP_XML_SITEMAP_URL'); ?></b>: <?php echo $sitemapUrl; ?></p>
             <div id="filter_options">
                 <form method="get" action="<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&view=xml'); ?>">
