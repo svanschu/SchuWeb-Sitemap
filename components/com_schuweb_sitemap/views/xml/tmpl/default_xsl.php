@@ -26,8 +26,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 <html>
 <head>
 <title><?php echo JText::_('COM_SCHUWEB_SITEMAP_XML_FILE'); ?></title>
-<script src="<?php echo JUri::base(); ?>media/system/js/mootools-core.js" type="text/javascript"></script>
-<script src="<?php echo JUri::base(); ?>media/system/js/mootools-more.js" type="text/javascript"></script>
 <style type="text/css">
     <![CDATA[
     <!--
@@ -173,7 +171,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
     -->
     ]]>
 </style>
-<script language="JavaScript">
+<script type="application/javascript">
     <![CDATA[
     var selectedColor = "blue";
     var defaultColor = "black";
@@ -317,23 +315,23 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
 
 <?php if ($this->canEdit): ?>
 
-    var divOptions=null;
+    let divOptions = null;
+
     function showOptions (cell,options,uid,itemid,e) {
-        // var div = document.getElementById('div'+options);
-        var div = $('div'+options);
-        pos = div.getPosition();
+        const div = document.getElementById('div' + options);
+        //var div = $('div'+options);
+        const pos = div.getBoundingClientRect();
         if ( divOptions != null && div != divOptions ) {
             closeOptions();
         }
-        var myCell = $(cell);
-        div.style.top = (myCell.getTop()+20)+'px';
-        div.style.left = myCell.getLeft()+'px';
-        var dimensions = myCell.getSize();
-        div.style.width=dimensions.x+'px';
+        let cellpos = cell.getBoundingClientRect();
+        div.style.top = (cellpos.top+20)+'px';
+        div.style.left = cellpos.left+'px';
+        div.style.width=cell.width+'px';
         div.style.display='';
         div.uid=uid;
         div.itemid=itemid;
-        div.cell=myCell;
+        div.cell=cell;
         divOptions=div;
 
     }
@@ -342,51 +340,92 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
         divOptions=null;
     }
 
-    function changeProperty(el,property) {
-        new Request.JSON({
-            url: '<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=changeProperty',false); ?>',
-            onComplete: checkChangeResult.bind(divOptions),
-            method: 'get'
-        }).send('<?php echo JSession::getFormToken(); ?>=1&id='+sitemapid+'&uid='+divOptions.uid+'&itemid='+divOptions.itemid+'&property='+property+'&value='+el.innerHTML);
-        divOptions.cell.innerHTML=el.innerHTML;
-        divOptions.style.display='none';
+    async function fetchCall(url='', data={}){
+        const response = await fetch(url)
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        if (response.ok) {
+            return response.json();
+        } else {
+            console.error("HTTP-Error: " + response.status);
+        }
+    }
+
+    function changeProperty(el, property) {
+        let url = '<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=changeProperty', false); ?>';
+        url = url.concat('&<?php echo JSession::getFormToken(); ?>');
+        url = url.concat('=1&id=' + sitemapid + '&uid=' + divOptions.uid + '&itemid=' + divOptions.itemid + '&property=' + property + '&value=' + el.innerHTML);
+        fetchCall(url, {}).then(data => {
+            if (data.result != "OK" || !data.state) {
+                console.error(data);
+            } else {
+                checkChangeResult.bind(divOptions);
+            }
+        });
+        divOptions.cell.innerHTML = el.innerHTML;
+        divOptions.style.display = 'none';
         return false;
     }
 
-    function toggleExcluded(el,itemid, uid){
-        row = $(el).getParent('tr');
-        new Request.JSON({
-            url: '<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement',false); ?>',
-            onComplete: checkToggleExcluded.bind(row),
-            method: 'get'
-        }).send('<?php echo JSession::getFormToken(); ?>=1&id='+sitemapid+'&uid='+uid+'&itemid='+itemid);
+    function getClosest(elem, selector) {
+        for (; elem && elem !== document; elem = elem.parentNode) {
+            if (elem.matches(selector)) return elem;
+        }
+        return null;
+    };
+
+    function toggleExcluded(el, itemid, uid) {
+        const row = getClosest(el, 'tr');
+        let url = '<?php echo JRoute::_('index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement', false); ?>';
+        url = url.concat('&<?php echo JSession::getFormToken(); ?>');
+        url = url.concat('=1&id=' + sitemapid + '&uid=' + uid + '&itemid=' + itemid);
+        fetchCall(url, {}).then(data => {
+            if (data.result != "OK") {
+                console.error(data);
+            } else {
+                checkToggleExcluded(row, data);
+            }
+        });
     }
 
-    function checkChangeResult(result,xmlResponse) {
+    function checkChangeResult(result) {
     }
 
-    function checkToggleExcluded(result,xmlResponse) {
+    function checkToggleExcluded(row, result) {
         if (result.result == 'OK') {
             if (result.state == 1) {
-                this.removeClass('excluded');
+                row.classList.remove('excluded');
             } else {
-                this.addClass('excluded');
+                row.classList.add('excluded');
             }
         }
     }
 
 <?php endif; ?>
 
-    window.addEvent('domready',function(){
-        $$('div.imagelist').each(function(div){
+    function ready(fn) {
+        if (document.readyState != 'loading'){
+            fn();
+        } else {
+            document.addEventListener('DOMContentLoaded', fn);
+        }
+    }
+
+    function start(){
+        var elements = document.querySelectorAll("div.imagelist");
+        Array.prototype.forEach.call(elements, function(div){
             div.slide = new Fx.Slide(div).hide();
-        })
-        $$('span.images_count').each(function(span){
+        });
+        var imagecounts = document.querySelectorAll("span.images_count");
+        Array.prototype.forEach.call(imagecounts, function(span){
             span.addEvent('click',function(){
-                $(this.parentNode).getElement('div.imagelist').slide.toggle();
+                this.parentNode.getElement('div.imagelist').slide.toggle();
             });
-        })
-    });
+        });
+    }
+
+    ready(start);
     var sitemapid=<?php echo $this->item->id; ?>;
 
     ]]>
