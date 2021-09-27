@@ -294,7 +294,7 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
             $state = 0;
         } else {
             if (is_array($excludedItems[$itemid]) && count($excludedItems[$itemid])) {
-                $excludedItems[$itemid] = array_filter($excludedItems[$itemid], create_function('$var', 'return ($var != \'' . $uid . '\');'));
+                $excludedItems[$itemid] = array_filter($excludedItems[$itemid], function($v) use ($uid) {return ($v != $uid );});
             } else {
                 unset($excludedItems[$itemid]);
             }
