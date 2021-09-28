@@ -202,6 +202,7 @@ class SchuWeb_SitemapDisplayer {
                 case 'alias':
                     // If this is an alias use the item id stored in the parameters to make the link.
                     $node->link = 'index.php?Itemid='.$item->params->get('aliasoptions');
+					$node->alias = true;
                     break;
                 default:
                     if (!$node->home) {

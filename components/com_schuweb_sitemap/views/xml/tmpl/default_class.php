@@ -94,7 +94,8 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
             && empty($this->_links[$link])
         ) { // ignore links that have been added already
             $this->count++;
-            $this->_links[$link] = 1;
+			if (!$node->alias)
+                $this->_links[$link] = 1;
 
             if (!isset($node->priority))
                 $node->priority = "0.5";
