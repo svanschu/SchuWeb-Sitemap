@@ -204,7 +204,7 @@ class schuweb_sitemap_com_zoo
 
 		if (self::$_menu_items == null)
 		{
-			$menu_items = $app->object->create('JSite')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
+			$menu_items = $app->object->create('\Joomla\CMS\Application\SiteApplication')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
 
 			$menu_items = $menu_items ? $menu_items : array();
 
