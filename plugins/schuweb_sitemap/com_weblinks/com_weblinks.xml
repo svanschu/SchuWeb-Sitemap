@@ -13,10 +13,10 @@
         <filename plugin="com_weblinks">com_weblinks.php</filename>
         <filename>index.html</filename>
     </files>
+    <updateservers>
+        <server type="extension" priority="1" name="SchuWeb Sitemap - Weblinks Integration">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap_plugin_weblinks.xml</server>
+    </updateservers>
     <languages folder="language">
-        <!--
-        these files will be installed in the administrator/language folder.
-        -->
         <language tag="en-GB">en-GB.plg_schuweb_sitemap_com_weblinks.ini</language>
         <language tag="es-ES">es-ES.plg_schuweb_sitemap_com_weblinks.ini</language>
         <language tag="fa-IR">fa-IR.plg_schuweb_sitemap_com_weblinks.ini</language>
