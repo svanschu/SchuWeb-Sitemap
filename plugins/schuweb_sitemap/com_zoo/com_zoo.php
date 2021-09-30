@@ -125,12 +125,12 @@ class schuweb_sitemap_com_zoo
 				$node->priority   = $params['cat_priority'];
 				$node->changefreq = $params['cat_changefreq'];
 
-				$attribs = json_decode($schuweb_sitemap->sitemap->attribs);
+				$attribs                   = json_decode($schuweb_sitemap->sitemap->attribs);
 				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $attribs->xmlInsertPriority;
+				$node->xmlInsertPriority   = $attribs->xmlInsertPriority;
 
 				$node->expandible = true;
-				$node->lastmod = $parent->lastmod;
+				$node->lastmod    = $parent->lastmod;
 				$schuweb_sitemap->printNode($node);
 			}
 			$schuweb_sitemap->changeLevel(-1);
@@ -176,12 +176,12 @@ class schuweb_sitemap_com_zoo
 				$node->priority   = $params['item_priority'];
 				$node->changefreq = $params['item_changefreq'];
 
-				$attribs = json_decode($schuweb_sitemap->sitemap->attribs);
+				$attribs                   = json_decode($schuweb_sitemap->sitemap->attribs);
 				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $attribs->xmlInsertPriority;
+				$node->xmlInsertPriority   = $attribs->xmlInsertPriority;
 
 				$node->expandible = true;
-				$node->lastmod = $parent->lastmod;
+				$node->lastmod    = $parent->lastmod;
 				$node->modified   = strtotime($item->modified);
 				$node->newsItem   = 1; // if we are making news map and it get this far, it's news
 				$schuweb_sitemap->printNode($node);

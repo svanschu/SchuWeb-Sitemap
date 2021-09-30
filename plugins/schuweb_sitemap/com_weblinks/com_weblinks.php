@@ -4,10 +4,10 @@
  *
  * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.schultschik.de
+ * @link    http://www.schultschik.de
  **/
 
-defined( '_JEXEC' ) or die;
+defined('_JEXEC') or die;
 
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Component\Weblinks\Site\Helper\RouteHelper;
@@ -16,194 +16,220 @@ use Joomla\Component\Weblinks\Site\Model\CategoryModel;
 class schuweb_sitemap_com_weblinks
 {
 
-    static private $_initialized = false;
-    /*
-     * This function is called before a menu item is printed. We use it to set the
-     * proper uniqueid for the item and indicate whether the node is expandible or not
-     */
+	static private $_initialized = false;
 
-    static function prepareMenuItem($node, &$params)
-    {
-        $link_query = parse_url($node->link);
-        parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $view = ArrayHelper::getValue($link_vars, 'view', '');
-        if ($view == 'weblink') {
-            $id = intval(ArrayHelper::getValue($link_vars, 'id', 0));
-            if ($id) {
-                $node->uid = 'com_weblinksi' . $id;
-                $node->expandible = false;
-            }
-        } elseif ($view == 'categories') {
-            $node->uid = 'com_weblinkscategories';
-            $node->expandible = true;
-        } elseif ($view == 'category') {
-            $catid = intval(ArrayHelper::getValue($link_vars, 'id', 0));
-            $node->uid = 'com_weblinksc' . $catid;
-            $node->expandible = true;
-        }
-    }
+	/*
+	 * This function is called before a menu item is printed. We use it to set the
+	 * proper uniqueid for the item and indicate whether the node is expandible or not
+	 */
 
-    static function getTree($sitemap, $parent, &$params)
-    {
-        self::initialize($params);
+	static function prepareMenuItem($node, &$params)
+	{
+		$link_query = parse_url($node->link);
+		parse_str(html_entity_decode($link_query['query']), $link_vars);
+		$view = ArrayHelper::getValue($link_vars, 'view', '');
+		if ($view == 'weblink')
+		{
+			$id = intval(ArrayHelper::getValue($link_vars, 'id', 0));
+			if ($id)
+			{
+				$node->uid        = 'com_weblinksi' . $id;
+				$node->expandible = false;
+			}
+		}
+		elseif ($view == 'categories')
+		{
+			$node->uid        = 'com_weblinkscategories';
+			$node->expandible = true;
+		}
+		elseif ($view == 'category')
+		{
+			$catid            = intval(ArrayHelper::getValue($link_vars, 'id', 0));
+			$node->uid        = 'com_weblinksc' . $catid;
+			$node->expandible = true;
+		}
+	}
 
-        $app = JFactory::getApplication();
-        $weblinks_params = $app->getParams('com_weblinks');
+	static function getTree($sitemap, $parent, &$params)
+	{
+		self::initialize($params);
 
-        $link_query = parse_url($parent->link);
-        parse_str(html_entity_decode($link_query['query']), $link_vars);
-        $view = ArrayHelper::getValue($link_vars, 'view', 0);
+		$app             = JFactory::getApplication();
+		$weblinks_params = $app->getParams('com_weblinks');
 
-        $app = JFactory::getApplication();
-        $menu = $app->getMenu();
-        $menuparams = $menu->getParams($parent->id);
+		$link_query = parse_url($parent->link);
+		parse_str(html_entity_decode($link_query['query']), $link_vars);
+		$view = ArrayHelper::getValue($link_vars, 'view', 0);
 
-        if ($view == 'category') {
-            $catid = intval(ArrayHelper::getValue($link_vars, 'id', 0));
-        } elseif ($view == 'categories') {
-            $catid = 0;
-        } else { // Only expand category menu items
-            return;
-        }
+		$app        = JFactory::getApplication();
+		$menu       = $app->getMenu();
+		$menuparams = $menu->getParams($parent->id);
 
-        $include_links = ArrayHelper::getValue($params, 'include_links', 1, '');
-        $include_links = ( $include_links == 1
-            || ( $include_links == 2 && $sitemap->view == 'xml')
-            || ( $include_links == 3 && $sitemap->view == 'html'));
-        $params['include_links'] = $include_links;
+		if ($view == 'category')
+		{
+			$catid = intval(ArrayHelper::getValue($link_vars, 'id', 0));
+		}
+		elseif ($view == 'categories')
+		{
+			$catid = 0;
+		}
+		else
+		{ // Only expand category menu items
+			return;
+		}
 
-        $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
-        $changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq, '');
-        if ($priority == '-1')
-            $priority = $parent->priority;
-        if ($changefreq == '-1')
-            $changefreq = $parent->changefreq;
+		$include_links           = ArrayHelper::getValue($params, 'include_links', 1, '');
+		$include_links           = ($include_links == 1
+			|| ($include_links == 2 && $sitemap->view == 'xml')
+			|| ($include_links == 3 && $sitemap->view == 'html'));
+		$params['include_links'] = $include_links;
 
-        $params['cat_priority'] = $priority;
-        $params['cat_changefreq'] = $changefreq;
+		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
+		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq, '');
+		if ($priority == '-1')
+			$priority = $parent->priority;
+		if ($changefreq == '-1')
+			$changefreq = $parent->changefreq;
 
-        $priority = ArrayHelper::getValue($params, 'link_priority', $parent->priority, '');
-        $changefreq = ArrayHelper::getValue($params, 'link_changefreq', $parent->changefreq, '');
-        if ($priority == '-1')
-            $priority = $parent->priority;
+		$params['cat_priority']   = $priority;
+		$params['cat_changefreq'] = $changefreq;
 
-        if ($changefreq == '-1')
-            $changefreq = $parent->changefreq;
+		$priority   = ArrayHelper::getValue($params, 'link_priority', $parent->priority, '');
+		$changefreq = ArrayHelper::getValue($params, 'link_changefreq', $parent->changefreq, '');
+		if ($priority == '-1')
+			$priority = $parent->priority;
 
-        $params['link_priority'] = $priority;
-        $params['link_changefreq'] = $changefreq;
+		if ($changefreq == '-1')
+			$changefreq = $parent->changefreq;
 
-        $options = array();
-        $options['countItems'] = false;
-        $options['catid'] = rand();
-        $categories = JCategories::getInstance('Weblinks', $options);
-        $category = $categories->get($catid? $catid : 'root', true);
+		$params['link_priority']   = $priority;
+		$params['link_changefreq'] = $changefreq;
 
-        $params['count_clicks'] = $weblinks_params->get('count_clicks');
+		$options               = array();
+		$options['countItems'] = false;
+		$options['catid']      = rand();
+		$categories            = JCategories::getInstance('Weblinks', $options);
+		$category              = $categories->get($catid ? $catid : 'root', true);
 
-        schuweb_sitemap_com_weblinks::getCategoryTree($sitemap, $parent, $params, $category);
-    }
+		$params['count_clicks'] = $weblinks_params->get('count_clicks');
 
-    static function getCategoryTree($sitemap, $parent, &$params, $category)
-    {
-        $db = JFactory::getDBO();
+		schuweb_sitemap_com_weblinks::getCategoryTree($sitemap, $parent, $params, $category);
+	}
 
-        $children = $category->getChildren();
-        $sitemap->changeLevel(1);
-        foreach ($children as $cat) {
-            $node = new stdclass;
-            $node->id = $parent->id;
-            $node->uid = $parent->uid . 'c' . $cat->id;
-            $node->name = $cat->title;
-	        if (version_compare(JVERSION, '4', 'lt'))
-	        {
-            $node->link = WeblinksHelperRoute::getCategoryRoute($cat);
-	        }else{
+	static function getCategoryTree($sitemap, $parent, &$params, $category)
+	{
+		$db = JFactory::getDBO();
 
-	        $node->link = RouteHelper::getCategoryRoute($cat);
-	        }
-            $node->priority = $params['cat_priority'];
-            $node->changefreq = $params['cat_changefreq'];
+		$children = $category->getChildren();
+		$sitemap->changeLevel(1);
+		foreach ($children as $cat)
+		{
+			$node       = new stdclass;
+			$node->id   = $parent->id;
+			$node->uid  = $parent->uid . 'c' . $cat->id;
+			$node->name = $cat->title;
+			if (version_compare(JVERSION, '4', 'lt'))
+			{
+				$node->link = WeblinksHelperRoute::getCategoryRoute($cat);
+			}
+			else
+			{
 
-            $node->lastmod = $parent->lastmod;
-	        $node->modified = $cat->modified_time;
+				$node->link = RouteHelper::getCategoryRoute($cat);
+			}
+			$node->priority   = $params['cat_priority'];
+			$node->changefreq = $params['cat_changefreq'];
 
-            $attribs = json_decode($sitemap->sitemap->attribs);
-            $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-            $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+			$node->lastmod  = $parent->lastmod;
+			$node->modified = $cat->modified_time;
 
-            $node->expandible = true;
-            if ($sitemap->printNode($node) !== FALSE) {
-                schuweb_sitemap_com_weblinks::getCategoryTree($sitemap, $parent, $params, $cat);
-            }
-        }
-        $sitemap->changeLevel(-1);
+			$attribs                   = json_decode($sitemap->sitemap->attribs);
+			$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+			$node->xmlInsertPriority   = $attribs->xmlInsertPriority;
 
-        if ($params['include_links']) { //view=category&catid=...
-	        if (version_compare(JVERSION, '4', 'lt'))
-	        {
-		        $linksModel = new WeblinksModelCategory();
-	        } else {
-		        $linksModel = new CategoryModel();
-	        }
-            $linksModel->getState(); // To force the populate state
-            $linksModel->setState('list.limit', ArrayHelper::getValue($params, 'max_links', NULL));
-            $linksModel->setState('list.start', 0);
-            $linksModel->setState('list.ordering', 'ordering');
-            $linksModel->setState('list.direction', 'ASC');
-            $linksModel->setState('category.id', $category->id);
-            $links = $linksModel->getItems();
-            $sitemap->changeLevel(1);
-            foreach ($links as $link) {
-                $item_params = new JRegistry;
-                $item_params->loadString($link->params);
+			$node->expandible = true;
+			if ($sitemap->printNode($node) !== false)
+			{
+				schuweb_sitemap_com_weblinks::getCategoryTree($sitemap, $parent, $params, $cat);
+			}
+		}
+		$sitemap->changeLevel(-1);
 
-                $node = new stdclass;
-                $node->id = $parent->id;
-                $node->uid = $parent->uid . 'i' . $link->id;
-                $node->name = $link->title;
+		if ($params['include_links'])
+		{ //view=category&catid=...
+			if (version_compare(JVERSION, '4', 'lt'))
+			{
+				$linksModel = new WeblinksModelCategory();
+			}
+			else
+			{
+				$linksModel = new CategoryModel();
+			}
+			$linksModel->getState(); // To force the populate state
+			$linksModel->setState('list.limit', ArrayHelper::getValue($params, 'max_links', null));
+			$linksModel->setState('list.start', 0);
+			$linksModel->setState('list.ordering', 'ordering');
+			$linksModel->setState('list.direction', 'ASC');
+			$linksModel->setState('category.id', $category->id);
+			$links = $linksModel->getItems();
+			$sitemap->changeLevel(1);
+			foreach ($links as $link)
+			{
+				$item_params = new JRegistry;
+				$item_params->loadString($link->params);
 
-                // Find the Itemid
-	            if (version_compare(JVERSION, '4', 'lt'))
-	            {
-		            $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', WeblinksHelperRoute::getWeblinkRoute($link->id, $category->id)));
-	            } else {
-		            $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getWeblinkRoute($link->id, $category->id)));
-	            }
+				$node       = new stdclass;
+				$node->id   = $parent->id;
+				$node->uid  = $parent->uid . 'i' . $link->id;
+				$node->name = $link->title;
 
-                if ($item_params->get('count_clicks', $params['count_clicks']) == 1) {
-                    $node->link = 'index.php?option=com_weblinks&task=weblink.go&id='. $link->id.'&Itemid='.($Itemid ? $Itemid : $parent->id);
-                } else {
-                    $node->link = $link->url;
-                }
-                $node->priority = $params['link_priority'];
-                $node->changefreq = $params['link_changefreq'];
+				// Find the Itemid
+				if (version_compare(JVERSION, '4', 'lt'))
+				{
+					$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', WeblinksHelperRoute::getWeblinkRoute($link->id, $category->id)));
+				}
+				else
+				{
+					$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getWeblinkRoute($link->id, $category->id)));
+				}
 
-                $attribs = json_decode($sitemap->sitemap->attribs);
-                $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-                $node->xmlInsertPriority = $attribs->xmlInsertPriority;
+				if ($item_params->get('count_clicks', $params['count_clicks']) == 1)
+				{
+					$node->link = 'index.php?option=com_weblinks&task=weblink.go&id=' . $link->id . '&Itemid=' . ($Itemid ? $Itemid : $parent->id);
+				}
+				else
+				{
+					$node->link = $link->url;
+				}
+				$node->priority   = $params['link_priority'];
+				$node->changefreq = $params['link_changefreq'];
 
-                $node->lastmod = $parent->lastmod;
-	            $node->modified = $link->modified;
+				$attribs                   = json_decode($sitemap->sitemap->attribs);
+				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
+				$node->xmlInsertPriority   = $attribs->xmlInsertPriority;
 
-	            $node->expandible = false;
-                $sitemap->printNode($node);
-            }
-            $sitemap->changeLevel(-1);
-        }
-    }
+				$node->lastmod  = $parent->lastmod;
+				$node->modified = $link->modified;
 
-    static public function initialize(&$params)
-    {
-        if (self::$_initialized) {
-            return;
-        }
+				$node->expandible = false;
+				$sitemap->printNode($node);
+			}
+			$sitemap->changeLevel(-1);
+		}
+	}
 
-        self::$_initialized = true;
-	    if (version_compare(JVERSION, '4', 'lt'))
-	    {
-		    require_once JPATH_SITE . '/components/com_weblinks/models/category.php';
-		    require_once JPATH_SITE . '/components/com_weblinks/helpers/route.php';
-	    }
-    }
+	static public function initialize(&$params)
+	{
+		if (self::$_initialized)
+		{
+			return;
+		}
+
+		self::$_initialized = true;
+		if (version_compare(JVERSION, '4', 'lt'))
+		{
+			require_once JPATH_SITE . '/components/com_weblinks/models/category.php';
+			require_once JPATH_SITE . '/components/com_weblinks/helpers/route.php';
+		}
+	}
 }
