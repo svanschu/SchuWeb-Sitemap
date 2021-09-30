@@ -1,11 +1,11 @@
 <?php
 /**
- * @package SchuWeb Sitemap
- *
- * @Copyright (C) 2020-2021 Sven Schultschik. All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link    http://www.schultschik.de
- **/
+ * @version             sw.build.version
+ * @copyright (C)       2010-2021 Sven Schultschik. All rights reserved
+ * @author              Sven Schultschik
+ * @license             http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link                http://www.schultschik.de
+ */
 defined('_JEXEC') or die;
 
 use \Joomla\Utilities\ArrayHelper;
@@ -214,13 +214,13 @@ class schuweb_sitemap_com_zoo
 				switch (@$menu_item->query['view'])
 				{
 					case 'frontpage':
-						self::$_menu_items['frontpage'][$app->parameter->create($menu_item->params)->get('application')] = $menu_item;
+						self::$_menu_items['frontpage'][$app->parameter->create($menu_item->getParams())->get('application')] = $menu_item;
 						break;
 					case 'category':
-						self::$_menu_items['category'][$app->parameter->create($menu_item->params)->get('category')] = $menu_item;
+						self::$_menu_items['category'][$app->parameter->create($menu_item->getParams())->get('category')] = $menu_item;
 						break;
 					case 'item':
-						self::$_menu_items['item'][$app->parameter->create($menu_item->params)->get('item_id')] = $menu_item;
+						self::$_menu_items['item'][$app->parameter->create($menu_item->getParams())->get('item_id')] = $menu_item;
 						break;
 				}
 			}
