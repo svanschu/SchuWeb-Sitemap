@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <extension type="plugin" group="schuweb_sitemap" version="1.6" method="upgrade">
     <name>SchuWeb Sitemap - Weblinks Plugin</name>
-    <author>Guillermo Vargas</author>
+    <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <authorEmail>extensions@schultschik.de</authorEmail>
-    <authorUrl>extensions.schultschik.de</authorUrl>
+    <authorEmail>sven@schultschik.de</authorEmail>
+    <authorUrl>www.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_WL_PLUGIN_DESCRIPTION</description>
     <files>
