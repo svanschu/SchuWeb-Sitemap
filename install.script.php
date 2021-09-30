@@ -8,7 +8,9 @@
  * @license          GNU General Public License version 3 or later
  */
 
-// No direct access to this file
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die('Restricted access');
 
 /**
@@ -42,6 +44,9 @@ class pkg_schuweb_sitemapInstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
+		if ($type == "update")
+			$this->upgradeJ3J4();
+
 		if ($type != "install")
 		{
 			return;
@@ -145,4 +150,61 @@ class pkg_schuweb_sitemapInstallerScript
 		$db->execute();
 	}
 
+	/**
+	 * This method should handle the steps if some has upgrade from J3 to J4
+	 *
+	 * @since 3.4.0
+	 */
+	private function upgradeJ3J4()
+	{
+		$errMessages = array();
+
+		if (version_compare(JVERSION, '4', 'ge'))
+		{
+			$unsupported = array('com_sobipro', 'com_virtuemart', 'com_kunena');
+			foreach ($unsupported as $componentName)
+			{
+				$db    = JFactory::getDbo();
+				$query = $db->getQuery(true);
+
+				$query->select('*')
+					->from($db->qn('#__extensions'))
+					->where($db->qn('element') . '=' . $db->q($componentName))
+					->where($db->qn('folder') . '=' . $db->q('schuweb_sitemap'));
+
+				$db->setQuery($query);
+				$extension = $db->loadObject();
+
+				$manifest = json_decode($extension->manifest_cache);
+
+				if (!is_null($manifest))
+				{
+					if (version_compare($manifest->version, '3.4.0', 'lt'))
+					{
+						$installer = Installer::getInstance();
+						if (!$installer->uninstall('plugin', $extension->extension_id))
+							$errMessages[] = Text::sprintf('COM_SCHUWEB_SITEMAP_POSTFLIGHT_PLUGIN_UNINSTALL_ERR', $componentName);
+					}
+				}
+				else
+				{
+					$errMessages[] = Text::sprintf('COM_SCHUWEB_SITEMAP_POSTFLIGHT_PLUGIN_UNINSTALL_MANIFEST_ERR', $componentName);
+				}
+			}
+		}
+
+		$this->printError($errMessages);
+	}
+
+	private function printError($messages)
+	{
+		if (empty($messages))
+			return;
+
+		echo '<div class="alert alert-error">';
+		foreach ($messages as $message){
+			echo '<p>'.$message.'</p>';
+		}
+		echo '</div>';
+	}
 }
