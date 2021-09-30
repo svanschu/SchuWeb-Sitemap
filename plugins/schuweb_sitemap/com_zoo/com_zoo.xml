@@ -14,9 +14,9 @@
         <filename plugin="com_zoo">com_zoo.php</filename>
         <filename>index.html</filename>
     </files>
-    <!--updateservers>
-        <server type="extension" priority="1" name="Xmap - Zoo Integration">https://raw.githubusercontent.com/z-index-net/joomla-plugin-xmap-zoo/master/updatestream.xml</server>
-    </updateservers-->
+    <updateservers>
+        <server type="extension" priority="1" name="SchuWeb Sitemap - Zoo Integration">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap_plugin_zoo.xml</server>
+    </updateservers>
     <config>
         <fields name="params">
             <fieldset name="BASIC">
