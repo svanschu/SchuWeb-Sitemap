@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Override variables:
+    - Version number -Dbuild.version=0.0.0
+-->
+<project name="schuweb_sitemap_plugins" default="build">
+    <property name="extension_name" value="SchuWeb_Sitemap"/>
+    <!-- Version number of build -->
+    <property name="build.version" value="0.0.0" override="true"/>
+    <!-- get the date for build -->
+    <tstamp prefix="build.date">
+        <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
+    </tstamp>
+    <!-- Set the directory where the packages should be saved. Relative to the build dir -->
+    <property name="builddir" value="./../../packages/${extension_name}" override="true"/>
+    <!-- Declare Project src files -->
+    <property name="src" value="./.." override="true"/>
+    <property name="plugins" value="${src}/plugins"/>
+
+    <target name="build" depends="prepare, copy">
+        <zip destfile="${builddir}/plg_zoo_${build.version}_${build.date.DSTAMP}.zip">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_zoo">
+                <include name="**"/>
+            </fileset>
+        </zip>
+        <delete dir="${builddir}/tmp"/>
+        <echo msg="Zip ALL OK!"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${builddir}/tmp/schuweb_sitemap/plugins/"/>
+        <echo msg="Create temp folder OK!"/>
+    </target>
+
+    <target name="copy">
+        <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
+            <fileset dir="${plugins}/schuweb_sitemap">
+                <include name="com_zoo/**"/>
+            </fileset>
+        </copy>
+        <echo msg="Copy was successfull"/>
+        <!-- insert version, build number and date into files -->
+        <reflexive>
+            <fileset dir="${builddir}/tmp/">
+                <include name="**"/>
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="sw\.build\.version" replace="${build.version}"/>
+                    <regexp pattern="sw\.build\.date" replace="${build.date.DATE}"/>
+                    <regexp pattern="sw\.build\.dstamp" replace="${build.date.DSTAMP}"/>
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
+    </target>
+</project>
