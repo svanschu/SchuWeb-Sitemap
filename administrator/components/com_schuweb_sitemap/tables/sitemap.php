@@ -1,6 +1,6 @@
 <?php
 /**
- * @version       $Id$
+ * @version       sw.build.version
  * @copyright     Copyright (C) 2019 SchuWeb Extensions, Sven Schultschik
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  * @author        Sven Schultschik

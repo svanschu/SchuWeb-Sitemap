@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="4.0" method="upgrade">
+    <name>SchuWeb Sitemap Package</name>
+    <packagename>schuweb_sitemap</packagename>
+    <creationDate>sw.build.date</creationDate>
+    <author>Sven Schultschik</author>
+    <version>sw.build.version</version>
+    <url>http://extensions.schultschik.de</url>
+    <packager>SchuWeb Sitemap</packager>
+    <packagerurl>http://extensions.schultschik.de</packagerurl>
+    <license>GNU/GPL</license>
+    <description>The Site Map generator for Joomla!</description>
+    <scriptfile>install.script.php</scriptfile>
+    <files folder="packages">
+        <file type="component" id="com_schuweb_sitemap">com_schuweb_sitemap_sw.build.version_sw.build.dstamp.zip</file>
+        <file type="plugin" id="com_content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.dstamp.zip</file>
+        <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_weblinks_sw.build.version_sw.build.dstamp.zip</file>
+        <file type="plugin" id="com_newsfeeds" group="schuweb_sitemap">plg_newsfeeds_sw.build.version_sw.build.dstamp.zip</file>
+        <file type="plugin" id="com_zoo" group="schuweb_sitemap">plg_zoo_sw.build.version_sw.build.dstamp.zip</file>
+    </files>
+    <updateservers>
+        <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap.xml</server>
+    </updateservers>
+</extension>

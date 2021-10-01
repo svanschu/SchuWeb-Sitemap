@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <extension type="plugin" group="schuweb_sitemap" version="1.6" method="upgrade">
-	<name>SchuWeb Sitemap - Weblinks Plugin</name>
-    <author>Guillermo Vargas</author>
+    <name>SchuWeb Sitemap - Weblinks Plugin</name>
+    <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <authorEmail>extensions@schultschik.de</authorEmail>
-    <authorUrl>extensions.schultschik.de</authorUrl>
+    <authorEmail>sven@schultschik.de</authorEmail>
+    <authorUrl>www.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_WL_PLUGIN_DESCRIPTION</description>
     <files>
         <filename plugin="com_weblinks">com_weblinks.php</filename>
         <filename>index.html</filename>
     </files>
+    <updateservers>
+        <server type="extension" priority="1" name="SchuWeb Sitemap - Weblinks Integration">
+            https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap_plugin_weblinks.xml
+        </server>
+    </updateservers>
     <languages folder="language">
-        <!--
-        these files will be installed in the administrator/language folder.
-        -->
         <language tag="en-GB">en-GB.plg_schuweb_sitemap_com_weblinks.ini</language>
         <language tag="es-ES">es-ES.plg_schuweb_sitemap_com_weblinks.ini</language>
         <language tag="fa-IR">fa-IR.plg_schuweb_sitemap_com_weblinks.ini</language>
@@ -27,16 +29,19 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="include_links" type="list" default="1" label="SCHUWEB_SITEMAP_WL_SETTING_SHOW_LINKS_LABEL" description="SCHUWEB_SITEMAP_WL_SETTING_SHOW_LINKS_DESC">
+                <field name="include_links" type="list" default="1" label="SCHUWEB_SITEMAP_WL_SETTING_SHOW_LINKS_LABEL"
+                       description="SCHUWEB_SITEMAP_WL_SETTING_SHOW_LINKS_DESC">
                     <option value="0">SCHUWEB_SITEMAP_OPTION_NEVER</option>
                     <option value="1">SCHUWEB_SITEMAP_OPTION_ALWAYS</option>
                     <option value="2">SCHUWEB_SITEMAP_OPTION_XML_ONLY</option>
                     <option value="3">SCHUWEB_SITEMAP_OPTION_HTML_ONLY</option>
                 </field>
-                <field name="max_links" type="text" default="" label="SCHUWEB_SITEMAP_WL_SETTING_MAX_LINKS_LABEL" description="SCHUWEB_SITEMAP_WL_SETTING_MAX_LINKS_DESC" />
+                <field name="max_links" type="text" default="" label="SCHUWEB_SITEMAP_WL_SETTING_MAX_LINKS_LABEL"
+                       description="SCHUWEB_SITEMAP_WL_SETTING_MAX_LINKS_DESC"/>
             </fieldset>
             <fieldset name="xml">
-                <field name="cat_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_CATEGORY_PRIORITY_LABEL" description="SCHUWEB_SITEMAP_WL_CATEGORY_PRIORITY_DESC">
+                <field name="cat_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_CATEGORY_PRIORITY_LABEL"
+                       description="SCHUWEB_SITEMAP_WL_CATEGORY_PRIORITY_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="0.0">0.0</option>
                     <option value="0.1">0.1</option>
@@ -50,7 +55,9 @@
                     <option value="0.9">0.9</option>
                     <option value="1">1</option>
                 </field>
-                <field name="cat_changefreq" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_CATEGORY_CHANGEFREQ_LABEL" description="SCHUWEB_SITEMAP_WL_CATEGORY_CHANGEFREQ_DESC">
+                <field name="cat_changefreq" type="list" default="-1"
+                       label="SCHUWEB_SITEMAP_WL_CATEGORY_CHANGEFREQ_LABEL"
+                       description="SCHUWEB_SITEMAP_WL_CATEGORY_CHANGEFREQ_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="always">SCHUWEB_SITEMAP_OPTION_ALWAYS</option>
                     <option value="hourly">SCHUWEB_SITEMAP_OPTION_HOURLY</option>
@@ -60,7 +67,8 @@
                     <option value="yearly">SCHUWEB_SITEMAP_OPTION_YEARLY</option>
                     <option value="never">SCHUWEB_SITEMAP_OPTION_NEVER</option>
                 </field>
-                <field name="link_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_LINK_PRIORITY_LABEL" description="SCHUWEB_SITEMAP_WL_LINK_PRIORITY_DESC">
+                <field name="link_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_LINK_PRIORITY_LABEL"
+                       description="SCHUWEB_SITEMAP_WL_LINK_PRIORITY_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="0.0">0.0</option>
                     <option value="0.2">0.2</option>
@@ -73,7 +81,8 @@
                     <option value="0.9">0.9</option>
                     <option value="1">1</option>
                 </field>
-                <field name="link_changefreq" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_LINK_CHANGEFREQ_LABEL" description="SCHUWEB_SITEMAP_WL_LINK_CHANGEFREQ_DESC">
+                <field name="link_changefreq" type="list" default="-1" label="SCHUWEB_SITEMAP_WL_LINK_CHANGEFREQ_LABEL"
+                       description="SCHUWEB_SITEMAP_WL_LINK_CHANGEFREQ_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>
                     <option value="always">SCHUWEB_SITEMAP_OPTION_ALWAYS</option>
                     <option value="hourly">SCHUWEB_SITEMAP_OPTION_HOURLY</option>

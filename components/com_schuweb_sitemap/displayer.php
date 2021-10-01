@@ -1,10 +1,12 @@
 <?php
 /**
-* @version        $Id$
+* @version        sw.build.version
 * @copyright        Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
 * @license        GNU General Public License version 2 or later; see LICENSE.txt
 * @author        Guillermo Vargas (guille@vargas.co.cr)
 */
+
+use Joomla\CMS\Application\SiteApplication;
 
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
@@ -151,8 +153,7 @@ class SchuWeb_SitemapDisplayer {
     protected function printMenuTree($menu,&$items)
     {
         $this->changeLevel(1);
-
-        $router = JSite::getRouter();
+        $router = SiteApplication::getRouter();
 
         foreach ( $items as $i => $item ) {                   // Add each menu entry to the root tree.
             $excludeExternal = false;
@@ -178,7 +179,6 @@ class SchuWeb_SitemapDisplayer {
             $node->xmlInsertChangeFreq = $item->xmlInsertChangeFreq;
             $node->xmlInsertPriority = $item->xmlInsertPriority;
 
-            // New on SchuWeb_Sitemap 2.0: send the menu params
             $node->params =& $item->params;
 
             if ($node->home == 1) {
@@ -202,12 +202,10 @@ class SchuWeb_SitemapDisplayer {
                 case 'alias':
                     // If this is an alias use the item id stored in the parameters to make the link.
                     $node->link = 'index.php?Itemid='.$item->params->get('aliasoptions');
+					$node->alias = true;
                     break;
                 default:
-                    if ($router->getMode() == JROUTER_MODE_SEF) {
-                        $node->link = 'index.php?Itemid='.$node->id;
-                    }
-                    elseif (!$node->home) {
+                    if (!$node->home) {
                         $node->link .= '&Itemid='.$node->id;
                     }
                     break;

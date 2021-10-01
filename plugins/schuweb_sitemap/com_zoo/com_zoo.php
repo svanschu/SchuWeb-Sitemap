@@ -1,11 +1,11 @@
 <?php
 /**
- * @package SchuWeb Sitemap
- *
- * @Copyright (C) 2020-2021 Sven Schultschik. All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link    http://www.schultschik.de
- **/
+ * @version             sw.build.version
+ * @copyright (C)       2010-2021 Sven Schultschik. All rights reserved
+ * @author              Sven Schultschik
+ * @license             GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @link                http://www.schultschik.de
+ */
 defined('_JEXEC') or die;
 
 use \Joomla\Utilities\ArrayHelper;
@@ -43,15 +43,13 @@ class schuweb_sitemap_com_zoo
 		$include_categories           = ArrayHelper::getValue($params, 'include_categories', 1, '');
 		$include_categories           = ($include_categories == 1
 			|| ($include_categories == 2 && $schuweb_sitemap->view == 'xml')
-			|| ($include_categories == 3 && $schuweb_sitemap->view == 'html')
-			|| $schuweb_sitemap->view == 'navigator');
+			|| ($include_categories == 3 && $schuweb_sitemap->view == 'html'));
 		$params['include_categories'] = $include_categories;
 
 		$include_items           = ArrayHelper::getValue($params, 'include_items', 1, '');
 		$include_items           = ($include_items == 1
 			|| ($include_items == 2 && $schuweb_sitemap->view == 'xml')
-			|| ($include_items == 3 && $schuweb_sitemap->view == 'html')
-			|| $schuweb_sitemap->view == 'navigator');
+			|| ($include_items == 3 && $schuweb_sitemap->view == 'html'));
 		$params['include_items'] = $include_items;
 
 		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
@@ -127,12 +125,12 @@ class schuweb_sitemap_com_zoo
 				$node->priority   = $params['cat_priority'];
 				$node->changefreq = $params['cat_changefreq'];
 
-				$attribs = json_decode($schuweb_sitemap->sitemap->attribs);
+				$attribs                   = json_decode($schuweb_sitemap->sitemap->attribs);
 				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $attribs->xmlInsertPriority;
+				$node->xmlInsertPriority   = $attribs->xmlInsertPriority;
 
 				$node->expandible = true;
-				$node->lastmod = $parent->lastmod;
+				$node->lastmod    = $parent->lastmod;
 				$schuweb_sitemap->printNode($node);
 			}
 			$schuweb_sitemap->changeLevel(-1);
@@ -178,12 +176,12 @@ class schuweb_sitemap_com_zoo
 				$node->priority   = $params['item_priority'];
 				$node->changefreq = $params['item_changefreq'];
 
-				$attribs = json_decode($schuweb_sitemap->sitemap->attribs);
+				$attribs                   = json_decode($schuweb_sitemap->sitemap->attribs);
 				$node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $attribs->xmlInsertPriority;
+				$node->xmlInsertPriority   = $attribs->xmlInsertPriority;
 
 				$node->expandible = true;
-				$node->lastmod = $parent->lastmod;
+				$node->lastmod    = $parent->lastmod;
 				$node->modified   = strtotime($item->modified);
 				$node->newsItem   = 1; // if we are making news map and it get this far, it's news
 				$schuweb_sitemap->printNode($node);
@@ -206,7 +204,7 @@ class schuweb_sitemap_com_zoo
 
 		if (self::$_menu_items == null)
 		{
-			$menu_items = $app->object->create('JSite')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
+			$menu_items = $app->object->create('\Joomla\CMS\Application\SiteApplication')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
 
 			$menu_items = $menu_items ? $menu_items : array();
 
@@ -216,13 +214,13 @@ class schuweb_sitemap_com_zoo
 				switch (@$menu_item->query['view'])
 				{
 					case 'frontpage':
-						self::$_menu_items['frontpage'][$app->parameter->create($menu_item->params)->get('application')] = $menu_item;
+						self::$_menu_items['frontpage'][$app->parameter->create($menu_item->getParams())->get('application')] = $menu_item;
 						break;
 					case 'category':
-						self::$_menu_items['category'][$app->parameter->create($menu_item->params)->get('category')] = $menu_item;
+						self::$_menu_items['category'][$app->parameter->create($menu_item->getParams())->get('category')] = $menu_item;
 						break;
 					case 'item':
-						self::$_menu_items['item'][$app->parameter->create($menu_item->params)->get('item_id')] = $menu_item;
+						self::$_menu_items['item'][$app->parameter->create($menu_item->getParams())->get('item_id')] = $menu_item;
 						break;
 				}
 			}

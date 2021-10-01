@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version       $Id$
+ * @version       sw.build.version
  * @copyright     Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  * @author        Guillermo Vargas (guille@vargas.co.cr)
@@ -294,7 +294,7 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
             $state = 0;
         } else {
             if (is_array($excludedItems[$itemid]) && count($excludedItems[$itemid])) {
-                $excludedItems[$itemid] = array_filter($excludedItems[$itemid], create_function('$var', 'return ($var != \'' . $uid . '\');'));
+                $excludedItems[$itemid] = array_filter($excludedItems[$itemid], function($v) use ($uid) {return ($v != $uid );});
             } else {
                 unset($excludedItems[$itemid]);
             }

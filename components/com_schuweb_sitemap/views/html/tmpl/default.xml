@@ -10,7 +10,7 @@
             addfieldpath="/administrator/components/com_schuweb_sitemap/models/fields">
             <field
                 name="id"
-                type="modal_sitemaps"
+                type="sitemap"
                 default=""
                 required="true"
                 label="COM_SCHUWEB_SITEMAP_SELECT_A_SITEMAP"

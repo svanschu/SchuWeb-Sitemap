@@ -1,6 +1,6 @@
 <?php
 /**
- * @version         $Id$
+ * @version         sw.build.version
  * @copyright       Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  * @author          Guillermo Vargas (guille@vargas.co.cr)
@@ -13,17 +13,21 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 
 // Create shortcut to parameters.
 $params = $this->item->params;
+if (version_compare(JVERSION, '4', 'lt'))
+{
+	if ($this->displayer->canEdit)
+	{
+		$live_site = JURI::root();
 
-if ($this->displayer->canEdit) {
-    $live_site = JURI::root();
-    JHTML::_('behavior.framework', true);
-    $ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&".JSession::getFormToken().'=1';
+		JHTML::_('behavior.framework', true);
 
-    $css = '.xmapexcl img{ border:0px; }'."\n";
-    $css .= '.xmapexcloff { text-decoration:line-through; }';
-    //$css .= "\n.".$this->item->classname .' li {float:left;}';
+		$ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&" . JSession::getFormToken() . '=1';
 
-    $js = "
+		$css = '.xmapexcl img{ border:0px; }' . "\n";
+		$css .= '.xmapexcloff { text-decoration:line-through; }';
+		//$css .= "\n.".$this->item->classname .' li {float:left;}';
+
+		$js = "
         window.addEvent('domready',function (){
             $$('.xmapexcl').each(function(el){
                 el.onclick = function(){
@@ -55,9 +59,10 @@ if ($this->displayer->canEdit) {
             }
         }";
 
-    $doc = JFactory::getDocument();
-    $doc->addStyleDeclaration ($css);
-    $doc->addScriptDeclaration ($js);
+		$doc = JFactory::getDocument();
+		$doc->addStyleDeclaration($css);
+		$doc->addScriptDeclaration($js);
+	}
 }
 ?>
 <div id="SchuWeb_Sitemap">
@@ -65,28 +70,6 @@ if ($this->displayer->canEdit) {
     <h1>
         <?php echo $this->escape($params->get('page_heading')); ?>
     </h1>
-<?php endif; ?>
-
-<?php if ($params->get('access-edit') || $params->get('show_title') ||  $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
-    <ul>
-    <?php if (!$this->print) : ?>
-        <?php if ($params->get('show_print_icon')) : ?>
-        <li>
-            <?php echo JHtml::_('icon.print_popup',  $this->item, $params); ?>
-        </li>
-        <?php endif; ?>
-
-        <?php if ($params->get('show_email_icon')) : ?>
-        <li>
-            <?php echo JHtml::_('icon.email',  $this->item, $params); ?>
-        </li>
-        <?php endif; ?>
-    <?php else : ?>
-        <li>
-            <?php echo JHtml::_('icon.print_screen',  $this->item, $params); ?>
-        </li>
-    <?php endif; ?>
-    </ul>
 <?php endif; ?>
 
 <?php if ($params->get('showintro', 1) )  : ?>

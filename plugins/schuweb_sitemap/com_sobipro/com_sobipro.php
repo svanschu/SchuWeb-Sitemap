@@ -75,8 +75,7 @@ class schuweb_sitemap_com_sobipro
         $include_entries = ArrayHelper::getValue($params, 'include_entries', 1);
         $include_entries = ($include_entries == 1
             || ($include_entries == 2 && $xmap->view == 'xml')
-            || ($include_entries == 3 && $xmap->view == 'html')
-            || $xmap->view == 'navigator');
+            || ($include_entries == 3 && $xmap->view == 'html'));
         $params['include_entries'] = $include_entries;
 
         $priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);

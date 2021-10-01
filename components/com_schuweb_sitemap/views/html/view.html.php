@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @version          $Id$
+ * @version          sw.build.version
  * @copyright        Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  * @author           Guillermo Vargas (guille@vargas.co.cr)
@@ -22,7 +22,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
 {
 
     protected $state;
-    protected $print;
 
     function display($tpl = null)
     {
@@ -30,10 +29,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
         $this->app = JFactory::getApplication();
         $jinput = $this->app->input;
         $this->user = JFactory::getUser();
-        $doc = JFactory::getDocument();
-
-        // Get view related request variables.
-        $this->print = $jinput->getBool('print');
 
         // Get model data.
         $this->state = $this->get('State');
@@ -98,7 +93,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
     protected function _prepareDocument()
     {
         $app = JFactory::getApplication();
-        $pathway = $app->getPathway();
         $menus = $app->getMenu();
         $title = null;
 
@@ -117,7 +111,7 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
                     }
                     // set meta description and keywords from menu item's params
                     $params = new JRegistry();
-                    $params->loadString($menu->params);
+                    $params->loadString($menu->getParams());
                     $this->document->setDescription($params->get('menu-meta_description'));
                     $this->document->setMetadata('keywords', $params->get('menu-meta_keywords'));
                 }
@@ -127,10 +121,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
 
         if ($app->get('MetaTitle') == '1') {
             $this->document->setMetaData('title', $title);
-        }
-
-        if ($this->print) {
-            $this->document->setMetaData('robots', 'noindex, nofollow');
         }
     }
 

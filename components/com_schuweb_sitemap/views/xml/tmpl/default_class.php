@@ -1,6 +1,6 @@
 <?php
 /**
- * @version         $Id$
+ * @version         sw.build.version
  * @copyright        Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  * @author        Guillermo Vargas (guille@vargas.co.cr)
@@ -94,7 +94,8 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
             && empty($this->_links[$link])
         ) { // ignore links that have been added already
             $this->count++;
-            $this->_links[$link] = 1;
+			if (!$node->alias)
+                $this->_links[$link] = 1;
 
             if (!isset($node->priority))
                 $node->priority = "0.5";

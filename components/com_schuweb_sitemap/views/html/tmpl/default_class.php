@@ -1,6 +1,6 @@
 <?php
 /**
-* @version       $Id$
+* @version       sw.build.version
 * @copyright     Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
 * @license       GNU General Public License version 2 or later; see LICENSE.txt
 * @author        Guillermo Vargas (guille@vargas.co.cr)
@@ -111,17 +111,23 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
         $this->_closeItem = "</li>\n";
         $this->_childs[$this->level]++;
         echo $out;
-
-        if ($this->canEdit) {
-            if ( $this->isExcluded($node->id,$node->uid) ) {
-                $img = '<img src="'.$this->live_site.'/components/com_schuweb_sitemap/assets/images/unpublished.png" alt="v" title="'.JText::_('JUNPUBLISHED').'">';
-                $class= 'xmapexclon';
-            } else {
-                $img = '<img src="'.$this->live_site.'/components/com_schuweb_sitemap/assets/images/tick.png" alt="x" title="'.JText::_('JPUBLISHED').'" />';
-                $class= 'xmapexcloff';
-            }
-            echo ' <a href= "#" class="xmapexcl '.$class.'" rel="{uid:\''.$node->uid.'\',itemid:'.$node->id.'}">'.$img.'</a>';
-        }
+	    if (version_compare(JVERSION, '4', 'lt'))
+	    {
+		    if ($this->canEdit)
+		    {
+			    if ($this->isExcluded($node->id, $node->uid))
+			    {
+				    $img   = '<img src="' . $this->live_site . '/components/com_schuweb_sitemap/assets/images/unpublished.png" alt="v" title="' . JText::_('JUNPUBLISHED') . '">';
+				    $class = 'xmapexclon';
+			    }
+			    else
+			    {
+				    $img   = '<img src="' . $this->live_site . '/components/com_schuweb_sitemap/assets/images/tick.png" alt="x" title="' . JText::_('JPUBLISHED') . '" />';
+				    $class = 'xmapexcloff';
+			    }
+			    echo ' <a href= "#" class="xmapexcl ' . $class . '" rel="{uid:\'' . $node->uid . '\',itemid:' . $node->id . '}">' . $img . '</a>';
+		    }
+	    }
         $this->count++;
 
         $this->_last_child[$this->level] = $node->uid;
