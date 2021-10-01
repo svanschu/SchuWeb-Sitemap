@@ -3,7 +3,7 @@
  * @version             sw.build.version
  * @copyright (C)       2010-2021 Sven Schultschik. All rights reserved
  * @author              Sven Schultschik
- * @license             http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @license             GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link                http://www.schultschik.de
  */
 defined('_JEXEC') or die;
