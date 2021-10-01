@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- sw.build.version -->
 <extension type="plugin" group="schuweb_sitemap" version="3" method="upgrade">
-    <name>SchuWeb Sitemap - Zoo Plugin</name>
+    <name>SchuWeb Sitemap - Zoo</name>
     <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>Sven Schultschik</copyright>
