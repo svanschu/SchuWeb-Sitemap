@@ -4,8 +4,8 @@
     <name>SchuWeb Sitemap - Zoo Plugin</name>
     <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
-    <copyright>GNU/GPL</copyright>
-    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <copyright>Sven Schultschik</copyright>
+    <license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
     <authorEmail>schuwebext@schultschik.de</authorEmail>
     <authorUrl>extensions.schultschik.com</authorUrl>
     <version>sw.build.version</version>
