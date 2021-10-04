@@ -175,20 +175,23 @@ class pkg_schuweb_sitemapInstallerScript
 				$db->setQuery($query);
 				$extension = $db->loadObject();
 
-				$manifest = json_decode($extension->manifest_cache);
+				if (!is_null($extension))
+				{
+					$manifest = json_decode($extension->manifest_cache);
 
-				if (!is_null($manifest))
-				{
-					if (version_compare($manifest->version, '3.4.0', 'lt'))
+					if (!is_null($manifest))
 					{
-						$installer = Installer::getInstance();
-						if (!$installer->uninstall('plugin', $extension->extension_id))
-							$errMessages[] = Text::sprintf('COM_SCHUWEB_SITEMAP_POSTFLIGHT_PLUGIN_UNINSTALL_ERR', $componentName);
+						if (version_compare($manifest->version, '3.4.0', 'lt'))
+						{
+							$installer = Installer::getInstance();
+							if (!$installer->uninstall('plugin', $extension->extension_id))
+								$errMessages[] = Text::sprintf('COM_SCHUWEB_SITEMAP_POSTFLIGHT_PLUGIN_UNINSTALL_ERR', $componentName);
+						}
 					}
-				}
-				else
-				{
-					$errMessages[] = Text::sprintf('COM_SCHUWEB_SITEMAP_POSTFLIGHT_PLUGIN_UNINSTALL_MANIFEST_ERR', $componentName);
+					else
+					{
+						$errMessages[] = Text::sprintf('COM_SCHUWEB_SITEMAP_POSTFLIGHT_PLUGIN_UNINSTALL_MANIFEST_ERR', $componentName);
+					}
 				}
 			}
 		}
