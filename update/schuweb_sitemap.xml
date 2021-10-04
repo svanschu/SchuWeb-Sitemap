@@ -5,6 +5,24 @@
         <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>3.4.1</version>
+        <infourl title="SchuWeb Sitemap 3.4.1">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-3-4-1</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/3.4.1/pkg_schuweb_sitemap_3.4.1_20211004_J4.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>7.2.5</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>3.4.0</version>
         <infourl title="SchuWeb Sitemap 3.4.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-3-4-0</infourl>
         <downloads>

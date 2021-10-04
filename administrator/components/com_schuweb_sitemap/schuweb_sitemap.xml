@@ -53,13 +53,14 @@
             <filename>controller.php</filename>
             <filename>index.html</filename>
             <filename>LICENSE.txt</filename>
+            <folder>controllers</folder>
+            <folder>forms</folder>
+            <folder>helpers</folder>
             <folder>images</folder>
             <folder>install</folder>
-            <folder>helpers</folder>
-            <folder>controllers</folder>
+            <folder>models</folder>
             <folder>tables</folder>
             <folder>views</folder>
-            <folder>models</folder>
         </files>
         <languages folder="admin/language">
             <language tag="en-GB">en-GB/en-GB.com_schuweb_sitemap.ini</language>
