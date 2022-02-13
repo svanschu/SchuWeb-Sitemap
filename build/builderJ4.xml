@@ -48,11 +48,6 @@
                 <include name="**"/>
             </fileset>
         </zip>
-        <zip destfile="${builddir}/tmp/packages/plg_zoo_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_zoo">
-                <include name="**"/>
-            </fileset>
-        </zip>
         <zip destfile="${builddir}/pkg_schuweb_sitemap_${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp">
                 <include name="packages/*.zip"/>
