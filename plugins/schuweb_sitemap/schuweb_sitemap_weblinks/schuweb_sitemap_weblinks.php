@@ -57,7 +57,7 @@ class schuweb_sitemap_com_weblinks
 		self::initialize($params);
 
 		$app             = JFactory::getApplication();
-		$weblinks_params = $app->getParams('com_weblinks');
+		$weblinks_params = $app->getParams('schuweb_sitemap_weblinks');
 
 		$link_query = parse_url($parent->link);
 		parse_str(html_entity_decode($link_query['query']), $link_vars);
@@ -197,7 +197,7 @@ class schuweb_sitemap_com_weblinks
 
 				if ($item_params->get('count_clicks', $params['count_clicks']) == 1)
 				{
-					$node->link = 'index.php?option=com_weblinks&task=weblink.go&id=' . $link->id . '&Itemid=' . ($Itemid ? $Itemid : $parent->id);
+					$node->link = 'index.php?option=schuweb_sitemap_weblinks&task=weblink.go&id=' . $link->id . '&Itemid=' . ($Itemid ? $Itemid : $parent->id);
 				}
 				else
 				{
@@ -230,8 +230,8 @@ class schuweb_sitemap_com_weblinks
 		self::$_initialized = true;
 		if (version_compare(JVERSION, '4', 'lt'))
 		{
-			require_once JPATH_SITE . '/components/com_weblinks/models/category.php';
-			require_once JPATH_SITE . '/components/com_weblinks/helpers/route.php';
+			require_once JPATH_SITE . '/components/schuweb_sitemap_weblinks/models/category.php';
+			require_once JPATH_SITE . '/components/schuweb_sitemap_weblinks/helpers/route.php';
 		}
 	}
 }
