@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 
 use \Joomla\Utilities\ArrayHelper;
 
-class schuweb_sitemap_com_zoo
+class schuweb_sitemap_zoo
 {
 
 	protected static $_menu_items;
@@ -22,7 +22,7 @@ class schuweb_sitemap_com_zoo
 		$component = ArrayHelper::getValue($link_vars, 'option', '');
 		$view      = ArrayHelper::getValue($link_vars, 'view', '');
 
-		if ($component == 'com_zoo' && $view == 'frontpage')
+		if ($component == 'schuweb_sitemap_zoo' && $view == 'frontpage')
 		{
 			$id = intval(ArrayHelper::getValue($link_vars, 'id', 0));
 			if ($id != 0)
@@ -121,7 +121,7 @@ class schuweb_sitemap_com_zoo
 				$node->id         = $parent->id;
 				$node->uid        = $parent->uid . 'c' . $cat->id;
 				$node->name       = $cat->name;
-				$node->link       = 'index.php?option=com_zoo&amp;task=category&amp;category_id=' . $cat->id . '&amp;Itemid=' . $Itemid;
+				$node->link       = 'index.php?option=schuweb_sitemap_zoo&amp;task=category&amp;category_id=' . $cat->id . '&amp;Itemid=' . $Itemid;
 				$node->priority   = $params['cat_priority'];
 				$node->changefreq = $params['cat_changefreq'];
 
@@ -172,7 +172,7 @@ class schuweb_sitemap_com_zoo
 				$node->id         = $parent->id;
 				$node->uid        = $parent->uid . 'i' . $item->id;
 				$node->name       = $item->name;
-				$node->link       = 'index.php?option=com_zoo&amp;task=item&amp;item_id=' . $item->id . '&amp;Itemid=' . $Itemid;
+				$node->link       = 'index.php?option=schuweb_sitemap_zoo&amp;task=item&amp;item_id=' . $item->id . '&amp;Itemid=' . $Itemid;
 				$node->priority   = $params['item_priority'];
 				$node->changefreq = $params['item_changefreq'];
 
@@ -197,14 +197,14 @@ class schuweb_sitemap_com_zoo
 	{
 
 		// load config
-		require_once(JPATH_ADMINISTRATOR . '/components/com_zoo/config.php');
+		require_once(JPATH_ADMINISTRATOR . '/components/schuweb_sitemap_zoo/config.php');
 
 		// get ZOO app
 		$app = App::getInstance('zoo');
 
 		if (self::$_menu_items == null)
 		{
-			$menu_items = $app->object->create('\Joomla\CMS\Application\SiteApplication')->getMenu()->getItems('component_id', JComponentHelper::getComponent('com_zoo')->id);
+			$menu_items = $app->object->create('\Joomla\CMS\Application\SiteApplication')->getMenu()->getItems('component_id', JComponentHelper::getComponent('schuweb_sitemap_zoo')->id);
 
 			$menu_items = $menu_items ? $menu_items : array();
 
