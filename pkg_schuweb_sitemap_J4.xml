@@ -14,7 +14,6 @@
     <files folder="packages">
         <file type="component" id="com_schuweb_sitemap">com_schuweb_sitemap_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="com_content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.dstamp.zip</file>
-        <file type="plugin" id="com_weblinks" group="schuweb_sitemap">plg_weblinks_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="com_newsfeeds" group="schuweb_sitemap">plg_newsfeeds_sw.build.version_sw.build.dstamp.zip</file>
     </files>
     <updateservers>
