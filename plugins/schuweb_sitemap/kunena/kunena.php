@@ -10,6 +10,10 @@
 defined('_JEXEC') or die;
 
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** Handles Kunena forum structure */
 class schuweb_sitemap_kunena
@@ -37,7 +41,7 @@ class schuweb_sitemap_kunena
             self::$profile = KunenaFactory::getUser();
         }
 
-        $user = JFactory::getUser();
+        $user = \Joomla\CMS\Factory::getApplication()->getIdentity();
         $catid = 0;
 
         $link_query = parse_url($parent->link);
@@ -121,9 +125,7 @@ class schuweb_sitemap_kunena
     static function getCategoryTree($sitemap, $parent, &$params, $parentCat)
     {
         // Load categories
-
-        // kimport('kunena.forum.category.helper');
-        $categories = KunenaForumCategoryHelper::getChildren($parentCat);
+        $categories = KunenaCategoryHelper::getChildren($parentCat);
 
         /* get list of categories */
         $sitemap->changeLevel(1);
@@ -153,8 +155,7 @@ class schuweb_sitemap_kunena
         }
 
         if ($params['include_topics']) {
-            // Kunena 2.0+
-            // kimport('kunena.forum.topic.helper');
+
             // TODO: orderby parameter is missing:
             $tparams = array();
             if ($params['days'] != '')
@@ -162,7 +163,7 @@ class schuweb_sitemap_kunena
             if ($params['limit'] < 1)
                 $tparams['nolimit'] = true;
 
-            $topics = KunenaForumTopicHelper::getLatestTopics($parentCat, 0, $params['limit'], $tparams);
+            $topics = KunenaTopicHelper::getLatestTopics($parentCat, 0, $params['limit'], $tparams);
             if (count($topics) == 2 && is_numeric($topics[0])) {
                 $topics = $topics[1];
             }

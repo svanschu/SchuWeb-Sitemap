@@ -7,9 +7,9 @@
  * @author        Guillermo Vargas (guille@vargas.co.cr)
  */
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+use Joomla\CMS\Factory;
 
-jimport('joomla.database.query');
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /**
  * SchuWeb_Sitemap Component Sitemap Model
