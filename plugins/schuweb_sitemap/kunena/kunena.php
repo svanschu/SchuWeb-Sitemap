@@ -2,7 +2,7 @@
 /**
  * @package SchuWeb Sitemap
  *
- * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @copyright (C) 2010-2022 Sven Schultschik. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.schultschik.de
  **/
@@ -10,9 +10,13 @@
 defined('_JEXEC') or die;
 
 use Joomla\Utilities\ArrayHelper;
+use Kunena\Forum\Libraries\Factory\KunenaFactory;
+use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
+use Kunena\Forum\Libraries\Forum\Topic\KunenaTopicHelper;
+use Kunena\Forum\Libraries\Route\KunenaRoute;
 
 /** Handles Kunena forum structure */
-class schuweb_sitemap_com_kunena
+class schuweb_sitemap_kunena
 {
     /*
      * This function is called before a menu item is printed. We use it to set the
@@ -28,7 +32,7 @@ class schuweb_sitemap_com_kunena
             return false;
 
         // Make sure that we can load the kunena api
-        if (!schuweb_sitemap_com_kunena::loadKunenaApi()) {
+        if (!schuweb_sitemap_kunena::loadKunenaApi()) {
             return false;
         }
 
@@ -37,7 +41,7 @@ class schuweb_sitemap_com_kunena
             self::$profile = KunenaFactory::getUser();
         }
 
-        $user = JFactory::getUser();
+        $user = \Joomla\CMS\Factory::getApplication()->getIdentity();
         $catid = 0;
 
         $link_query = parse_url($parent->link);
@@ -112,7 +116,7 @@ class schuweb_sitemap_com_kunena
 
         $params['table_prefix'] = '#__kunena';
 
-        schuweb_sitemap_com_kunena::getCategoryTree($sitemap, $parent, $params, $catid);
+        schuweb_sitemap_kunena::getCategoryTree($sitemap, $parent, $params, $catid);
     }
 
     /*
@@ -121,9 +125,7 @@ class schuweb_sitemap_com_kunena
     static function getCategoryTree($sitemap, $parent, &$params, $parentCat)
     {
         // Load categories
-
-        // kimport('kunena.forum.category.helper');
-        $categories = KunenaForumCategoryHelper::getChildren($parentCat);
+        $categories = KunenaCategoryHelper::getChildren($parentCat);
 
         /* get list of categories */
         $sitemap->changeLevel(1);
@@ -148,13 +150,12 @@ class schuweb_sitemap_com_kunena
             $node->modified = intval($cat->last_post_time);
 
             if ($sitemap->printNode($node) !== FALSE) {
-                schuweb_sitemap_com_kunena::getCategoryTree($sitemap, $parent, $params, $cat->id);
+                schuweb_sitemap_kunena::getCategoryTree($sitemap, $parent, $params, $cat->id);
             }
         }
 
         if ($params['include_topics']) {
-            // Kunena 2.0+
-            // kimport('kunena.forum.topic.helper');
+
             // TODO: orderby parameter is missing:
             $tparams = array();
             if ($params['days'] != '')
@@ -162,7 +163,7 @@ class schuweb_sitemap_com_kunena
             if ($params['limit'] < 1)
                 $tparams['nolimit'] = true;
 
-            $topics = KunenaForumTopicHelper::getLatestTopics($parentCat, 0, $params['limit'], $tparams);
+            $topics = KunenaTopicHelper::getLatestTopics($parentCat, 0, $params['limit'], $tparams);
             if (count($topics) == 2 && is_numeric($topics[0])) {
                 $topics = $topics[1];
             }

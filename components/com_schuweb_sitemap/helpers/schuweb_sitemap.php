@@ -7,9 +7,9 @@
  * @author        Guillermo Vargas (guille@vargas.co.cr)
  */
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+use Joomla\CMS\Factory;
 
-jimport('joomla.database.query');
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /**
  * SchuWeb_Sitemap Component Sitemap Model
@@ -160,6 +160,13 @@ class SchuWeb_SitemapHelper
             $obj = new $className;
             if (method_exists($obj, 'prepareMenuItem')) {
                 $obj->prepareMenuItem($item,$extensions[$item->option]->params);
+            }
+        } elseif (!empty($extensions[substr($item->option,4)])){
+            $className = 'schuweb_sitemap_' . substr($item->option,4);
+            $obj = new $className;
+            if (method_exists($obj, 'prepareMenuItem')) {
+                die();
+                $obj->prepareMenuItem($item,$extensions[substr($item->option,4)]->params);
             }
         }
     }
