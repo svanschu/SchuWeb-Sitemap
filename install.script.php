@@ -8,6 +8,7 @@
  * @license          GNU General Public License version 3 or later
  */
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Language\Text;
 
@@ -61,7 +62,7 @@ class pkg_schuweb_sitemapInstallerScript
 
 		$extensions = SchuWeb_SitemapHelper::getExtensionsList();
 
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Activate the fitting plugins
 		foreach ($extensions as $extension)
@@ -86,7 +87,7 @@ class pkg_schuweb_sitemapInstallerScript
 
 			if (!$db->execute())
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('SCHUWEB_SITEMAP_ACTIVATE_PLUGIN_FAILED'), 'error');
+				Factory::getApplication()->enqueueMessage(JText::_('SCHUWEB_SITEMAP_ACTIVATE_PLUGIN_FAILED'), 'error');
 			}
 		}
 
@@ -164,7 +165,7 @@ class pkg_schuweb_sitemapInstallerScript
 			$unsupported = array('com_sobipro', 'com_virtuemart', 'com_kunena');
 			foreach ($unsupported as $componentName)
 			{
-				$db    = JFactory::getDbo();
+				$db    = Factory::getDbo();
 				$query = $db->getQuery(true);
 
 				$query->select('*')
