@@ -222,7 +222,12 @@ class SchuWeb_SitemapDisplayer {
                          $node->uid = $node->option;
                         $className = 'SchuWeb_Sitemap_'.$node->option;
                         call_user_func_array(array($className, 'getTree'),array(&$this,&$node,&$this->jview->extensions[$node->option]->params));
+                    } elseif ( !empty($this->jview->extensions[substr($node->option,4)]) ) {
+                        $node->uid = substr($node->option,4);
+                        $className = 'SchuWeb_Sitemap_'.substr($node->option,4);
+                        call_user_func_array(array($className, 'getTree'),array(&$this,&$node,&$this->jview->extensions[substr($node->option,4)]->params));
                     }
+
                 }
             }
         }

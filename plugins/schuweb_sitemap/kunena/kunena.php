@@ -2,7 +2,7 @@
 /**
  * @package SchuWeb Sitemap
  *
- * @Copyright (C) 2010-2021 Sven Schultschik. All rights reserved
+ * @copyright (C) 2010-2022 Sven Schultschik. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.schultschik.de
  **/
@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\Utilities\ArrayHelper;
 
 /** Handles Kunena forum structure */
-class schuweb_sitemap_com_kunena
+class schuweb_sitemap_kunena
 {
     /*
      * This function is called before a menu item is printed. We use it to set the
@@ -28,7 +28,7 @@ class schuweb_sitemap_com_kunena
             return false;
 
         // Make sure that we can load the kunena api
-        if (!schuweb_sitemap_com_kunena::loadKunenaApi()) {
+        if (!schuweb_sitemap_kunena::loadKunenaApi()) {
             return false;
         }
 
@@ -112,7 +112,7 @@ class schuweb_sitemap_com_kunena
 
         $params['table_prefix'] = '#__kunena';
 
-        schuweb_sitemap_com_kunena::getCategoryTree($sitemap, $parent, $params, $catid);
+        schuweb_sitemap_kunena::getCategoryTree($sitemap, $parent, $params, $catid);
     }
 
     /*
@@ -148,7 +148,7 @@ class schuweb_sitemap_com_kunena
             $node->modified = intval($cat->last_post_time);
 
             if ($sitemap->printNode($node) !== FALSE) {
-                schuweb_sitemap_com_kunena::getCategoryTree($sitemap, $parent, $params, $cat->id);
+                schuweb_sitemap_kunena::getCategoryTree($sitemap, $parent, $params, $cat->id);
             }
         }
 
