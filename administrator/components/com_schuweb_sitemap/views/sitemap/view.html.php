@@ -87,43 +87,25 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
      */
 	function addToolbar()
 	{
-		$isNew = ($this->item->id == 0);
+        $isNew = ($this->item->id == 0);
 
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			JToolBarHelper::title(JText::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'article-add.png');
-			JToolBarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('sitemap.save', 'JTOOLBAR_SAVE');
-			JToolBarHelper::save2new('sitemap.save2new');
-			if (!$isNew)
-			{
-				JToolBarHelper::save2copy('sitemap.save2copy');
-			}
-			JToolBarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
-		}
-		else
-		{
-			ToolBarHelper::title(Text::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'sitemap fa-sitemap');
-			ToolbarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
 
-			$toolbarButtons[] = ['save', 'sitemap.save'];
-			$toolbarButtons[] = ['save2new', 'sitemap.save2new'];
-			if (!$isNew)
-			{
-				$toolbarButtons[] = ['save2copy', 'sitemap.save2copy'];
-			}
-			ToolbarHelper::saveGroup(
-				$toolbarButtons,
-				'btn-success'
-			);
-			if ($isNew)
-			{
-				ToolbarHelper::cancel('sitemap.cancel');
-			}
-			else
-			{
-				ToolbarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
-			}
-		}
+        ToolBarHelper::title(Text::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'sitemap fa-sitemap');
+        ToolbarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
+
+        $toolbarButtons[] = ['save', 'sitemap.save'];
+        $toolbarButtons[] = ['save2new', 'sitemap.save2new'];
+        if (!$isNew) {
+            $toolbarButtons[] = ['save2copy', 'sitemap.save2copy'];
+        }
+        ToolbarHelper::saveGroup(
+            $toolbarButtons,
+            'btn-success'
+        );
+        if ($isNew) {
+            ToolbarHelper::cancel('sitemap.cancel');
+        } else {
+            ToolbarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
+        }
 	}
 }

@@ -128,14 +128,7 @@ class schuweb_sitemap_com_newsfeeds
 			$node->id   = $parent->id;
 			$node->uid  = $parent->uid . 'c' . $cat->id;
 			$node->name = $cat->title;
-			if (version_compare(JVERSION, '4', 'lt'))
-			{
-				$node->link = NewsfeedsHelperRoute::getCategoryRoute($cat);
-			}
-			else
-			{
-				$node->link = RouteHelper::getCategoryRoute($cat);
-			}
+            $node->link = RouteHelper::getCategoryRoute($cat);
 			$node->priority   = $params['cat_priority'];
 			$node->changefreq = $params['cat_changefreq'];
 
@@ -156,14 +149,7 @@ class schuweb_sitemap_com_newsfeeds
 
 		if ($params['include_newsfeeds'])
 		{ //view=category&catid=...
-			if (version_compare(JVERSION, '4', 'lt'))
-			{
-				$newsfeedsModel = new NewsfeedsModelCategory();
-			}
-			else
-			{
-				$newsfeedsModel = new CategoryModel();
-			}
+			$newsfeedsModel = new CategoryModel();
 			$newsfeedsModel->getState(); // To force the populate state
 			$newsfeedsModel->setState('list.limit', ArrayHelper::getValue($params, 'max_newsfeeds', null));
 			$newsfeedsModel->setState('list.start', 0);
@@ -183,14 +169,7 @@ class schuweb_sitemap_com_newsfeeds
 				$node->name = $newsfeed->name;
 
 				// Find the Itemid
-				if (version_compare(JVERSION, '4', 'lt'))
-				{
-					$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', NewsfeedsHelperRoute::getNewsfeedRoute($newsfeed->id, $category->id)));
-				}
-				else
-				{
-					$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getNewsfeedRoute($newsfeed->id, $category->id)));
-				}
+                $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getNewsfeedRoute($newsfeed->id, $category->id)));
 
 
 				if ($item_params->get('count_clicks', $params['count_clicks']) == 1)
@@ -226,10 +205,5 @@ class schuweb_sitemap_com_newsfeeds
 		}
 
 		self::$_initialized = true;
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			require_once JPATH_SITE . '/components/com_newsfeeds/models/category.php';
-			require_once JPATH_SITE . '/components/com_newsfeeds/helpers/route.php';
-		}
 	}
 }

@@ -130,15 +130,7 @@ class schuweb_sitemap_com_weblinks
 			$node->id   = $parent->id;
 			$node->uid  = $parent->uid . 'c' . $cat->id;
 			$node->name = $cat->title;
-			if (version_compare(JVERSION, '4', 'lt'))
-			{
-				$node->link = WeblinksHelperRoute::getCategoryRoute($cat);
-			}
-			else
-			{
-
-				$node->link = RouteHelper::getCategoryRoute($cat);
-			}
+            $node->link = RouteHelper::getCategoryRoute($cat);
 			$node->priority   = $params['cat_priority'];
 			$node->changefreq = $params['cat_changefreq'];
 
@@ -159,14 +151,7 @@ class schuweb_sitemap_com_weblinks
 
 		if ($params['include_links'])
 		{ //view=category&catid=...
-			if (version_compare(JVERSION, '4', 'lt'))
-			{
-				$linksModel = new WeblinksModelCategory();
-			}
-			else
-			{
-				$linksModel = new CategoryModel();
-			}
+			$linksModel = new CategoryModel();
 			$linksModel->getState(); // To force the populate state
 			$linksModel->setState('list.limit', ArrayHelper::getValue($params, 'max_links', null));
 			$linksModel->setState('list.start', 0);
@@ -186,14 +171,7 @@ class schuweb_sitemap_com_weblinks
 				$node->name = $link->title;
 
 				// Find the Itemid
-				if (version_compare(JVERSION, '4', 'lt'))
-				{
-					$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', WeblinksHelperRoute::getWeblinkRoute($link->id, $category->id)));
-				}
-				else
-				{
-					$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getWeblinkRoute($link->id, $category->id)));
-				}
+                $Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getWeblinkRoute($link->id, $category->id)));
 
 				if ($item_params->get('count_clicks', $params['count_clicks']) == 1)
 				{
@@ -228,10 +206,5 @@ class schuweb_sitemap_com_weblinks
 		}
 
 		self::$_initialized = true;
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			require_once JPATH_SITE . '/components/schuweb_sitemap_weblinks/models/category.php';
-			require_once JPATH_SITE . '/components/schuweb_sitemap_weblinks/helpers/route.php';
-		}
 	}
 }

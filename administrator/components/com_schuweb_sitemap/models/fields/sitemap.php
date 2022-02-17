@@ -67,18 +67,10 @@ class JFormFieldSitemap extends JFormFieldList
 
 		$link = JRoute::_('index.php?option=com_schuweb_sitemap&view=sitemaps&layout=modal&tmpl=component&function=jSelectSitemap_' . $this->id);
 
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			$class     = 'class="input-medium"';
-			$classSpan = 'input-append';
-			$bsModal   = 'data-target="#sitemapTypeModal" data-toggle="modal"';
-		}
-		else
-		{
-			$class     = 'class="form-control valid form-control-success"';
-			$classSpan = 'input-group';
-			$bsModal   = 'data-bs-target="#sitemapTypeModal" data-bs-toggle="modal"';
-		}
+
+        $class     = 'class="form-control valid form-control-success"';
+        $classSpan = 'input-group';
+        $bsModal   = 'data-bs-target="#sitemapTypeModal" data-bs-toggle="modal"';
 
 		$html   = array();
 		$html[] = '<span class="' . $classSpan . '">';

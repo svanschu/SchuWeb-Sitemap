@@ -8,12 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-if (version_compare(JVERSION, '4', 'lt'))
-{
-	require_once JPATH_SITE . '/components/com_content/helpers/route.php';
-	require_once JPATH_SITE . '/components/com_content/helpers/query.php';
-}
-
 use \Joomla\Component\Content\Site\Helper\RouteHelper;
 use \Joomla\Component\Content\Site\Helper\QueryHelper;
 use \Joomla\Utilities\ArrayHelper;
@@ -457,16 +451,8 @@ class schuweb_sitemap_com_content
 			$query->where($db->qn('a.access') . 'IN (' . $params['groups'] . ')');
 		}
 
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			$query->andWhere(array($db->quoteName('a.publish_up') . '=' . $params['nullDate'], $db->quoteName('a.publish_up') . '<=' . $params['nowDate']))
-				->andWhere(array($db->quoteName('a.publish_down') . '=' . $params['nullDate'], $db->quoteName('a.publish_down') . '>=' . $params['nowDate']));
-		}
-		else
-		{
-			$query->andWhere(array($db->quoteName('a.publish_up') . 'IS NULL', $db->quoteName('a.publish_up') . '<=' . $params['nowDate']))
+		$query->andWhere(array($db->quoteName('a.publish_up') . 'IS NULL', $db->quoteName('a.publish_up') . '<=' . $params['nowDate']))
 				->andWhere(array($db->quoteName('a.publish_down') . 'IS NULL', $db->quoteName('a.publish_down') . '>=' . $params['nowDate']));
-		}
 
 		if ($sitemap->view != 'xml')
 			$query->order(self::buildContentOrderBy($parent->params, $parent->id, $Itemid));
@@ -604,16 +590,8 @@ class schuweb_sitemap_com_content
 		$articleOrderby   = $menuParams->get('orderby_sec', 'rdate');
 		$articleOrderDate = $menuParams->get('order_date');
 		//$categoryOrderby  = $menuParams->def('orderby_pri', '');
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			$secondary = ContentHelperQuery::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
-			//$primary      = ContentHelperQuery::orderbyPrimary($categoryOrderby);
-		}
-		else
-		{
-			$secondary = QueryHelper::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
-			//$primary      = QueryHelper::orderbyPrimary($categoryOrderby);
-		}
+		$secondary = QueryHelper::orderbySecondary($articleOrderby, $articleOrderDate) . ', ';
+		//$primary      = QueryHelper::orderbyPrimary($categoryOrderby);
 
 		//$orderby .= $primary . ' ' . $secondary . ' a.created ';
 		$orderby .= $secondary . ' a.created ';
