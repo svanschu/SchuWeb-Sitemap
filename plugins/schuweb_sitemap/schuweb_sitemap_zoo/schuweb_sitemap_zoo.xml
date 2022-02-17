@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- sw.build.version -->
 <extension type="plugin" group="schuweb_sitemap" version="3" method="upgrade">
-    <name>SchuWeb Sitemap - Zoo</name>
+    <name>SchuWeb Sitemap - SchuWeb Sitemap Integration for Zoo</name>
     <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>Sven Schultschik</copyright>
@@ -11,7 +11,7 @@
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_ZOO_PLUGIN_DESCRIPTION</description>
     <files>
-        <filename plugin="com_zoo">com_zoo.php</filename>
+        <filename plugin="schuweb_sitemap_zoo">schuweb_sitemap_zoo.php</filename>
         <filename>index.html</filename>
     </files>
     <updateservers>
@@ -20,8 +20,8 @@
         </server>
     </updateservers>
     <languages folder="language">
-        <language tag="en-GB">en-GB/en-GB.plg_schuweb_sitemap_com_zoo.ini</language>
-        <language tag="en-GB">en-GB/en-GB.plg_schuweb_sitemap_com_zoo.sys.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_schuweb_sitemap_zoo.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_schuweb_sitemap_zoo.sys.ini</language>
     </languages>
     <config>
         <fields name="params">
