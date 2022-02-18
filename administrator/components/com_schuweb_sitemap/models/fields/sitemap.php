@@ -74,7 +74,7 @@ class JFormFieldSitemap extends JFormFieldList
 
 		$html   = array();
 		$html[] = '<span class="' . $classSpan . '">';
-		$html[] = '<input type="text" required="required" readonly="readonly" size="40" id="' . $this->id . '_name" ' . $class . ' value="' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '" />';
+		$html[] = '<input type="text" required="required" readonly="readonly" size="40" id="' . $this->id . '_name" ' . $class . ' value="' . htmlspecialchars($title, ENT_QUOTES) . '" />';
 		$html[] = '<button type="button" class="btn btn-primary" ' . $bsModal . ' title="' . JText::_('COM_SCHUWEB_SITEMAP_CHANGE_SITEMAP') . '">'
 			. '<span class="icon-list icon-white" aria-hidden="true"></span> '
 			. JText::_('JSELECT') . '</button>';

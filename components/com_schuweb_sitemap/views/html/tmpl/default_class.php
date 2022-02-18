@@ -21,6 +21,17 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
     var $_width;
     var $live_site = 0;
 
+    /**
+     * @var array
+     * @since 4.0
+     */
+    private array $_parent_children;
+    /**
+     * @var array
+     * @since 4.0
+     */
+    private array $_last_child;
+
     function __construct ($config, $sitemap) {
         $this->view = 'html';
         parent::__construct($config, $sitemap);
@@ -36,7 +47,7 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
         $columns = $this->sitemap->params->get('columns',0);
         if( $columns > 1 ) { // calculate column widths
             $total = count($view->items);
-            $columns = $total < $columns? $total : $columns;
+            $columns = min($total, $columns);
             $this->_width    = (100 / $columns) - 1;
             $this->sitemap->params->set('columns',$columns);
         }

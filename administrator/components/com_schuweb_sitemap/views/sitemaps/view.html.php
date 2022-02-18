@@ -72,9 +72,9 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
         JToolBarHelper::custom('sitemaps.setdefault', 'featured.png', 'featured_f2.png', 'SCHUWEB_SITEMAP_TOOLBAR_SET_DEFAULT', true);
 
         if ($state->get('filter.published') == -2) {
-            JToolBarHelper::deleteList('', 'sitemaps.delete', 'JTOOLBAR_DELETE');
+            JToolBarHelper::deleteList('', 'sitemaps.delete');
         } else {
-            JToolBarHelper::trash('sitemaps.trash', 'JTOOLBAR_TRASH');
+            JToolBarHelper::trash('sitemaps.trash');
         }
 
 

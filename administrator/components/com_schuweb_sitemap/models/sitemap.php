@@ -255,8 +255,7 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
 
     function _orderConditions($table = null)
     {
-        $condition = array();
-        return $condition;
+        return array();
     }
 
     function setDefault($id)

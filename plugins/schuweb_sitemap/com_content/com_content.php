@@ -241,7 +241,7 @@ class schuweb_sitemap_com_content
 			case 'categories':
 				if ($params['expand_categories'])
 				{
-					$result = self::expandCategory($xmap, $parent, ($id ? $id : 1), $params, $parent->id);
+					$result = self::expandCategory($xmap, $parent, ($id ?: 1), $params, $parent->id);
 				}
 				break;
 			case 'archive':

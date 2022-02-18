@@ -78,8 +78,6 @@ class SchuWeb_SitemapControllerSitemaps extends JControllerAdmin
      */
     public function getModel($name = 'Sitemap', $prefix = 'SchuWeb_SitemapModel', $config = array('ignore_request' => true))
     {
-        $model = parent::getModel($name, $prefix, $config);
-
-        return $model;
+        return parent::getModel($name, $prefix, $config);
     }
 }

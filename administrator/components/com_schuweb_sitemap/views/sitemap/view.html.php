@@ -91,7 +91,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
 
 
         ToolBarHelper::title(Text::_('SCHUWEB_SITEMAP_PAGE_' . ($isNew ? 'ADD_SITEMAP' : 'EDIT_SITEMAP')), 'sitemap fa-sitemap');
-        ToolbarHelper::apply('sitemap.apply', 'JTOOLBAR_APPLY');
+        ToolbarHelper::apply('sitemap.apply');
 
         $toolbarButtons[] = ['save', 'sitemap.save'];
         $toolbarButtons[] = ['save2new', 'sitemap.save2new'];
@@ -99,8 +99,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
             $toolbarButtons[] = ['save2copy', 'sitemap.save2copy'];
         }
         ToolbarHelper::saveGroup(
-            $toolbarButtons,
-            'btn-success'
+            $toolbarButtons
         );
         if ($isNew) {
             ToolbarHelper::cancel('sitemap.cancel');

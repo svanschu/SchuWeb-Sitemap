@@ -94,7 +94,7 @@ class SchuWeb_SitemapDisplayer {
              * @todo allow the user to provide the module used to display that menu, or some other
              * workaround
              */
-            $node->name = $this->getMenuTitle($menutype,'mod_menu'); // Get the name of this menu
+            $node->name = $this->getMenuTitle($menutype); // Get the name of this menu
 
             $this->startMenu($node);
             $this->printMenuTree($node, $items);

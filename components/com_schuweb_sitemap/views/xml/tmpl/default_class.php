@@ -17,12 +17,13 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
      *
      * @var array  Stores the list of links that have been already included in
      *             the sitemap to avoid duplicated items
+     * @since
      */
     var $_links;
 
     /**
-     *
      * @var string
+     * @since
      */
     var $view = 'xml';
 
@@ -37,10 +38,21 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
      */
     var bool $isImages = false;
 
+    /**
+     * @var mixed|string
+     *
+     * @since 4.0
+     */
+    private mixed $defaultLanguage;
+    /**
+     * @var string
+     * @since 4.0
+     */
+    private string $nullDate;
+
     function __construct($config, $sitemap)
     {
         parent::__construct($config, $sitemap);
-        $this->uids = array();
 
         $this->defaultLanguage = strtolower(JFactory::getApplication()->getLanguage()->getTag());
         if (preg_match('/^([a-z]+)-.*/', $this->defaultLanguage, $matches) && !in_array($this->defaultLanguage, array(' zh-cn', ' zh-tw'))) {

@@ -76,14 +76,14 @@ class schuweb_sitemap_com_weblinks
 			return;
 		}
 
-		$include_links           = ArrayHelper::getValue($params, 'include_links', 1, '');
+		$include_links           = ArrayHelper::getValue($params, 'include_links', 1);
 		$include_links           = ($include_links == 1
 			|| ($include_links == 2 && $sitemap->view == 'xml')
 			|| ($include_links == 3 && $sitemap->view == 'html'));
 		$params['include_links'] = $include_links;
 
-		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
-		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq, '');
+		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
+		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
 		if ($priority == '-1')
 			$priority = $parent->priority;
 		if ($changefreq == '-1')
@@ -92,8 +92,8 @@ class schuweb_sitemap_com_weblinks
 		$params['cat_priority']   = $priority;
 		$params['cat_changefreq'] = $changefreq;
 
-		$priority   = ArrayHelper::getValue($params, 'link_priority', $parent->priority, '');
-		$changefreq = ArrayHelper::getValue($params, 'link_changefreq', $parent->changefreq, '');
+		$priority   = ArrayHelper::getValue($params, 'link_priority', $parent->priority);
+		$changefreq = ArrayHelper::getValue($params, 'link_changefreq', $parent->changefreq);
 		if ($priority == '-1')
 			$priority = $parent->priority;
 
@@ -107,7 +107,7 @@ class schuweb_sitemap_com_weblinks
 		$options['countItems'] = false;
 		$options['catid']      = rand();
 		$categories            = JCategories::getInstance('Weblinks', $options);
-		$category              = $categories->get($catid ? $catid : 'root', true);
+		$category              = $categories->get($catid ?: 'root', true);
 
 		$params['count_clicks'] = $weblinks_params->get('count_clicks');
 
@@ -147,7 +147,7 @@ class schuweb_sitemap_com_weblinks
 		{ //view=category&catid=...
 			$linksModel = new CategoryModel();
 			$linksModel->getState(); // To force the populate state
-			$linksModel->setState('list.limit', ArrayHelper::getValue($params, 'max_links', null));
+			$linksModel->setState('list.limit', ArrayHelper::getValue($params, 'max_links'));
 			$linksModel->setState('list.start', 0);
 			$linksModel->setState('list.ordering', 'ordering');
 			$linksModel->setState('list.direction', 'ASC');
@@ -169,7 +169,7 @@ class schuweb_sitemap_com_weblinks
 
 				if ($item_params->get('count_clicks', $params['count_clicks']) == 1)
 				{
-					$node->link = 'index.php?option=schuweb_sitemap_weblinks&task=weblink.go&id=' . $link->id . '&Itemid=' . ($Itemid ? $Itemid : $parent->id);
+					$node->link = 'index.php?option=schuweb_sitemap_weblinks&task=weblink.go&id=' . $link->id . '&Itemid=' . ($Itemid ?: $parent->id);
 				}
 				else
 				{

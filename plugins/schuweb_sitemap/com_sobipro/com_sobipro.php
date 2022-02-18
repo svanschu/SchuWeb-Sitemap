@@ -52,7 +52,7 @@ class schuweb_sitemap_com_sobipro
         $link_query = parse_url($parent->link);
         parse_str(html_entity_decode($link_query['query']), $link_vars);
         $sid = ArrayHelper::getValue($link_vars, 'sid', 1);
-        $task = ArrayHelper::getValue($link_vars, 'task', null);
+        $task = ArrayHelper::getValue($link_vars, 'task');
 
         if (in_array($task, array('search', 'entry.add'))) {
             return;
@@ -203,7 +203,7 @@ class schuweb_sitemap_com_sobipro
                 $node->uid = 'com_sobiproe' . $row->id; // Unique ID
                 $node->browserNav = $parent->browserNav;
                 $node->name = html_entity_decode($row->name);
-                $node->modified = $row->modified ? $row->modified : $row->publish_up;
+                $node->modified = $row->modified ?: $row->publish_up;
                 $node->priority = $params['entry_priority'];
                 $node->changefreq = $params['entry_changefreq'];
 
@@ -236,7 +236,7 @@ class schuweb_sitemap_com_sobipro
         }
         define('SOBI_TESTS', false);
         $ver = new JVersion();
-        $ver = str_replace('.', null, $ver->RELEASE);
+        $ver = str_replace('.', null, $ver->getHelpVersion());
         // added by Pierre Burri-Wittke globeall.de
         if ($ver > '15') {
             $ver = '16';

@@ -76,14 +76,14 @@ class schuweb_sitemap_com_newsfeeds
 			return;
 		}
 
-		$include_newsfeeds           = ArrayHelper::getValue($params, 'include_newsfeeds', 1, '');
+		$include_newsfeeds           = ArrayHelper::getValue($params, 'include_newsfeeds', 1);
 		$include_newsfeeds           = ($include_newsfeeds == 1
 			|| ($include_newsfeeds == 2 && $sitemap->view == 'xml')
 			|| ($include_newsfeeds == 3 && $sitemap->view == 'html'));
 		$params['include_newsfeeds'] = $include_newsfeeds;
 
-		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority, '');
-		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq, '');
+		$priority   = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
+		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
 		if ($priority == '-1')
 			$priority = $parent->priority;
 		if ($changefreq == '-1')
@@ -92,8 +92,8 @@ class schuweb_sitemap_com_newsfeeds
 		$params['cat_priority']   = $priority;
 		$params['cat_changefreq'] = $changefreq;
 
-		$priority   = ArrayHelper::getValue($params, 'newsfeed_priority', $parent->priority, '');
-		$changefreq = ArrayHelper::getValue($params, 'newsfeed_changefreq', $parent->changefreq, '');
+		$priority   = ArrayHelper::getValue($params, 'newsfeed_priority', $parent->priority);
+		$changefreq = ArrayHelper::getValue($params, 'newsfeed_changefreq', $parent->changefreq);
 		if ($priority == '-1')
 			$priority = $parent->priority;
 
@@ -107,7 +107,7 @@ class schuweb_sitemap_com_newsfeeds
 		$options['countItems'] = false;
 		$options['catid']      = rand();
 		$categories            = JCategories::getInstance('Newsfeeds', $options);
-		$category              = $categories->get($catid ? $catid : 'root', true);
+		$category              = $categories->get($catid ?: 'root', true);
 
 		$params['count_clicks'] = $newsfeeds_params->get('count_clicks');
 
@@ -147,7 +147,7 @@ class schuweb_sitemap_com_newsfeeds
 		{ //view=category&catid=...
 			$newsfeedsModel = new CategoryModel();
 			$newsfeedsModel->getState(); // To force the populate state
-			$newsfeedsModel->setState('list.limit', ArrayHelper::getValue($params, 'max_newsfeeds', null));
+			$newsfeedsModel->setState('list.limit', ArrayHelper::getValue($params, 'max_newsfeeds'));
 			$newsfeedsModel->setState('list.start', 0);
 			$newsfeedsModel->setState('list.ordering', 'ordering');
 			$newsfeedsModel->setState('list.direction', 'ASC');
@@ -170,7 +170,7 @@ class schuweb_sitemap_com_newsfeeds
 
 				if ($item_params->get('count_clicks', $params['count_clicks']) == 1)
 				{
-					$node->link = 'index.php?option=com_newsfeeds&task=newsfeed.go&id=' . $newsfeed->id . '&Itemid=' . ($Itemid ? $Itemid : $parent->id);
+					$node->link = 'index.php?option=com_newsfeeds&task=newsfeed.go&id=' . $newsfeed->id . '&Itemid=' . ($Itemid ?: $parent->id);
 				}
 				else
 				{

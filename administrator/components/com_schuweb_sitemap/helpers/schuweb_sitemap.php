@@ -37,9 +37,7 @@ class SchuWeb_SitemapHelper
 			->where('e.type=\'component\' and e.enabled=1');
 
 		$db->setQuery($query);
-		$extensions = $db->loadObjectList();
-
-		return $extensions;
+        return $db->loadObjectList();
 	}
 
 }

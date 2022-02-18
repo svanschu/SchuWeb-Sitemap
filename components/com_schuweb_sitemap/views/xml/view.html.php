@@ -6,7 +6,9 @@
  * @license             GNU General Public License version 2 or later; see LICENSE.txt
  * @author              Sven Schultschik (extensions@schultschik.de)
  */
-// No direct access
+
+use Joomla\CMS\User\User;
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.view');
