@@ -38,6 +38,7 @@ class SchuWeb_SitemapControllerAjax extends JControllerLegacy
             $result->setValue('message', 'You are not authorized to perform this action!');
         } else {
             $model = $this->getModel('sitemap');
+            $state = false;
             if ($model->getItem()) {
                 $action = $jinput->getCmd('action', '');
                 $uid = $jinput->getCmd('uid', '');

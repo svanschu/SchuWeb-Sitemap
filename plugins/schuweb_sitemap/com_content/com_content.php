@@ -86,11 +86,13 @@ class schuweb_sitemap_com_content
 
 
 				$db->setQuery($query);
-				if (($row = $db->loadObject()) != null)
+                $row = $db->loadObject();
+
+				if ( $row != null)
 				{
 					$node->modified = $row->modified;
 
-					$text = @$item->introtext . @$item->fulltext;
+					$text = $row->introtext . $row->fulltext;
 					if ($params['add_images'])
 					{
 						$node->images = SchuWeb_SitemapHelper::getImages($text, ArrayHelper::getValue($params, 'max_images', 1000));

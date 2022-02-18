@@ -40,24 +40,36 @@ class SchuWeb_SitemapDisplayer {
 
     public $canEdit;
 
+    /**
+     * @var bool Indicates if this is a google news sitemap or not
+     *
+     * @since
+     */
+    public bool $isNews = false;
+
+    /**
+     *
+     * @var bool Indicates if this is a google image sitemap or not
+     *
+     * @since
+     */
+    var bool $isImages = false;
+
     function __construct($config,$sitemap)
     {
         jimport('joomla.utilities.date');
         jimport('joomla.user.helper');
         $user = JFactory::getApplication()->getIdentity();
-        $groups = array_keys(JUserHelper::getUserGroups($user->get('id')));
         $date = new JDate();
 
         $this->userLevels    = (array)$user->getAuthorisedViewLevels();
-        // Deprecated: should use userLevels from now on
-        // $this->gid = $user->gid;
-        $this->now    = $date->toUnix();
-        $this->config    = $config;
-        $this->sitemap    = $sitemap;
-        $this->isNews   = false;
-        $this->isImages    = false;
-        $this->count    = 0;
-        $this->canEdit  = false;
+        $this->now = $date->toUnix();
+        $this->config = $config;
+        $this->sitemap = $sitemap;
+        $this->isNews = false;
+        $this->isImages = false;
+        $this->count = 0;
+        $this->canEdit = false;
     }
 
     public function printNode( &$node ) {

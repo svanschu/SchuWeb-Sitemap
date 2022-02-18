@@ -27,8 +27,6 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
         $this->_parent_children=array();
         $this->_last_child=array();
         $this->live_site = substr_replace(JURI::root(), "", -1, 1);
-
-        $user = JFactory::getApplication()->getIdentity();
     }
 
     function setJView($view)
@@ -55,6 +53,7 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
     {
 
         $out = '';
+        $link = '';
 
         if ($this->isExcluded($node->id,$node->uid) && !$this->canEdit) {
             return FALSE;

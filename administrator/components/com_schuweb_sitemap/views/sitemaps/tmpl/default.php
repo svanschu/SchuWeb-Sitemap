@@ -25,8 +25,9 @@ $user = JFactory::getApplication()->getIdentity();
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.ordering';
+$saveOrderCheck = $saveOrder && !empty($this->items);
 
-if ($saveOrder && !empty($this->items))
+if ($saveOrderCheck)
 {
     //TODO!!!!!!!!!!!!!!!!!!!!
 	$saveOrderingUrl = 'index.php?option=com_schuweb_sitemap&task=sitemaps.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
@@ -79,7 +80,7 @@ if ($saveOrder && !empty($this->items))
                             </th>
                         </tr>
                         </thead>
-                        <tbody <?php if ($saveOrder) :?> data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true"<?php endif; ?>>
+                        <tbody <?php if ($saveOrderCheck) :?> data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true"<?php endif; ?>>
 						<?php foreach ($this->items as $i => $item) :
 							$ordering   = ($listOrder == 'a.ordering');
 							$canCreate  = $user->authorise('core.create',     'com_schuweb_sitemap.sitemap.' . $item->id);

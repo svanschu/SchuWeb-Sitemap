@@ -26,14 +26,16 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
 
     protected $_obLevel;
 
+    protected bool $isImages;
+
     function display($tpl = null)
     {
         // Initialise variables.
         $app = JFactory::getApplication();
         $this->user = $app->getIdentity();
         $jinput = $app->input;
-        $isNewsSitemap = $jinput->getInt('news',0);
-        $this->isImages = $jinput->getInt('images',0);
+        $isNewsSitemap = $jinput->getInt('news',0) != 0;
+        $this->isImages = $jinput->getInt('images',0) != 0;
 
         $model = $this->getModel('Sitemap');
         $this->setModel($model);

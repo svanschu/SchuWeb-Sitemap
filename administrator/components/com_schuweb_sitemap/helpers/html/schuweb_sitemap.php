@@ -29,6 +29,7 @@ abstract class JHtmlSchuWeb_Sitemap
      */
     public static function priorities($name, $value = '0.5', $j)
     {
+        $options = array();
         // Array of options
         for ($i=0.1; $i<=1;$i+=0.1) {
             $options[] = JHTML::_('select.option',$i,$i);;

@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 class SchuWeb_SitemapHelper
 {
 
-    public static function &getMenuItems($selections)
+    public static function getMenuItems($selections)
     {
         $db = JFactory::getDbo();
         $app = JFactory::getApplication();
@@ -176,8 +176,9 @@ class SchuWeb_SitemapHelper
     {
         if (!isset($urlBase)) {
             $urlBase = JURI::base();
-            $urlBaseLen = strlen($urlBase);
         }
+
+        $urlBaseLen = strlen($urlBase);
 
         $images = null;
         $matches = $matches1 = $matches2 = array();

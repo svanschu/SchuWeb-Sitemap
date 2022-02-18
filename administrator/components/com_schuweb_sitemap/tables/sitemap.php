@@ -69,7 +69,7 @@ class SchuWeb_SitemapTableSitemap extends JTable
     /**
      * @var int
      */
-    var $access = 0;
+    var int $access = 0;
     /**
      * @var int
      */

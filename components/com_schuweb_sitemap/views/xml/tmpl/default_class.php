@@ -31,15 +31,11 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
 
     /**
      *
-     * @var int Indicates if this is a google news sitemap or not
-     */
-    var $isNews = 0;
-
-    /**
+     * @var bool Indicates if this is a google image sitemap or not
      *
-     * @var int Indicates if this is a google news sitemap or not
+     * @since
      */
-    var $isImages = 0;
+    var bool $isImages = false;
 
     function __construct($config, $sitemap)
     {
