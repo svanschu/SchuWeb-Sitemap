@@ -8,8 +8,6 @@
  */
 
 // No direct access
-use Joomla\CMS\Factory;
-
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /**
@@ -67,7 +65,7 @@ class SchuWeb_SitemapHelper
             }
 
             // Set some values to make nested HTML rendering easier.
-            foreach ($tmpList as $id => $item) {
+            foreach ($tmpList as $item) {
                 $item->items = array();
 
                 $params = new JRegistry($item->params);
@@ -182,7 +180,7 @@ class SchuWeb_SitemapHelper
         $urlBaseLen = strlen($urlBase);
 
         $images = null;
-        $matches = $matches1 = $matches2 = array();
+        $matches1 = $matches2 = array();
         // Look <img> tags
         preg_match_all('/<img[^>]*?(?:(?:[^>]*src="(?P<src>[^"]+)")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches1, PREG_SET_ORDER);
         // Loog for <a> tags with href to images

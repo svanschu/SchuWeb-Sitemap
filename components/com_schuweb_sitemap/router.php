@@ -65,8 +65,6 @@ class SchuWeb_SitemapRoute
             }
         }
 
-        $match = null;
-
         foreach ($needles as $view => $id)
         {
             if (isset(self::$lookup[$view]))
@@ -102,7 +100,6 @@ function SchuWeb_SitemapBuildRoute(&$query)
     else {
         $menuItem = $menu->getItem($query['Itemid']);
     }
-    $mView    = (empty($menuItem->query['view'])) ? null : $menuItem->query['view'];
     $mId      = (empty($menuItem->query['id'])) ? null : $menuItem->query['id'];
 
     if ( !empty($query['Itemid']) ) {

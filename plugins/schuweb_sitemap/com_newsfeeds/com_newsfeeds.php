@@ -63,10 +63,6 @@ class schuweb_sitemap_com_newsfeeds
 		parse_str(html_entity_decode($newsfeed_query['query']), $newsfeed_vars);
 		$view = ArrayHelper::getValue($newsfeed_vars, 'view', 0);
 
-		$app        = JFactory::getApplication();
-		$menu       = $app->getMenu();
-		$menuparams = $menu->getParams($parent->id);
-
 		if ($view == 'category')
 		{
 			$catid = intval(ArrayHelper::getValue($newsfeed_vars, 'id', 0));

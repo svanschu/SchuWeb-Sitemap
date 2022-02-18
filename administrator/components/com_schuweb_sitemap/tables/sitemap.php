@@ -215,7 +215,6 @@ class SchuWeb_SitemapTableSitemap extends JTable
 
         // Sanitize input.
         ArrayHelper::toInteger($pks);
-        $userId = (int)$userId;
         $state = (int)$state;
 
         // If there are no primary keys set check to see if the instance key is set.

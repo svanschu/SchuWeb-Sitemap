@@ -111,7 +111,6 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
 
         // Create a shortcut to the paramemters.
         $params = &$this->state->params;
-        $offset = $this->state->get('page.offset');
 
         if (!$this->item->params->get('access-view')) {
             if ($this->user->get('guest')) {

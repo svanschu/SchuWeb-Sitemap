@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-use \Joomla\Component\Content\Site\Helper\RouteHelper;
 use \Joomla\Component\Content\Site\Helper\QueryHelper;
 use \Joomla\Utilities\ArrayHelper;
 

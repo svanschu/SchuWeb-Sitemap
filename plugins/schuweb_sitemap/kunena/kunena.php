@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
 use Kunena\Forum\Libraries\Factory\KunenaFactory;
 use Kunena\Forum\Libraries\Forum\Category\KunenaCategoryHelper;
@@ -41,8 +42,7 @@ class schuweb_sitemap_kunena
             self::$profile = KunenaFactory::getUser();
         }
 
-        $user = \Joomla\CMS\Factory::getApplication()->getIdentity();
-        $catid = 0;
+        $user = Factory::getApplication()->getIdentity();
 
         $link_query = parse_url($parent->link);
         if (!isset($link_query['query'])) {

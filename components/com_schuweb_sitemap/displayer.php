@@ -165,9 +165,8 @@ class SchuWeb_SitemapDisplayer {
     protected function printMenuTree($menu,&$items)
     {
         $this->changeLevel(1);
-        $router = SiteApplication::getRouter();
 
-        foreach ( $items as $i => $item ) {                   // Add each menu entry to the root tree.
+        foreach ($items as $item ) {                   // Add each menu entry to the root tree.
             $excludeExternal = false;
 
             $node = new stdclass;

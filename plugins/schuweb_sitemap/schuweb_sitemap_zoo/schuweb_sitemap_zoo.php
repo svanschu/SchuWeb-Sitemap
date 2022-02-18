@@ -38,7 +38,6 @@ class schuweb_sitemap_zoo
 
 		$link_query = parse_url($parent->link);
 		parse_str(html_entity_decode($link_query['query']), $link_vars);
-		$view = ArrayHelper::getValue($link_vars, 'view', 0);
 
 		$include_categories           = ArrayHelper::getValue($params, 'include_categories', 1, '');
 		$include_categories           = ($include_categories == 1

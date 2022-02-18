@@ -37,7 +37,6 @@ class SchuWeb_SitemapController extends JControllerLegacy
         $app    = JFactory::getApplication();
         $input  = $app->input;
 
-        $id         = $input->get('id', null, 'INT');
         $viewName   = $input->get('view');
         $viewLayout = $input->get('layout', 'default');
 

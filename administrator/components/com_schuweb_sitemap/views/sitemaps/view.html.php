@@ -60,7 +60,6 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
     protected function addToolbar()
     {
         $state = $this->get('State');
-        $doc = JFactory::getDocument();
 
         JToolBarHelper::addNew('sitemap.add');
         JToolBarHelper::custom('sitemap.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);

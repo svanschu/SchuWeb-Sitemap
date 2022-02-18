@@ -27,7 +27,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
     {
         // Initialise variables.
         $this->app = JFactory::getApplication();
-        $jinput = $this->app->input;
         $this->user = $this->app->getIdentity();
 
         // Get model data.
@@ -51,7 +50,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
 
         // Create a shortcut to the paramemters.
         $params = &$this->state->params;
-        $offset = $this->state->get('page.offset');
 
         // If a guest user, they may be able to log in to view the full article
         // TODO: Does this satisfy the show not auth setting?

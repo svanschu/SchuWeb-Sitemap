@@ -63,10 +63,6 @@ class schuweb_sitemap_com_weblinks
 		parse_str(html_entity_decode($link_query['query']), $link_vars);
 		$view = ArrayHelper::getValue($link_vars, 'view', 0);
 
-		$app        = JFactory::getApplication();
-		$menu       = $app->getMenu();
-		$menuparams = $menu->getParams($parent->id);
-
 		if ($view == 'category')
 		{
 			$catid = intval(ArrayHelper::getValue($link_vars, 'id', 0));
@@ -120,8 +116,6 @@ class schuweb_sitemap_com_weblinks
 
 	static function getCategoryTree($sitemap, $parent, &$params, $category)
 	{
-		$db = JFactory::getDBO();
-
 		$children = $category->getChildren();
 		$sitemap->changeLevel(1);
 		foreach ($children as $cat)
