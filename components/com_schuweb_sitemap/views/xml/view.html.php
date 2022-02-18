@@ -30,7 +30,7 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
     {
         // Initialise variables.
         $app = JFactory::getApplication();
-        $this->user = JFactory::getUser();
+        $this->user = $app->getIdentity();
         $jinput = $app->input;
         $isNewsSitemap = $jinput->getInt('news',0);
         $this->isImages = $jinput->getInt('images',0);
@@ -49,7 +49,7 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
 
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
-        $this->canEdit = JFactory::getUser()->authorise('core.admin', 'com_schuweb_sitemap');
+        $this->canEdit = $this->user->authorise('core.admin', 'com_schuweb_sitemap');
 
         // For now, news sitemaps are not editable
         $this->canEdit = $this->canEdit && !$isNewsSitemap;

@@ -122,7 +122,7 @@ class schuweb_sitemap_com_content
 	{
 		$db     = JFactory::getDBO();
 		$app    = JFactory::getApplication();
-		$user   = JFactory::getUser();
+		$user   = $app->getIdentity();
 		$result = null;
 
 		$link_query = parse_url($parent->link);
@@ -182,7 +182,7 @@ class schuweb_sitemap_com_content
 		if ($params['add_pagebreaks'] && !defined('_SCHUWEBSITEMAP_COM_CONTENT_LOADED'))
 		{
 			define('_SCHUWEBSITEMAP_COM_CONTENT_LOADED', 1);  // Load it just once
-			$lang = JFactory::getLanguage();
+			$lang = $app->getLanguage();
 			$lang->load('plg_content_pagebreak');
 		}
 
@@ -291,13 +291,14 @@ class schuweb_sitemap_com_content
 	static function expandCategory($sitemap, $parent, $catid, &$params, $itemid)
 	{
 		$db    = JFactory::getDBO();
+        $app   = JFactory::getApplication();
 		$query = $db->getQuery(true);
 
 		$where = array('a.parent_id = ' . $catid . ' AND a.published = 1 AND a.extension=\'com_content\'');
 
 		if ($params['language_filter'])
 		{
-			$where[] = 'a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')';
+			$where[] = 'a.language in (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')';
 		}
 
 		if (!$params['show_unauth'])
@@ -443,7 +444,7 @@ class schuweb_sitemap_com_content
 
 		if ($params['language_filter'])
 		{
-			$query->where($db->qn('a.language') . ' in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+			$query->where($db->qn('a.language') . ' in (' . $db->quote(JFactory::getApplication()->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 		}
 
 		if (!$params['show_unauth'])

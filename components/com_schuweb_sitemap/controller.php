@@ -34,20 +34,21 @@ class SchuWeb_SitemapController extends JControllerLegacy
     {
         $cachable = true;
 
-        $input = JFactory::getApplication()->input;
+        $app    = JFactory::getApplication();
+        $input  = $app->input;
 
         $id         = $input->get('id', null, 'INT');
         $viewName   = $input->get('view');
         $viewLayout = $input->get('layout', 'default');
 
-        $user = JFactory::getUser();
+        $user = $app->getIdentity();
 
         if ($user->get('id') || !in_array($viewName, array('html', 'xml')) || $viewLayout == 'xsl') {
             $cachable = false;
         }
 
         if ($viewName) {
-            $document = JFactory::getDocument();
+            $document = $app->getDocument();
             $viewType = $document->getType();
 
             $view = $this->getView($viewName, $viewType, '', array('base_path' => $this->basePath, 'layout' => $viewLayout));

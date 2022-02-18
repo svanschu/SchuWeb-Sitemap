@@ -44,7 +44,7 @@ class SchuWeb_SitemapDisplayer {
     {
         jimport('joomla.utilities.date');
         jimport('joomla.user.helper');
-        $user = JFactory::getUser();
+        $user = JFactory::getApplication()->getIdentity();
         $groups = array_keys(JUserHelper::getUserGroups($user->get('id')));
         $date = new JDate();
 
@@ -113,7 +113,7 @@ class SchuWeb_SitemapDisplayer {
 		// Filter by language
 		if ($app->getLanguageFilter())
 		{
-			$query->where($db->quoteName('language') . ' IN (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+			$query->where($db->quoteName('language') . ' IN (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 		}
 		$query->setLimit('1');
 

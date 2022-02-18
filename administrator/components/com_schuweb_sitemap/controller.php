@@ -31,10 +31,11 @@ class SchuWeb_SitemapController extends JControllerLegacy
     {
         require_once JPATH_COMPONENT . '/helpers/schuweb_sitemap.php';
 
+        $app    = JFactory::getApplication();
         // Get the document object.
-        $document = JFactory::getDocument();
+        $document = $app->getDocument();
 
-        $jinput = JFactory::$application->input;
+        $jinput = $app->input;
 
         // Set the default view name and format from the Request.
         $vName = $jinput->getWord('view', 'sitemaps');

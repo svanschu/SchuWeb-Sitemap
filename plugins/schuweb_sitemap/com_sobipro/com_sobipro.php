@@ -129,11 +129,11 @@ class schuweb_sitemap_com_sobipro
     }
 
     /** SobiPro support */
-    static function getCategoryTree($xmap, $parent, $sid, &$params)
+    static function getCategoryTree($sitemap, $parent, $sid, &$params)
     {
         $database = JFactory::getDBO();
 
-        $lang = JFactory::getLanguage();
+        $lang = JFactory::getApplication()->getLanguage();
 
         $query =
             "SELECT a.id,a.nid, a.name, b.pid as pid, c.sValue as name "
@@ -154,7 +154,7 @@ class schuweb_sitemap_com_sobipro
         $rows = $database->loadObjectList();
 
         $modified = time();
-        $xmap->changeLevel(1);
+        $sitemap->changeLevel(1);
         foreach ($rows as $row) {
             $node = new stdclass;
             $node->id = $parent->id;
@@ -166,15 +166,15 @@ class schuweb_sitemap_com_sobipro
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
-            $attribs = json_decode($xmap->sitemap->attribs);
+            $attribs = json_decode($sitemap->sitemap->attribs);
             $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
             $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
             $node->expandible = true;
             $node->secure = $parent->secure;
             $node->lastmod = $parent->lastmod;
-            if ($xmap->printNode($node) !== FALSE) {
-                self::getCategoryTree($xmap, $parent, $row->id, $params);
+            if ($sitemap->printNode($node) !== FALSE) {
+                self::getCategoryTree($sitemap, $parent, $row->id, $params);
             }
         }
 
@@ -207,7 +207,7 @@ class schuweb_sitemap_com_sobipro
                 $node->priority = $params['entry_priority'];
                 $node->changefreq = $params['entry_changefreq'];
 
-                $attribs = json_decode($xmap->sitemap->attribs);
+                $attribs = json_decode($sitemap->sitemap->attribs);
                 $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
                 $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
@@ -215,11 +215,11 @@ class schuweb_sitemap_com_sobipro
                 $node->secure = $parent->secure;
                 $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'pid' => $row->catid, 'title' => $row->name), false, false);
                 $node->lastmod = $parent->lastmod;
-                $xmap->printNode($node);
+                $sitemap->printNode($node);
             }
 
         }
-        $xmap->changeLevel(-1);
+        $sitemap->changeLevel(-1);
     }
 
     static protected function getSectionConfig($sectionId)
@@ -244,7 +244,7 @@ class schuweb_sitemap_com_sobipro
         define('SOBI_CMS', 'joomla' . $ver);
         define('SOBIPRO', true);
         define('SOBI_TASK', 'task');
-        define('SOBI_DEFLANG', JFactory::getLanguage()->getDefault());
+        define('SOBI_DEFLANG', JFactory::getApplication()->getDefault());
         define('SOBI_ACL', 'front');
         define('SOBI_ROOT', JPATH_ROOT);
         define('SOBI_MEDIA', implode('/', array(JPATH_ROOT, 'media', 'sobipro')));

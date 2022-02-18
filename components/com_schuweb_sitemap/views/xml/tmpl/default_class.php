@@ -46,7 +46,7 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
         parent::__construct($config, $sitemap);
         $this->uids = array();
 
-        $this->defaultLanguage = strtolower(JFactory::getLanguage()->getTag());
+        $this->defaultLanguage = strtolower(JFactory::getApplication()->getLanguage()->getTag());
         if (preg_match('/^([a-z]+)-.*/', $this->defaultLanguage, $matches) && !in_array($this->defaultLanguage, array(' zh-cn', ' zh-tw'))) {
             $this->defaultLanguage = $matches[1];
         }

@@ -27,7 +27,7 @@ class SchuWeb_SitemapControllerAjax extends JControllerLegacy
 
         jimport('joomla.utilities.date');
         jimport('joomla.user.helper');
-        $user = JFactory::getUser();
+        $user = JFactory::getApplication()->getIdentity();
         $groups = array_keys(JUserHelper::getUserGroups($user->get('id')));
         $result = new JRegistry('_default');
         $jinput = JFactory::$application->input;

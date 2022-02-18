@@ -28,14 +28,14 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
         // Initialise variables.
         $this->app = JFactory::getApplication();
         $jinput = $this->app->input;
-        $this->user = JFactory::getUser();
+        $this->user = $this->app->getIdentity();
 
         // Get model data.
         $this->state = $this->get('State');
         $this->item = $this->get('Item');
         $this->items = $this->get('Items');
 
-        $this->canEdit = JFactory::getUser()->authorise('core.admin', 'com_schuweb_sitemap');
+        $this->canEdit = $this->user->authorise('core.admin', 'com_schuweb_sitemap');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {

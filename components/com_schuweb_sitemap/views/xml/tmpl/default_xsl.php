@@ -157,7 +157,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
         padding:2px;
         float: left;
     }
-<?php $doc = JFactory::getDocument(); if ($doc->direction == 'rtl') { ?>
+<?php $doc = JFactory::getApplication()->getDocument(); if ($doc->direction == 'rtl') { ?>
     body {
         font-family: Tahoma;
     }
