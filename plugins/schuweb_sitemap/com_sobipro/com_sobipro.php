@@ -1,7 +1,7 @@
 <?php
 /**
- * @author Guillermo Vargas guille@vargas.co.cr
- * @author Sven Schultschik extensions@schultschik.de
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
+ * @author Sven Schultschik (extensions@schultschik.de)
  * @package schuweb_sitemap
  * @license GNU/GPL
  * @authorSite extensions.schultschik.de

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <extension type="plugin" group="schuweb_sitemap" version="3.0" method="upgrade">
     <name>SchuWeb Sitemap - SobiPro Plugin</name>
-    <author>Sven Schultschik | Guillermo Vargas</author>
+    <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>

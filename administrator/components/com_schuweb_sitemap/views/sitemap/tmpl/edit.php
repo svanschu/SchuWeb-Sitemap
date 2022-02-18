@@ -1,7 +1,7 @@
 <?php
 /**
  * @version          sw.build.version
- * @copyright        Copyright (C) 2021 Sven Schultschik. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  * @author           Sven Schultschik (sven@schultschik.de)
  */
