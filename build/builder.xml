@@ -15,15 +15,11 @@
         <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
     </tstamp>
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
-    <property name="builddir" value="./../../packages/${extension_name}" override="true"/>
+    <property name="builddir" value="./../../packages/${extension_name}/J4" override="true"/>
     <!-- Declare Project src files -->
     <property name="src" value="./.." override="true"/>
     <property name="plugins" value="${src}/plugins"/>
 
-    <!-- plugins -->
-    <fileset dir="${plugins}/schuweb_sitemap" id="schuweb_sitemap_plugins">
-        <include name="**"/>
-    </fileset>
     <fileset dir="${src}/administrator/components/com_schuweb_sitemap" id="schuweb_sitemap_admin">
         <include name="**"/>
     </fileset>
@@ -42,37 +38,11 @@
                 <include name="**"/>
             </fileset>
         </zip>
-        <zip destfile="${builddir}/tmp/packages/plg_kunena_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_kunena">
-                <include name="**"/>
-            </fileset>
-        </zip>
-        <zip destfile="${builddir}/tmp/packages/plg_sobipro_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_sobipro">
-                <include name="**"/>
-            </fileset>
-        </zip>
-        <zip destfile="${builddir}/tmp/packages/plg_virtuemart_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_virtuemart">
-                <include name="**"/>
-            </fileset>
-        </zip>
         <zip destfile="${builddir}/tmp/packages/plg_newsfeeds_${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_newsfeeds">
                 <include name="**"/>
             </fileset>
         </zip>
-        <zip destfile="${builddir}/tmp/packages/plg_weblinks_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_weblinks">
-                <include name="**"/>
-            </fileset>
-        </zip>
-        <zip destfile="${builddir}/tmp/packages/plg_zoo_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_zoo">
-                <include name="**"/>
-            </fileset>
-        </zip>
-        
         <zip destfile="${builddir}/pkg_schuweb_sitemap_${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp">
                 <include name="packages/*.zip"/>
@@ -101,14 +71,17 @@
                 <fileset refid="schuweb_sitemap_front"/>
         </copy>
         <copy file="${src}/administrator/components/com_schuweb_sitemap/schuweb_sitemap.xml" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
-        <copy file="${src}/pkg_schuweb_sitemap.xml" todir="${builddir}/tmp" />
+        <copy file="${src}/pkg_schuweb_sitemap.xml" tofile="${builddir}/tmp/pkg_schuweb_sitemap.xml" />
         <copy file="${src}/install.script.php" todir="${builddir}/tmp" />
         <copy file="${src}/extension.script.php" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
         <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
-            <fileset refid="schuweb_sitemap_plugins"/>
+            <fileset dir="${plugins}/schuweb_sitemap">
+                <include name="com_content/**"/>
+                <include name="com_newsfeeds/**"/>
+            </fileset>
         </copy>
         <echo msg="Copy was successfull"/>
-        <!-- insert version, build number and date into the xml files -->
+        <!-- insert version, build number and date into files -->
         <reflexive>
             <fileset dir="${builddir}/tmp/">
                 <include name="**"/>
