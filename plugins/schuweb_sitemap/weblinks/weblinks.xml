@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <extension type="plugin" group="schuweb_sitemap" method="upgrade">
-    <name>SchuWeb Sitemap - Weblinks Plugin</name>
+    <name>SchuWeb Sitemap - SchuWeb Sitemap Integration for Weblinks</name>
     <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
@@ -8,7 +8,7 @@
     <authorEmail>sven@schultschik.de</authorEmail>
     <authorUrl>www.schultschik.de</authorUrl>
     <version>sw.build.version</version>
-    <description>SCHUWEB_SITEMAP_WL_PLUGIN_DESCRIPTION</description>
+    <description>SchuWeb Sitemap integration plugin for the extension Weblinks</description>
     <files>
         <filename plugin="weblinks">weblinks.php</filename>
         <filename>index.html</filename>
