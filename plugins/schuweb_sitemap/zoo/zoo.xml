@@ -11,7 +11,7 @@
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_ZOO_PLUGIN_DESCRIPTION</description>
     <files>
-        <filename plugin="schuweb_sitemap_zoo">schuweb_sitemap_zoo.php</filename>
+        <filename plugin="zoo">zoo.php</filename>
         <filename>index.html</filename>
     </files>
     <updateservers>
