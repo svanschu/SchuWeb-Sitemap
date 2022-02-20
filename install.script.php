@@ -16,17 +16,26 @@ defined('_JEXEC') or die('Restricted access');
 
 /**
  *
- * @package     Joomla.Administrator
- * @subpackage  com_helloworld
- *
  * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  *              reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
- * @since       __DEPLOY_VERSION__
+ * @since
  */
-class pkg_schuweb_sitemapInstallerScript
+class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 {
+
+    /**
+     * Extension script constructor.
+     *
+     * @since   4.0.0
+     */
+    public function __construct()
+    {
+        // Define the minumum versions to be supported.
+        $this->minimumJoomla = '4.0';
+        $this->minimumPhp = '7.4';
+    }
 
 	/**
 	 * Runs right after any installation action is performed on the component.

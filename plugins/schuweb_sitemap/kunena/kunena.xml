@@ -22,6 +22,7 @@
         <language tag="nl-NL">nl-NL/plg_schuweb_sitemap_kunena.ini</language>
         <language tag="ru-RU">ru-RU/plg_schuweb_sitemap_kunena.ini</language>
     </languages>
+    <scriptfile>script.php</scriptfile>
     <config>
         <fields name="params">
             <fieldset name="basic">

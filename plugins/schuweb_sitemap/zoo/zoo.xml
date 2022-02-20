@@ -14,6 +14,7 @@
         <filename plugin="zoo">zoo.php</filename>
         <filename>index.html</filename>
     </files>
+    <scriptfile>script.php</scriptfile>
     <updateservers>
         <server type="extension" priority="1" name="SchuWeb Sitemap - Zoo Integration">
             https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap_plugin_zoo.xml
