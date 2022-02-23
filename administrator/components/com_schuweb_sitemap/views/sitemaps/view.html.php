@@ -38,7 +38,12 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
             JFactory::getApplication()->enqueueMessage($message);
         }
 
-        // Check for errors.
+        $message = $this->get('NotInstalledMessage');
+        if ($message) {
+            JFactory::getApplication()->enqueueMessage($message);
+        }
+
+            // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             JFactory::$application->enqueueMessage(implode("\n", $errors), 'error');
             return false;

@@ -6,6 +6,8 @@
  * @author        Sven Schultschik (extensions@schultschik.de)
  */
 // no direct access
+use Joomla\Database\ParameterType;
+
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
@@ -153,28 +155,86 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
         return $query;
     }
 
-    public function getExtensionsMessage()
+    /**
+     * Detect which plugins are installed, but disabled for full sitemap
+     *
+     * @return string
+     *
+     * @since
+     */
+    public function getExtensionsMessage(): string
     {
-        $db    = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select('e.*');
-        $query->from($db->quoteName('#__extensions'). 'AS e');
-        $query->join('INNER', '#__extensions AS p ON (SUBSTRING(e.element,5)=p.element or e.element=p.element) and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'');
-        $query->where('e.type=\'component\' and e.enabled=1');
+        $db = $this->getDbo();
+        $query = $db->getQuery(true)
+            ->select('e.*')
+            ->from($db->quoteName('#__extensions') . 'AS e')
+            ->join('INNER', '#__extensions AS p ON (SUBSTRING(e.element,5)=p.element or e.element=p.element) and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
+            ->where($db->quoteName('e.type') . '=' . $db->quote('component'))
+            ->where($db->quoteName('e.enabled') . '=1')
+            ->where($db->quoteName('p.state') . '=0');
 
         $db->setQuery($query);
         $extensions = $db->loadObjectList();
-        if ( count($extensions) ) {
+        if (count($extensions)) {
             $sep = $extensionsNameList = '';
             foreach ($extensions as $extension) {
                 $extensionsNameList .= "$sep$extension->element";
                 $sep = ', ';
             }
 
-            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED',$extensionsNameList);
+            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED', $extensionsNameList);
         } else {
             return "";
         }
     }
 
+    /**
+     * Detect which plugins are missing for full sitemap
+     *
+     * @return string
+     *
+     * @since 4.0
+     */
+    public function getNotInstalledMessage(): string
+    {
+        $db = $this->getDbo();
+
+        $supportedExtensions = array('com_zoo', 'com_weblinks', 'com_kunena');
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('e.extension_id') . ',' . $db->quoteName('e.element'))
+            ->from($db->quoteName('#__extensions') . 'AS e')
+            ->whereIn($db->quoteName('e.element'), $supportedExtensions, ParameterType::STRING);
+
+        $db->setQuery($query);
+        $extensions = $db->loadObjectList();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('element'))
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('type') . '=' . $db->quote('plugin'))
+            ->where($db->quoteName('folder') . '=' . $db->quote('schuweb_sitemap'))
+            ->where($db->quoteName('state') . '=0');
+        $db->setQuery($query);
+        $plugins = $db->loadAssocList();
+
+        $pluginList = array();
+        foreach ($plugins as $plugin) {
+            $pluginList[] = $plugin['element'];
+        }
+
+        if (count($extensions)) {
+            $sep = $extensionsNameList = '';
+            foreach ($extensions as $extension) {
+                if (!in_array(substr($extension->element, 4), $pluginList)) {
+                    $extensionsNameList .= "$sep$extension->element";
+                    $sep = ', ';
+                }
+            }
+
+            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_NOT_INSTALLED', $extensionsNameList);
+        } else {
+            return "";
+        }
+    }
 }
