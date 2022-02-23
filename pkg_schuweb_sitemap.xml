@@ -5,9 +5,9 @@
     <creationDate>sw.build.date</creationDate>
     <author>Sven Schultschik</author>
     <version>sw.build.version</version>
-    <url>http://extensions.schultschik.de</url>
+    <url>https://extensions.schultschik.com/</url>
     <packager>SchuWeb Sitemap</packager>
-    <packagerurl>http://extensions.schultschik.de</packagerurl>
+    <packagerurl>https://extensions.schultschik.com/</packagerurl>
     <license>GNU/GPL</license>
     <description>The Site Map generator for Joomla!</description>
     <scriptfile>install.script.php</scriptfile>

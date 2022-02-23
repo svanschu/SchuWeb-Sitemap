@@ -1,10 +1,11 @@
 <?php
 /**
  * @version       sw.build.version
- * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
+ * @copyright     Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  * @author        Sven Schultschik (extensions@schultschik.de)
  */
+
 // no direct access
 use Joomla\Database\ParameterType;
 
@@ -16,7 +17,7 @@ jimport('joomla.database.query');
 /**
  * Sitemaps Model Class
  *
- * @package         Xmap
+ * @package         SchuWeb_Sitemap
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
@@ -25,9 +26,10 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
     /**
      * Constructor.
      *
-     * @param    array    An optional associative array of configuration settings.
-     * @see      JController
-     * @since    1.6
+     * @param   array    An optional associative array of configuration settings.
+     * @throws  Exception
+     * @since   1.6
+     * @see     JController
      */
     public function __construct($config = array())
     {
@@ -64,16 +66,16 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
     {
         // Adjust the context to support modal layouts.
         if ($layout = JFactory::$application->input->getVar('layout')) {
-            $this->context .= '.'.$layout;
+            $this->context .= '.' . $layout;
         }
 
-        $access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', 0, 'int');
+        $access = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', 0, 'int');
         $this->setState('filter.access', $access);
 
-        $published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
+        $published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
         $this->setState('filter.published', $published);
 
-        $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
 
         // List state information.
@@ -87,36 +89,40 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param   string      $id A prefix for the store id.
+     * @param string $id A prefix for the store id.
      *
      * @return  string      A store id.
+     *
+     * @since
      */
     protected function getStoreId($id = '')
     {
         // Compile the store id.
-        $id .= ':'.$this->getState('filter.search');
-        $id .= ':'.$this->getState('filter.access');
-        $id .= ':'.$this->getState('filter.published');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.access');
+        $id .= ':' . $this->getState('filter.published');
 
         return parent::getStoreId($id);
     }
 
     /**
-     * @param       boolean True to join selected foreign information
+     * @param boolean True to join selected foreign information
      *
      * @return      string
+     *
+     * @since
      */
     protected function getListQuery($resolveFKs = true)
     {
-        $db     = $this->getDbo();
+        $db = $this->getDbo();
         // Create a new query object.
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
         $query->select(
-                $this->getState(
-                          'list.select',
-                          'a.*')
+            $this->getState(
+                'list.select',
+                'a.*')
         );
         $query->from('#__schuweb_sitemap AS a');
 
@@ -126,13 +132,13 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
 
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
-            $query->where('a.access = ' . (int) $access);
+            $query->where('a.access = ' . (int)$access);
         }
 
         // Filter by published state
         $published = $this->getState('filter.published');
         if (is_numeric($published)) {
-            $query->where('a.state = ' . (int) $published);
+            $query->where('a.state = ' . (int)$published);
         } else if ($published === '') {
             $query->where('(a.state = 0 OR a.state = 1)');
         }
@@ -141,17 +147,16 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             if (stripos($search, 'id:') === 0) {
-                $query->where('a.id = '.(int) substr($search, 3));
-            }
-            else {
-                $search = $db->Quote('%'.$db->escape($search, true).'%');
-                $query->where('(a.title LIKE '.$search.' OR a.alias LIKE '.$search.')');
+                $query->where('a.id = ' . (int)substr($search, 3));
+            } else {
+                $search = $db->Quote('%' . $db->escape($search, true) . '%');
+                $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
             }
         }
 
         // Add the list ordering clause.
         $query->order($db->escape($this->state->get('list.ordering', 'a.title')) . ' ' . $db->escape($this->state->get('list.direction', 'ASC')));
-        //echo nl2br(str_replace('#__','jos_',$query));
+
         return $query;
     }
 
