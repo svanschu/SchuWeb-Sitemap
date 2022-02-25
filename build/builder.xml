@@ -34,7 +34,7 @@
             </fileset>
         </zip>
         <zip destfile="${builddir}/tmp/packages/plg_content_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_content">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/content">
                 <include name="**"/>
             </fileset>
         </zip>
@@ -76,7 +76,7 @@
         <copy file="${src}/extension.script.php" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
         <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
             <fileset dir="${plugins}/schuweb_sitemap">
-                <include name="com_content/**"/>
+                <include name="content/**"/>
                 <include name="com_newsfeeds/**"/>
             </fileset>
         </copy>
