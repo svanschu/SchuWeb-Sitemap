@@ -39,7 +39,7 @@
             </fileset>
         </zip>
         <zip destfile="${builddir}/tmp/packages/plg_newsfeeds_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/com_newsfeeds">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/newsfeeds">
                 <include name="**"/>
             </fileset>
         </zip>
@@ -77,7 +77,7 @@
         <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
             <fileset dir="${plugins}/schuweb_sitemap">
                 <include name="content/**"/>
-                <include name="com_newsfeeds/**"/>
+                <include name="newsfeeds/**"/>
             </fileset>
         </copy>
         <echo msg="Copy was successfull"/>

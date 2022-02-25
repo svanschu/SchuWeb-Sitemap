@@ -14,7 +14,7 @@
     <files folder="packages">
         <file type="component" id="com_schuweb_sitemap">com_schuweb_sitemap_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.dstamp.zip</file>
-        <file type="plugin" id="com_newsfeeds" group="schuweb_sitemap">plg_newsfeeds_sw.build.version_sw.build.dstamp.zip</file>
+        <file type="plugin" id="newsfeeds" group="schuweb_sitemap">plg_newsfeeds_sw.build.version_sw.build.dstamp.zip</file>
     </files>
     <updateservers>
         <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap.xml</server>
