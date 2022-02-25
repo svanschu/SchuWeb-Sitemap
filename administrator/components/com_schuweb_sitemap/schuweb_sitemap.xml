@@ -36,12 +36,12 @@
         <folder>views</folder>
     </files>
     <languages folder="front/language">
-        <language tag="en-GB">en-GB.com_schuweb_sitemap.ini</language>
-        <language tag="es-ES">es-ES.com_schuweb_sitemap.ini</language>
-        <language tag="fa-IR">fa-IR.com_schuweb_sitemap.ini</language>
-        <language tag="cs-CZ">cs-CZ.com_schuweb_sitemap.ini</language>
-        <language tag="nl-NL">nl-NL.com_schuweb_sitemap.ini</language>
-        <language tag="ru-RU">ru-RU.com_schuweb_sitemap.ini</language>
+        <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
+        <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
+        <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+        <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
+        <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
+        <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
     </languages>
     <images folder="admin">
         <folder>images</folder>
@@ -63,18 +63,18 @@
             <folder>views</folder>
         </files>
         <languages folder="admin/language">
-            <language tag="en-GB">en-GB/en-GB.com_schuweb_sitemap.ini</language>
-            <language tag="en-GB">en-GB/en-GB.com_schuweb_sitemap.sys.ini</language>
-            <language tag="es-ES">es-ES/es-ES.com_schuweb_sitemap.ini</language>
-            <language tag="es-ES">es-ES/es-ES.com_schuweb_sitemap.sys.ini</language>
-            <language tag="fa-IR">fa-IR/fa-IR.com_schuweb_sitemap.ini</language>
-            <language tag="fa-IR">fa-IR/fa-IR.com_schuweb_sitemap.sys.ini</language>
-            <language tag="cs-CZ">cs-CZ/cs-CZ.com_schuweb_sitemap.ini</language>
-            <language tag="cs-CZ">cs-CZ/cs-CZ.com_schuweb_sitemap.sys.ini</language>
-            <language tag="nl-NL">nl-NL/nl-NL.com_schuweb_sitemap.ini</language>
-            <language tag="nl-NL">nl-NL/nl-NL.com_schuweb_sitemap.sys.ini</language>
-            <language tag="ru-RU">ru-RU/ru-RU.com_schuweb_sitemap.ini</language>
-            <language tag="ru-RU">ru-RU/ru-RU.com_schuweb_sitemap.sys.ini</language>
+            <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
+            <language tag="en-GB">en-GB/com_schuweb_sitemap.sys.ini</language>
+            <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
+            <language tag="es-ES">es-ES/com_schuweb_sitemap.sys.ini</language>
+            <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+            <language tag="fa-IR">fa-IR/com_schuweb_sitemap.sys.ini</language>
+            <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
+            <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.sys.ini</language>
+            <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
+            <language tag="nl-NL">nl-NL/com_schuweb_sitemap.sys.ini</language>
+            <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
+            <language tag="ru-RU">ru-RU/com_schuweb_sitemap.sys.ini</language>
         </languages>
         <images folder="admin">
             <folder>images</folder>
