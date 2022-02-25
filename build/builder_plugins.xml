@@ -19,17 +19,17 @@
 
     <target name="build" depends="prepare, copy">
         <zip destfile="${builddir}/plg_zoo_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/schuweb_sitemap_zoo">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/zoo">
                 <include name="**"/>
             </fileset>
         </zip>
         <zip destfile="${builddir}/plg_weblinks_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/schuweb_sitemap_weblinks">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/weblinks">
                 <include name="**"/>
             </fileset>
         </zip>
         <zip destfile="${builddir}/plg_kunena_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/schuweb_sitemap_kunena">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/kunena">
                 <include name="**"/>
             </fileset>
         </zip>
@@ -45,9 +45,9 @@
     <target name="copy">
         <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
             <fileset dir="${plugins}/schuweb_sitemap">
-                <include name="schuweb_sitemap_zoo/**"/>
-                <include name="schuweb_sitemap_weblinks/**"/>
-                <include name="schuweb_sitemap_kunena/**"/>
+                <include name="zoo/**"/>
+                <include name="weblinks/**"/>
+                <include name="kunena/**"/>
             </fileset>
         </copy>
         <echo msg="Copy was successfull"/>
