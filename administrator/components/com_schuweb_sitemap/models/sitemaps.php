@@ -173,7 +173,7 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
         $query = $db->getQuery(true)
             ->select('e.*')
             ->from($db->quoteName('#__extensions') . 'AS e')
-            ->join('INNER', '#__extensions AS p ON (SUBSTRING(e.element,5)=p.element or e.element=p.element) and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
+            ->join('INNER', '#__extensions AS p ON SUBSTRING(e.element,5)=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
             ->where($db->quoteName('e.type') . '=' . $db->quote('component'))
             ->where($db->quoteName('e.enabled') . '=1')
             ->where($db->quoteName('p.state') . '=0');
