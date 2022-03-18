@@ -13,6 +13,7 @@
         <filename plugin="newsfeeds">newsfeeds.php</filename>
         <filename>index.html</filename>
     </files>
+    <scriptfile>script.php</scriptfile>
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_schuweb_sitemap_com_newsfeeds.ini</language>
         <language tag="nl-NL">nl-NL/plg_schuweb_sitemap_com_newsfeeds.ini</language>
