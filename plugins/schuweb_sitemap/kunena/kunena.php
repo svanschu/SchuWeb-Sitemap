@@ -2,7 +2,7 @@
 /**
  * @package SchuWeb Sitemap
  *
- * @copyright (C) 2010-2022 Sven Schultschik. All rights reserved
+ * @copyright (C) 2010 - 2022 Sven Schultschik. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.schultschik.de
  **/

@@ -1,10 +1,13 @@
 <?php
 /**
- * @package    Joomla.Language
+ * @package             SchuWeb Sitemap
  *
- * @copyright  (C) 2022 J!German <https://www.jgerman.de>
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @version             sw.build.version
+ * @author              Sven Schultschik
+ * @copyright (C)       2022 Sven Schultschik. All rights reserved
+ * @license             http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link                http://www.schultschik.de
+ **/
 
 defined('_JEXEC') or die;
 

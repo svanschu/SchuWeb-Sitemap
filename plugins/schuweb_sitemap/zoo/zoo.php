@@ -1,7 +1,7 @@
 <?php
 /**
  * @version             sw.build.version
- * @copyright (C)       2010-2021 Sven Schultschik. All rights reserved
+ * @copyright (C)       2010 - 2022 Sven Schultschik. All rights reserved
  * @author              Sven Schultschik
  * @license             GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  * @link                http://www.schultschik.de
