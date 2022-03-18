@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
+        <version>4.0.0</version>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 4.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-3-5-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/3.5.0/plg_zoo_3.4.0_20211001.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>7.4</php_minimum>
+    </update>
+</updates>

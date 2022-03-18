@@ -14,6 +14,11 @@
         <filename plugin="kunena">kunena.php</filename>
 		<filename>index.html</filename>
     </files>
+    <updateservers>
+        <server type="extension" priority="1" name="SchuWeb Sitemap - SchuWeb Sitemap Integration for Kunena">
+            https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap_plugin_kunena.xml
+        </server>
+    </updateservers>
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_schuweb_sitemap_kunena.ini</language>
         <language tag="es-ES">es-ES/plg_schuweb_sitemap_kunena.ini</language>
