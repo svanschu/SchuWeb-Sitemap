@@ -164,7 +164,6 @@ class SchuWeb_SitemapHelper
             $className = 'schuweb_sitemap_' . substr($item->option,4);
             $obj = new $className;
             if (method_exists($obj, 'prepareMenuItem')) {
-                die();
                 $obj->prepareMenuItem($item,$extensions[substr($item->option,4)]->params);
             }
         }
