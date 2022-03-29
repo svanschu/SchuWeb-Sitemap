@@ -15,7 +15,7 @@
         <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
     </tstamp>
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
-    <property name="builddir" value="./../../packages/${extension_name}/J4" override="true"/>
+    <property name="builddir" value="./../../packages/${extension_name}" override="true"/>
     <!-- Declare Project src files -->
     <property name="src" value="./.." override="true"/>
     <property name="plugins" value="${src}/plugins"/>
