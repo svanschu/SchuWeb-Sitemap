@@ -171,7 +171,7 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 
 		if (version_compare(JVERSION, '4', 'ge'))
 		{
-			$unsupported = array('com_sobipro', 'com_virtuemart', 'com_kunena');
+			$unsupported = array('com_sobipro', 'com_virtuemart');
 			foreach ($unsupported as $componentName)
 			{
 				$db    = Factory::getDbo();
