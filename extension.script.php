@@ -46,7 +46,7 @@ class com_schuweb_sitemapInstallerScript extends \Joomla\CMS\Installer\Installer
      */
     public function preflight($type, $parent)
     {
-        parent::preflight();
+        parent::preflight($type, $parent);
 
         if (strcmp($type, "update") !== 0) return;
 
