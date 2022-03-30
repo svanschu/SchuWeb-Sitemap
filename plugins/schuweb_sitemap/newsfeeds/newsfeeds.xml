@@ -15,9 +15,9 @@
     </files>
     <scriptfile>script.php</scriptfile>
     <languages folder="language">
-        <language tag="en-GB">en-GB/plg_schuweb_sitemap_com_newsfeeds.ini</language>
-        <language tag="nl-NL">nl-NL/plg_schuweb_sitemap_com_newsfeeds.ini</language>
-        <language tag="ru-RU">ru-RU/plg_schuweb_sitemap_com_newsfeeds.ini</language>
+        <language tag="en-GB">en-GB/plg_schuweb_sitemap_newsfeeds.ini</language>
+        <language tag="nl-NL">nl-NL/plg_schuweb_sitemap_newsfeeds.ini</language>
+        <language tag="ru-RU">ru-RU/plg_schuweb_sitemap_newsfeeds.ini</language>
     </languages>
     <config>
         <fields name="params">
