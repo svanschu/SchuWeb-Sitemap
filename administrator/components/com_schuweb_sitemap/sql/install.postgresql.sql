@@ -10,7 +10,7 @@ CREATE TABLE "#__schuweb_sitemap" (
   "excluded_items" text DEFAULT NULL,
   "is_default" integer DEFAULT 0,
   "state" integer DEFAULT NULL,
-  "access" integer DEFAULT NULL,
+  "access" integer DEFAULT 0 NOT NULL,
   "created" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
   "count_xml" integer DEFAULT NULL,
   "count_html" integer DEFAULT NULL,

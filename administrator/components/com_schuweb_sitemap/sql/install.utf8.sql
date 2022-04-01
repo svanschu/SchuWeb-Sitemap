@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `#__schuweb_sitemap` (
   `excluded_items` text DEFAULT NULL,
   `is_default` int(1) DEFAULT 0,
   `state` int(2) DEFAULT NULL,
-  `access` int DEFAULT NULL,
+  `access` int unsigned DEFAULT 0 NOT NULL,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `count_xml` int(11) DEFAULT NULL,
   `count_html` int(11) DEFAULT NULL,

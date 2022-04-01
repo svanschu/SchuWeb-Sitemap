@@ -8,6 +8,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -15,7 +16,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class SchuWeb_SitemapTableSitemap extends JTable
+class SchuWeb_SitemapTableSitemap extends Table
 {
 
     /**
