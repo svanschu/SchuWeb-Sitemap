@@ -1,9 +1,7 @@
 # SchuWeb Sitemap
-This project continuous the great, simple and lightweight sitemap extension for Joomla! Xmap.
+SchuWeb Sitemap is the great, simple and lightweight sitemap extension for Joomla!.
 
 [Project website](https://extensions.schultschik.com/products/schuweb-sitemap)
-
-Many thanks to Vargas, the original creator of Xmap, who discontinued the development of the extension.
 
 ## Demo
 A small demo you can see at: [demo.schultschik.com](http://demo.schultschik.com/schuweb-sitemap)
@@ -18,8 +16,6 @@ You have trouble using the extension? Write an issue here at github or see the [
 Big thank you to all who helped with this extension. Especially to those listed below for such a great testing and reporting.
 - [sshcli](https://github.com/sshcli)
 - [Jelle Kok](https://github.com/810)
-
-Thank you to [Guillermo Vargas](https://github.com/guilleva) too, who originally developed the XMap component, which development is discontinued.
 
 ## Donation
 Want to support the project? 

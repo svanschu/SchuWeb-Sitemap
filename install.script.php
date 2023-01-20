@@ -8,24 +8,35 @@
  * @license          GNU General Public License version 3 or later
  */
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die('Restricted access');
 
 /**
  *
- * @package     Joomla.Administrator
- * @subpackage  com_helloworld
- *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  *              reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
- * @since       __DEPLOY_VERSION__
+ * @since
  */
-class pkg_schuweb_sitemapInstallerScript
+class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 {
+
+    /**
+     * Extension script constructor.
+     *
+     * @since   4.0.0
+     */
+    public function __construct()
+    {
+        // Define the minumum versions to be supported.
+        $this->minimumJoomla = '4.0';
+        $this->minimumPhp = '7.4';
+    }
 
 	/**
 	 * Runs right after any installation action is performed on the component.
@@ -61,7 +72,7 @@ class pkg_schuweb_sitemapInstallerScript
 
 		$extensions = SchuWeb_SitemapHelper::getExtensionsList();
 
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Activate the fitting plugins
 		foreach ($extensions as $extension)
@@ -86,7 +97,7 @@ class pkg_schuweb_sitemapInstallerScript
 
 			if (!$db->execute())
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('SCHUWEB_SITEMAP_ACTIVATE_PLUGIN_FAILED'), 'error');
+				Factory::getApplication()->enqueueMessage(JText::_('SCHUWEB_SITEMAP_ACTIVATE_PLUGIN_FAILED'), 'error');
 			}
 		}
 
@@ -161,10 +172,10 @@ class pkg_schuweb_sitemapInstallerScript
 
 		if (version_compare(JVERSION, '4', 'ge'))
 		{
-			$unsupported = array('com_sobipro', 'com_virtuemart', 'com_kunena');
+			$unsupported = array('com_sobipro', 'com_virtuemart');
 			foreach ($unsupported as $componentName)
 			{
-				$db    = JFactory::getDbo();
+				$db    = Factory::getDbo();
 				$query = $db->getQuery(true);
 
 				$query->select('*')

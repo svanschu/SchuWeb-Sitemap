@@ -2,11 +2,13 @@
 
 /**
  * @version             sw.build.version
- * @copyright           Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license             GNU General Public License version 2 or later; see LICENSE.txt
- * @author              Guillermo Vargas (guille@vargas.co.cr)
+ * @author              Sven Schultschik (extensions@schultschik.de)
  */
-// No direct access
+
+use Joomla\CMS\User\User;
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.view');
@@ -26,14 +28,16 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
 
     protected $_obLevel;
 
+    protected bool $isImages;
+
     function display($tpl = null)
     {
         // Initialise variables.
         $app = JFactory::getApplication();
-        $this->user = JFactory::getUser();
+        $this->user = $app->getIdentity();
         $jinput = $app->input;
-        $isNewsSitemap = $jinput->getInt('news',0);
-        $this->isImages = $jinput->getInt('images',0);
+        $isNewsSitemap = $jinput->getInt('news',0) != 0;
+        $this->isImages = $jinput->getInt('images',0) != 0;
 
         $model = $this->getModel('Sitemap');
         $this->setModel($model);
@@ -49,7 +53,7 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
 
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
-        $this->canEdit = JFactory::getUser()->authorise('core.admin', 'com_schuweb_sitemap');
+        $this->canEdit = $this->user->authorise('core.admin', 'com_schuweb_sitemap');
 
         // For now, news sitemaps are not editable
         $this->canEdit = $this->canEdit && !$isNewsSitemap;
@@ -109,7 +113,6 @@ class SchuWeb_SitemapViewXml extends JViewLegacy
 
         // Create a shortcut to the paramemters.
         $params = &$this->state->params;
-        $offset = $this->state->get('page.offset');
 
         if (!$this->item->params->get('access-view')) {
             if ($this->user->get('guest')) {

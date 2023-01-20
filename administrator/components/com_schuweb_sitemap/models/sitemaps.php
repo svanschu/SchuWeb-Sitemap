@@ -1,11 +1,14 @@
 <?php
 /**
  * @version       sw.build.version
- * @copyright     Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright     Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Guillermo Vargas (guille@vargas.co.cr)
+ * @author        Sven Schultschik (extensions@schultschik.de)
  */
+
 // no direct access
+use Joomla\Database\ParameterType;
+
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
@@ -14,7 +17,7 @@ jimport('joomla.database.query');
 /**
  * Sitemaps Model Class
  *
- * @package         Xmap
+ * @package         SchuWeb_Sitemap
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
@@ -23,9 +26,10 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
     /**
      * Constructor.
      *
-     * @param    array    An optional associative array of configuration settings.
-     * @see      JController
-     * @since    1.6
+     * @param   array    An optional associative array of configuration settings.
+     * @throws  Exception
+     * @since   1.6
+     * @see     JController
      */
     public function __construct($config = array())
     {
@@ -62,16 +66,16 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
     {
         // Adjust the context to support modal layouts.
         if ($layout = JFactory::$application->input->getVar('layout')) {
-            $this->context .= '.'.$layout;
+            $this->context .= '.' . $layout;
         }
 
-        $access = $this->getUserStateFromRequest($this->context.'.filter.access', 'filter_access', 0, 'int');
+        $access = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', 0, 'int');
         $this->setState('filter.access', $access);
 
-        $published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
+        $published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
         $this->setState('filter.published', $published);
 
-        $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
 
         // List state information.
@@ -85,36 +89,40 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param   string      $id A prefix for the store id.
+     * @param string $id A prefix for the store id.
      *
      * @return  string      A store id.
+     *
+     * @since
      */
     protected function getStoreId($id = '')
     {
         // Compile the store id.
-        $id .= ':'.$this->getState('filter.search');
-        $id .= ':'.$this->getState('filter.access');
-        $id .= ':'.$this->getState('filter.published');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.access');
+        $id .= ':' . $this->getState('filter.published');
 
         return parent::getStoreId($id);
     }
 
     /**
-     * @param       boolean True to join selected foreign information
+     * @param boolean True to join selected foreign information
      *
      * @return      string
+     *
+     * @since
      */
     protected function getListQuery($resolveFKs = true)
     {
-        $db     = $this->getDbo();
+        $db = $this->getDbo();
         // Create a new query object.
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
         $query->select(
-                $this->getState(
-                          'list.select',
-                          'a.*')
+            $this->getState(
+                'list.select',
+                'a.*')
         );
         $query->from('#__schuweb_sitemap AS a');
 
@@ -124,13 +132,13 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
 
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
-            $query->where('a.access = ' . (int) $access);
+            $query->where('a.access = ' . (int)$access);
         }
 
         // Filter by published state
         $published = $this->getState('filter.published');
         if (is_numeric($published)) {
-            $query->where('a.state = ' . (int) $published);
+            $query->where('a.state = ' . (int)$published);
         } else if ($published === '') {
             $query->where('(a.state = 0 OR a.state = 1)');
         }
@@ -139,42 +147,101 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             if (stripos($search, 'id:') === 0) {
-                $query->where('a.id = '.(int) substr($search, 3));
-            }
-            else {
-                $search = $db->Quote('%'.$db->escape($search, true).'%');
-                $query->where('(a.title LIKE '.$search.' OR a.alias LIKE '.$search.')');
+                $query->where('a.id = ' . (int)substr($search, 3));
+            } else {
+                $search = $db->Quote('%' . $db->escape($search, true) . '%');
+                $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
             }
         }
 
         // Add the list ordering clause.
         $query->order($db->escape($this->state->get('list.ordering', 'a.title')) . ' ' . $db->escape($this->state->get('list.direction', 'ASC')));
-        //echo nl2br(str_replace('#__','jos_',$query));
+
         return $query;
     }
 
-    public function getExtensionsMessage()
+    /**
+     * Detect which plugins are installed, but disabled for full sitemap
+     *
+     * @return string
+     *
+     * @since
+     */
+    public function getExtensionsMessage(): string
     {
-        $db    = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select('e.*');
-        $query->from($db->quoteName('#__extensions'). 'AS e');
-        $query->join('INNER', '#__extensions AS p ON e.element=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'');
-        $query->where('e.type=\'component\' and e.enabled=1');
+        $db = $this->getDbo();
+        $query = $db->getQuery(true)
+            ->select('e.*')
+            ->from($db->quoteName('#__extensions') . 'AS e')
+            ->join('INNER', '#__extensions AS p ON SUBSTRING(e.element,5)=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
+            ->where($db->quoteName('e.type') . '=' . $db->quote('component'))
+            ->where($db->quoteName('e.enabled') . '=1')
+            ->where($db->quoteName('p.state') . '=0');
 
         $db->setQuery($query);
         $extensions = $db->loadObjectList();
-        if ( count($extensions) ) {
+        if (count($extensions)) {
             $sep = $extensionsNameList = '';
             foreach ($extensions as $extension) {
                 $extensionsNameList .= "$sep$extension->element";
                 $sep = ', ';
             }
 
-            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED',$extensionsNameList);
+            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED', $extensionsNameList);
         } else {
             return "";
         }
     }
 
+    /**
+     * Detect which plugins are missing for full sitemap
+     *
+     * @return string
+     *
+     * @since 4.0
+     */
+    public function getNotInstalledMessage(): string
+    {
+        $db = $this->getDbo();
+
+        $supportedExtensions = array('com_zoo', 'com_weblinks', 'com_kunena');
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('e.extension_id') . ',' . $db->quoteName('e.element'))
+            ->from($db->quoteName('#__extensions') . 'AS e')
+            ->whereIn($db->quoteName('e.element'), $supportedExtensions, ParameterType::STRING);
+
+        $db->setQuery($query);
+        $extensions = $db->loadObjectList();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('element'))
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('type') . '=' . $db->quote('plugin'))
+            ->where($db->quoteName('folder') . '=' . $db->quote('schuweb_sitemap'))
+            ->where($db->quoteName('state') . '=0');
+        $db->setQuery($query);
+        $plugins = $db->loadAssocList();
+
+        $pluginList = array();
+        foreach ($plugins as $plugin) {
+            $pluginList[] = $plugin['element'];
+        }
+
+        if (count($extensions)) {
+            $sep = $extensionsNameList = '';
+            foreach ($extensions as $extension) {
+                if (!in_array(substr($extension->element, 4), $pluginList)) {
+                    $extensionsNameList .= "$sep$extension->element";
+                    $sep = ', ';
+                }
+            }
+        }
+
+        if (!empty($extensionsNameList)) {
+            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_NOT_INSTALLED', $extensionsNameList);
+        } else {
+            return "";
+        }
+    }
 }

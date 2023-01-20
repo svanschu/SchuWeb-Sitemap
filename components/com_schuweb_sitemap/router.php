@@ -1,9 +1,9 @@
 <?php
 /**
  * @version        sw.build.version
- * @copyright   Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Guillermo Vargas (guille@vargas.co.cr)
+ * @author        Sven Schultschik (extensions@schultschik.de)
  */
 defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
@@ -46,8 +46,8 @@ class SchuWeb_SitemapRoute
         {
             self::$lookup = array();
 
-            $component    = &JComponentHelper::getComponent('com_schuweb_sitemap');
-            $menus        = &JMenu::getInstance('site', array());
+            $component    = JComponentHelper::getComponent('com_schuweb_sitemap');
+            $menus        = JMenu::getInstance('site', array());
             $items        = $menus->getItems('component_id', $component->id);
 
             foreach ($items as &$item)
@@ -64,8 +64,6 @@ class SchuWeb_SitemapRoute
                 }
             }
         }
-
-        $match = null;
 
         foreach ($needles as $view => $id)
         {
@@ -102,7 +100,6 @@ function SchuWeb_SitemapBuildRoute(&$query)
     else {
         $menuItem = $menu->getItem($query['Itemid']);
     }
-    $mView    = (empty($menuItem->query['view'])) ? null : $menuItem->query['view'];
     $mId      = (empty($menuItem->query['id'])) ? null : $menuItem->query['id'];
 
     if ( !empty($query['Itemid']) ) {

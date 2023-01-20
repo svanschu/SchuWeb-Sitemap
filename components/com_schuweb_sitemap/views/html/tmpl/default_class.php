@@ -1,9 +1,9 @@
 <?php
 /**
 * @version       sw.build.version
-* @copyright     Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+* @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
 * @license       GNU General Public License version 2 or later; see LICENSE.txt
-* @author        Guillermo Vargas (guille@vargas.co.cr)
+* @author        Sven Schultschik (extensions@schultschik.de)
 */
 
 // No direct access
@@ -21,14 +21,23 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
     var $_width;
     var $live_site = 0;
 
+    /**
+     * @var array
+     * @since 4.0
+     */
+    private array $_parent_children;
+    /**
+     * @var array
+     * @since 4.0
+     */
+    private array $_last_child;
+
     function __construct ($config, $sitemap) {
         $this->view = 'html';
         parent::__construct($config, $sitemap);
         $this->_parent_children=array();
         $this->_last_child=array();
         $this->live_site = substr_replace(JURI::root(), "", -1, 1);
-
-        $user = JFactory::getUser();
     }
 
     function setJView($view)
@@ -38,7 +47,7 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
         $columns = $this->sitemap->params->get('columns',0);
         if( $columns > 1 ) { // calculate column widths
             $total = count($view->items);
-            $columns = $total < $columns? $total : $columns;
+            $columns = min($total, $columns);
             $this->_width    = (100 / $columns) - 1;
             $this->sitemap->params->set('columns',$columns);
         }
@@ -55,6 +64,7 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
     {
 
         $out = '';
+        $link = '';
 
         if ($this->isExcluded($node->id,$node->uid) && !$this->canEdit) {
             return FALSE;
@@ -111,23 +121,7 @@ class SchuWeb_SitemapHtmlDisplayer extends SchuWeb_SitemapDisplayer {
         $this->_closeItem = "</li>\n";
         $this->_childs[$this->level]++;
         echo $out;
-	    if (version_compare(JVERSION, '4', 'lt'))
-	    {
-		    if ($this->canEdit)
-		    {
-			    if ($this->isExcluded($node->id, $node->uid))
-			    {
-				    $img   = '<img src="' . $this->live_site . '/components/com_schuweb_sitemap/assets/images/unpublished.png" alt="v" title="' . JText::_('JUNPUBLISHED') . '">';
-				    $class = 'xmapexclon';
-			    }
-			    else
-			    {
-				    $img   = '<img src="' . $this->live_site . '/components/com_schuweb_sitemap/assets/images/tick.png" alt="x" title="' . JText::_('JPUBLISHED') . '" />';
-				    $class = 'xmapexcloff';
-			    }
-			    echo ' <a href= "#" class="xmapexcl ' . $class . '" rel="{uid:\'' . $node->uid . '\',itemid:' . $node->id . '}">' . $img . '</a>';
-		    }
-	    }
+
         $this->count++;
 
         $this->_last_child[$this->level] = $node->uid;

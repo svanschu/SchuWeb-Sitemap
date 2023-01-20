@@ -2,9 +2,9 @@
 
 /**
  * @version          sw.build.version
- * @copyright        Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
- * @author           Guillermo Vargas (guille@vargas.co.cr)
+ * @author           Sven Schultschik (extensions@schultschik.de)
  */
 // No direct access
 defined( '_JEXEC' ) or die();
@@ -27,15 +27,14 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
     {
         // Initialise variables.
         $this->app = JFactory::getApplication();
-        $jinput = $this->app->input;
-        $this->user = JFactory::getUser();
+        $this->user = $this->app->getIdentity();
 
         // Get model data.
         $this->state = $this->get('State');
         $this->item = $this->get('Item');
         $this->items = $this->get('Items');
 
-        $this->canEdit = JFactory::getUser()->authorise('core.admin', 'com_schuweb_sitemap');
+        $this->canEdit = $this->user->authorise('core.admin', 'com_schuweb_sitemap');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -51,7 +50,6 @@ class SchuWeb_SitemapViewHtml extends JViewLegacy
 
         // Create a shortcut to the paramemters.
         $params = &$this->state->params;
-        $offset = $this->state->get('page.offset');
 
         // If a guest user, they may be able to log in to view the full article
         // TODO: Does this satisfy the show not auth setting?

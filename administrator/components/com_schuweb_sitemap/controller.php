@@ -1,9 +1,9 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Guillermo Vargas (guille@vargas.co.cr)
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 // no direct access
 defined('_JEXEC') or die;
@@ -31,10 +31,11 @@ class SchuWeb_SitemapController extends JControllerLegacy
     {
         require_once JPATH_COMPONENT . '/helpers/schuweb_sitemap.php';
 
+        $app    = JFactory::getApplication();
         // Get the document object.
-        $document = JFactory::getDocument();
+        $document = $app->getDocument();
 
-        $jinput = JFactory::$application->input;
+        $jinput = $app->input;
 
         // Set the default view name and format from the Request.
         $vName = $jinput->getWord('view', 'sitemaps');

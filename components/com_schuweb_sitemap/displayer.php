@@ -1,9 +1,9 @@
 <?php
 /**
 * @version        sw.build.version
-* @copyright        Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+* @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
 * @license        GNU General Public License version 2 or later; see LICENSE.txt
-* @author        Guillermo Vargas (guille@vargas.co.cr)
+* @author        Sven Schultschik (extensions@schultschik.de)
 */
 
 use Joomla\CMS\Application\SiteApplication;
@@ -40,24 +40,36 @@ class SchuWeb_SitemapDisplayer {
 
     public $canEdit;
 
+    /**
+     * @var bool Indicates if this is a google news sitemap or not
+     *
+     * @since
+     */
+    public bool $isNews = false;
+
+    /**
+     *
+     * @var bool Indicates if this is a google image sitemap or not
+     *
+     * @since
+     */
+    var bool $isImages = false;
+
     function __construct($config,$sitemap)
     {
         jimport('joomla.utilities.date');
         jimport('joomla.user.helper');
-        $user = JFactory::getUser();
-        $groups = array_keys(JUserHelper::getUserGroups($user->get('id')));
+        $user = JFactory::getApplication()->getIdentity();
         $date = new JDate();
 
         $this->userLevels    = (array)$user->getAuthorisedViewLevels();
-        // Deprecated: should use userLevels from now on
-        // $this->gid = $user->gid;
-        $this->now    = $date->toUnix();
-        $this->config    = $config;
-        $this->sitemap    = $sitemap;
-        $this->isNews   = false;
-        $this->isImages    = false;
-        $this->count    = 0;
-        $this->canEdit  = false;
+        $this->now = $date->toUnix();
+        $this->config = $config;
+        $this->sitemap = $sitemap;
+        $this->isNews = false;
+        $this->isImages = false;
+        $this->count = 0;
+        $this->canEdit = false;
     }
 
     public function printNode( &$node ) {
@@ -82,7 +94,7 @@ class SchuWeb_SitemapDisplayer {
              * @todo allow the user to provide the module used to display that menu, or some other
              * workaround
              */
-            $node->name = $this->getMenuTitle($menutype,'mod_menu'); // Get the name of this menu
+            $node->name = $this->getMenuTitle($menutype); // Get the name of this menu
 
             $this->startMenu($node);
             $this->printMenuTree($node, $items);
@@ -113,7 +125,7 @@ class SchuWeb_SitemapDisplayer {
 		// Filter by language
 		if ($app->getLanguageFilter())
 		{
-			$query->where($db->quoteName('language') . ' IN (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+			$query->where($db->quoteName('language') . ' IN (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 		}
 		$query->setLimit('1');
 
@@ -153,9 +165,8 @@ class SchuWeb_SitemapDisplayer {
     protected function printMenuTree($menu,&$items)
     {
         $this->changeLevel(1);
-        $router = SiteApplication::getRouter();
 
-        foreach ( $items as $i => $item ) {                   // Add each menu entry to the root tree.
+        foreach ($items as $item ) {                   // Add each menu entry to the root tree.
             $excludeExternal = false;
 
             $node = new stdclass;
@@ -222,7 +233,12 @@ class SchuWeb_SitemapDisplayer {
                          $node->uid = $node->option;
                         $className = 'SchuWeb_Sitemap_'.$node->option;
                         call_user_func_array(array($className, 'getTree'),array(&$this,&$node,&$this->jview->extensions[$node->option]->params));
+                    } elseif ( !empty($this->jview->extensions[substr($node->option,4)]) ) {
+                        $node->uid = substr($node->option,4);
+                        $className = 'SchuWeb_Sitemap_'.substr($node->option,4);
+                        call_user_func_array(array($className, 'getTree'),array(&$this,&$node,&$this->jview->extensions[substr($node->option,4)]->params));
                     }
+
                 }
             }
         }

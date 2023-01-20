@@ -2,14 +2,13 @@
 
 /**
  * @version       sw.build.version
- * @copyright     Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Guillermo Vargas (guille@vargas.co.cr)
+ * @author        Sven Schultschik (extensions@schultschik.de)
  */
+
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport('joomla.database.query');
 
 /**
  * SchuWeb_Sitemap Component Sitemap Model
@@ -21,7 +20,7 @@ jimport('joomla.database.query');
 class SchuWeb_SitemapHelper
 {
 
-    public static function &getMenuItems($selections)
+    public static function getMenuItems($selections)
     {
         $db = JFactory::getDbo();
         $app = JFactory::getApplication();
@@ -66,7 +65,7 @@ class SchuWeb_SitemapHelper
             }
 
             // Set some values to make nested HTML rendering easier.
-            foreach ($tmpList as $id => $item) {
+            foreach ($tmpList as $item) {
                 $item->items = array();
 
                 $params = new JRegistry($item->params);
@@ -161,6 +160,12 @@ class SchuWeb_SitemapHelper
             if (method_exists($obj, 'prepareMenuItem')) {
                 $obj->prepareMenuItem($item,$extensions[$item->option]->params);
             }
+        } elseif (!empty($extensions[substr($item->option,4)])){
+            $className = 'schuweb_sitemap_' . substr($item->option,4);
+            $obj = new $className;
+            if (method_exists($obj, 'prepareMenuItem')) {
+                $obj->prepareMenuItem($item,$extensions[substr($item->option,4)]->params);
+            }
         }
     }
 
@@ -169,11 +174,12 @@ class SchuWeb_SitemapHelper
     {
         if (!isset($urlBase)) {
             $urlBase = JURI::base();
-            $urlBaseLen = strlen($urlBase);
         }
 
+        $urlBaseLen = strlen($urlBase);
+
         $images = null;
-        $matches = $matches1 = $matches2 = array();
+        $matches1 = $matches2 = array();
         // Look <img> tags
         preg_match_all('/<img[^>]*?(?:(?:[^>]*src="(?P<src>[^"]+)")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches1, PREG_SET_ORDER);
         // Loog for <a> tags with href to images

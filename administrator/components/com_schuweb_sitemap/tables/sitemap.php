@@ -1,13 +1,14 @@
 <?php
 /**
  * @version       sw.build.version
- * @copyright     Copyright (C) 2019 SchuWeb Extensions, Sven Schultschik
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  * @author        Sven Schultschik
  */
 // no direct access
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -15,7 +16,7 @@ use Joomla\Utilities\ArrayHelper;
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class SchuWeb_SitemapTableSitemap extends JTable
+class SchuWeb_SitemapTableSitemap extends Table
 {
 
     /**
@@ -69,7 +70,7 @@ class SchuWeb_SitemapTableSitemap extends JTable
     /**
      * @var int
      */
-    var $access = 0;
+    var int $access = 0;
     /**
      * @var int
      */
@@ -215,7 +216,6 @@ class SchuWeb_SitemapTableSitemap extends JTable
 
         // Sanitize input.
         ArrayHelper::toInteger($pks);
-        $userId = (int)$userId;
         $state = (int)$state;
 
         // If there are no primary keys set check to see if the instance key is set.

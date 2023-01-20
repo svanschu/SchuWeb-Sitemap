@@ -1,7 +1,7 @@
 <?php
 /**
  * @version      sw.build.version
- * @copyright    Copyright (C) 2019 SchuWeb Extensions Sven Schultschik, All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license      GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -255,8 +255,7 @@ class SchuWeb_SitemapModelSitemap extends JModelAdmin
 
     function _orderConditions($table = null)
     {
-        $condition = array();
-        return $condition;
+        return array();
     }
 
     function setDefault($id)

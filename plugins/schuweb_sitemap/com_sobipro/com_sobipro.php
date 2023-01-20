@@ -1,7 +1,7 @@
 <?php
 /**
- * @author Guillermo Vargas guille@vargas.co.cr
- * @author Sven Schultschik extensions@schultschik.de
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
+ * @author Sven Schultschik (extensions@schultschik.de)
  * @package schuweb_sitemap
  * @license GNU/GPL
  * @authorSite extensions.schultschik.de
@@ -52,7 +52,7 @@ class schuweb_sitemap_com_sobipro
         $link_query = parse_url($parent->link);
         parse_str(html_entity_decode($link_query['query']), $link_vars);
         $sid = ArrayHelper::getValue($link_vars, 'sid', 1);
-        $task = ArrayHelper::getValue($link_vars, 'task', null);
+        $task = ArrayHelper::getValue($link_vars, 'task');
 
         if (in_array($task, array('search', 'entry.add'))) {
             return;
@@ -129,11 +129,11 @@ class schuweb_sitemap_com_sobipro
     }
 
     /** SobiPro support */
-    static function getCategoryTree($xmap, $parent, $sid, &$params)
+    static function getCategoryTree($sitemap, $parent, $sid, &$params)
     {
         $database = JFactory::getDBO();
 
-        $lang = JFactory::getLanguage();
+        $lang = JFactory::getApplication()->getLanguage();
 
         $query =
             "SELECT a.id,a.nid, a.name, b.pid as pid, c.sValue as name "
@@ -154,7 +154,7 @@ class schuweb_sitemap_com_sobipro
         $rows = $database->loadObjectList();
 
         $modified = time();
-        $xmap->changeLevel(1);
+        $sitemap->changeLevel(1);
         foreach ($rows as $row) {
             $node = new stdclass;
             $node->id = $parent->id;
@@ -166,15 +166,15 @@ class schuweb_sitemap_com_sobipro
             $node->priority = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
 
-            $attribs = json_decode($xmap->sitemap->attribs);
+            $attribs = json_decode($sitemap->sitemap->attribs);
             $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
             $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
             $node->expandible = true;
             $node->secure = $parent->secure;
             $node->lastmod = $parent->lastmod;
-            if ($xmap->printNode($node) !== FALSE) {
-                self::getCategoryTree($xmap, $parent, $row->id, $params);
+            if ($sitemap->printNode($node) !== FALSE) {
+                self::getCategoryTree($sitemap, $parent, $row->id, $params);
             }
         }
 
@@ -203,11 +203,11 @@ class schuweb_sitemap_com_sobipro
                 $node->uid = 'com_sobiproe' . $row->id; // Unique ID
                 $node->browserNav = $parent->browserNav;
                 $node->name = html_entity_decode($row->name);
-                $node->modified = $row->modified ? $row->modified : $row->publish_up;
+                $node->modified = $row->modified ?: $row->publish_up;
                 $node->priority = $params['entry_priority'];
                 $node->changefreq = $params['entry_changefreq'];
 
-                $attribs = json_decode($xmap->sitemap->attribs);
+                $attribs = json_decode($sitemap->sitemap->attribs);
                 $node->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
                 $node->xmlInsertPriority = $attribs->xmlInsertPriority;
 
@@ -215,11 +215,11 @@ class schuweb_sitemap_com_sobipro
                 $node->secure = $parent->secure;
                 $node->link = SPJoomlaMainFrame::url(array('sid' => $row->id, 'pid' => $row->catid, 'title' => $row->name), false, false);
                 $node->lastmod = $parent->lastmod;
-                $xmap->printNode($node);
+                $sitemap->printNode($node);
             }
 
         }
-        $xmap->changeLevel(-1);
+        $sitemap->changeLevel(-1);
     }
 
     static protected function getSectionConfig($sectionId)
@@ -236,7 +236,7 @@ class schuweb_sitemap_com_sobipro
         }
         define('SOBI_TESTS', false);
         $ver = new JVersion();
-        $ver = str_replace('.', null, $ver->RELEASE);
+        $ver = str_replace('.', null, $ver->getHelpVersion());
         // added by Pierre Burri-Wittke globeall.de
         if ($ver > '15') {
             $ver = '16';
@@ -244,7 +244,7 @@ class schuweb_sitemap_com_sobipro
         define('SOBI_CMS', 'joomla' . $ver);
         define('SOBIPRO', true);
         define('SOBI_TASK', 'task');
-        define('SOBI_DEFLANG', JFactory::getLanguage()->getDefault());
+        define('SOBI_DEFLANG', JFactory::getApplication()->getDefault());
         define('SOBI_ACL', 'front');
         define('SOBI_ROOT', JPATH_ROOT);
         define('SOBI_MEDIA', implode('/', array(JPATH_ROOT, 'media', 'sobipro')));

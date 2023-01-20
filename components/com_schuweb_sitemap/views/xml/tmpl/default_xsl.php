@@ -1,9 +1,9 @@
 <?php
 /**
  * @version             sw.build.version
- * @copyright           Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license             GNU General Public License version 2 or later; see LICENSE.txt
- * @author              Guillermo Vargas (guille@vargas.co.cr)
+ * @author              Sven Schultschik (extensions@schultschik.de)
  */
 
 // no direct access
@@ -157,7 +157,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>',"\n";
         padding:2px;
         float: left;
     }
-<?php $doc = JFactory::getDocument(); if ($doc->direction == 'rtl') { ?>
+<?php $doc = JFactory::getApplication()->getDocument(); if ($doc->direction == 'rtl') { ?>
     body {
         font-family: Tahoma;
     }

@@ -2,9 +2,9 @@
 
 /**
  * @version       sw.build.version
- * @copyright     Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Guillermo Vargas (guille@vargas.co.cr)
+ * @author        Sven Schultschik (extensions@schultschik.de)
  */
 // No direct access
 defined('_JEXEC') or die;
@@ -79,8 +79,9 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
     public function &getItem($pk = null)
     {
         // Initialize variables.
-        $db = $this->getDbo();
-        $pk = (!empty($pk)) ? $pk : (int)$this->getState('sitemap.id');
+        $db     = $this->getDbo();
+        $app    = JFactory::getApplication();
+        $pk     = (!empty($pk)) ? $pk : (int)$this->getState('sitemap.id');
 
         if ($this->_item === null) {
             $this->_item = array();
@@ -103,7 +104,7 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
 
                 // Filter by access level.
                 if ($access = $this->getState('filter.access')) {
-                    $user = JFactory::getUser();
+                    $user = JFactory::getApplication()->getIdentity();
                     $groups = implode(',', $user->getAuthorisedViewLevels());
                     $query->where('a.access IN (' . $groups . ')');
                 }
@@ -153,7 +154,7 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
                     $data->params->set('access-view', true);
                 } else {
                     // If no access filter is set, the layout takes some responsibility for display of limited information.
-                    $user = JFactory::getUser();
+                    $user = $app->getIdentity();
                     $groups = $user->authorisedLevels();
 
                     $data->params->set('access-view', in_array($data->access, $groups));
@@ -162,7 +163,7 @@ class SchuWeb_SitemapModelSitemap extends JModelItem
 
                 $this->_item[$pk] = $data;
             } catch (Exception $e) {
-                JFactory::getApplication()->enqueueMessage(JText::_($e->getMessage()), 'error');
+                $app->enqueueMessage(JText::_($e->getMessage()), 'error');
 
                 $this->_item[$pk] = false;
             }

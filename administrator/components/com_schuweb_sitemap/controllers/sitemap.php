@@ -1,9 +1,9 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Guillermo Vargas (guille@vargas.co.cr)
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 
 // No direct access
@@ -32,6 +32,6 @@ class SchuWeb_SitemapControllerSitemap extends JControllerForm
         $recordId = (int) isset($data[$key]) ? $data[$key] : 0;
 
         // Assets are being tracked, so no need to look into the category.
-        return JFactory::getUser()->authorise('core.edit', 'com_schuweb_sitemap.sitemap.'.$recordId);
+        return JFactory::getApplication()->getIdentity()->authorise('core.edit', 'com_schuweb_sitemap.sitemap.'.$recordId);
     }
 }

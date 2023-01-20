@@ -2,9 +2,9 @@
 
 /**
  * @version        sw.build.version
- * @copyright      Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
- * @author         Guillermo Vargas (guille@vargas.co.cr)
+ * @author         Sven Schultschik (extensions@schultschik.de)
  */
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
@@ -34,20 +34,20 @@ class SchuWeb_SitemapController extends JControllerLegacy
     {
         $cachable = true;
 
-        $input = JFactory::getApplication()->input;
+        $app    = JFactory::getApplication();
+        $input  = $app->input;
 
-        $id         = $input->get('id', null, 'INT');
         $viewName   = $input->get('view');
         $viewLayout = $input->get('layout', 'default');
 
-        $user = JFactory::getUser();
+        $user = $app->getIdentity();
 
         if ($user->get('id') || !in_array($viewName, array('html', 'xml')) || $viewLayout == 'xsl') {
             $cachable = false;
         }
 
         if ($viewName) {
-            $document = JFactory::getDocument();
+            $document = $app->getDocument();
             $viewType = $document->getType();
 
             $view = $this->getView($viewName, $viewType, '', array('base_path' => $this->basePath, 'layout' => $viewLayout));

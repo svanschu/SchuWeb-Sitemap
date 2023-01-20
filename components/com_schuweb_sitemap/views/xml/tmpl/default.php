@@ -1,9 +1,9 @@
 <?php
 /**
  * @version             sw.build.version
- * @copyright			Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license             GNU General Public License version 2 or later; see LICENSE.txt
- * @author              Guillermo Vargas (guille@vargas.co.cr)
+ * @author              Sven Schultschik (extensions@schultschik.de)
  */
 
 // no direct access
@@ -27,7 +27,7 @@ if ($params->get('cacheControl', 1) == 1) {
         $cacheControl .= 'max-age=' . $this->changeFreq;
     } else {
         if (($maxAge = intval($params->get('cacheControlMaxAge', 0))) > 0) {
-            $cacheControl .= 'max-age=' . strval($maxAge);
+            $cacheControl .= 'max-age=' . $maxAge;
         }
     }
     header('Cache-Control: ' . $cacheControl);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension method="upgrade" version="3.6" type="component">
+<extension method="upgrade" type="component">
     <name>com_schuweb_sitemap</name>
     <creationDate>sw.build.date</creationDate>
-    <author>Sven Schultschik | Guillermo Vargas</author>
+    <author>Sven Schultschik</author>
     <copyright>This component is released under the GNU/GPL License</copyright>
     <authorEmail>sven@schultschik.de</authorEmail>
     <authorUrl>www.schultschik.de</authorUrl>
@@ -11,14 +11,19 @@
     <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
     <install folder="admin">
         <sql>
-            <file driver="mysql" charset="utf8">install/install.utf8.sql</file>
-            <file driver="postgresql" charset="utf8">install/install.postgresql.sql</file>
+            <file driver="mysql" charset="utf8">sql/install.utf8.sql</file>
+            <file driver="postgresql" charset="utf8">sql/install.postgresql.sql</file>
         </sql>
     </install>
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
     <uninstall>
         <sql>
-            <file driver="mysql" charset="utf8">install/uninstall.utf8.sql</file>
-            <file driver="postgresql" charset="utf8">install/uninstall.postgresql.sql</file>
+            <file driver="mysql" charset="utf8">sql/uninstall.utf8.sql</file>
+            <file driver="postgresql" charset="utf8">sql/uninstall.postgresql.sql</file>
         </sql>
     </uninstall>
     <scriptfile>extension.script.php</scriptfile>
@@ -36,12 +41,12 @@
         <folder>views</folder>
     </files>
     <languages folder="front/language">
-        <language tag="en-GB">en-GB.com_schuweb_sitemap.ini</language>
-        <language tag="es-ES">es-ES.com_schuweb_sitemap.ini</language>
-        <language tag="fa-IR">fa-IR.com_schuweb_sitemap.ini</language>
-        <language tag="cs-CZ">cs-CZ.com_schuweb_sitemap.ini</language>
-        <language tag="nl-NL">nl-NL.com_schuweb_sitemap.ini</language>
-        <language tag="ru-RU">ru-RU.com_schuweb_sitemap.ini</language>
+        <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
+        <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
+        <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+        <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
+        <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
+        <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
     </languages>
     <images folder="admin">
         <folder>images</folder>
@@ -57,24 +62,24 @@
             <folder>forms</folder>
             <folder>helpers</folder>
             <folder>images</folder>
-            <folder>install</folder>
+            <folder>sql</folder>
             <folder>models</folder>
             <folder>tables</folder>
             <folder>views</folder>
         </files>
         <languages folder="admin/language">
-            <language tag="en-GB">en-GB/en-GB.com_schuweb_sitemap.ini</language>
-            <language tag="en-GB">en-GB/en-GB.com_schuweb_sitemap.sys.ini</language>
-            <language tag="es-ES">es-ES/es-ES.com_schuweb_sitemap.ini</language>
-            <language tag="es-ES">es-ES/es-ES.com_schuweb_sitemap.sys.ini</language>
-            <language tag="fa-IR">fa-IR/fa-IR.com_schuweb_sitemap.ini</language>
-            <language tag="fa-IR">fa-IR/fa-IR.com_schuweb_sitemap.sys.ini</language>
-            <language tag="cs-CZ">cs-CZ/cs-CZ.com_schuweb_sitemap.ini</language>
-            <language tag="cs-CZ">cs-CZ/cs-CZ.com_schuweb_sitemap.sys.ini</language>
-            <language tag="nl-NL">nl-NL/nl-NL.com_schuweb_sitemap.ini</language>
-            <language tag="nl-NL">nl-NL/nl-NL.com_schuweb_sitemap.sys.ini</language>
-            <language tag="ru-RU">ru-RU/ru-RU.com_schuweb_sitemap.ini</language>
-            <language tag="ru-RU">ru-RU/ru-RU.com_schuweb_sitemap.sys.ini</language>
+            <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
+            <language tag="en-GB">en-GB/com_schuweb_sitemap.sys.ini</language>
+            <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
+            <language tag="es-ES">es-ES/com_schuweb_sitemap.sys.ini</language>
+            <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+            <language tag="fa-IR">fa-IR/com_schuweb_sitemap.sys.ini</language>
+            <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
+            <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.sys.ini</language>
+            <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
+            <language tag="nl-NL">nl-NL/com_schuweb_sitemap.sys.ini</language>
+            <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
+            <language tag="ru-RU">ru-RU/com_schuweb_sitemap.sys.ini</language>
         </languages>
         <images folder="admin">
             <folder>images</folder>

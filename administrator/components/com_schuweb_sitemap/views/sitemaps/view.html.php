@@ -1,9 +1,9 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Guillermo Vargas (guille@vargas.co.cr)
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 
 // no direct access
@@ -27,18 +27,7 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
      */
     public function display($tpl = null)
     {
-	    if (version_compare(JVERSION, '4', 'lt'))
-	    {
-		    if ($this->getLayout() !== 'modal')
-		    {
-			    JHtmlSidebar::addEntry(JText::_('SCHUWEB_SITEMAP_Submenu_Sitemaps'), 'index.php?option=com_schuweb_sitemap', true);
-			    JHtmlSidebar::addEntry(JText::_('SCHUWEB_SITEMAP_Submenu_Extensions'), 'index.php?option=com_plugins&view=plugins&filter_folder=schuweb_sitemap');
-		    }
-	    }
-	    else
-	    {
-		    $this->filterForm = $this->get('FilterForm');
-	    }
+	    $this->filterForm = $this->get('FilterForm');
 
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
@@ -49,7 +38,12 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
             JFactory::getApplication()->enqueueMessage($message);
         }
 
-        // Check for errors.
+        $message = $this->get('NotInstalledMessage');
+        if ($message) {
+            JFactory::getApplication()->enqueueMessage($message);
+        }
+
+            // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             JFactory::$application->enqueueMessage(implode("\n", $errors), 'error');
             return false;
@@ -71,7 +65,6 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
     protected function addToolbar()
     {
         $state = $this->get('State');
-        $doc = JFactory::getDocument();
 
         JToolBarHelper::addNew('sitemap.add');
         JToolBarHelper::custom('sitemap.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);
@@ -84,9 +77,9 @@ class SchuWeb_SitemapViewSitemaps extends JViewLegacy
         JToolBarHelper::custom('sitemaps.setdefault', 'featured.png', 'featured_f2.png', 'SCHUWEB_SITEMAP_TOOLBAR_SET_DEFAULT', true);
 
         if ($state->get('filter.published') == -2) {
-            JToolBarHelper::deleteList('', 'sitemaps.delete', 'JTOOLBAR_DELETE');
+            JToolBarHelper::deleteList('', 'sitemaps.delete');
         } else {
-            JToolBarHelper::trash('sitemaps.trash', 'JTOOLBAR_TRASH');
+            JToolBarHelper::trash('sitemaps.trash');
         }
 
 

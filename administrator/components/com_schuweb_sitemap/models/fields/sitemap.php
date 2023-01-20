@@ -1,7 +1,7 @@
 <?php
 /**
  * @version       sw.build.version
- * @copyright     Copyright (C) 2021 Sven Schultschik. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  * @author        Sven Schultschik (sven@schultschik.de)
  */
@@ -67,22 +67,14 @@ class JFormFieldSitemap extends JFormFieldList
 
 		$link = JRoute::_('index.php?option=com_schuweb_sitemap&view=sitemaps&layout=modal&tmpl=component&function=jSelectSitemap_' . $this->id);
 
-		if (version_compare(JVERSION, '4', 'lt'))
-		{
-			$class     = 'class="input-medium"';
-			$classSpan = 'input-append';
-			$bsModal   = 'data-target="#sitemapTypeModal" data-toggle="modal"';
-		}
-		else
-		{
-			$class     = 'class="form-control valid form-control-success"';
-			$classSpan = 'input-group';
-			$bsModal   = 'data-bs-target="#sitemapTypeModal" data-bs-toggle="modal"';
-		}
+
+        $class     = 'class="form-control valid form-control-success"';
+        $classSpan = 'input-group';
+        $bsModal   = 'data-bs-target="#sitemapTypeModal" data-bs-toggle="modal"';
 
 		$html   = array();
 		$html[] = '<span class="' . $classSpan . '">';
-		$html[] = '<input type="text" required="required" readonly="readonly" size="40" id="' . $this->id . '_name" ' . $class . ' value="' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '" />';
+		$html[] = '<input type="text" required="required" readonly="readonly" size="40" id="' . $this->id . '_name" ' . $class . ' value="' . htmlspecialchars($title, ENT_QUOTES) . '" />';
 		$html[] = '<button type="button" class="btn btn-primary" ' . $bsModal . ' title="' . JText::_('COM_SCHUWEB_SITEMAP_CHANGE_SITEMAP') . '">'
 			. '<span class="icon-list icon-white" aria-hidden="true"></span> '
 			. JText::_('JSELECT') . '</button>';

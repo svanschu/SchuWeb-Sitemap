@@ -1,9 +1,9 @@
 <?php
 /**
  * @version         sw.build.version
- * @copyright       Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
- * @author          Guillermo Vargas (guille@vargas.co.cr)
+ * @author          Sven Schultschik (extensions@schultschik.de)
  */
 
 // no direct access
@@ -13,57 +13,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 
 // Create shortcut to parameters.
 $params = $this->item->params;
-if (version_compare(JVERSION, '4', 'lt'))
-{
-	if ($this->displayer->canEdit)
-	{
-		$live_site = JURI::root();
 
-		JHTML::_('behavior.framework', true);
-
-		$ajaxurl = "{$live_site}index.php?option=com_schuweb_sitemap&format=json&task=ajax.editElement&action=toggleElement&" . JSession::getFormToken() . '=1';
-
-		$css = '.xmapexcl img{ border:0px; }' . "\n";
-		$css .= '.xmapexcloff { text-decoration:line-through; }';
-		//$css .= "\n.".$this->item->classname .' li {float:left;}';
-
-		$js = "
-        window.addEvent('domready',function (){
-            $$('.xmapexcl').each(function(el){
-                el.onclick = function(){
-                    if (this && this.rel) {
-                        options = JSON.decode(this.rel);
-                        this.onComplete = checkExcludeResult
-                        var myAjax = new Request.JSON({
-                            url:'{$ajaxurl}',
-                            onSuccess: checkExcludeResult.bind(this)
-                        }).get({id:{$this->item->id},uid:options.uid,itemid:options.itemid});
-                    }
-                    return false;
-                };
-
-            });
-        });
-        checkExcludeResult = function (response) {
-            //this.set('class','xmapexcl xmapexcloff');
-            var imgs = this.getElementsByTagName('img');
-            if (response.result == 'OK') {
-                var state = response.state;
-                if (state==0) {
-                    imgs[0].src='{$live_site}/components/com_schuweb_sitemap/assets/images/unpublished.png';
-                } else {
-                    imgs[0].src='{$live_site}/components/com_schuweb_sitemap/assets/images/tick.png';
-                }
-            } else {
-                alert('The element couldn\\'t be published or upublished!');
-            }
-        }";
-
-		$doc = JFactory::getDocument();
-		$doc->addStyleDeclaration($css);
-		$doc->addScriptDeclaration($js);
-	}
-}
 ?>
 <div id="SchuWeb_Sitemap">
 <?php if ($params->get('show_page_heading', 1) && $params->get('page_heading') != '') : ?>

@@ -1,9 +1,9 @@
 <?php
 /**
  * @version         sw.build.version
- * @copyright        Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Guillermo Vargas (guille@vargas.co.cr)
+ * @author        Sven Schultschik (extensions@schultschik.de)
  */
 // No direct access
 defined('_JEXEC') or die('Restricted access');
@@ -17,12 +17,13 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
      *
      * @var array  Stores the list of links that have been already included in
      *             the sitemap to avoid duplicated items
+     * @since
      */
     var $_links;
 
     /**
-     *
      * @var string
+     * @since
      */
     var $view = 'xml';
 
@@ -31,22 +32,29 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
 
     /**
      *
-     * @var int Indicates if this is a google news sitemap or not
+     * @var bool Indicates if this is a google image sitemap or not
+     *
+     * @since
      */
-    var $isNews = 0;
+    var bool $isImages = false;
 
     /**
+     * @var mixed|string
      *
-     * @var int Indicates if this is a google news sitemap or not
+     * @since 4.0
      */
-    var $isImages = 0;
+    private mixed $defaultLanguage;
+    /**
+     * @var string
+     * @since 4.0
+     */
+    private string $nullDate;
 
     function __construct($config, $sitemap)
     {
         parent::__construct($config, $sitemap);
-        $this->uids = array();
 
-        $this->defaultLanguage = strtolower(JFactory::getLanguage()->getTag());
+        $this->defaultLanguage = strtolower(JFactory::getApplication()->getLanguage()->getTag());
         if (preg_match('/^([a-z]+)-.*/', $this->defaultLanguage, $matches) && !in_array($this->defaultLanguage, array(' zh-cn', ' zh-tw'))) {
             $this->defaultLanguage = $matches[1];
         }

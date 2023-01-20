@@ -1,9 +1,9 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Guillermo Vargas (guille@vargas.co.cr)
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 
 // no direct access
@@ -78,8 +78,6 @@ class SchuWeb_SitemapControllerSitemaps extends JControllerAdmin
      */
     public function getModel($name = 'Sitemap', $prefix = 'SchuWeb_SitemapModel', $config = array('ignore_request' => true))
     {
-        $model = parent::getModel($name, $prefix, $config);
-
-        return $model;
+        return parent::getModel($name, $prefix, $config);
     }
 }

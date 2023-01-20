@@ -1,9 +1,9 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2007 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Guillermo Vargas (guille@vargas.co.cr)
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 
 
@@ -24,7 +24,7 @@ class SchuWeb_SitemapHelper
 	 *
 	 * @return mixed
 	 *
-	 * @since __DEPLOY_VERSION__
+	 * @since
 	 */
 	public static function getExtensionsList()
 	{
@@ -33,13 +33,11 @@ class SchuWeb_SitemapHelper
 
 		$query->select('e.*')
 			->from($db->quoteName('#__extensions') . 'AS e')
-			->join('INNER', '#__extensions AS p ON e.element=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
+			->join('INNER', '#__extensions AS p ON SUBSTRING(e.element,5)=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
 			->where('e.type=\'component\' and e.enabled=1');
 
 		$db->setQuery($query);
-		$extensions = $db->loadObjectList();
-
-		return $extensions;
+        return $db->loadObjectList();
 	}
 
 }

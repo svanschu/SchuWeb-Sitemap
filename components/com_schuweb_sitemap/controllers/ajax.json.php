@@ -2,9 +2,9 @@
 
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2005 - 2009 Joomla! Vargas. All rights reserved.
+ * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Guillermo Vargas (guille@vargas.co.cr)
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 // No direct access
 defined('_JEXEC') or die;
@@ -27,8 +27,7 @@ class SchuWeb_SitemapControllerAjax extends JControllerLegacy
 
         jimport('joomla.utilities.date');
         jimport('joomla.user.helper');
-        $user = JFactory::getUser();
-        $groups = array_keys(JUserHelper::getUserGroups($user->get('id')));
+        $user = JFactory::getApplication()->getIdentity();
         $result = new JRegistry('_default');
         $jinput = JFactory::$application->input;
         $sitemapId = $jinput->getInt('id');
@@ -38,6 +37,7 @@ class SchuWeb_SitemapControllerAjax extends JControllerLegacy
             $result->setValue('message', 'You are not authorized to perform this action!');
         } else {
             $model = $this->getModel('sitemap');
+            $state = false;
             if ($model->getItem()) {
                 $action = $jinput->getCmd('action', '');
                 $uid = $jinput->getCmd('uid', '');

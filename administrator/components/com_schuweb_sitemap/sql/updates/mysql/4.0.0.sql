@@ -1,0 +1,1 @@
+ALTER TABLE `#__schuweb_sitemap` MODIFY `access` int unsigned DEFAULT 0 NOT NULL;
