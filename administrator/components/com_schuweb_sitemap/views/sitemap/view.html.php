@@ -22,7 +22,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
 
     protected $item;
     protected $list;
-    protected mixed $form;
+    protected $form;
     protected $state;
 
     /**
