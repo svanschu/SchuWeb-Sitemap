@@ -39,11 +39,11 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
     var bool $isImages = false;
 
     /**
-     * @var mixed|string
+     * @var string
      *
      * @since 4.0
      */
-    private mixed $defaultLanguage;
+    private $defaultLanguage;
     /**
      * @var string
      * @since 4.0
