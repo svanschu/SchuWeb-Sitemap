@@ -1,10 +1,14 @@
 <?php
 /**
- * @version          sw.build.version
- * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
- * @license          GNU General Public License version 2 or later; see LICENSE.txt
- * @author           Sven Schultschik (sven@schultschik.de)
+ * @package     Joomla.Administrator
+ * @subpackage  com_schuweb_sitemap
+ * 
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2023 Sven Schultschik. All rights reserved
+ * @license     GNU General Public License version 3; see LICENSE
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;

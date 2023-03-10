@@ -1,38 +1,62 @@
 <?php
 /**
- * @version             sw.build.version
- * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
- * @license             GNU General Public License version 2 or later; see LICENSE.txt
- * @author              Sven Schultschik (https://extensions.schultschik.com)
+ * @package     Joomla.Administrator
+ * @subpackage  com_schuweb_sitemap
+ * 
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2023 Sven Schultschik. All rights reserved
+ * @license     GNU General Public License version 3; see LICENSE
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
-// no direct access
-defined('_JEXEC') or die;
 
+namespace SchuWeb\Component\Sitemap\Administrator\View\Sitemap;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 
-jimport('joomla.application.component.view');
 
 /**
- * @package    SchuWeb Sitemap
- * @subpackage com_schuweb_sitemap
+ * View to edit a sitemap.
+ *
+ * @since  __BUMP_VERSION__
  */
-class SchuWeb_SitemapViewSitemap extends JViewLegacy
+class HtmlView extends BaseHtmlView
 {
-
-    protected $item;
-    protected $list;
+    /**
+	 * The \JForm object
+	 *
+	 * @var  \JForm
+	 */
     protected $form;
+
+    /**
+	 * The active item
+	 *
+	 * @var  object
+	 */
+    protected $item;
+
+    protected $list;
+    
     protected $state;
 
     /**
-     * Display the view
-     *
-     * @access    public
-     */
+	 * Display the view.
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
+     * 
+     * @since  __BUMP_VERSION__
+	 */
     function display($tpl = null)
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $this->state = $this->get('State');
         $this->item = $this->get('Item');
         $this->form = $this->get('Form');
@@ -46,7 +70,7 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
         // Convert dates from UTC
         $offset = $app->get('offset');
         if (intval($this->item->created)) {
-            $this->item->created = JHtml::date($this->item->created, '%Y-%m-%d %H-%M-%S', $offset);
+            $this->item->created = HTMLHelper::date($this->item->created, '%Y-%m-%d %H-%M-%S', $offset);
         }
 
         $this->handleMenus();
@@ -81,10 +105,12 @@ class SchuWeb_SitemapViewSitemap extends JViewLegacy
     }
 
     /**
-     * Display the toolbar
-     *
-     * @access    private
-     */
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   __BUMP_VERSION__
+	 */
 	function addToolbar()
 	{
         $isNew = ($this->item->id == 0);

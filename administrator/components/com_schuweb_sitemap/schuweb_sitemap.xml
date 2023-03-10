@@ -9,6 +9,7 @@
     <version>sw.build.version</version>
     <license>GNU/GPL</license>
     <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+    <namespace path="src/">SchuWeb\Component\Sitemap</namespace>
     <install folder="admin">
         <sql>
             <file driver="mysql" charset="utf8">sql/install.utf8.sql</file>

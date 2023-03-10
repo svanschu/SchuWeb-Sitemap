@@ -1,22 +1,32 @@
 <?php
 /**
- * @version       sw.build.version
- * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
- * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Sven Schultschik
+ * @package     Joomla.Administrator
+ * @subpackage  com_schuweb_sitemap
+ * 
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2023 Sven Schultschik. All rights reserved
+ * @license     GNU General Public License version 3; see LICENSE
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
-// no direct access
-defined('_JEXEC') or die;
+
+namespace SchuWeb\Component\Sitemap\Administrator\Table;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseDriver;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Application\ApplicationHelper;
 
 /**
  * @package         Joomla
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class SchuWeb_SitemapTableSitemap extends Table
+class SitemapTable extends Table
 {
 
     /**
@@ -102,29 +112,33 @@ class SchuWeb_SitemapTableSitemap extends Table
     protected $_jsonEncode = array('params', 'selections');
 
     /**
-     * @param    JDatabase    A database connector object
+     * Constructor
+     *
+     * @param   DatabaseDriver  $db  Database connector object
+     *
+     * @since   __BUMP_VERSION__
      */
-    function __construct(&$db)
+    function __construct(DatabaseDriver $db)
     {
         parent::__construct('#__schuweb_sitemap', 'id', $db);
     }
 
-	/**
-	 * Overloaded bind function
-	 *
-	 * @access      public
-	 *
-	 * @param array hash named $array
-	 * @param string $ignore
-	 *
-	 * @return      null|string  null is operation was satisfactory, otherwise returns an error
-	 * @see         JTable:bind
-	 * @since       2.0
-	 */
+    /**
+     * Overloaded bind function
+     *
+     * @access      public
+     *
+     * @param array hash named $array
+     * @param string $ignore
+     *
+     * @return      null|string  null is operation was satisfactory, otherwise returns an error
+     * @see         JTable:bind
+     * @since       2.0
+     */
     function bind($array, $ignore = '')
     {
         if (isset($array['attribs']) && is_array($array['attribs'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['attribs']);
             $array['attribs'] = $registry->toString();
         }
@@ -138,13 +152,13 @@ class SchuWeb_SitemapTableSitemap extends Table
                 );
             }
 
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($selections);
             $array['selections'] = $registry->toString();
         }
 
         if (isset($array['metadata']) && is_array($array['metadata'])) {
-            $registry = new JRegistry();
+            $registry = new Registry();
             $registry->loadArray($array['metadata']);
             $array['metadata'] = $registry->toString();
         }
@@ -162,20 +176,20 @@ class SchuWeb_SitemapTableSitemap extends Table
      */
     function check()
     {
-        $app = JFactory::$application;
+        $app = Factory::$application;
 
         if (empty($this->title)) {
-            $app->enqueueMessage(JText::_('Sitemap must have a title'), 'error');
+            $app->enqueueMessage(Text::_('Sitemap must have a title'), 'error');
             return false;
         }
 
         if (empty($this->alias)) {
             $this->alias = $this->title;
         }
-        $this->alias = JApplicationHelper::stringURLSafe($this->alias);
+        $this->alias = ApplicationHelper::stringURLSafe($this->alias);
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $datenow = JFactory::getDate();
+            $datenow = Factory::getDate();
             $this->alias = $datenow->format("Y-m-d-H-i-s");
         }
 
@@ -191,7 +205,7 @@ class SchuWeb_SitemapTableSitemap extends Table
      */
     public function store($updateNulls = false)
     {
-        $date = JFactory::getDate();
+        $date = Factory::getDate();
         if (!$this->id) {
             $this->created = $date->toSql();
         }
@@ -216,7 +230,7 @@ class SchuWeb_SitemapTableSitemap extends Table
 
         // Sanitize input.
         ArrayHelper::toInteger($pks);
-        $state = (int)$state;
+        $state = (int) $state;
 
         // If there are no primary keys set check to see if the instance key is set.
         if (empty($pks)) {
@@ -224,7 +238,7 @@ class SchuWeb_SitemapTableSitemap extends Table
                 $pks = array($this->$k);
             } // Nothing to set publishing state on, return false.
             else {
-                JFactory::$application->enqueueMessage(JText::_('No_Rows_Selected'), 'error');
+                Factory::$application->enqueueMessage(Text::_('No_Rows_Selected'), 'error');
                 return false;
             }
         }
@@ -235,7 +249,7 @@ class SchuWeb_SitemapTableSitemap extends Table
         // Update the publishing state for rows with the given primary keys.
         $query = $this->_db->getQuery(true)
             ->update($this->_db->quoteName('#__schuweb_sitemap'))
-            ->set($this->_db->quoteName('state') . ' = ' . (int)$state)
+            ->set($this->_db->quoteName('state') . ' = ' . (int) $state)
             ->where($where);
 
         $this->_db->setQuery($query);

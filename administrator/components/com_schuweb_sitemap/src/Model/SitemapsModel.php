@@ -1,27 +1,33 @@
 <?php
 /**
- * @version       sw.build.version
- * @copyright     Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
- * @license       GNU General Public License version 2 or later; see LICENSE.txt
- * @author        Sven Schultschik (extensions@schultschik.de)
+ * @package     Joomla.Administrator
+ * @subpackage  com_schuweb_sitemap
+ * 
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2023 Sven Schultschik. All rights reserved
+ * @license     GNU General Public License version 3; see LICENSE
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 
-// no direct access
+namespace SchuWeb\Component\Sitemap\Administrator\Model;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\ParameterType;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
-defined('_JEXEC') or die;
-
-jimport('joomla.application.component.modellist');
 jimport('joomla.database.query');
 
 /**
  * Sitemaps Model Class
  *
- * @package         SchuWeb_Sitemap
+ * @package         Joomla.Administrator
  * @subpackage      com_schuweb_sitemap
  * @since           2.0
  */
-class SchuWeb_SitemapModelSitemaps extends JModelList
+class SitemapsModel extends ListModel
 {
     /**
      * Constructor.
@@ -65,7 +71,7 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
     protected function populateState($ordering = null, $direction = null)
     {
         // Adjust the context to support modal layouts.
-        if ($layout = JFactory::$application->input->getVar('layout')) {
+        if ($layout = Factory::$application->input->getVar('layout')) {
             $this->context .= '.' . $layout;
         }
 
@@ -93,7 +99,7 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
      *
      * @return  string      A store id.
      *
-     * @since
+     * @since    __BUMP_VERSION__
      */
     protected function getStoreId($id = '')
     {
@@ -106,13 +112,12 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
     }
 
     /**
-     * @param boolean True to join selected foreign information
      *
-     * @return      string
+     * @return  \JDatabaseQuery
      *
-     * @since
+     * @since    __BUMP_VERSION__
      */
-    protected function getListQuery($resolveFKs = true)
+    protected function getListQuery()
     {
         $db = $this->getDbo();
         // Create a new query object.
@@ -165,7 +170,7 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
      *
      * @return string
      *
-     * @since
+     * @since    __BUMP_VERSION__
      */
     public function getExtensionsMessage(): string
     {
@@ -187,7 +192,7 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
                 $sep = ', ';
             }
 
-            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED', $extensionsNameList);
+            return Text::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED', $extensionsNameList);
         } else {
             return "";
         }
@@ -239,7 +244,7 @@ class SchuWeb_SitemapModelSitemaps extends JModelList
         }
 
         if (!empty($extensionsNameList)) {
-            return JText::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_NOT_INSTALLED', $extensionsNameList);
+            return Text::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_NOT_INSTALLED', $extensionsNameList);
         } else {
             return "";
         }
