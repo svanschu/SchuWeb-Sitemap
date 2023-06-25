@@ -94,12 +94,12 @@ class schuweb_sitemap_content
 					$text = $row->introtext . $row->fulltext;
 					if ($params['add_images'])
 					{
-						$node->images = SchuWeb_SitemapHelper::getImages($text, ArrayHelper::getValue($params, 'max_images', 1000));
+						$node->images = schuweb_sitemap_content::getImages($text, ArrayHelper::getValue($params, 'max_images', 1000));
 					}
 
 					if ($params['add_pagebreaks'])
 					{
-						$node->subnodes   = SchuWeb_SitemapHelper::getPagebreaks($text, $node->link);
+						$node->subnodes   = schuweb_sitemap_content::getPagebreaks($text, $node->link);
 						$node->expandible = (count($node->subnodes) > 0); // This article has children
 					}
 				}
@@ -270,7 +270,7 @@ class schuweb_sitemap_content
 					$parent->slug = $row->alias ? ($id . ':' . $row->alias) : $id;
 					$parent->link = ContentHelperRoute::getArticleRoute($parent->slug, $row->catid);
 
-					$subnodes = SchuWeb_SitemapHelper::getPagebreaks($row->introtext . $row->fulltext, $parent->link);
+					$subnodes = schuweb_sitemap_content::getPagebreaks($row->introtext . $row->fulltext, $parent->link);
 					self::printNodes($xmap, $parent, $params, $subnodes);
 				}
 
@@ -506,12 +506,12 @@ class schuweb_sitemap_content
 				$text = @$item->introtext . @$item->fulltext;
 				if ($params['add_images'])
 				{
-					$node->images = SchuWeb_SitemapHelper::getImages($text, $params['max_images']);
+					$node->images = schuweb_sitemap_content::getImages($text, $params['max_images']);
 				}
 
 				if ($params['add_pagebreaks'])
 				{
-					$subnodes         = SchuWeb_SitemapHelper::getPagebreaks($text, $node->link);
+					$subnodes         = schuweb_sitemap_content::getPagebreaks($text, $node->link);
 					$node->expandible = (count($subnodes) > 0); // This article has children
 				}
 
@@ -599,5 +599,81 @@ class schuweb_sitemap_content
 		$orderby .= $secondary . ' a.created ';
 
 		return $orderby;
+	}
+
+	static function getImages($text, $max)
+    {
+        if (!isset($urlBase)) {
+            $urlBase = JURI::base();
+        }
+
+        $urlBaseLen = strlen($urlBase);
+
+        $images = null;
+        $matches1 = $matches2 = array();
+        // Look <img> tags
+        preg_match_all('/<img[^>]*?(?:(?:[^>]*src="(?P<src>[^"]+)")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches1, PREG_SET_ORDER);
+        // Loog for <a> tags with href to images
+        preg_match_all('/<a[^>]*?(?:(?:[^>]*href="(?P<src>[^"]+\.(gif|png|jpg|jpeg))")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches2, PREG_SET_ORDER);
+        $matches = array_merge($matches1, $matches2);
+        if (count($matches)) {
+            $images = array();
+
+            $count = count($matches);
+            $j = 0;
+            for ($i = 0; $i < $count && $j < $max; $i++) {
+                if (trim($matches[$i]['src']) && (substr($matches[$i]['src'], 0, 1) == '/' || !preg_match('/^https?:\/\//i', $matches[$i]['src']) || substr($matches[$i]['src'], 0, $urlBaseLen) == $urlBase)) {
+                    $src = $matches[$i]['src'];
+                    if (substr($src, 0, 1) == '/') {
+                        $src = substr($src, 1);
+                    }
+                    if (!preg_match('/^https?:\//i', $src)) {
+                        $src = $urlBase . $src;
+                    }
+                    $image = new stdClass;
+                    $image->src = $src;
+                    $image->title = (isset($matches[$i]['title']) ? $matches[$i]['title'] : @$matches[$i]['alt']);
+                    $images[] = $image;
+                    $j++;
+                }
+            }
+        }
+        return $images;
+    }
+
+	static function getPagebreaks($text, $baseLink)
+	{
+		$matches = $subnodes = array();
+		if (
+			preg_match_all(
+				'/<hr\s*[^>]*?(?:(?:\s*alt="(?P<alt>[^"]+)")|(?:\s*title="(?P<title>[^"]+)"))+[^>]*>/i',
+				$text,
+				$matches,
+				PREG_SET_ORDER
+			)
+		) {
+			$i = 2;
+			foreach ($matches as $match) {
+				if (strpos($match[0], 'class="system-pagebreak"') !== FALSE) {
+					$link = $baseLink . '&limitstart=' . ($i - 1);
+
+					if (@$match['alt']) {
+						$title = stripslashes($match['alt']);
+					} elseif (@$match['title']) {
+						$title = stripslashes($match['title']);
+					} else {
+						$title = JText::sprintf('Page #', $i);
+					}
+					$subnode = new stdclass();
+					$subnode->name = $title;
+					$subnode->expandible = false;
+					$subnode->link = $link;
+					$subnodes[] = $subnode;
+					$i++;
+				}
+			}
+
+		}
+		return $subnodes;
 	}
 }
