@@ -75,6 +75,7 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
      */
     function printNode(&$node)
     {
+//TODO isExcluded moved to model
         $node->isExcluded = false;
         if ($this->isExcluded($node->id, $node->uid)) {
             if (!$this->showExcluded || !$this->canEdit) {
@@ -128,6 +129,7 @@ class SchuWeb_SitemapXmlDisplayer extends SchuWeb_SitemapDisplayer
                     echo '<title><![CDATA[' . $node->name . ']]></title>' . "\n";
                 }
                 if ($this->showExcluded) {
+                    //TODO isExcluded moved to model
                     echo '<rowclass>', ($node->isExcluded ? 'excluded' : ''), '</rowclass>';
                 }
                 echo '<uid>', $node->uid, '</uid>' . "\n";

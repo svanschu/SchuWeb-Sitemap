@@ -9,10 +9,8 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
-
 // Create shortcut to parameters.
-$params = $this->item->params;
+$params = $this->params;
 
 ?>
 <div id="SchuWeb_Sitemap">
@@ -29,7 +27,7 @@ $params = $this->item->params;
     <?php echo $this->loadTemplate('items'); ?>
 
 <?php if ($params->get('include_link', 1) )  : ?>
-    <div class="muted" style="font-size:10px;width:100%;clear:both;text-align:center;">Powered by <a target="_blank" href="http://extensions.schultschik.com/">SchuWeb Sitemap</a></div>
+    <div class="muted" style="font-size:10px;width:100%;clear:both;text-align:center;">Powered by <a target="_blank" href="https://extensions.schultschik.com/">SchuWeb Sitemap</a></div>
 <?php endif; ?>
 
     <span class="article_separator">&nbsp;</span>

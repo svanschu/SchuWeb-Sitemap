@@ -255,29 +255,5 @@ class SchuWeb_SitemapDisplayer {
         return $this->count;
     }
 
-    public function &getExcludedItems() {
-        static $_excluded_items;
-        if (!isset($_excluded_items)) {
-            $_excluded_items = array();
-            $registry = new JRegistry('_default');
-            $registry->loadString($this->sitemap->excluded_items);
-            $_excluded_items = $registry->toArray();
-        }
-        return $_excluded_items;
-    }
 
-    public function isExcluded($itemid,$uid) {
-        $excludedItems = $this->getExcludedItems();
-        $items = NULL;
-        if (!empty($excludedItems[$itemid])) {
-            if (is_object($excludedItems[$itemid])) {
-                $excludedItems[$itemid] = (array) $excludedItems[$itemid];
-            }
-            $items =& $excludedItems[$itemid];
-        }
-        if (!$items) {
-            return false;
-        }
-        return ( in_array($uid, $items));
-    }
 }
