@@ -165,7 +165,9 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
 									<?php if ($item->is_default == 1) : ?>
                                         <span class="icon-star" aria-hidden="true"></span>
 									<?php endif; ?>
-									<?php if ($item->state): ?>
+									<?php if ($item->state): 
+                                        //TODO show XML link only if it exists
+                                        ?>
                                         <small>[<a href="<?php echo $baseUrl . 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&id=' . $item->id; ?>"
                                                    target="_blank"
                                                    title="<?php echo Text::_('SCHUWEB_SITEMAP_XML_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_XML_LINK'); ?></a>]</small>

@@ -13,6 +13,7 @@ namespace SchuWeb\Component\Sitemap\Site\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Language;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -43,6 +44,14 @@ class SitemapModel extends ItemModel
     static $items = array();
 
     /**
+     * Is the sitemap the default sitemap?
+     * 
+     * @var bool
+     * @since __BUMP_VERSION__
+     */
+    private bool $default;
+
+    /**
      * The nodes object details
      *
      * @var    \stdClass
@@ -50,13 +59,38 @@ class SitemapModel extends ItemModel
      */
     private $nodes;
 
-     /**
+    /**
      * The total number of menus
      *
      * @var    int
      * @since  __BUMP_VERSION__
      */
     private $totalmenusnumber;
+
+    /**
+     * Ist language filter active
+     * 
+     * @var bool
+     * @since __BUMP_VERSION__
+     */
+    private bool $languageFilter;
+
+    /**
+     * Language object
+     * 
+     * @var Language
+     * @since __BUMP_VERSION__
+     */
+    private Language $language;
+
+
+    /**
+     * Do we generate an XML?
+     * 
+     * @var bool
+     * @since __BUMP_VERSION__
+     */
+    private bool $xmlsitemap = false;
 
     /**
      * Method to auto-populate the model state.
@@ -167,7 +201,7 @@ class SitemapModel extends ItemModel
                         // If this is an internal Joomla link, ensure the Itemid is set.
                         $node->htmllink = $node->htmllink . '&Itemid=' . $node->id;
                     } else {
-                        $excludeExternal = ($this->view == 'xml');
+                        $excludeExternal = $this->xmlsitemap;
                     }
                     break;
                 case 'alias':
@@ -188,7 +222,7 @@ class SitemapModel extends ItemModel
                     $node->browserNav = 0;
 
                 if ($node->browserNav != 3) {
-                    $node->htmllink = Route::_($node->htmllink, true, @$node->secure);
+                    $node->htmllink = Route::link('site', $node->htmllink, true, @$node->secure);
                 }
 
                 $node->name = htmlspecialchars($node->name);
@@ -317,6 +351,9 @@ class SitemapModel extends ItemModel
                 // TODO: Type 2 permission checks?
 
                 $this->_item[$pk] = $data;
+
+                $this->default = $data->is_default;
+                $this->name = $data->alias;
             } catch (Exception $e) {
                 $app->enqueueMessage(Text::_($e->getMessage()), 'error');
 
@@ -344,8 +381,8 @@ class SitemapModel extends ItemModel
             ->where($db->quoteName('published') . ' = 1')
             ->where($db->quoteName('client_id') . ' = 0');
         // Filter by language
-        if ($app->getLanguageFilter()) {
-            $query->where($db->quoteName('language') . ' IN (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+        if ($this->isLanguageFilter()) {
+            $query->where($db->quoteName('language') . ' IN (' . $db->quote($this->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
         }
         $query->setLimit('1');
 
@@ -372,7 +409,8 @@ class SitemapModel extends ItemModel
         return $title;
     }
 
-    public function getTotalMenusNumber() {
+    public function getTotalMenusNumber()
+    {
         if (empty($this->totalmenusnumber))
             $this->totalmenusnumber = count($this->getMenus());
         return $this->totalmenusnumber;
@@ -415,8 +453,8 @@ class SitemapModel extends ItemModel
             $query->where('n.access IN (' . implode(',', (array) $user->getAuthorisedViewLevels()) . ')');
 
             // Filter by language
-            if ($app->getLanguageFilter()) {
-                $query->where('n.language in (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+            if ($this->isLanguageFilter()) {
+                $query->where('n.language in (' . $db->quote($this->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
             }
 
             try {
@@ -630,7 +668,8 @@ class SitemapModel extends ItemModel
         } else {
             if (is_array($excludedItems[$itemid]) && count($excludedItems[$itemid])) {
                 $excludedItems[$itemid] = array_filter($excludedItems[$itemid], function ($v) use ($uid) {
-                    return ($v != $uid); });
+                    return ($v != $uid);
+                });
             } else {
                 unset($excludedItems[$itemid]);
             }
@@ -674,5 +713,63 @@ class SitemapModel extends ItemModel
             return false;
         }
         return (in_array($uid, $items));
+    }
+
+    /**
+     * Set ist language filter active
+     */
+    public function setLanguageFilter(bool $languageFilter): self
+    {
+        $this->languageFilter = $languageFilter;
+
+        return $this;
+    }
+
+    /**
+     * Get ist language filter active
+     */
+    private function isLanguageFilter(): bool
+    {
+        if (!isset($this->languageFilter))
+            $this->languageFilter = Factory::getApplication()->getLanguageFilter();
+        return $this->languageFilter;
+    }
+
+    /**
+     * Get the value of language
+     */
+    private function getLanguage(): Language
+    {
+        if (!isset($this->language))
+            $this->language = Factory::getApplication()->getLanguage();
+        return $this->language;
+    }
+
+    /**
+     * Set the value of language
+     */
+    public function setLanguage(Language $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of xmlsitemap
+     */
+    public function setXmlsitemap(bool $xmlsitemap): self
+    {
+        $this->xmlsitemap = $xmlsitemap;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of default
+     */
+    public function isDefault(): bool
+    {
+        return $this->default;
     }
 }

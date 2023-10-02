@@ -77,6 +77,8 @@ class HtmlView extends BaseHtmlView
     {
         $state = $this->get('State');
 
+        $toolbar = Toolbar::getInstance();
+
         ToolBarHelper::addNew('sitemap.add');
         ToolBarHelper::custom('sitemap.edit', 'edit.png', 'edit_f2.png', 'JTOOLBAR_EDIT', true);
 
@@ -85,6 +87,23 @@ class HtmlView extends BaseHtmlView
         ToolBarHelper::custom('sitemaps.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_Publish', true);
         ToolBarHelper::custom('sitemaps.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
         ToolBarHelper::custom('sitemaps.setdefault', 'featured.png', 'featured_f2.png', 'SCHUWEB_SITEMAP_TOOLBAR_SET_DEFAULT', true);
+
+        $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('SCHUWEB_SITEMAP_TOOLBAR_CREATE_XML')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+
+        $childBar = $dropdown->getChildToolbar();
+
+        $childBar->standardButton('refresh', 'SCHUWEB_SITEMAP_TOOLBAR_CREATE_SITEMAP_XML', 'sitemaps.createxml')
+            ->listCheck(true);
+        $childBar->standardButton('refresh', 'SCHUWEB_SITEMAP_TOOLBAR_CREATE_NEWS_XML', 'sitemaps.createxmlnews')
+            ->listCheck(true);
+        $childBar->standardButton('refresh', 'SCHUWEB_SITEMAP_TOOLBAR_CREATE_IMAGES_XML', 'sitemaps.createxmlimages')
+            ->listCheck(true);
+
 
         if ($state->get('filter.published') == -2) {
             ToolBarHelper::deleteList('', 'sitemaps.delete');
