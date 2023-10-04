@@ -43,7 +43,7 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
         <div class="col-md-12">
             <div id="j-main-container" class="j-main-container">
                 <?php
-    #            echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+                echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
                 ?>
                 <?php if (empty($this->items)): ?>
                     <div class="alert alert-info">

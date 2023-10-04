@@ -48,7 +48,7 @@
         <folder>images</folder>
     </images>
     <administration>
-        <menu img="components/com_schuweb_sitemap/images/xmap-favicon.png">com_schuweb_sitemap_TITLE</menu>
+        <menu>com_schuweb_sitemap_TITLE</menu>
         <files folder="admin">
             <filename>schuweb_sitemap.php</filename>
             <filename>controller.php</filename>
