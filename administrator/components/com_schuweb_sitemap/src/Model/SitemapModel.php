@@ -249,26 +249,28 @@ class SitemapModel extends AdminModel
         return true;
     }
 
-    // function setDefault($id)
-    // {
-    //     $table = $this->getTable();
-    //     if ($table->load($id)) {
-    //         $db = Factory::getDbo();
-    //         $query = $db->getQuery(true)
-    //             ->update($db->quoteName('#__schuweb_sitemap'))
-    //             ->set($db->quoteName('is_default') . ' = 0')
-    //             ->where($db->quoteName('id') . ' <> ' . $table->id);
-    //         $this->_db->setQuery($query);
-    //         $this->_db->execute();
-    //         $table->is_default = 1;
-    //         $table->store();
+    public function setDefault($id): bool
+    {
+        $table = $this->getTable();
+        if ($table->load($id)) {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__schuweb_sitemap'))
+                ->set($db->quoteName('is_default') . ' = 0')
+                ->where($db->quoteName('id') . ' <> ' . $table->id);
+            $this->_db->setQuery($query);
+            $this->_db->execute();
+            $table->is_default = 1;
+            $table->store();
 
-    //         // Clean the cache.
-    //         $cache = Factory::getCache('com_schuweb_sitemap');
-    //         $cache->clean();
-    //         return true;
-    //     }
-    // }
+            // Clean the cache.
+            $cache = Factory::getCache('com_schuweb_sitemap');
+            $cache->clean();
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Override to avoid warnings
