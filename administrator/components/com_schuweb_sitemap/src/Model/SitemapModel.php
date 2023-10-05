@@ -272,15 +272,6 @@ class SitemapModel extends AdminModel
         return false;
     }
 
-    /**
-     * Override to avoid warnings
-     *
-     */
-    // public function checkout($pk = null)
-    // {
-    //     return true;
-    // }
-
     private function getDefaultSitemapId()
     {
         $db = Factory::getDBO();
