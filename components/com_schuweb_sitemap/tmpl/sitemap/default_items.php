@@ -9,6 +9,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 
@@ -24,6 +25,12 @@ function displayNode($node, $level, $extlinks)
     echo '<ul class="level_' . $level . '">';
     foreach ($node->subnodes as $subnode) {
         echo '<li>';
+        $htmllink = '';
+        if (isset($subnode->htmllink)) {
+            $htmllink = $subnode->htmllink;
+        } else {
+            $htmllink = Route::link('site', $subnode->link, true, @$subnode->secure);
+        }
         switch ($subnode->browserNav) {
             case 1: // open url in new window
                 $extim = '';
@@ -35,12 +42,12 @@ function displayNode($node, $level, $extlinks)
                         . Text::_('COM_SCHUWEB_SITEMAP_SHOW_AS_EXTERN_ALT')
                         . '" border="0" />';
                 }
-                echo '<a href="' . $subnode->htmllink . '" title="' . $subnode->name . '" target="_blank">'
+                echo '<a href="' . $htmllink . '" title="' . $subnode->name . '" target="_blank">'
                     . $subnode->name . $extim
                     . '</a>';
                 break;
             case 2: // open url in javascript popup window
-                echo '<a href="' . $subnode->htmllink . '" '
+                echo '<a href="' . $htmllink . '" '
                     . 'title="' . $subnode->name . '" target="_blank" '
                     . "onClick=\"window.open(this.href, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,'); return false;\">"
                     . $subnode->name
@@ -56,7 +63,7 @@ function displayNode($node, $level, $extlinks)
                     . '</span>';
                 break;
             default: // open url in parent window
-                echo '<a href="' . $subnode->htmllink . '" title="' . $subnode->name . '">'
+                echo '<a href="' . $htmllink . '" title="' . $subnode->name . '">'
                     . $subnode->name
                     . '</a>';
                 break;

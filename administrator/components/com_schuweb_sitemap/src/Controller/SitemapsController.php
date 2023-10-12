@@ -41,22 +41,6 @@ class SitemapsController extends AdminController
     protected $text_prefix = 'com_schuweb_sitemap_SITEMAPS';
 
     /**
-     *
-     * @var bool Indicates if this is a google image sitemap or not
-     *
-     * @since __BUMP_VERSION__
-     */
-    private bool $isImages = false;
-
-    /**
-     *
-     * @var bool Indicates if this is a google image sitemap or not
-     *
-     * @since __BUMP_VERSION__
-     */
-    private bool $isNews = false;
-
-    /**
      * XML sitemap object
      * 
      * @var \XMLWriter
@@ -143,10 +127,14 @@ class SitemapsController extends AdminController
      */
     public function createxml()
     {
-        if ($this->doTask == 'createxmlnews') $this->isNews = true;
-        if ($this->doTask == 'createxmlimages') $this->isImages = true;
-
         $site_sitemap_model = $this->getModel('Sitemap', 'Site');
+
+        if ($this->doTask == 'createxmlnews') {
+            $site_sitemap_model->setImagesitemap(true);
+        }
+        if ($this->doTask == 'createxmlimages') {
+            $site_sitemap_model->setNewssitemap(true);
+        }
 
         $pks = (array) $this->input->getInt('cid');
 
@@ -189,13 +177,13 @@ class SitemapsController extends AdminController
             xmlwriter_text($this->xw, "http://www.sitemaps.org/schemas/sitemap/0.9");
             xmlwriter_end_attribute($this->xw);
 
-            if ($this->isImages) {
+            if ($site_sitemap_model->isImagesitemap()) {
                 xmlwriter_start_attribute($this->xw, 'xmlns:image');
                 xmlwriter_text($this->xw, "http://www.google.com/schemas/sitemap-image/1.1");
                 xmlwriter_end_attribute($this->xw);
             }
 
-            if ($this->isNews) {
+            if ($site_sitemap_model->isNewssitemap()) {
                 xmlwriter_start_attribute($this->xw, 'xmlns:news');
                 xmlwriter_text($this->xw, "http://www.google.com/schemas/sitemap-news/0.9");
                 xmlwriter_end_attribute($this->xw);
@@ -205,7 +193,7 @@ class SitemapsController extends AdminController
 
             foreach ($nodes as $node) {
 
-                $this->printNode($node);
+                $this->printNode($node, $site_sitemap_model->isNewssitemap());
             }
 
             xmlwriter_end_document($this->xw);
@@ -222,7 +210,7 @@ class SitemapsController extends AdminController
      * @return void
      * @since __BUMP_VERSION__
      */
-    private function printNode(&$node)
+    private function printNode(&$node, $newssitemap)
     {
         // ignore "no link" && ignore links that have been added already
         if ($node->browserNav != 3 && empty($this->_links[$node->htmllink])) {
@@ -244,7 +232,7 @@ class SitemapsController extends AdminController
             $modified = null;
             if ($node->lastmod != 0) {
                 $modified = (isset($node->modified) && $node->modified != FALSE && $node->modified != $this->nullDate && $node->modified != -1) ? $node->modified : NULL;
-                if (!$modified && $this->isNews) {
+                if (!$modified && $newssitemap) {
                     $modified = time();
                 }
                 if ($modified && !is_numeric($modified)) {
@@ -279,7 +267,7 @@ class SitemapsController extends AdminController
 
         if (isset($node->subnodes)) {
             foreach ($node->subnodes as $subnode) {
-                $this->printNode($subnode);
+                $this->printNode($subnode, $newssitemap);
             }
         }
     }

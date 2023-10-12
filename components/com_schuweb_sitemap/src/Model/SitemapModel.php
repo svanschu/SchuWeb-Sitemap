@@ -11,6 +11,7 @@
 
 namespace SchuWeb\Component\Sitemap\Site\Model;
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Language;
@@ -32,14 +33,17 @@ use Joomla\CMS\Language\Text;
  */
 class SitemapModel extends ItemModel
 {
-
     /**
      * Model context string.
      *
      * @var        string
      */
     protected $_context = 'com_schuweb_sitemap.sitemap';
-    protected $_extensions = null;
+
+    /**
+     * List of sitemap extensions
+     */
+    private $extensions = null;
 
     static $items = array();
 
@@ -93,6 +97,22 @@ class SitemapModel extends ItemModel
     private bool $xmlsitemap = false;
 
     /**
+     *
+     * @var bool Indicates if this is a google image sitemap or not
+     *
+     * @since __BUMP_VERSION__
+     */
+    private bool $imagesitemap = false;
+
+    /**
+     *
+     * @var bool Indicates if this is a google news sitemap or not
+     *
+     * @since __BUMP_VERSION__
+     */
+    private bool $newssitemap = false;
+
+    /**
      * Method to auto-populate the model state.
      *
      * @return     void
@@ -142,15 +162,10 @@ class SitemapModel extends ItemModel
             $node->menutype = $menutype;
             $node->priority = null;
             $node->changefreq = null;
-            // $node->priority = $menu->priority;
-            // $node->changefreq = $menu->changefreq;
             $node->browserNav = 3;
             $node->type = 'separator';
 
             $node->name = $this->getMenuTitle($menutype); // Get the name of this menu
-
-
-            // $this->printMenuTree($node, $items);
 
             $this->nodes->$menutype = $node;
 
@@ -162,6 +177,7 @@ class SitemapModel extends ItemModel
 
     private function getSubNodes(&$pathref, $menu, &$items)
     {
+        $extensions = $this->getExtensions();
 
         foreach ($items as $item) { // Add each menu entry to the root tree.
             $excludeExternal = false;
@@ -228,14 +244,12 @@ class SitemapModel extends ItemModel
                 $node->name = htmlspecialchars($node->name);
 
                 if ($node->option) {
-                    if (!empty($this->extensions[$node->option])) {
-                        $node->uid = $node->option;
-                        $className = 'SchuWeb_Sitemap_' . $node->option;
-                        call_user_func_array(array($className, 'getTree'), array(&$this, &$node, &$this->extensions[$node->option]->params));
-                    } elseif (!empty($this->extensions[substr($node->option, 4)])) {
-                        $node->uid = substr($node->option, 4);
-                        $className = 'SchuWeb_Sitemap_' . substr($node->option, 4);
-                        call_user_func_array(array($className, 'getTree'), array(&$this, &$node, &$this->extensions[substr($node->option, 4)]->params));
+                    $element_name = substr($node->option, 4);
+                    if (!empty($extensions[$element_name])) {
+                        $node->uid = $element_name;
+                        $className = 'SchuWeb_Sitemap_' . $element_name;
+                        //TODO use Joomla dispatcher event based instead
+                        call_user_func_array(array($className, 'getTree'), array(&$this, &$node, &$extensions[$element_name]->params));
                     }
                 }
 
@@ -430,6 +444,8 @@ class SitemapModel extends ItemModel
         $user = $app->getIdentity();
         $list = array();
 
+        $extensions = $this->getExtensions();
+
         foreach ($selections as $menutype => $menuOptions) {
             // Initialize variables.
             // Get the menu items as a tree.
@@ -462,7 +478,7 @@ class SitemapModel extends ItemModel
                 $db->setQuery($query);
                 $tmpList = $db->loadObjectList('id');
                 $list[$menutype] = array();
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $app->enqueueMessage(Text::_($e->getMessage()), 'error');
                 return array();
             }
@@ -493,18 +509,12 @@ class SitemapModel extends ItemModel
                     $item->xmlInsertChangeFreq = $menuOptions['xmlInsertChangeFreq'];
                     $item->xmlInsertPriority = $menuOptions['xmlInsertPriority'];
 
-                    $extensions = $this->getExtensions();
-                    if (!empty($extensions[$item->option])) {
-                        $className = 'schuweb_sitemap_' . $item->option;
+                    $element_name = substr($item->option, 4);
+                    if (!empty($extensions[$element_name])) {
+                        $className = 'schuweb_sitemap_' . $element_name;
                         $obj = new $className;
                         if (method_exists($obj, 'prepareMenuItem')) {
-                            $obj->prepareMenuItem($item, $extensions[$item->option]->params);
-                        }
-                    } elseif (!empty($extensions[substr($item->option, 4)])) {
-                        $className = 'schuweb_sitemap_' . substr($item->option, 4);
-                        $obj = new $className;
-                        if (method_exists($obj, 'prepareMenuItem')) {
-                            $obj->prepareMenuItem($item, $extensions[substr($item->option, 4)]->params);
+                            $obj->prepareMenuItem($item, $extensions[$element_name]->params);
                         }
                     }
                 } else {
@@ -527,37 +537,31 @@ class SitemapModel extends ItemModel
 
     private function getExtensions()
     {
-        static $list;
+        if (empty($this->extensions)) {
+            $db = $this->getDBO();
 
-        jimport('joomla.html.parameter');
+            $this->extensions = array();
+            // Get the menu items as a tree.
+            $query = $db->getQuery(true);
+            $query->select('*');
+            $query->from('#__extensions AS n');
+            $query->where('n.folder = \'schuweb_sitemap\'');
+            $query->where('n.enabled = 1');
 
-        if ($list != null) {
-            return $list;
-        }
-        $db = $this->getDBO();
+            // Get the list of menu items.
+            $db->setQuery($query);
+            $extensions = $db->loadObjectList('element');
 
-        $list = array();
-        // Get the menu items as a tree.
-        $query = $db->getQuery(true);
-        $query->select('*');
-        $query->from('#__extensions AS n');
-        $query->where('n.folder = \'schuweb_sitemap\'');
-        $query->where('n.enabled = 1');
-
-        // Get the list of menu items.
-        $db->setQuery($query);
-        $extensions = $db->loadObjectList('element');
-
-        foreach ($extensions as $element => $extension) {
-            if (file_exists(JPATH_PLUGINS . '/' . $extension->folder . '/' . $element . '/' . $element . '.php')) {
-                require_once(JPATH_PLUGINS . '/' . $extension->folder . '/' . $element . '/' . $element . '.php');
-                $params = new Registry($extension->params);
-                $extension->params = $params->toArray();
-                $list[$element] = $extension;
+            foreach ($extensions as $element => $extension) {
+                if (file_exists(JPATH_PLUGINS . '/' . $extension->folder . '/' . $element . '/' . $element . '.php')) {
+                    require_once(JPATH_PLUGINS . '/' . $extension->folder . '/' . $element . '/' . $element . '.php');
+                    $params = new Registry($extension->params);
+                    $extension->params = $params->toArray();
+                    $this->extensions[$element] = $extension;
+                }
             }
         }
-
-        return $list;
+        return $this->extensions;
     }
 
     /**
@@ -766,10 +770,54 @@ class SitemapModel extends ItemModel
     }
 
     /**
+     * Get the value of xmlsitemap
+     */
+    public function isXmlsitemap(): bool
+    {
+        return $this->xmlsitemap;
+    }
+
+    /**
      * Get the value of default
      */
     public function isDefault(): bool
     {
         return $this->default;
+    }
+
+    /**
+     * Get the value of imagesitemap
+     */
+    public function isImagesitemap(): bool
+    {
+        return $this->imagesitemap;
+    }
+
+    /**
+     * Set the value of imagesitemap
+     */
+    public function setImagesitemap(bool $imagesitemap): self
+    {
+        $this->imagesitemap = $imagesitemap;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of newssitemap
+     */
+    public function isNewssitemap(): bool
+    {
+        return $this->newssitemap;
+    }
+
+    /**
+     * Set the value of newssitemap
+     */
+    public function setNewssitemap(bool $newssitemap): self
+    {
+        $this->newssitemap = $newssitemap;
+
+        return $this;
     }
 }
