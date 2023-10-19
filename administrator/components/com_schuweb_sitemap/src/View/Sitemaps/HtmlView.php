@@ -45,13 +45,15 @@ class HtmlView extends BaseHtmlView
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
+        $modal = $this->getLayout() == 'modal';
+
         $message = $this->get('ExtensionsMessage');
-        if ($message) {
+        if ($message && !$modal) {
             Factory::getApplication()->enqueueMessage($message);
         }
 
         $message = $this->get('NotInstalledMessage');
-        if ($message) {
+        if ($message && !$modal) {
             Factory::getApplication()->enqueueMessage($message);
         }
 

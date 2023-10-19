@@ -34,6 +34,10 @@
         <folder>src</folder>
         <folder>tmpl</folder>
     </files>
+    <media folder="media/com_schuweb_sitemap" destination="com_schuweb_sitemap">
+		<folder>js</folder>
+		<filename>joomla.asset.json</filename>
+    </media>
     <administration>
         <menu>com_schuweb_sitemap_TITLE</menu>
         <files folder="admin">

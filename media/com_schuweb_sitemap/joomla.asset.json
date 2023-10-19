@@ -1,0 +1,34 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_schuweb_sitemap",
+  "version": "4.0.0",
+  "description": "Joomla CMS",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "com_schuweb_sitemap.admin-sitemaps-modal.es5",
+      "type": "script",
+      "uri": "com_schuweb_sitemap/admin-sitemaps-modal-es5.min.js",
+      "dependencies": [
+        "core"
+      ],
+      "attributes": {
+        "nomodule": true,
+        "defer": true
+      },
+      "version": "f515667caece3238a27a80e6ac7acc46a02b3a60"
+    },
+    {
+      "name": "com_schuweb_sitemap.admin-sitemaps-modal",
+      "type": "script",
+      "uri": "com_schuweb_sitemap/admin-sitemaps-modal.min.js",
+      "dependencies": [
+        "com_schuweb_sitemap.admin-sitemaps-modal.es5"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "bed8db4d9dd739752dae07292d0c67de99d7a152"
+    }
+  ]
+}
