@@ -13,9 +13,6 @@ namespace SchuWeb\Component\Sitemap\Administrator\Controller;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 
 \defined('_JEXEC') or die;
 

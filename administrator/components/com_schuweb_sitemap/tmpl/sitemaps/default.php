@@ -17,12 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
-// JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-// JHtml::_('bootstrap.tooltip');
-
-
-// $n = count($this->items);
-
 $baseUrl = JUri::root();
 
 $user = Factory::getApplication()->getIdentity();
@@ -31,11 +25,6 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 $saveOrder = $listOrder == 'a.ordering';
 $saveOrderCheck = $saveOrder && !empty($this->items);
 
-// if ($saveOrderCheck)
-// {
-//     //TODO!!!!!!!!!!!!!!!!!!!!
-// 	$saveOrderingUrl = 'index.php?option=com_schuweb_sitemap&task=sitemaps.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
-// }
 ?>
 <form action="<?php echo Route::_('index.php?option=com_schuweb_sitemap&view=sitemaps'); ?>" method="post"
     name="adminForm" id="adminForm">
