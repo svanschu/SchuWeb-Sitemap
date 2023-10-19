@@ -73,7 +73,8 @@ class SitemapModel extends AdminModel
         $app = Factory::getApplication();
 
         // Load the User state.
-        if (!($pk = (int) $app->getUserState('com_schuweb_sitemap.edit.sitemap.id'))) {
+        $userstate = $app->getUserState('com_schuweb_sitemap.edit.sitemap.id');
+        if (!($pk = (int) $userstate[0])) {
             $pk = (int) $app->input->getInt('id');
         }
         $this->setState('sitemap.id', $pk);
