@@ -28,13 +28,21 @@
             <file driver="postgresql" charset="utf8">sql/uninstall.postgresql.sql</file>
         </sql>
     </uninstall>
-    <files folder="front">
+    <files folder="site">
         <folder>assets</folder>
         <folder>language</folder>
         <folder>src</folder>
         <folder>tmpl</folder>
     </files>
-    <media folder="media/com_schuweb_sitemap" destination="com_schuweb_sitemap">
+    <languages folder="site/language">
+        <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
+        <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
+        <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+        <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
+        <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
+        <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
+    </languages>
+    <media folder="media" destination="com_schuweb_sitemap">
 		<folder>js</folder>
 		<filename>joomla.asset.json</filename>
     </media>
@@ -45,11 +53,26 @@
             <folder>forms</folder>
             <folder>helpers</folder>
             <folder>language</folder>
+            <folder>models</folder>
             <folder>services</folder>
             <folder>sql</folder>
             <folder>src</folder>
             <folder>tmpl</folder>
-            <folder>views</folder>
         </files>
+
+        <languages folder="admin/language">
+            <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
+            <language tag="en-GB">en-GB/com_schuweb_sitemap.sys.ini</language>
+            <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
+            <language tag="es-ES">es-ES/com_schuweb_sitemap.sys.ini</language>
+            <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+            <language tag="fa-IR">fa-IR/com_schuweb_sitemap.sys.ini</language>
+            <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
+            <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.sys.ini</language>
+            <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
+            <language tag="nl-NL">nl-NL/com_schuweb_sitemap.sys.ini</language>
+            <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
+            <language tag="ru-RU">ru-RU/com_schuweb_sitemap.sys.ini</language>
+        </languages>
     </administration>
 </extension>

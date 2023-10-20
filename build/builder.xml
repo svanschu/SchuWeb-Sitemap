@@ -26,6 +26,9 @@
     <fileset dir="${src}/components/com_schuweb_sitemap" id="schuweb_sitemap_front">
         <include name="**"/>
     </fileset>
+    <fileset dir="${src}/media/com_schuweb_sitemap" id="schuweb_sitemap_media">
+        <include name="**"/>
+    </fileset>
 
     <target name="build" depends="prepare, copy">
         <zip destfile="${builddir}/tmp/packages/com_schuweb_sitemap_${build.version}_${build.date.DSTAMP}.zip">
@@ -56,7 +59,8 @@
 
     <target name="prepare">
         <mkdir dir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/admin"/>
-        <mkdir dir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/front"/>
+        <mkdir dir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/site"/>
+        <mkdir dir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/media"/>
         <mkdir dir="${builddir}/tmp/schuweb_sitemap/plugins/"/>
         <mkdir dir="${builddir}/tmp/packages/"/>
         <echo msg="Create temp folder OK!"/>
@@ -67,8 +71,11 @@
         <copy todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/admin">
             <fileset refid="schuweb_sitemap_admin"/>
         </copy>
-        <copy todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/front">
+        <copy todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/site">
                 <fileset refid="schuweb_sitemap_front"/>
+        </copy>
+        <copy todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap/media">
+                <fileset refid="schuweb_sitemap_media"/>
         </copy>
         <copy file="${src}/administrator/components/com_schuweb_sitemap/schuweb_sitemap.xml" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
         <copy file="${src}/pkg_schuweb_sitemap.xml" tofile="${builddir}/tmp/pkg_schuweb_sitemap.xml" />
