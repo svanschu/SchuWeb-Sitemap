@@ -4,7 +4,7 @@
  * @subpackage       SchuWeb_Sitemap
  *
  * @author           Sven Schultschik <extensions@schultschik.com>
- * @copyright    (c) 2019 extensions.schultschik.com - All rights reserved
+ * @copyright    (c) 2019 - 2023 extensions.schultschik.com - All rights reserved
  * @license          GNU General Public License version 3 or later
  */
 
@@ -35,7 +35,7 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
     {
         // Define the minumum versions to be supported.
         $this->minimumJoomla = '4.0';
-        $this->minimumPhp = '7.4';
+        $this->minimumPhp = '8';
     }
 
 	/**

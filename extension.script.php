@@ -4,7 +4,7 @@
  * @subpackage       SchuWeb_Sitemap
  *
  * @author           Sven Schultschik <extensions@schultschik.com>
- * @copyright    (c) 2020 extensions.schultschik.com - All rights reserved
+ * @copyright    (c) 2020 - 2023 extensions.schultschik.com - All rights reserved
  * @license          GNU General Public License version 3 or later
  */
 
@@ -22,7 +22,7 @@ class com_schuweb_sitemapInstallerScript extends \Joomla\CMS\Installer\Installer
     {
         // Define the minumum versions to be supported.
         $this->minimumJoomla = '4.0';
-        $this->minimumPhp = '7.4';
+        $this->minimumPhp = '8';
 
         $oldRelease = $this->getParam('version');
         if (version_compare($oldRelease, "3.2.0", "lt")) {

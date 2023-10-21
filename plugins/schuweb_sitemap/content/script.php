@@ -4,7 +4,7 @@
  *
  * @version             sw.build.version
  * @author              Sven Schultschik
- * @copyright (C)       2022 Sven Schultschik. All rights reserved
+ * @copyright (C)       2022 - 2023 Sven Schultschik. All rights reserved
  * @license             http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link                http://www.schultschik.de
  **/
@@ -30,7 +30,7 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
     {
         // Define the minumum versions to be supported.
         $this->minimumJoomla = '4.0';
-        $this->minimumPhp = '7.4';
+        $this->minimumPhp = '8';
     }
 
     /**
