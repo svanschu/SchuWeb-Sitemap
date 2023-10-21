@@ -11,8 +11,17 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-class com_schuweb_sitemapInstallerScript extends \Joomla\CMS\Installer\InstallerScript
+use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\InstallerScript;
+use Joomla\Database\ParameterType;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Installer\InstallerAdapter;
+
+class com_schuweb_sitemapInstallerScript extends InstallerScript
 {
+
+    private string $_oldRelease;
+
     /**
      * Extension script constructor.
      *
@@ -24,8 +33,8 @@ class com_schuweb_sitemapInstallerScript extends \Joomla\CMS\Installer\Installer
         $this->minimumJoomla = '4.0';
         $this->minimumPhp = '8';
 
-        $oldRelease = $this->getParam('version');
-        if (version_compare($oldRelease, "3.2.0", "lt")) {
+        $this->_oldRelease = $this->getParam('version');
+        if (version_compare($this->_oldRelease, "3.2.0", "lt")) {
             $this->deleteFolders = array("/components/com_schuweb_sitemap/assets/css");
         }
     }
@@ -39,7 +48,7 @@ class com_schuweb_sitemapInstallerScript extends \Joomla\CMS\Installer\Installer
      *                           - * install
      *                           - * update
      *                           - * discover_install
-     * @param \stdClass $parent - Parent object calling object.
+     * @param InstallerAdapter $parent - Parent object calling object.
      *
      * @return void
      * @since 3.2.0
@@ -48,8 +57,123 @@ class com_schuweb_sitemapInstallerScript extends \Joomla\CMS\Installer\Installer
     {
         parent::preflight($type, $parent);
 
-        if (strcmp($type, "update") !== 0) return;
+        if (strcmp($type, "update") !== 0)
+            return;
 
         $this->removeFiles();
+    }
+
+    /**
+     * Runs right after any installation action is performed on the component.
+     *
+     * @param   string     $type    - Type of PostFlight action. Possible values
+     *                              are:
+     *                              - * install
+     *                              - * update
+     *                              - * discover_install
+     * @param   \stdClass  $parent  - Parent object calling object.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * @since  __BUMP_VERSION__
+     */
+    public function postflight($type, $parent)
+    {
+        if ($type == "update") {
+            $this->upgradev4v5();
+        }
+    }
+
+    /**
+     * Upgrade from SchuWeb Sitemap v4 and earlier to v5
+     *
+     * @since __BUMP_VERSION__
+     */
+    private function upgradev4v5()
+    {
+
+        if (version_compare($this->_oldRelease, '5', '>='))
+            return;
+
+        $extensionId = $this->getInstances(false);
+
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select(array($db->quoteName('id'), $db->quoteName('link')))
+            ->from($db->quoteName('#__menu'))
+            ->where($db->quoteName('component_id') . ' = :cid')
+            ->bind(':cid', $extensionId, ParameterType::INTEGER);
+        $db->setQuery($query);
+
+        $menus = $db->loadObjectList();
+
+        # from: index.php?option=com_schuweb_sitemap&view=html&id=1
+        # to:   index.php?option=com_schuweb_sitemap&view=sitemap&id=1
+        foreach ($menus as $k => $menu) {
+            if (str_contains($menu->link, 'view=html')) {
+                $menu->link = substr_replace($menu->link, 'sitemap', 42, -5);
+
+                $query = $db->getQuery(true);
+
+                $fields = array(
+                    $db->quoteName('link') . '=' . $db->quote($menu->link),
+                );
+
+                $conditions = array(
+                    $db->quoteName('id') . '=' . $db->quote($menu->id),
+                );
+
+                $query->update($db->quoteName('#__menu'))
+                    ->set($fields)
+                    ->where($conditions);
+
+
+                $db->setQuery($query);
+
+                if (!$db->execute()) {
+                    Factory::getApplication()->enqueueMessage(Text::_('SCHUWEB_SITEMAP_UPGRADE_V4_V5_FAILED'), 'error');
+                }
+            }
+        }
+    }
+
+    /**
+     * Copy of Joomla\CMS\Installer\InstallerScript which has a bug
+     * If bug is fixed in J5.xx it can be remove
+     * PR: https://github.com/joomla/joomla-cms/pull/42192
+     *
+     * @param   boolean  $isModule  True if the extension is a module as this can have multiple instances
+     *
+     * @return  array  An array of ID's of the extension
+     *
+     * @since   __BUMP_VERSION__
+     */
+    public function getInstances($isModule)
+    {
+        $extension = $this->extension;
+
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Select the item(s) and retrieve the id
+
+        // Select the item(s) and retrieve the id
+        if ($isModule) {
+            $query->select($db->quoteName('id'))
+                ->from($db->quoteName('#__modules'))
+                ->where($db->quoteName('module') . ' = :extension');
+        } else {
+            $query->select($db->quoteName('extension_id') . ' AS id')
+                ->from($db->quoteName('#__extensions'))
+                ->where($db->quoteName('element') . ' = :extension');
+        }
+
+
+        $query->bind(':extension', $extension);
+
+        // Set the query and obtain an array of id's
+        return $db->setQuery($query)->loadColumn();
     }
 }
