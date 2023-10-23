@@ -1,7 +1,7 @@
 <?php
 /**
  * @version             sw.build.version
- * @copyright (C)       2010 - 2022 Sven Schultschik. All rights reserved
+ * @copyright (C)       2010 - 2023 Sven Schultschik. All rights reserved
  * @author              Sven Schultschik
  * @license             http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link                http://www.schultschik.de
@@ -509,9 +509,8 @@ class schuweb_sitemap_content
 			$subnode->priority = $params['art_priority'];
 			$subnode->changefreq = $params['art_changefreq'];
 
-			$attribs = json_decode($sitemap->sitemap->attribs);
-			$subnode->xmlInsertChangeFreq = $attribs->xmlInsertChangeFreq;
-			$subnode->xmlInsertPriority = $attribs->xmlInsertPriority;
+			$subnode->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
+			$subnode->xmlInsertPriority = $parent->xmlInsertPriority;
 
 			$subnode->secure = $parent->secure;
 			$subnode->lastmod = $parent->lastmod;
