@@ -186,13 +186,13 @@ class SitemapsController extends AdminController
                 xmlwriter_end_attribute($this->xw);
             }
 
-            xmlwriter_end_element($this->xw);
-
             foreach ($nodes as $node) {
 
                 $this->printNode($node, $site_sitemap_model->isNewssitemap());
             }
-
+            
+            xmlwriter_end_element($this->xw);
+            
             xmlwriter_end_document($this->xw);
 
             xmlwriter_flush($this->xw);
