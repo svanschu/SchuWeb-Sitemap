@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <extension type="plugin" group="schuweb_sitemap" method="upgrade">
-    <name>SchuWeb Sitemap - Newsfeeds Plugin</name>
+    <name>PLG_SCHUWEB_SITEMAP_NEWSFEEDS</name>
     <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <authorEmail>sven@schultschik.de</authorEmail>
-    <authorUrl>www.schultschik.de</authorUrl>
+    <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
-    <description>SCHUWEB_SITEMAP_NF_PLUGIN_DESCRIPTION</description>
+    <description>PLG_SCHUWEB_SITEMAP_NEWSFEEDS_DESCRIPTION</description>
     <files>
         <filename plugin="newsfeeds">newsfeeds.php</filename>
-        <filename>index.html</filename>
+        <folder>language</folder>
     </files>
     <scriptfile>script.php</scriptfile>
     <languages folder="language">
