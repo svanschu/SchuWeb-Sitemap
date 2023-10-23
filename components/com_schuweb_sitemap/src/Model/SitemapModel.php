@@ -732,7 +732,7 @@ class SitemapModel extends ItemModel
     /**
      * Get ist language filter active
      */
-    private function isLanguageFilter(): bool
+    public function isLanguageFilter(): bool
     {
         if (!isset($this->languageFilter))
             $this->languageFilter = Factory::getApplication()->getLanguageFilter();

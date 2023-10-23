@@ -210,7 +210,7 @@ class schuweb_sitemap_content
 		$params['groups'] = implode(',', $user->getAuthorisedViewLevels());
 
 		// Define the language filter condition for the query
-		$params['language_filter'] = $app->getLanguageFilter();
+		$params['language_filter'] = $sitemap->isLanguageFilter();
 
 		switch ($view) {
 			case 'category':
