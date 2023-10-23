@@ -15,7 +15,6 @@ use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\Component\Newsfeeds\Site\Model\CategoryModel;
 use Joomla\Component\Newsfeeds\Site\Helper\RouteHelper;
 
 class schuweb_sitemap_newsfeeds
@@ -48,9 +47,6 @@ class schuweb_sitemap_newsfeeds
 
 	static function getTree(&$sitemap, &$parent, &$params)
 	{
-		$app = Factory::getApplication();
-		$newsfeeds_params = $app->getParams('com_newsfeeds');
-
 		$newsfeed_query = parse_url($parent->link);
 		parse_str(html_entity_decode($newsfeed_query['query']), $newsfeed_vars);
 		$view = ArrayHelper::getValue($newsfeed_vars, 'view', 0);
@@ -96,8 +92,6 @@ class schuweb_sitemap_newsfeeds
 		$categories = Categories::getInstance('Newsfeeds', $options);
 		$category = $categories->get($catid ?: 'root', true);
 
-		$params['count_clicks'] = $newsfeeds_params->get('count_clicks');
-
 		self::getCategoryTree($sitemap, $parent, $params, $category);
 	}
 
@@ -134,15 +128,26 @@ class schuweb_sitemap_newsfeeds
 
 		}
 
-		if ($params['include_newsfeeds']) { //view=category&catid=...
-			$newsfeedsModel = new CategoryModel();
-			$newsfeedsModel->getState(); // To force the populate state
-			$newsfeedsModel->setState('list.limit', ArrayHelper::getValue($params, 'max_newsfeeds'));
-			$newsfeedsModel->setState('list.start', 0);
-			$newsfeedsModel->setState('list.ordering', 'ordering');
-			$newsfeedsModel->setState('list.direction', 'ASC');
-			$newsfeedsModel->setState('category.id', $category->id);
-			$newsfeeds = $newsfeedsModel->getItems();
+		if ($params['include_newsfeeds']) {
+			$db = Factory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select(
+				array(
+					$db->qn('id'),
+					$db->qn('name'),
+					$db->qn('link'),
+					$db->qn('params'),
+					$db->qn('modified')
+				)
+			)
+				->from($db->qn('#__newsfeeds'))
+				->setLimit(ArrayHelper::getValue($params, 'max_newsfeeds', null, 'INT'))
+				->order($db->escape('ordering') . ' ' . $db->escape('ASC'))
+				->where($db->qn('catid') . ' = ' . $db->q($category->id));
+
+			$db->setQuery($query);
+
+			$newsfeeds = $db->loadObjectList();
 
 			foreach ($newsfeeds as $newsfeed) {
 				$item_params = new Registry;
@@ -153,16 +158,9 @@ class schuweb_sitemap_newsfeeds
 				$id = $node->uid = $parent->uid . 'i' . $newsfeed->id;
 				$node->name = $newsfeed->name;
 
-				// Find the Itemid
-				$Itemid = intval(preg_replace('/.*Itemid=([0-9]+).*/', '$1', RouteHelper::getNewsfeedRoute($newsfeed->id, $category->id)));
-
 				$node->browserNav = $parent->browserNav;
 
-				if ($item_params->get('count_clicks', $params['count_clicks']) == 1) {
-					$node->link = 'index.php?option=com_newsfeeds&task=newsfeed.go&id=' . $newsfeed->id . '&Itemid=' . ($Itemid ?: $parent->id);
-				} else {
-					$node->link = $newsfeed->link;
-				}
+				$node->link = $newsfeed->link;
 				$node->priority = $params['newsfeed_priority'];
 				$node->changefreq = $params['newsfeed_changefreq'];
 
