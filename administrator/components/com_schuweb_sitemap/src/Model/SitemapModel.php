@@ -232,13 +232,14 @@ class SitemapModel extends AdminModel
         }
 
         if ($table->is_default) {
-            $query = $this->_db->getQuery(true)
-                ->update($this->_db->quoteName('#__schuweb_sitemap'))
-                ->set($this->_db->quoteName('is_default') . ' = 0')
-                ->where($this->_db->quoteName('id') . ' <> ' . $table->id);
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__schuweb_sitemap'))
+                ->set($db->quoteName('is_default') . ' = 0')
+                ->where($db->quoteName('id') . ' <> ' . $table->id);
 
-            $this->_db->setQuery($query);
-            $this->_db->execute();
+            $db->setQuery($query);
+            $db->execute();
         }
 
         // Clean the cache.
@@ -259,8 +260,8 @@ class SitemapModel extends AdminModel
                 ->update($db->quoteName('#__schuweb_sitemap'))
                 ->set($db->quoteName('is_default') . ' = 0')
                 ->where($db->quoteName('id') . ' <> ' . $table->id);
-            $this->_db->setQuery($query);
-            $this->_db->execute();
+            $db->setQuery($query);
+            $db->execute();
             $table->is_default = 1;
             $table->store();
 

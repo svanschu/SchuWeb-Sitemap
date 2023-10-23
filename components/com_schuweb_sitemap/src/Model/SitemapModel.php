@@ -312,9 +312,9 @@ class SitemapModel extends ItemModel
                     $query->where('a.access IN (' . $groups . ')');
                 }
 
-                $this->_db->setQuery($query);
+                $db->setQuery($query);
 
-                $data = $this->_db->loadObject();
+                $data = $db->loadObject();
 
                 if (empty($data)) {
                     throw new Exception(Text::_('COM_SCHUWEB_SITEMAP_ERROR_SITEMAP_NOT_FOUND'));
