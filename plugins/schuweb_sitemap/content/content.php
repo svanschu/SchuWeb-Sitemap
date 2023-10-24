@@ -218,7 +218,7 @@ class schuweb_sitemap_content
 					$id = intval(ArrayHelper::getValue($params, 'id', 0));
 				}
 				if ($params['expand_categories'] && $id) {
-					$result = self::expandCategory($sitemap, $parent, $id, $params, $parent->id);
+					$result = self::expandCategory($sitemap, $parent, $id, $params, $parent->id, 0);
 				}
 				break;
 			case 'featured':
@@ -228,7 +228,7 @@ class schuweb_sitemap_content
 				break;
 			case 'categories':
 				if ($params['expand_categories']) {
-					$result = self::expandCategory($sitemap, $parent, ($id ?: 1), $params, $parent->id);
+					$result = self::expandCategory($sitemap, $parent, ($id ?: 1), $params, $parent->id, 0);
 				}
 				break;
 			case 'archive':
@@ -274,82 +274,86 @@ class schuweb_sitemap_content
 	 * @param   array   $params  an assoc array with the params for this plugin on Xmap
 	 * @param   int     $itemid  the itemid to use for this category's children
 	 */
-	static function expandCategory(&$sitemap, &$parent, $catid, &$params, $itemid)
+	static function expandCategory(&$sitemap, &$parent, $catid, &$params, $itemid, $level)
 	{
-		$db = Factory::getDBO();
-		$app = Factory::getApplication();
-		$query = $db->getQuery(true);
+		$maxlevel = $parent->params->get('maxLevel');
+		if ($maxlevel == -1 || $level < $maxlevel) {
+			$db = Factory::getDBO();
+			$app = Factory::getApplication();
+			$query = $db->getQuery(true);
 
-		$where = array('a.parent_id = ' . $catid . ' AND a.published = 1 AND a.extension=\'com_content\'');
+			$where = array('a.parent_id = ' . $catid . ' AND a.published = 1 AND a.extension=\'com_content\'');
 
-		if ($params['language_filter']) {
-			$where[] = 'a.language in (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')';
-		}
+			if ($params['language_filter']) {
+				$where[] = 'a.language in (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')';
+			}
 
-		if (!$params['show_unauth']) {
-			$where[] = 'a.access IN (' . $params['groups'] . ') ';
-		}
+			if (!$params['show_unauth']) {
+				$where[] = 'a.access IN (' . $params['groups'] . ') ';
+			}
 
-		$columns = array(
-			$db->quoteName('a.id'),
-			$db->quoteName('a.title'),
-			$db->quoteName('a.alias'),
-			$db->quoteName('a.access'),
-			$db->quoteName('a.path') . 'AS route',
-			$db->quoteName('a.created_time') . 'AS created',
-			$db->quoteName('a.modified_time') . 'AS modified'
-		);
-		$query->select($columns)
-			->from($db->quoteName('#__categories') . 'AS a')
-			->where($where);
-		if (!$sitemap->isXmlsitemap())
-			$query->order('a.lft');
+			$columns = array(
+				$db->quoteName('a.id'),
+				$db->quoteName('a.title'),
+				$db->quoteName('a.alias'),
+				$db->quoteName('a.access'),
+				$db->quoteName('a.path') . 'AS route',
+				$db->quoteName('a.created_time') . 'AS created',
+				$db->quoteName('a.modified_time') . 'AS modified'
+			);
+			$query->select($columns)
+				->from($db->quoteName('#__categories') . 'AS a')
+				->where($where);
+			if (!$sitemap->isXmlsitemap())
+				$query->order('a.lft');
 
-		$db->setQuery($query);
-		$items = $db->loadObjectList();
+			$db->setQuery($query);
+			$items = $db->loadObjectList();
 
-		if (count($items) > 0) {
-			foreach ($items as $item) {
-				$node = new stdclass();
-				$node->id = $parent->id;
-				$id = $node->uid = $parent->uid . 'c' . $item->id;
-				$node->browserNav = $parent->browserNav;
-				$node->priority = $params['cat_priority'];
-				$node->changefreq = $params['cat_changefreq'];
+			if (count($items) > 0) {
+				foreach ($items as $item) {
+					$node = new stdclass();
+					$node->id = $parent->id;
+					$id = $node->uid = $parent->uid . 'c' . $item->id;
+					$node->browserNav = $parent->browserNav;
+					$node->priority = $params['cat_priority'];
+					$node->changefreq = $params['cat_changefreq'];
 
-				$node->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $parent->xmlInsertPriority;
+					$node->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
+					$node->xmlInsertPriority = $parent->xmlInsertPriority;
 
-				$node->name = $item->title;
-				$node->expandible = true;
-				$node->secure = $parent->secure;
-				$node->lastmod = $parent->lastmod;
-				// TODO: Should we include category name or metakey here?
-				// $node->keywords = $item->metakey;
-				$node->newsItem = 0;
+					$node->name = $item->title;
+					$node->expandible = true;
+					$node->secure = $parent->secure;
+					$node->lastmod = $parent->lastmod;
+					// TODO: Should we include category name or metakey here?
+					// $node->keywords = $item->metakey;
+					$node->newsItem = 0;
 
-				// For the google news we should use te publication date instead
-				// the last modification date. See
-				if ($sitemap->isNewssitemap() || !$item->modified)
-					$item->modified = $item->created;
+					// For the google news we should use te publication date instead
+					// the last modification date. See
+					if ($sitemap->isNewssitemap() || !$item->modified)
+						$item->modified = $item->created;
 
-				$node->slug = $item->route ? ($item->id . ':' . $item->route) : $item->id;
-				$node->link = ContentHelperRoute::getCategoryRoute($node->slug);
-				if (strpos($node->link, 'Itemid=') === false) {
-					$node->itemid = $itemid;
-					$node->link .= '&Itemid=' . $itemid;
-				} else {
-					$node->itemid = preg_replace('/.*Itemid=([0-9]+).*/', '$1', $node->link);
+					$node->slug = $item->route ? ($item->id . ':' . $item->route) : $item->id;
+					$node->link = ContentHelperRoute::getCategoryRoute($node->slug);
+					if (strpos($node->link, 'Itemid=') === false) {
+						$node->itemid = $itemid;
+						$node->link .= '&Itemid=' . $itemid;
+					} else {
+						$node->itemid = preg_replace('/.*Itemid=([0-9]+).*/', '$1', $node->link);
+					}
+
+					if (!isset($parent->subnodes))
+						$parent->subnodes = new \stdClass();
+
+					$node->params = &$parent->params;
+
+					$parent->subnodes->$id = $node;
+
+
+					self::expandCategory($sitemap, $parent->subnodes->$id, $item->id, $params, $node->itemid, ++$level);
 				}
-
-				if (!isset($parent->subnodes))
-					$parent->subnodes = new \stdClass();
-
-				$node->params = &$parent->params;
-
-				$parent->subnodes->$id = $node;
-
-				self::expandCategory($sitemap, $parent->subnodes->$id, $item->id, $params, $node->itemid);
 			}
 		}
 
@@ -392,9 +396,10 @@ class schuweb_sitemap_content
 
 		$categories = Categories::getInstance("content", array("access" => false, "published" => 0));
 		$categoryNodes = $categories->get($catid);
-		
+
 		# if categorie is archived and include archive is false just return
-		if ($categoryNodes->published == 2 && !$params['include_archived']) return true;
+		if ($categoryNodes->published == 2 && !$params['include_archived'])
+			return true;
 
 		if ($catid != 'archived')
 			if ($params['include_archived']) {
