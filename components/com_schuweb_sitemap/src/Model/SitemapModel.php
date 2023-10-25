@@ -113,6 +113,13 @@ class SitemapModel extends ItemModel
     private bool $newssitemap = false;
 
     /**
+     * @var bool Indicates if the duplicated entries should get removed
+     *
+     * @since __BUMP_VERSION__
+     */
+    private bool $removeDuplicates;
+
+    /**
      * Method to auto-populate the model state.
      *
      * @return     void
@@ -172,7 +179,26 @@ class SitemapModel extends ItemModel
             $this->getSubNodes($this->nodes->$menutype, $node, $items);
         }
 
+        if ($this->removeDuplicates)
+            $this->removingDuplicates($this->nodes);
+
         return $this->nodes;
+    }
+
+    private function removingDuplicates(&$nodes, &$links = array())
+    {
+        foreach ($nodes as $key => $node) {
+            if (isset($node->link))
+                if (empty($links[$node->link])) {
+                    $links[$node->link] = true;
+                    if (isset($node->subnodes))
+                        $this->removingDuplicates($node->subnodes, $links);
+                } else {
+                    unset($nodes->$key);
+                } else
+                if (isset($node->subnodes))
+                    $this->removingDuplicates($node->subnodes, $links);
+        }
     }
 
     private function getSubNodes(&$pathref, $menu, &$items)
@@ -331,6 +357,7 @@ class SitemapModel extends ItemModel
                 $data->params = clone $this->getState('params');
                 $data->params->merge($registry);
 
+                $this->removeDuplicates = $registry->get('remove_duplicate') == 1 ? true : false;
 
                 // Convert the selections field to an array.
                 $registry = new Registry('_default');
