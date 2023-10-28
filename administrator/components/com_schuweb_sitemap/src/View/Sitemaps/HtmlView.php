@@ -18,8 +18,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\HTML\Helpers\Sidebar;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 
 /**
@@ -30,6 +29,14 @@ class HtmlView extends BaseHtmlView
     protected $state;
     protected $items;
     protected $pagination;
+
+    /**
+     * nested array with links to the sitemap xml
+     * 
+     * @var array 
+     * @since __BUMP_VERSION__
+     */
+    protected array $xml_links;
 
     /**
      * Display the main "SchuWeb Sitemap" view
@@ -44,6 +51,33 @@ class HtmlView extends BaseHtmlView
         $this->state = $this->get('State');
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
+
+        foreach ($this->items as $item) {
+            $path = '';
+            if ($item->is_default) {
+                $path = 'sitemap.xml';
+            } else {
+                $path = $item->alias . '.xml';
+            }
+            if (file_exists(JPATH_SITE . '/' . $path))
+                $this->xml_links[$item->id]['sitemap'] = Uri::root() . $path;
+
+                if ($item->is_default) {
+                    $path = 'sitemap_news.xml';
+                } else {
+                    $path = $item->alias . '_news.xml';
+                }
+            if (file_exists(JPATH_SITE . '/' . $path))
+                $this->xml_links[$item->id]['news'] = Uri::root() . $path;
+
+                if ($item->is_default) {
+                    $path = 'sitemap_images.xml';
+                } else {
+                    $path = $item->alias . '_images.xml';
+                }
+            if (file_exists(JPATH_SITE . '/' . $path))
+                $this->xml_links[$item->id]['images'] = Uri::root() . $path;
+        }
 
         $modal = $this->getLayout() == 'modal';
 

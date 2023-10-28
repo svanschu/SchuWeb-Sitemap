@@ -154,19 +154,29 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
 									<?php if ($item->is_default == 1) : ?>
                                         <span class="icon-star" aria-hidden="true"></span>
 									<?php endif; ?>
-									<?php if ($item->state): 
-                                        //TODO show XML link only if it exists
-                                        ?>
-                                        <small>[<a href="<?php echo $baseUrl . 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&id=' . $item->id; ?>"
-                                                   target="_blank"
-                                                   title="<?php echo Text::_('SCHUWEB_SITEMAP_XML_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_XML_LINK'); ?></a>]</small>
-                                        <small>[<a href="<?php echo $baseUrl . 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&news=1&id=' . $item->id; ?>"
-                                                   target="_blank"
-                                                   title="<?php echo Text::_('SCHUWEB_SITEMAP_NEWS_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_NEWS_LINK'); ?></a>]</small>
-                                        <small>[<a href="<?php echo $baseUrl . 'index.php?option=com_schuweb_sitemap&amp;view=xml&tmpl=component&images=1&id=' . $item->id; ?>"
-                                                   target="_blank"
-                                                   title="<?php echo Text::_('SCHUWEB_SITEMAP_IMAGES_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_IMAGES_LINK'); ?></a>]</small>
-									<?php endif; ?>
+									<?php if ($item->state):
+                                        if (isset($this->xml_links[$item->id]['sitemap'])): ?>
+                                            <small>[<a href="<?php echo $this->xml_links[$item->id]['sitemap']; ?>"
+                                                target="_blank"
+                                                title="<?php echo Text::_('SCHUWEB_SITEMAP_XML_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_XML_LINK'); ?></a>]</small>
+                                        <?php else : ?>
+                                            <small>[<?php echo Text::_('SCHUWEB_SITEMAP_NO_SITEMAP_XML', true); ?>]</small>
+                                        <?php endif; 
+                                        if (isset($this->xml_links[$item->id]['news'])): ?>
+                                            <small>[<a href="<?php echo $this->xml_links[$item->id]['news']; ?>"
+                                                target="_blank"
+                                                title="<?php echo Text::_('SCHUWEB_SITEMAP_NEWS_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_NEWS_LINK'); ?></a>]</small>
+                                        <?php else : ?>
+                                            <small>[<?php echo Text::_('SCHUWEB_SITEMAP_NO_NEWS_XML', true); ?>]</small>
+                                        <?php endif; 
+                                        if (isset($this->xml_links[$item->id]['images'])): ?>
+                                            <small>[<a href="<?php echo $this->xml_links[$item->id]['images']; ?>"
+                                                target="_blank"
+                                                title="<?php echo Text::_('SCHUWEB_SITEMAP_IMAGES_LINK_TOOLTIP', true); ?>"><?php echo Text::_('SCHUWEB_SITEMAP_IMAGES_LINK'); ?></a>]</small>
+                                        <?php else : ?>
+                                            <small>[<?php echo Text::_('SCHUWEB_SITEMAP_NO_IMAGES_XML', true); ?>]</small>
+                                        <?php endif;
+                                    endif; ?>
                                     <br/>
                                     <div class="small">
 		                                <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>

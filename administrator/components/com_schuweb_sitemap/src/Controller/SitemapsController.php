@@ -64,8 +64,8 @@ class SitemapsController extends AdminController
         $this->registerTask('unfeatured', 'featured');
 
         $this->registerTask('createxml', 'createxml');
-        $this->registerTask('createxmlnews', 'createxml');
-        $this->registerTask('createxmlimages', 'createxml');
+        $this->registerTask('createxmlnews', 'createxmlnews');
+        $this->registerTask('createxmlimages', 'createxmlimages');
     }
 
 
@@ -94,6 +94,10 @@ class SitemapsController extends AdminController
             // Publish the items.
             if (!$model->setDefault($id)) {
                 $this->enqueueMessage($model->getError(), 'warning');
+            } else {
+                $this->createxml();
+                $this->createxmlnews();
+                $this->createxmlimages();
             }
         }
 
@@ -117,7 +121,33 @@ class SitemapsController extends AdminController
     }
 
     /**
-     * Create XML file
+     * Create news sitemap xml file
+     * 
+     * @return void
+     * @since __BUMP_VERSION__
+     */
+    public function createxmlnews()
+    {
+        $site_sitemap_model = $this->getModel('Sitemap', 'Site');
+        $site_sitemap_model->setNewssitemap(true);
+        $this->createSitemapXml($site_sitemap_model);
+    }
+
+    /**
+     * Create images sitemap xml file
+     * 
+     * @return void
+     * @since __BUMP_VERSION__
+     */
+    public function createxmlimages()
+    {
+        $site_sitemap_model = $this->getModel('Sitemap', 'Site');
+        $site_sitemap_model->setImagesitemap(true);
+        $this->createSitemapXml($site_sitemap_model);
+    }
+
+    /**
+     * Create sitemap xml file
      * 
      * @return void
      * @since __BUMP_VERSION__
@@ -125,14 +155,17 @@ class SitemapsController extends AdminController
     public function createxml()
     {
         $site_sitemap_model = $this->getModel('Sitemap', 'Site');
+        $this->createSitemapXml($site_sitemap_model);
+    }
 
-        if ($this->doTask == 'createxmlnews') {
-            $site_sitemap_model->setImagesitemap(true);
-        }
-        if ($this->doTask == 'createxmlimages') {
-            $site_sitemap_model->setNewssitemap(true);
-        }
-
+    /**
+     * Create actually the xml file for sitemap, news and images
+     * 
+     * @return void
+     * @since __BUMP_VERSION__
+     */
+    private function createSitemapXml(&$site_sitemap_model)
+    {
         $pks = (array) $this->input->getInt('cid');
 
         foreach ($pks as $pk) {
@@ -149,9 +182,12 @@ class SitemapsController extends AdminController
             $nodes = $site_sitemap_model->getNodes();
 
             $sitemapname = $site_sitemap_model->getName();
-            if ($site_sitemap_model->isDefault()) {
+            if ($site_sitemap_model->isDefault())
                 $sitemapname = 'sitemap';
-            }
+            if ($site_sitemap_model->isNewssitemap())
+                $sitemapname .= '_news';
+            if ($site_sitemap_model->isImagesitemap())
+                $sitemapname .= '_images';
 
             $path = JPATH_SITE . '/' . $sitemapname . '.xml';
             $this->xw = xmlwriter_open_uri($path);
