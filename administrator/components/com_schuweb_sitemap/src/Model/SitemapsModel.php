@@ -54,7 +54,6 @@ class SitemapsModel extends ListModel
                 'ordering', 'a.ordering',
                 'featured', 'a.featured',
                 'language', 'a.language',
-                'hits', 'a.hits',
                 'publish_up', 'a.publish_up',
                 'publish_down', 'a.publish_down',
             );

@@ -67,16 +67,6 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                 <th scope="col" class="w-10 d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'access_level', $listDirn, $listOrder); ?>
                                 </th>
-                                <th scope="col" class="w-10 d-none d-md-table-cell">
-                                    <?php echo Text::_('SCHUWEB_SITEMAP_Heading_Html_Stats'); ?><br />
-                                    (
-                                    <?php echo Text::_('SCHUWEB_SITEMAP_Heading_Num_Links') . ' / ' . Text::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . ' / ' . Text::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>
-                                    )
-                                </th>
-                                <th scope="col" class="w-10 d-none d-md-table-cell">
-                                    <?php echo Text::_('SCHUWEB_SITEMAP_Heading_Xml_Stats'); ?><br />
-                                    <?php echo Text::_('SCHUWEB_SITEMAP_Heading_Num_Links') . '/' . Text::_('SCHUWEB_SITEMAP_Heading_Num_Hits') . '/' . Text::_('SCHUWEB_SITEMAP_Heading_Last_Visit'); ?>
-                                </th>
                                 <th scope="col" class="w-5 d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                                 </th>
@@ -89,38 +79,6 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                 $canCreate = $user->authorise('core.create', 'com_schuweb_sitemap.sitemap.' . $item->id);
                                 $canEdit = $user->authorise('core.edit', 'com_schuweb_sitemap.sitemap.' . $item->id);
                                 $canChange = $user->authorise('core.edit.state', 'com_schuweb_sitemap.sitemap.' . $item->id);
-
-                                $now = Factory::getDate()->toUnix();
-                                if (!$item->lastvisit_html) {
-                                    $htmlDate = Text::_('Date_Never');
-                                } elseif ($item->lastvisit_html > ($now - 3600)) { // Less than one hour
-                                    $htmlDate = Text::sprintf('Date_Minutes_Ago', intval(($now - $item->lastvisit_html) / 60));
-                                } elseif ($item->lastvisit_html > ($now - 86400)) { // Less than one day
-                                    $hours = intval(($now - $item->lastvisit_html) / 3600);
-                                    $htmlDate = Text::sprintf('Date_Hours_Minutes_Ago', $hours, ($now - ($hours * 3600) - $item->lastvisit_html) / 60);
-                                } elseif ($item->lastvisit_html > ($now - 259200)) { // Less than three days
-                                    $days = intval(($now - $item->lastvisit_html) / 86400);
-                                    $htmlDate = Text::sprintf('Date_Days_Hours_Ago', $days, intval(($now - ($days * 86400) - $item->lastvisit_html) / 3600));
-                                } else {
-                                    $date = new JDate($item->lastvisit_html);
-                                    $htmlDate = $date->format('Y-m-d H:i');
-                                }
-
-                                if (!$item->lastvisit_xml) {
-                                    $xmlDate = Text::_('Date_Never');
-                                } elseif ($item->lastvisit_xml > ($now - 3600)) { // Less than one hour
-                                    $xmlDate = Text::sprintf('Date_Minutes_Ago', intval(($now - $item->lastvisit_xml) / 60));
-                                } elseif ($item->lastvisit_xml > ($now - 86400)) { // Less than one day
-                                    $hours = intval(($now - $item->lastvisit_xml) / 3600);
-                                    $xmlDate = Text::sprintf('Date_Hours_Minutes_Ago', $hours, ($now - ($hours * 3600) - $item->lastvisit_xml) / 60);
-                                } elseif ($item->lastvisit_xml > ($now - 259200)) { // Less than three days
-                                    $days = intval(($now - $item->lastvisit_xml) / 86400);
-                                    $xmlDate = Text::sprintf('Date_Days_Hours_Ago', $days, intval(($now - ($days * 86400) - $item->lastvisit_xml) / 3600));
-                                } else {
-                                    $date = new JDate($item->lastvisit_xml);
-                                    $xmlDate = $date->format('Y-m-d H:i');
-                                }
-
                                 ?>
                                 <tr class="row<?php echo $i % 2; ?>">
                                     <td class="text-center">
@@ -181,12 +139,6 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
 
                                     <td class="small d-none d-md-table-cell">
                                         <?php echo $this->escape($item->access_level); ?>
-                                    </td>
-                                    <td class="d-none d-md-table-cell">
-                                        <?php echo $item->count_html . ' / ' . $item->views_html . ' / ' . $htmlDate; ?>
-                                    </td>
-                                    <td class="d-none d-md-table-cell">
-                                        <?php echo $item->count_xml . ' / ' . $item->views_xml . ' / ' . $xmlDate; ?>
                                     </td>
                                     <td class="d-none d-md-table-cell">
                                         <?php echo (int) $item->id; ?>

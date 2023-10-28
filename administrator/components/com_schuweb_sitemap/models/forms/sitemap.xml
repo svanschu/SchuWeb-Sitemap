@@ -93,54 +93,6 @@
             size="1" />
 
         <field
-            id="count_html"
-            name="hits"
-            type="text"
-            label="SCHUWEB_SITEMAP__HITSHTML_LABEL"
-            description="SCHUWEB_SITEMAP__HITS_DESC"
-            class="readonly"
-            labelclass="control-label"
-            size="6"
-            readonly="true"
-            filter="unset"/>
-
-        <field
-            id="count_xml"
-            name="hits"
-            type="text"
-            label="SCHUWEB_SITEMAP__HITSXML_LABEL"
-            description="SCHUWEB_SITEMAP__HITS_DESC"
-            class="readonly"
-            labelclass="control-label"
-            size="6"
-            readonly="true"
-            filter="unset"/>
-
-        <field
-            id="visits_html"
-            name="visits_html"
-            type="text"
-            label="SCHUWEB_SITEMAP__VISITSHTML_LABEL"
-            description="SCHUWEB_SITEMAP__HITS_DESC"
-            class="readonly"
-            labelclass="control-label"
-            size="6"
-            readonly="true"
-            filter="unset"/>
-
-        <field
-            id="visits_xml"
-            name="visits_xml"
-            type="text"
-            label="SCHUWEB_SITEMAP__VISITSXML_LABEL"
-            description="SCHUWEB_SITEMAP__HITS_DESC"
-            class="readonly"
-            labelclass="control-label"
-            size="6"
-            readonly="true"
-            filter="unset"/>
-
-        <field
             name="selections"
             type="list"
             label="SCHUWEB_SITEMAP__MENUASSIGMENT_LABEL"
