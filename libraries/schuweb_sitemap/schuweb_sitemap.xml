@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>	
+<extension type="library" method="upgrade">	
+    <name>SchuWeb Sitemap</name>	
+    <libraryname>schuweb_sitemap</libraryname>
+    <creationDate>sw.build.date</creationDate>
+    <author>Sven Schultschik</author>
+    <copyright>(C) 2023 Sven Schultschik. All rights reserved.</copyright>
+    <authorEmail>sven@schultschik.de</authorEmail>
+    <authorUrl>www.schultschik.de</authorUrl>
+    <version>sw.build.version</version>
+    <license>GNU/GPLv3 or later</license>	
+    <description>SchuWeb Sitemap - Libraries</description>
+    <namespace path="src">SchuWeb\Libraries</namespace>
+    <changelogurl></changelogurl>	
+    <files>	
+        <folder>src</folder>	
+        <filename>schuweb_sitemap.xml</filename>	
+    </files>	
+</extension>

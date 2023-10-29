@@ -1,6 +1,4 @@
 <?php
-use Joomla\CMS\Factory;
-
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_schuweb_sitemap
@@ -17,6 +15,8 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use SchuWeb\Libraries\Button\DefaultButton;
 
 $baseUrl = JUri::root();
 
@@ -61,6 +61,9 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                 <th scope="col" class="w-1 text-center">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
                                 </th>
+                                <th scope="col" class="w-1 text-center">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'SCHUWEB_SITEMAP_HEADING_DEFAULT', 'a.featured', $listDirn, $listOrder); ?>
+                                </th>
                                 <th scope="col" class="title">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'SCHUWEB_SITEMAP_Heading_Sitemap', 'a.title', $listDirn, $listOrder); ?>
                                 </th>
@@ -87,6 +90,18 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                     <td class="text-center">
                                         <?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'sitemaps.', $canChange, 'cb'); ?>
                                     </td>
+                                    <td class="text-center">
+                                        <?php
+                                        $options = [
+                                            'task_prefix' => 'sitemaps.',
+                                            'disabled' => false,
+                                            'id' => 'default-' . $item->id
+                                        ];
+
+                                        echo (new DefaultButton())
+                                            ->render((int) $item->is_default, $i, $options);
+                                        ?>
+                                    </td>
                                     <td>
                                         <?php if ($canEdit): ?>
                                             <a
@@ -95,9 +110,6 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                             </a>
                                         <?php else: ?>
                                             <?php echo $this->escape($item->title); ?>
-                                        <?php endif; ?>
-                                        <?php if ($item->is_default == 1): ?>
-                                            <span class="icon-star" aria-hidden="true"></span>
                                         <?php endif; ?>
                                         <?php if ($item->state):
                                             if (isset($this->xml_links[$item->id]['sitemap'])): ?>

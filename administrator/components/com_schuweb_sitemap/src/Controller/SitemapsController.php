@@ -60,12 +60,8 @@ class SitemapsController extends AdminController
     {
         parent::__construct($config, $factory, $app, $input);
 
-        //TODO ??
-        $this->registerTask('unfeatured', 'featured');
-
-        $this->registerTask('createxml', 'createxml');
-        $this->registerTask('createxmlnews', 'createxmlnews');
-        $this->registerTask('createxmlimages', 'createxmlimages');
+        $this->registerTask('unfeatured', 'setdefault');
+        $this->registerTask('featured', 'setdefault');
     }
 
 
