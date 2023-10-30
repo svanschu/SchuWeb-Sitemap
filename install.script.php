@@ -134,7 +134,7 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 		}
 
 		$attribs = '{"showintro":"1","show_menutitle":"1","classname":"",'
-			. '"columns":"","exlinks":"img_blue.gif","compress_xml":"1",'
+			. '"columns":"","compress_xml":"1",'
 			. '"include_link":"1","xmlLastMod":"1",'
 			. '"xmlInsertChangeFreq":"1","xmlInsertPriority":"1",'
 			. '"news_publication_name":""}';

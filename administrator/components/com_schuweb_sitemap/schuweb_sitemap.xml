@@ -29,7 +29,6 @@
         </sql>
     </uninstall>
     <files folder="site">
-        <folder>assets</folder>
         <folder>language</folder>
         <folder>src</folder>
         <folder>tmpl</folder>

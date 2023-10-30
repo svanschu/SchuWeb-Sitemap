@@ -166,47 +166,16 @@
                 label="SCHUWEB_SITEMAP_ATTRIBS_COLUMNS_LABEL"
                 description="SCHUWEB_SITEMAP_ATTRIBS_COLUMNS_DESC" />
 
-            <field
-                name="exlinks"
-                type="radio"
-                class="btn-group"
-                labelclass="control-label"
-                label="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_LABEL"
-                description="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_DESC"
-                default="1">
-                <option
-                    value="0">No</option>
-                <option
-                    value="1">Yes</option>
-            </field>
-
-            <field
-                name="exlinks"
-                type="list"
-                label="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_IMAGE_LABEL"
-                description="SCHUWEB_SITEMAP_ATTRIBS_EXTERNAL_LINKS_IMAGE_DESC"
-                labelclass="control-label"
-                default="1">
-                <option
-                    value="img_blue.gif">img_blue.gif</option>
-                <option
-                    value="img_green.gif">img_green.gif</option>
-                <option
-                    value="img_grey.gif">img_grey.gif</option>
-                <option
-                    value="img_orange.gif">img_orange.gif</option>
-                <option
-                    value="img_red.gif">img_red.gif</option>
-                <option
-                    value="txt_blue.gif">txt_blue.gif</option>
-                <option
-                    value="txt_green.gif">txt_green.gif</option>
-                <option
-                    value="txt_grey.gif">txt_grey.gif</option>
-                <option
-                    value="txt_orange.gif">txt_orange.gif</option>
-                <option
-                    value="txt_red.gif">txt_red.gif</option>
+            <field 
+                name="remove_duplicate" 
+                type="radio" 
+                class="btn-group" 
+                label="SCHUWEB_SITEMAP_REMOVE_DUPLICATE" 
+                description="SCHUWEB_SITEMAP_REMOVE_DUPLICATE_DESC" 
+                default="0"
+                >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
             </field>
 
             <field
@@ -221,18 +190,6 @@
                     value="0">No</option>
                 <option
                     value="1">Yes</option>
-            </field>
-
-            <field 
-                name="remove_duplicate" 
-                type="radio" 
-                class="btn-group" 
-                label="SCHUWEB_SITEMAP_REMOVE_DUPLICATE" 
-                description="SCHUWEB_SITEMAP_REMOVE_DUPLICATE_DESC" 
-                default="0"
-                >
-                <option value="0">No</option>
-                <option value="1">Yes</option>
             </field>
         </fieldset>
 
