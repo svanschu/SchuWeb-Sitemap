@@ -185,8 +185,7 @@ class SitemapsController extends AdminController
             if ($site_sitemap_model->isImagesitemap())
                 $sitemapname .= '_images';
 
-            $path = JPATH_SITE . '/' . $sitemapname . '.xml';
-            $this->xw = xmlwriter_open_uri($path);
+            $this->xw = xmlwriter_open_memory();
             xmlwriter_set_indent($this->xw, 1);
             $res = xmlwriter_set_indent_string($this->xw, ' ');
 
@@ -222,12 +221,32 @@ class SitemapsController extends AdminController
 
                 $this->printNode($node, $site_sitemap_model->isNewssitemap());
             }
-            
+
             xmlwriter_end_element($this->xw);
-            
+
             xmlwriter_end_document($this->xw);
 
-            xmlwriter_flush($this->xw);
+            $xml = xmlwriter_output_memory($this->xw);
+
+            if ($site_sitemap_model->isXmlcompress()) {
+                $dom = new \DOMDocument("1.0");
+
+                // Preserve redundant spaces (`true` by default)
+                $dom->preserveWhiteSpace = false;
+
+                // Disable automatic document indentation
+                $dom->formatOutput = false;
+
+                $dom->loadXML($xml);
+
+                /** @var string $minifiedXml  */
+                $xml = $dom->saveXML();
+            }
+
+            $path = JPATH_SITE . '/' . $sitemapname . '.xml';
+            $xmlfile = fopen($path, "w");
+            fwrite($xmlfile, $xml);
+            fclose($xmlfile);
         }
 
         $this->setRedirect('index.php?option=com_schuweb_sitemap&view=sitemaps');
