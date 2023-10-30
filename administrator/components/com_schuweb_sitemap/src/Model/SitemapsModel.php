@@ -191,7 +191,9 @@ class SitemapsModel extends ListModel
                 $sep = ', ';
             }
 
-            return Text::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED', $extensionsNameList);
+            $url = 'index.php?option=com_plugins&view=plugins&filter[folder]=schuweb_sitemap';
+
+            return Text::sprintf('SCHUWEB_SITEMAP_MESSAGE_EXTENSIONS_DISABLED', $url, $extensionsNameList);
         } else {
             return "";
         }
