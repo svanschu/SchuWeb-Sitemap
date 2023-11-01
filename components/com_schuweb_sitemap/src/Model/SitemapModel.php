@@ -272,7 +272,7 @@ class SitemapModel extends ItemModel
                     $node->browserNav = 0;
 
                 if ($node->browserNav != 3) {
-                    $node->htmllink = Route::link('site', $node->htmllink, true, @$node->secure);
+                    $node->htmllink = Route::link('site', $node->htmllink, true, @$node->secure, $this->isXmlsitemap());
                 }
 
                 $node->name = htmlspecialchars($node->name);
