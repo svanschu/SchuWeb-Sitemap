@@ -239,7 +239,7 @@ class SitemapModel extends ItemModel
 
             if ($node->home == 1) {
                 // Correct the URL for the home page.
-                $node->htmllink = Uri::base();
+                $node->htmllink = Uri::root();
             }
             switch ($item->type) {
                 case 'separator':
