@@ -11,7 +11,7 @@
     <description>SchuWeb Sitemap integration plugin for the extension Weblinks</description>
     <files>
         <filename plugin="weblinks">weblinks.php</filename>
-        <filename>index.html</filename>
+        <folder>language</folder>
     </files>
     <updateservers>
         <server type="extension" priority="1" name="SchuWeb Sitemap - Weblinks Integration">
