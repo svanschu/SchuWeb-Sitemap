@@ -1,12 +1,14 @@
 <?php
 /**
- * @version         sw.build.version
- * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
- * @license         GNU General Public License version 2 or later; see LICENSE.txt
- * @author          Sven Schultschik (extensions@schultschik.de)
+ * @package     Joomla.Site
+ * @subpackage  com_schuweb_sitemap
+ * 
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2023 Sven Schultschik. All rights reserved
+ * @license     GNU General Public License version 3; see LICENSE
+ * @author      Sven Schultschik (extensions@schultschik.de)
  */
 
-// no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // Create shortcut to parameters.
