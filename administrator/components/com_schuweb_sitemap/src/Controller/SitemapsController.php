@@ -13,6 +13,7 @@ namespace SchuWeb\Component\Sitemap\Administrator\Controller;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Router\Route;
 
 \defined('_JEXEC') or die;
 
@@ -260,6 +261,10 @@ class SitemapsController extends AdminController
      */
     private function printNode(&$node, $newssitemap)
     {
+        if (!isset($node->htmllink)) {
+            $node->htmllink = Route::link('site', $node->link, true, @$node->secure, true);
+        }
+
         // ignore "no link" && ignore links that have been added already
         if ($node->browserNav != 3 && empty($this->_links[$node->htmllink])) {
 
