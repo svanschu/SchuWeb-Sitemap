@@ -128,6 +128,13 @@ class SitemapModel extends ItemModel
     private bool $removeDuplicates;
 
     /**
+     * @var bool Indicates if the duplicated menus should get removed
+     *
+     * @since __BUMP_VERSION__
+     */
+    private bool $removeDuplicateMenus;
+
+    /**
      * Method to auto-populate the model state.
      *
      * @return     void
@@ -193,19 +200,56 @@ class SitemapModel extends ItemModel
         return $this->nodes;
     }
 
-    private function removingDuplicates(&$nodes, &$links = array())
+    private function removingDuplicates(&$nodes, &$links = array(), &$mlinks = array())
     {
         foreach ($nodes as $key => $node) {
-            if (isset($node->link))
-                if (empty($links[$node->link])) {
-                    $links[$node->link] = true;
+            if (isset($node->link)) {
+                $link = $node->link;
+                if ($this->removeDuplicateMenus && str_contains($link, "Itemid"))
+                    $link = substr($link, 0, strpos($link, 'Itemid'));
+                if (empty($links[$link])) {
+                    $links[$link] = true;
                     if (isset($node->subnodes))
-                        $this->removingDuplicates($node->subnodes, $links);
+                        $this->removingDuplicates($node->subnodes, $links, $mlinks);
                 } else {
                     unset($nodes->$key);
-                } else
+                }
+            } else {
                 if (isset($node->subnodes))
-                    $this->removingDuplicates($node->subnodes, $links);
+                    $this->removingDuplicates($node->subnodes, $links, $mlinks);
+            }
+        }
+
+        if (!$this->removeDuplicateMenus)
+            return;
+
+        // http://localhost:43000/schuweb-sitemap-dev-j4/index.php?option=com_content&view=category
+        // &layout=blog&id=17&Itemid=266
+        // http://localhost:43000/schuweb-sitemap-dev-j4/index.php?option=com_content&view=category
+        // &id=17&Itemid=103
+        // http://localhost:43000/schuweb-sitemap-dev-j4/index.php?option=com_content&view=category&id=18&Itemid=266
+        // http://localhost:43000/schuweb-sitemap-dev-j4/index.php?option=com_content&view=category&id=18&Itemid=103
+        foreach ($nodes as $key => $node) {
+            if (!isset($node->link))
+                continue;
+
+            $matches = array();
+            if (preg_match('/^.*option=(.[^&]*).*&view=(.[^&]*).*&id=(\d+).*$/', $node->link, $matches)) {
+                // TODO make this extensible for plugins
+                $option = $matches[1];
+                $view = $matches[2];
+                $id = $matches[3];
+                if (empty($option) || empty($view) || empty($id))
+                    continue;
+                if (empty($mlinks[$option][$view][$id])) {
+                    $mlinks[$option][$view][$id] = true;
+                } else {
+                    if (empty((array)($node->subnodes))) {
+                        unset($nodes->$key);
+                    }
+                }
+            }
+
         }
     }
 
@@ -366,6 +410,7 @@ class SitemapModel extends ItemModel
                 $data->params->merge($registry);
 
                 $this->removeDuplicates = $registry->get('remove_duplicate') == 1 ? true : false;
+                $this->removeDuplicateMenus = $registry->get('remove_duplicate_menu') == 1 ? true : false;
 
                 // Convert the selections field to an array.
                 $registry = new Registry('_default');

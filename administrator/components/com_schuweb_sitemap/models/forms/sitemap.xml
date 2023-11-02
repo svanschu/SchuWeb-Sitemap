@@ -178,6 +178,19 @@
                 <option value="1">Yes</option>
             </field>
 
+            <field 
+                name="remove_duplicate_menu" 
+                type="radio" 
+                showon="remove_duplicate:1"
+                class="btn-group btn-group-yesno" 
+                label="SCHUWEB_SITEMAP_REMOVE_DUPLICATE_MENU" 
+                description="SCHUWEB_SITEMAP_REMOVE_DUPLICATE_MENU_DESC" 
+                default="0"
+                >
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </field>
+
             <field
                 name="include_link"
                 type="radio"
