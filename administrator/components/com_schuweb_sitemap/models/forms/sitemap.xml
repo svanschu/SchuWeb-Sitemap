@@ -125,7 +125,7 @@
             <field
                 name="showintro"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 labelclass="control-label"
                 label="SCHUWEB_SITEMAP_ATTRIBS_SHOW_INTRO_LABEL"
                 description="SCHUWEB_SITEMAP_ATTRIBS_SHOW_INTRO_DESC"
@@ -139,7 +139,7 @@
             <field
                 name="show_menutitle"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_ATTRIBS_SHOW_MENU_TITLE_LABEL"
                 description="SCHUWEB_SITEMAP_ATTRIBS_SHOW_MENU_TITLE_DESC"
                 labelclass="control-label"
@@ -169,7 +169,7 @@
             <field 
                 name="remove_duplicate" 
                 type="radio" 
-                class="btn-group" 
+                class="btn-group btn-group-yesno" 
                 label="SCHUWEB_SITEMAP_REMOVE_DUPLICATE" 
                 description="SCHUWEB_SITEMAP_REMOVE_DUPLICATE_DESC" 
                 default="0"
@@ -194,7 +194,7 @@
             <field
                 name="include_link"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_ATTRIBS_INCLUDE_LINK_LABEL"
                 description="SCHUWEB_SITEMAP_ATTRIBS_INCLUDE_LINK_DESC"
                 labelclass="control-label"
@@ -210,7 +210,7 @@
             <field
                 name="compress_xml"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_ATTRIBS_COMPRESS_XML_LABEL"
                 description="SCHUWEB_SITEMAP_ATTRIBS_COMPRESS_XML_DESC"
                 labelclass="control-label"
@@ -223,7 +223,7 @@
             <field
                 name="xmlLastMod"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_XML_LAST_MOD"
                 description="SCHUWEB_SITEMAP_XML_LAST_MOD_DESC"
                 labelclass="control-label"
@@ -234,7 +234,7 @@
             <field
                 name="xmlInsertChangeFreq"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_CHANGE_FREQUENCY"
                 description="SCHUWEB_SITEMAP_CHANGE_FREQUENCY_DESC"
                 labelclass="control-label"
@@ -245,7 +245,7 @@
             <field
                 name="xmlInsertPriority"
                 type="radio"
-                class="btn-group"
+                class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_PRIORITY"
                 description="SCHUWEB_SITEMAP_PRIORITY_DESC2"
                 labelclass="control-label"
