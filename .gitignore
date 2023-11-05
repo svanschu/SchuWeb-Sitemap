@@ -1,5 +1,2 @@
-\.idea/
-/.docker/**/db/
-/.docker/**/public/
-
 plugins/schuweb_sitemap/dpcalendar
+plugins/schuweb_sitemap/kunena
