@@ -5,7 +5,7 @@
     <creationDate>sw.build.date</creationDate>
     <copyright>GNU GPL</copyright>
     <license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <authorEmail>sven@schultschik.de</authorEmail>
+    <authorEmail>extensions@schultschik.de</authorEmail>
     <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>PLG_SCHUWEB_SITEMAP_NEWSFEEDS_DESCRIPTION</description>
