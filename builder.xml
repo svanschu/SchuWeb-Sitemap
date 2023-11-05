@@ -2,12 +2,8 @@
 <!--
     Override variables:
     - Version number -Dbuild.version=0.0.0
-    All paths starts at the build folder
-    - Build dir -Dbuilddir=./../../packages/swsetgroup
-    - Sourcefiles -Dsrc=./..
 -->
 <project name="schuweb_sitemap" default="build">
-    <property name="extension_name" value="SchuWeb_Sitemap"/>
     <!-- Version number of build -->
     <property name="build.version" value="0.0.0" override="true"/>
     <!-- get the date for build -->
@@ -15,21 +11,18 @@
         <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
     </tstamp>
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
-    <property name="builddir" value="./../../packages/${extension_name}" override="true"/>
-    <!-- Declare Project src files -->
-    <property name="src" value="./.." override="true"/>
-    <property name="plugins" value="${src}/plugins"/>
+    <property name="builddir" value="./../../packages/SchuWeb_Sitemap" override="true"/>
 
-    <fileset dir="${src}/administrator/components/com_schuweb_sitemap" id="schuweb_sitemap_admin">
+    <fileset dir="src/administrator/components/com_schuweb_sitemap" id="schuweb_sitemap_admin">
         <include name="**"/>
     </fileset>
-    <fileset dir="${src}/components/com_schuweb_sitemap" id="schuweb_sitemap_front">
+    <fileset dir="src/components/com_schuweb_sitemap" id="schuweb_sitemap_front">
         <include name="**"/>
     </fileset>
-    <fileset dir="${src}/media/com_schuweb_sitemap" id="schuweb_sitemap_media">
+    <fileset dir="src/media/com_schuweb_sitemap" id="schuweb_sitemap_media">
         <include name="**"/>
     </fileset>
-    <fileset dir="${src}/libraries/schuweb_sitemap" id="schuweb_sitemap_lib">
+    <fileset dir="src/libraries/schuweb_sitemap" id="schuweb_sitemap_lib">
         <include name="**"/>
     </fileset>
 
@@ -88,12 +81,12 @@
         <copy todir="${builddir}/tmp/schuweb_sitemap/lib">
                 <fileset refid="schuweb_sitemap_lib"/>
         </copy>
-        <copy file="${src}/administrator/components/com_schuweb_sitemap/schuweb_sitemap.xml" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
-        <copy file="${src}/pkg_schuweb_sitemap.xml" tofile="${builddir}/tmp/pkg_schuweb_sitemap.xml" />
-        <copy file="${src}/install.script.php" todir="${builddir}/tmp" />
-        <copy file="${src}/extension.script.php" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
+        <copy file="src/administrator/components/com_schuweb_sitemap/schuweb_sitemap.xml" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
+        <copy file="src/pkg_schuweb_sitemap.xml" tofile="${builddir}/tmp/pkg_schuweb_sitemap.xml" />
+        <copy file="src/install.script.php" todir="${builddir}/tmp" />
+        <copy file="src/extension.script.php" todir="${builddir}/tmp/schuweb_sitemap/schuweb_sitemap" />
         <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
-            <fileset dir="${plugins}/schuweb_sitemap">
+            <fileset dir="src/plugins/schuweb_sitemap">
                 <include name="content/**"/>
                 <include name="newsfeeds/**"/>
             </fileset>
