@@ -13,6 +13,7 @@ namespace SchuWeb\Component\Sitemap\Administrator\Controller;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 
 \defined('_JEXEC') or die;
@@ -80,7 +81,7 @@ class SitemapsController extends AdminController
 
         // Get items to publish from the request.
         $cid = $input->getVar('cid', 0, '', 'array');
-        $id = @$cid[0];
+        $id  = @$cid[0];
 
         if (!$id) {
             $this->enqueueMessage(Text::_('Select an item to set as default'), 'warning');
@@ -219,8 +220,11 @@ class SitemapsController extends AdminController
             }
 
             foreach ($nodes as $node) {
-
-                $this->printNode($node, $site_sitemap_model->isNewssitemap());
+                $this->printNode(
+                    $node,
+                    $site_sitemap_model->isNewssitemap(),
+                    $site_sitemap_model->getNewsPublicationName()
+                );
             }
 
             xmlwriter_end_element($this->xw);
@@ -244,7 +248,7 @@ class SitemapsController extends AdminController
                 $xml = $dom->saveXML();
             }
 
-            $path = JPATH_SITE . '/' . $sitemapname . '.xml';
+            $path    = JPATH_SITE . '/' . $sitemapname . '.xml';
             $xmlfile = fopen($path, "w");
             fwrite($xmlfile, $xml);
             fclose($xmlfile);
@@ -259,14 +263,26 @@ class SitemapsController extends AdminController
      * @return void
      * @since __BUMP_VERSION__
      */
-    private function printNode(&$node, $newssitemap)
+    private function printNode(&$node, $newssitemap, $news_publication_name)
     {
-        if (!isset($node->htmllink)) {
+        
+        if ($node->browserNav != 3 && !isset($node->htmllink)) {
             $node->htmllink = Route::link('site', $node->link, true, @$node->secure, true);
         }
 
+        $diff = -1;
+        if (isset($node->modified)) {
+            $oldest = date_add(date_create(),  date_interval_create_from_date_string('-2 days'));
+            $interval = date_diff($oldest, date_create($node->modified));
+            $diff = intval($interval->format('%R%a')) + 1;
+        }
+
         // ignore "no link" && ignore links that have been added already
-        if ($node->browserNav != 3 && empty($this->_links[$node->htmllink])) {
+        if (
+            $node->browserNav != 3 && empty($this->_links[$node->htmllink])
+            // Ignore nodes without modified date on news sitemap
+            && !($newssitemap && (!isset($node->modified) || $diff < 0))
+        ) {
 
             if (isset($node->alias) && !$node->alias)
                 $this->_links[$node->htmllink] = 1;
@@ -284,12 +300,12 @@ class SitemapsController extends AdminController
 
             $modified = null;
             if ($node->lastmod != 0) {
-                $modified = (isset($node->modified) && $node->modified != FALSE && $node->modified != $this->nullDate && $node->modified != -1) ? $node->modified : NULL;
+                $modified = (isset($node->modified) && $node->modified != FALSE && $node->modified != -1) ? $node->modified : NULL;
                 if (!$modified && $newssitemap) {
                     $modified = time();
                 }
                 if ($modified && !is_numeric($modified)) {
-                    $date = new Date($modified);
+                    $date     = new Date($modified);
                     $modified = $date->toUnix();
                 }
                 if ($modified) {
@@ -297,19 +313,41 @@ class SitemapsController extends AdminController
                 }
             }
 
-            if ($modified) {
+            if ($newssitemap) {
+                xmlwriter_start_element($this->xw, 'news:news');
+                xmlwriter_start_element($this->xw, 'news:publication');
+                xmlwriter_start_element($this->xw, 'news:name');
+                xmlwriter_text($this->xw, $news_publication_name);
+                xmlwriter_end_element($this->xw);
+                xmlwriter_start_element($this->xw, 'news:language');
+                //ToDo support multi lang
+                $app = Factory::getApplication();
+                $languageObj = $app->getLanguage();
+                xmlwriter_text($this->xw, $languageObj->get('tag'));
+                xmlwriter_end_element($this->xw);
+                xmlwriter_end_element($this->xw);
+                xmlwriter_start_element($this->xw, 'news:publication_date');
+                xmlwriter_text($this->xw, (new Date($node->modified))->toISO8601(true));
+                xmlwriter_end_element($this->xw);
+                xmlwriter_start_element($this->xw, 'news:title');
+                xmlwriter_text($this->xw, $node->name);
+                xmlwriter_end_element($this->xw);
+                xmlwriter_end_element($this->xw);
+            }
+
+            if ($modified && !$newssitemap) {
                 xmlwriter_start_element($this->xw, 'lastmod');
                 xmlwriter_text($this->xw, $modified);
                 xmlwriter_end_element($this->xw);
             }
 
-            if ($node->changefreq) {
+            if ($node->changefreq && !$newssitemap) {
                 xmlwriter_start_element($this->xw, 'changefreq');
                 xmlwriter_text($this->xw, $node->changefreq);
                 xmlwriter_end_element($this->xw);
             }
 
-            if ($node->priority) {
+            if ($node->priority && !$newssitemap) {
                 xmlwriter_start_element($this->xw, 'priority');
                 xmlwriter_text($this->xw, $node->priority);
                 xmlwriter_end_element($this->xw);
@@ -320,7 +358,7 @@ class SitemapsController extends AdminController
 
         if (isset($node->subnodes)) {
             foreach ($node->subnodes as $subnode) {
-                $this->printNode($subnode, $newssitemap);
+                $this->printNode($subnode, $newssitemap, $news_publication_name);
             }
         }
     }

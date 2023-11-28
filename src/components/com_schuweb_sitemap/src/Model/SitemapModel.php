@@ -135,6 +135,13 @@ class SitemapModel extends ItemModel
     private bool $removeDuplicateMenus;
 
     /**
+     * @var string This is the name of the news publication for the news sitemap
+     * 
+     * @since __BUMP_VERSION__
+     */
+    private string $news_publication_name;
+
+    /**
      * Method to auto-populate the model state.
      *
      * @return     void
@@ -149,7 +156,7 @@ class SitemapModel extends ItemModel
 
         // If not sitemap specified, select the default one
         if (!$pk) {
-            $db = $this->getDbo();
+            $db    = $this->getDbo();
             $query = $db->getQuery(true);
             $query->select('id')->from('#__schuweb_sitemap')->where('is_default=1');
             $db->setQuery($query);
@@ -180,12 +187,12 @@ class SitemapModel extends ItemModel
 
             $node = new \stdClass();
 
-            $node->uid = "menu-" . $menutype;
-            $node->menutype = $menutype;
-            $node->priority = null;
+            $node->uid        = "menu-" . $menutype;
+            $node->menutype   = $menutype;
+            $node->priority   = null;
             $node->changefreq = null;
             $node->browserNav = 3;
-            $node->type = 'separator';
+            $node->type       = 'separator';
 
             $node->name = $this->getMenuTitle($menutype); // Get the name of this menu
 
@@ -237,14 +244,14 @@ class SitemapModel extends ItemModel
             if (preg_match('/^.*option=(.[^&]*).*&view=(.[^&]*).*&id=(\d+).*$/', $node->link, $matches)) {
                 // TODO make this extensible for plugins
                 $option = $matches[1];
-                $view = $matches[2];
-                $id = $matches[3];
+                $view   = $matches[2];
+                $id     = $matches[3];
                 if (empty($option) || empty($view) || empty($id))
                     continue;
                 if (empty($mlinks[$option][$view][$id])) {
                     $mlinks[$option][$view][$id] = true;
                 } else {
-                    if (empty((array)($node->subnodes))) {
+                    if (empty((array) ($node->subnodes))) {
                         unset($nodes->$key);
                     }
                 }
@@ -262,22 +269,22 @@ class SitemapModel extends ItemModel
 
             $node = new \stdClass;
 
-            $id = $node->id = $item->id;
-            $node->uid = $item->uid;
-            $node->name = $item->title; // displayed name of node
-            $node->browserNav = $item->browserNav; // how to open link
-            $node->priority = $item->priority;
-            $node->changefreq = $item->changefreq;
-            $node->type = $item->type; // menuentry-type
-            $node->menutype = $menu->menutype; // menuentry-type
-            $node->home = $item->home; // If it's a home menu entry
-            $node->htmllink = $node->link = $item->link;
-            $node->option = $item->option;
-            $node->modified = @$item->modified;
-            $node->secure = $item->params->get('secure');
-            $node->lastmod = $item->lastmod;
+            $id                        = $node->id = $item->id;
+            $node->uid                 = $item->uid;
+            $node->name                = $item->title; // displayed name of node
+            $node->browserNav          = $item->browserNav; // how to open link
+            $node->priority            = $item->priority;
+            $node->changefreq          = $item->changefreq;
+            $node->type                = $item->type; // menuentry-type
+            $node->menutype            = $menu->menutype; // menuentry-type
+            $node->home                = $item->home; // If it's a home menu entry
+            $node->htmllink            = $node->link = $item->link;
+            $node->option              = $item->option;
+            $node->modified            = @$item->modified;
+            $node->secure              = $item->params->get('secure');
+            $node->lastmod             = $item->lastmod;
             $node->xmlInsertChangeFreq = $item->xmlInsertChangeFreq;
-            $node->xmlInsertPriority = $item->xmlInsertPriority;
+            $node->xmlInsertPriority   = $item->xmlInsertPriority;
 
             $node->params =& $item->params;
 
@@ -360,9 +367,9 @@ class SitemapModel extends ItemModel
     public function getItem($pk = null)
     {
         // Initialize variables.
-        $db = $this->getDbo();
+        $db  = $this->getDbo();
         $app = Factory::getApplication();
-        $pk = (!empty($pk)) ? $pk : (int) $this->getState('sitemap.id');
+        $pk  = (!empty($pk)) ? $pk : (int) $this->getState('sitemap.id');
 
         if ($this->_item === null) {
             $this->_item = array();
@@ -385,7 +392,7 @@ class SitemapModel extends ItemModel
 
                 // Filter by access level.
                 if ($access = $this->getState('filter.access')) {
-                    $user = $app->getIdentity();
+                    $user   = $app->getIdentity();
                     $groups = implode(',', $user->getAuthorisedViewLevels());
                     $query->where('a.access IN (' . $groups . ')');
                 }
@@ -409,25 +416,26 @@ class SitemapModel extends ItemModel
                 $data->params = clone $this->getState('params');
                 $data->params->merge($registry);
 
-                $this->removeDuplicates = $registry->get('remove_duplicate') == 1 ? true : false;
-                $this->removeDuplicateMenus = $registry->get('remove_duplicate_menu') == 1 ? true : false;
+                $this->removeDuplicates      = $registry->get('remove_duplicate') == 1 ? true : false;
+                $this->removeDuplicateMenus  = $registry->get('remove_duplicate_menu') == 1 ? true : false;
+                $this->news_publication_name = $registry->get('news_publication_name', $app->get('sitename'));
 
                 // Convert the selections field to an array.
                 $registry = new Registry('_default');
                 $registry->loadString($data->selections);
                 $data->selections = $registry->toArray();
 
-                $lastmod = $data->params->get('xmlLastMod');
+                $lastmod             = $data->params->get('xmlLastMod');
                 $xmlInsertChangeFreq = $data->params->get('xmlInsertChangeFreq');
-                $xmlInsertPriority = $data->params->get('xmlInsertPriority');
+                $xmlInsertPriority   = $data->params->get('xmlInsertPriority');
                 // only display the Menüs which are activated
                 foreach ($data->selections as $key => $selection) {
                     if (!isset($selection["enabled"]) || is_null($selection["enabled"]) || $selection["enabled"] != 1) {
                         unset($data->selections[$key]);
                     } else {
-                        $data->selections[$key]["lastmod"] = $lastmod;
+                        $data->selections[$key]["lastmod"]             = $lastmod;
                         $data->selections[$key]["xmlInsertChangeFreq"] = $xmlInsertChangeFreq;
-                        $data->selections[$key]["xmlInsertPriority"] = $xmlInsertPriority;
+                        $data->selections[$key]["xmlInsertPriority"]   = $xmlInsertPriority;
                     }
                 }
 
@@ -437,7 +445,7 @@ class SitemapModel extends ItemModel
                     $data->params->set('access-view', true);
                 } else {
                     // If no access filter is set, the layout takes some responsibility for display of limited information.
-                    $user = $app->getIdentity();
+                    $user   = $app->getIdentity();
                     $groups = $user->getAuthorisedViewLevels();
 
                     $data->params->set('access-view', in_array($data->access, $groups));
@@ -446,8 +454,8 @@ class SitemapModel extends ItemModel
 
                 $this->_item[$pk] = $data;
 
-                $this->default = $data->is_default;
-                $this->name = $data->alias;
+                $this->default     = $data->is_default;
+                $this->name        = $data->alias;
                 $this->xmlcompress = $data->params->get('compress_xml');
             } catch (Exception $e) {
                 $app->enqueueMessage(Text::_($e->getMessage()), 'error');
@@ -461,9 +469,9 @@ class SitemapModel extends ItemModel
 
     public function getMenuTitle($menutype, $module = 'mod_menu')
     {
-        $app = Factory::getApplication();
+        $app  = Factory::getApplication();
         $user = $app->getIdentity();
-        $db = $this->getDbo();
+        $db   = $this->getDbo();
 
         $userLevelsImp = implode(',', (array) $user->getAuthorisedViewLevels());
 
@@ -520,8 +528,8 @@ class SitemapModel extends ItemModel
 
         $selections = $item->selections;
 
-        $db = $this->getDBO();
-        $app = Factory::getApplication();
+        $db   = $this->getDBO();
+        $app  = Factory::getApplication();
         $user = $app->getIdentity();
         $list = array();
 
@@ -557,7 +565,7 @@ class SitemapModel extends ItemModel
             try {
                 // Get the list of menu items.
                 $db->setQuery($query);
-                $tmpList = $db->loadObjectList('id');
+                $tmpList         = $db->loadObjectList('id');
                 $list[$menutype] = array();
             } catch (\RuntimeException $e) {
                 $app->enqueueMessage(Text::_($e->getMessage()), 'error');
@@ -568,11 +576,11 @@ class SitemapModel extends ItemModel
             foreach ($tmpList as $item) {
                 $item->items = array();
 
-                $params = new Registry($item->params);
+                $params    = new Registry($item->params);
                 $item->uid = 'itemid' . $item->id;
 
                 if (preg_match('#^/?index.php.*option=(com_[^&]+)#', $item->link, $matches)) {
-                    $item->option = $matches[1];
+                    $item->option    = $matches[1];
                     $componentParams = clone (ComponentHelper::getParams($item->option));
                     $componentParams->merge($params);
                     //$params->merge($componentParams);
@@ -584,26 +592,26 @@ class SitemapModel extends ItemModel
                 $item->params = $params;
 
                 if ($item->type != 'separator') {
-                    $item->priority = $menuOptions['priority'];
-                    $item->changefreq = $menuOptions['changefreq'];
-                    $item->lastmod = $menuOptions['lastmod'];
+                    $item->priority            = $menuOptions['priority'];
+                    $item->changefreq          = $menuOptions['changefreq'];
+                    $item->lastmod             = $menuOptions['lastmod'];
                     $item->xmlInsertChangeFreq = $menuOptions['xmlInsertChangeFreq'];
-                    $item->xmlInsertPriority = $menuOptions['xmlInsertPriority'];
+                    $item->xmlInsertPriority   = $menuOptions['xmlInsertPriority'];
 
                     $element_name = substr($item->option, 4);
                     if (!empty($extensions[$element_name])) {
                         $className = 'schuweb_sitemap_' . $element_name;
-                        $obj = new $className;
+                        $obj       = new $className;
                         if (method_exists($obj, 'prepareMenuItem')) {
                             $obj->prepareMenuItem($item, $extensions[$element_name]->params);
                         }
                     }
                 } else {
-                    $item->priority = null;
-                    $item->changefreq = null;
-                    $item->lastmod = null;
+                    $item->priority            = null;
+                    $item->changefreq          = null;
+                    $item->lastmod             = null;
                     $item->xmlInsertChangeFreq = null;
-                    $item->xmlInsertPriority = null;
+                    $item->xmlInsertPriority   = null;
                 }
 
                 if ($item->parent_id > 1) {
@@ -636,8 +644,8 @@ class SitemapModel extends ItemModel
             foreach ($extensions as $element => $extension) {
                 if (file_exists(JPATH_PLUGINS . '/' . $extension->folder . '/' . $element . '/' . $element . '.php')) {
                     require_once(JPATH_PLUGINS . '/' . $extension->folder . '/' . $element . '/' . $element . '.php');
-                    $params = new Registry($extension->params);
-                    $extension->params = $params->toArray();
+                    $params                     = new Registry($extension->params);
+                    $extension->params          = $params->toArray();
                     $this->extensions[$element] = $extension;
                 }
             }
@@ -692,15 +700,15 @@ class SitemapModel extends ItemModel
         }
         $query = "select * from #__schuweb_sitemap_items where view='$view' and sitemap_id=" . $pk;
         $db->setQuery($query);
-        $rows = $db->loadObjectList();
+        $rows               = $db->loadObjectList();
         self::$items[$view] = array();
         foreach ($rows as $row) {
-            self::$items[$view][$row->itemid] = array();
+            self::$items[$view][$row->itemid]            = array();
             self::$items[$view][$row->itemid][$row->uid] = array();
-            $pairs = explode(';', $row->properties);
+            $pairs                                       = explode(';', $row->properties);
             foreach ($pairs as $pair) {
                 if (strpos($pair, '=') !== FALSE) {
-                    list($property, $value) = explode('=', $pair);
+                    list($property, $value)                                 = explode('=', $pair);
                     self::$items[$view][$row->itemid][$row->uid][$property] = $value;
                 }
             }
@@ -711,19 +719,19 @@ class SitemapModel extends ItemModel
     function chageItemPropery($uid, $itemid, $view, $property, $value)
     {
         $items = $this->getSitemapItems($view);
-        $db = $this->getDBO();
-        $pk = (int) $this->getState('sitemap.id');
+        $db    = $this->getDBO();
+        $pk    = (int) $this->getState('sitemap.id');
 
         $isNew = false;
         if (empty($items[$view][$itemid][$uid])) {
             $items[$view][$itemid][$uid] = array();
-            $isNew = true;
+            $isNew                       = true;
         }
         $items[$view][$itemid][$uid][$property] = $value;
-        $sep = $properties = '';
+        $sep                                    = $properties = '';
         foreach ($items[$view][$itemid][$uid] as $k => $v) {
             $properties .= $sep . $k . '=' . $v;
-            $sep = ';';
+            $sep        = ';';
         }
         if (!$isNew) {
             $query = 'UPDATE #__schuweb_sitemap_items SET properties=\'' . $db->escape($properties) . "' where uid='" . $db->escape($uid) . "' and itemid=$itemid and view='$view' and sitemap_id=" . $pk;
@@ -749,7 +757,7 @@ class SitemapModel extends ItemModel
         }
         if (!$this->isExcluded($itemid, $uid)) {
             $excludedItems[$itemid][] = $uid;
-            $state = 0;
+            $state                    = 0;
         } else {
             if (is_array($excludedItems[$itemid]) && count($excludedItems[$itemid])) {
                 $excludedItems[$itemid] = array_filter($excludedItems[$itemid], function ($v) use ($uid) {
@@ -765,7 +773,7 @@ class SitemapModel extends ItemModel
         $registry->loadArray($excludedItems);
         $str = $registry->toString();
 
-        $db = $this->getDBO();
+        $db    = $this->getDBO();
         $query = "UPDATE #__schuweb_sitemap set excluded_items='" . $db->escape($str) . "' where id=" . $sitemap->id;
         $db->setQuery($query);
         $db->execute();
@@ -777,7 +785,7 @@ class SitemapModel extends ItemModel
         static $_excluded_items;
         if (!isset($_excluded_items)) {
             $_excluded_items = array();
-            $registry = new Registry('_default');
+            $registry        = new Registry('_default');
             $registry->loadString($this->getItem()->excluded_items);
             $_excluded_items = $registry->toArray();
         }
@@ -787,7 +795,7 @@ class SitemapModel extends ItemModel
     public function isExcluded($itemid, $uid)
     {
         $excludedItems = $this->getExcludedItems();
-        $items = NULL;
+        $items         = NULL;
         if (!empty($excludedItems[$itemid])) {
             if (is_object($excludedItems[$itemid])) {
                 $excludedItems[$itemid] = (array) $excludedItems[$itemid];
@@ -908,5 +916,13 @@ class SitemapModel extends ItemModel
     public function isXmlcompress(): bool
     {
         return $this->xmlcompress;
+    }
+
+    /**
+     * Get the value of news_publication_name
+     */
+    public function getNewsPublicationName(): string
+    {
+        return $this->news_publication_name;
     }
 }
