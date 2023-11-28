@@ -266,7 +266,6 @@ class schuweb_sitemap_content
 
 	/**
 	 * Get all content items within a content category.
-	 * Returns an array of all contained content items.
 	 *
 	 * @param   object  $sitemap
 	 * @param   object  $parent  the menu item

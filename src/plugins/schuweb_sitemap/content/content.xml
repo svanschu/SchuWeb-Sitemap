@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- sw.build.version -->
 <extension type="plugin" group="schuweb_sitemap" method="upgrade">
     <name>SchuWeb Sitemap - Content Plugin</name>
     <author>Sven Schultschik</author>
