@@ -222,8 +222,7 @@ class SitemapsController extends AdminController
             foreach ($nodes as $node) {
                 $this->printNode(
                     $node,
-                    $site_sitemap_model->isNewssitemap(),
-                    $site_sitemap_model->getNewsPublicationName()
+                    $site_sitemap_model
                 );
             }
 
@@ -263,15 +262,17 @@ class SitemapsController extends AdminController
      * @return void
      * @since __BUMP_VERSION__
      */
-    private function printNode(&$node, $newssitemap, $news_publication_name)
+    private function printNode(&$node, &$site_sitemap_model)
     {
+        $newssitemap = $site_sitemap_model->isNewssitemap();
+        $news_publication_name = $site_sitemap_model->getNewsPublicationName();
         
         if ($node->browserNav != 3 && !isset($node->htmllink)) {
             $node->htmllink = Route::link('site', $node->link, true, @$node->secure, true);
         }
 
         $diff = -1;
-        if (isset($node->modified)) {
+        if ($newssitemap && isset($node->modified)) {
             $oldest = date_add(date_create(),  date_interval_create_from_date_string('-2 days'));
             $interval = date_diff($oldest, date_create($node->modified));
             $diff = intval($interval->format('%R%a')) + 1;
@@ -282,6 +283,8 @@ class SitemapsController extends AdminController
             $node->browserNav != 3 && empty($this->_links[$node->htmllink])
             // Ignore nodes without modified date on news sitemap
             && !($newssitemap && (!isset($node->modified) || $diff < 0))
+            // Ignore nodes without images on image sitemap
+            && !($site_sitemap_model->isImagesitemap() && !isset($node->images))
         ) {
 
             if (isset($node->alias) && !$node->alias)
@@ -335,19 +338,29 @@ class SitemapsController extends AdminController
                 xmlwriter_end_element($this->xw);
             }
 
-            if ($modified && !$newssitemap) {
+            if ($site_sitemap_model->isImagesitemap()) {
+                foreach ($node->images as $image) {
+                    xmlwriter_start_element($this->xw, 'image:image');
+                    xmlwriter_start_element($this->xw, 'image:loc');
+                    xmlwriter_text($this->xw, $image->src);
+                    xmlwriter_end_element($this->xw);
+                    xmlwriter_end_element($this->xw);
+                }
+            }
+
+            if ($modified && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
                 xmlwriter_start_element($this->xw, 'lastmod');
                 xmlwriter_text($this->xw, $modified);
                 xmlwriter_end_element($this->xw);
             }
 
-            if ($node->changefreq && !$newssitemap) {
+            if ($node->changefreq && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
                 xmlwriter_start_element($this->xw, 'changefreq');
                 xmlwriter_text($this->xw, $node->changefreq);
                 xmlwriter_end_element($this->xw);
             }
 
-            if ($node->priority && !$newssitemap) {
+            if ($node->priority && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
                 xmlwriter_start_element($this->xw, 'priority');
                 xmlwriter_text($this->xw, $node->priority);
                 xmlwriter_end_element($this->xw);
@@ -358,7 +371,7 @@ class SitemapsController extends AdminController
 
         if (isset($node->subnodes)) {
             foreach ($node->subnodes as $subnode) {
-                $this->printNode($subnode, $newssitemap, $news_publication_name);
+                $this->printNode($subnode, $site_sitemap_model);
             }
         }
     }
