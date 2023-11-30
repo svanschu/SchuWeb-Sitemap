@@ -60,11 +60,6 @@
                        description="SCHUWEB_SITEMAP_SETTING_MAX_ART_AGE_DESC"/>
             </fieldset>
             <fieldset name="xml">
-                <field name="add_images" type="list" default="1" label="SCHUWEB_SITEMAP_SETTING_ADD_IMAGES_LABEL"
-                       description="SCHUWEB_SITEMAP_SETTING_ADD_IMAGES_DESC">
-                    <option value="1">JYES</option>
-                    <option value="0">JNO</option>
-                </field>
                 <field name="cat_priority" type="list" default="-1" label="SCHUWEB_SITEMAP_SETTING_CAT_PRIORITY"
                        description="SCHUWEB_SITEMAP_SETTING_CAT_PRIORITY_DESC">
                     <option value="-1">SCHUWEB_SITEMAP_OPTION_USE_PARENT_MENU</option>

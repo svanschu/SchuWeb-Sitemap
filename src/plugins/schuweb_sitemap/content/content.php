@@ -13,6 +13,8 @@ use Joomla\Component\Content\Site\Helper\QueryHelper;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Handles standard Joomla's Content articles/categories
@@ -49,9 +51,6 @@ class schuweb_sitemap_content
 		$layout = ArrayHelper::getValue($link_vars, 'layout', '');
 		$id = ArrayHelper::getValue($link_vars, 'id', 0);
 
-		//----- Set add_images param
-		$params['add_images'] = ArrayHelper::getValue($params, 'add_images', 0);
-
 		//----- Set add pagebreaks param
 		$params['add_pagebreaks'] = ArrayHelper::getValue($params, 'add_pagebreaks', 1);
 
@@ -75,7 +74,7 @@ class schuweb_sitemap_content
 					->from($db->quoteName('#__content'))
 					->where($db->quoteName('id') . '=' . intval($id));
 
-				if ($params['add_pagebreaks'] || $params['add_images']) {
+				if ($params['add_pagebreaks']) {
 					$query->select($db->quoteName('introtext'))
 						->select($db->quoteName('fulltext'));
 				}
@@ -88,9 +87,6 @@ class schuweb_sitemap_content
 					$node->modified = $row->modified;
 
 					$text = $row->introtext . $row->fulltext;
-					if ($params['add_images']) {
-						$node->images = schuweb_sitemap_content::getImages($text, ArrayHelper::getValue($params, 'max_images', 1000));
-					}
 
 					if ($params['add_pagebreaks']) {
 						$node->subnodes = schuweb_sitemap_content::getPagebreaks($text, $node->link);
@@ -159,12 +155,6 @@ class schuweb_sitemap_content
 			|| ($show_unauth == 2 && $sitemap->isXmlsitemap())
 			|| ($show_unauth == 3 && !$sitemap->isXmlsitemap()));
 		$params['show_unauth'] = $show_unauth;
-
-		//----- Set add_images param
-		$add_images = ArrayHelper::getValue($params, 'add_images', 0) && $sitemap->isImagesitemap();
-		$add_images = ($add_images && $sitemap->isXmlsitemap());
-		$params['add_images'] = $add_images;
-		$params['max_images'] = ArrayHelper::getValue($params, 'max_images', 1000);
 
 		//----- Set add pagebreaks param
 		$add_pagebreaks = ArrayHelper::getValue($params, 'add_pagebreaks', 1);
@@ -246,6 +236,8 @@ class schuweb_sitemap_content
 						->select($db->quoteName('fulltext'))
 						->select($db->quoteName('alias'))
 						->select($db->quoteName('catid'))
+                        ->select($db->qn('images'))
+                        ->select($db->qn('created'))
 						->from($db->quoteName('#__content'))
 						->where($db->quoteName('id') . '=' . intval($id));
 					$db->setQuery($query);
@@ -254,6 +246,14 @@ class schuweb_sitemap_content
 
 					$parent->slug = $row->alias ? ($id . ':' . $row->alias) : $id;
 					$parent->link = ContentHelperRoute::getArticleRoute($parent->slug, $row->catid);
+
+                    $text = $row->introtext . $row->fulltext;
+                    if ($sitemap->isImagesitemap()) {
+                        $parent->images = schuweb_sitemap_content::getImages($text, $row->images);
+                    }
+
+                    if ($sitemap->isNewssitemap())
+                        $parent->modified = $row->created;
 
 					$subnodes = schuweb_sitemap_content::getPagebreaks($row->introtext . $row->fulltext, $parent->link);
 					self::printNodes($sitemap, $parent, $params, $subnodes);
@@ -331,7 +331,7 @@ class schuweb_sitemap_content
 
 					// For the google news we should use te publication date instead
 					// the last modification date. See
-					if ($sitemap->isNewssitemap() || !$item->modified)
+					if ($sitemap->isNewssitemap())
 						$item->modified = $item->created;
 
 					$node->slug = $item->route ? ($item->id . ':' . $item->route) : $item->id;
@@ -382,10 +382,11 @@ class schuweb_sitemap_content
 			$db->quoteName('a.catid'),
 			$db->quoteName('a.created') . ' AS created',
 			$db->quoteName('a.modified') . ' AS modified',
-			$db->quoteName('a.language')
+			$db->quoteName('a.language'),
+            $db->qn('a.images')
 		);
 
-		if ($params['add_images'] || $params['add_pagebreaks']) {
+		if ($sitemap->isImagesitemap() || $params['add_pagebreaks']) {
 			$columns[] = $db->quoteName('a.introtext');
 			$columns[] = $db->quoteName('a.fulltext');
 		}
@@ -470,7 +471,7 @@ class schuweb_sitemap_content
 
 				// For the google news we should use te publication date instead
 				// the last modification date. See
-				if ($sitemap->isNewssitemap() || !$node->modified)
+				if ($sitemap->isNewssitemap())
 					$node->modified = $item->created;
 
 				$node->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
@@ -479,8 +480,8 @@ class schuweb_sitemap_content
 
 				// Add images to the article
 				$text = @$item->introtext . @$item->fulltext;
-				if ($params['add_images']) {
-					$node->images = schuweb_sitemap_content::getImages($text, $params['max_images']);
+				if ($sitemap->isImagesitemap()) {
+					$node->images = schuweb_sitemap_content::getImages($text, $item->images);
 				}
 
 				if ($params['add_pagebreaks']) {
@@ -569,10 +570,10 @@ class schuweb_sitemap_content
 		return $orderby;
 	}
 
-	static function getImages($text, $max)
+	static function getImages($text, $meta_images, $max = 1000)
 	{
 		if (!isset($urlBase)) {
-			$urlBase = JURI::base();
+			$urlBase = URI::base();
 		}
 
 		$urlBaseLen = strlen($urlBase);
@@ -606,6 +607,20 @@ class schuweb_sitemap_content
 				}
 			}
 		}
+
+        $mimages = new Registry($meta_images);
+        foreach($mimages as $k => $mimage){
+            if ($mimage != "" && ($k == "image_intro" || $k == "image_fulltext")) {
+                $src = explode('#', $mimage )[0];
+                if (!preg_match('/^https?:\//i', $src)) {
+                    $src = $urlBase . $src;
+                }
+                $image = new stdClass;
+                $image->src = $src;
+                $images[] = $image;
+            }
+        }
+
 		return $images;
 	}
 
@@ -630,7 +645,7 @@ class schuweb_sitemap_content
 					} elseif (@$match['title']) {
 						$title = stripslashes($match['title']);
 					} else {
-						$title = JText::sprintf('Page #', $i);
+						$title = Text::sprintf('Page #', $i);
 					}
 					$subnode = new stdclass();
 					$subnode->name = $title;
