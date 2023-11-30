@@ -47,6 +47,10 @@ class schuweb_sitemap_newsfeeds
 
 	static function getTree(&$sitemap, &$parent, &$params)
 	{
+        //Image sitemap does not make sense for newsfeeds
+        if ($sitemap->isImagesitemap())
+            return false;
+
 		$newsfeed_query = parse_url($parent->link);
 		parse_str(html_entity_decode($newsfeed_query['query']), $newsfeed_vars);
 		$view = ArrayHelper::getValue($newsfeed_vars, 'view', 0);
