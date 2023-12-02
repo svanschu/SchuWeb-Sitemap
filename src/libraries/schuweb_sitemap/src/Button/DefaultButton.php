@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 /**
  * The DefaultButton class.
  *
- * @since  __BUMP_VERSION__
+ * @since  5.0.0
  */
 class DefaultButton extends \Joomla\CMS\Button\FeaturedButton
 {

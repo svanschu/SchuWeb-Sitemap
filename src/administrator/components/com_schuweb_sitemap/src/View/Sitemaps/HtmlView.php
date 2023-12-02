@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
      * nested array with links to the sitemap xml
      * 
      * @var array 
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     protected array $xml_links;
 

@@ -40,7 +40,7 @@ use Joomla\CMS\HTML\Registry;
 /**
  * The content service provider.
  *
- * @since   __BUMP_VERSION__
+ * @since   5.0.0
  */
 return new class implements ServiceProviderInterface
 {
@@ -51,7 +51,7 @@ return new class implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 *
-	 * @since    __BUMP_VERSION__
+	 * @since    5.0.0
 	 */
 	public function register(Container $container) : void
     {

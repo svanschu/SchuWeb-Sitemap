@@ -23,7 +23,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 /**
  * View to edit a sitemap.
  *
- * @since  __BUMP_VERSION__
+ * @since  5.0.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -52,7 +52,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  mixed  A string if successful, otherwise an Error object.
      * 
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
 	 */
     function display($tpl = null)
     {
@@ -109,7 +109,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   __BUMP_VERSION__
+	 * @since   5.0.0
 	 */
 	function addToolbar()
 	{

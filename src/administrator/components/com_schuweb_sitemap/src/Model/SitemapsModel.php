@@ -98,7 +98,7 @@ class SitemapsModel extends ListModel
      *
      * @return  string      A store id.
      *
-     * @since    __BUMP_VERSION__
+     * @since    5.0.0
      */
     protected function getStoreId($id = '')
     {
@@ -114,7 +114,7 @@ class SitemapsModel extends ListModel
      *
      * @return  \JDatabaseQuery
      *
-     * @since    __BUMP_VERSION__
+     * @since    5.0.0
      */
     protected function getListQuery()
     {
@@ -169,7 +169,7 @@ class SitemapsModel extends ListModel
      *
      * @return string
      *
-     * @since    __BUMP_VERSION__
+     * @since    5.0.0
      */
     public function getExtensionsMessage(): string
     {

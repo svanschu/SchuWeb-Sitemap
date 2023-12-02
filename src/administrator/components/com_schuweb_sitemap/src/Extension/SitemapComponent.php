@@ -35,7 +35,7 @@ class SitemapComponent extends MVCComponent implements
      *
      * @return  void
      *
-     * @since   __BUMP_VERSION__
+     * @since   5.0.0
      */
     public function boot(ContainerInterface $container)
     {

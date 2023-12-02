@@ -51,7 +51,7 @@ class SitemapModel extends ItemModel
      * Is the sitemap the default sitemap?
      * 
      * @var bool
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $default;
 
@@ -59,7 +59,7 @@ class SitemapModel extends ItemModel
      * The nodes object details
      *
      * @var    \stdClass
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     private $nodes;
 
@@ -67,7 +67,7 @@ class SitemapModel extends ItemModel
      * The total number of menus
      *
      * @var    int
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     private $totalmenusnumber;
 
@@ -75,7 +75,7 @@ class SitemapModel extends ItemModel
      * Ist language filter active
      * 
      * @var bool
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $languageFilter;
 
@@ -83,7 +83,7 @@ class SitemapModel extends ItemModel
      * Language object
      * 
      * @var Language
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private Language $language;
 
@@ -92,7 +92,7 @@ class SitemapModel extends ItemModel
      * Do we generate an XML?
      * 
      * @var bool
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $xmlsitemap = false;
 
@@ -100,7 +100,7 @@ class SitemapModel extends ItemModel
      *
      * @var bool Indicates if this is a google image sitemap or not
      *
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $imagesitemap = false;
 
@@ -108,7 +108,7 @@ class SitemapModel extends ItemModel
      *
      * @var bool Indicates if this is a google news sitemap or not
      *
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $newssitemap = false;
 
@@ -116,28 +116,28 @@ class SitemapModel extends ItemModel
      *
      * @var bool Indicates if the xml file should be compressed
      *
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $xmlcompress = false;
 
     /**
      * @var bool Indicates if the duplicated entries should get removed
      *
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $removeDuplicates;
 
     /**
      * @var bool Indicates if the duplicated menus should get removed
      *
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private bool $removeDuplicateMenus;
 
     /**
      * @var string This is the name of the news publication for the news sitemap
      * 
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private string $news_publication_name;
 

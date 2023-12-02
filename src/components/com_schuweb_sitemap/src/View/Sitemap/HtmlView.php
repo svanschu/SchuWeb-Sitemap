@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	 * The page parameters
 	 *
 	 * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
+	 * @since  5.0.0
 	 */
 	protected $params = null;
 
@@ -42,7 +42,7 @@ class HtmlView extends BaseHtmlView
 	 * The item model state
 	 *
 	 * @var    \Joomla\Registry\Registry
-	 * @since  __BUMP_VERSION__
+	 * @since  5.0.0
 	 */
 	protected $state;
 
@@ -50,7 +50,7 @@ class HtmlView extends BaseHtmlView
 	 * The item object details
 	 *
 	 * @var    \stdClass
-	 * @since  __BUMP_VERSION__
+	 * @since  5.0.0
 	 */
 	protected $item;
 
@@ -58,7 +58,7 @@ class HtmlView extends BaseHtmlView
 	 * The nodes object with all sitemap elements
 	 *
 	 * @var    \stdClass
-	 * @since  __BUMP_VERSION__
+	 * @since  5.0.0
 	 */
 	protected $nodes;
 
@@ -66,7 +66,7 @@ class HtmlView extends BaseHtmlView
 	 * The menu items for the sitemap
 	 *
 	 * @var    \stdClass
-	 * @since  __BUMP_VERSION__
+	 * @since  5.0.0
 	 */
 	protected $menuitems;
 
@@ -74,7 +74,7 @@ class HtmlView extends BaseHtmlView
 	 * The column width
 	 *
 	 * @var    int
-	 * @since  __BUMP_VERSION__
+	 * @since  5.0.0
 	 */
     private $_width;
 
@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
      *
      * @var bool Indicates if this is a google image sitemap or not
      *
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
 
     var bool $isImages = false;
@@ -97,7 +97,7 @@ class HtmlView extends BaseHtmlView
      *
      * @var int  Counter for the number of links on the sitemap
      * 
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     protected $count = 0;
 
@@ -105,7 +105,7 @@ class HtmlView extends BaseHtmlView
      *
      * @var boolean  can edit
      * 
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     public $canEdit = false;
 

@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
  * @package     Joomla.Administrator
  * @subpackage  com_schuweb_sitemap
  * 
- * @since    __BUMP_VERSION__
+ * @since    5.0.0
  */
 class DisplayController extends BaseController
 {

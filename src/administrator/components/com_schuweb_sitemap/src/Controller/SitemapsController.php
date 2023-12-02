@@ -43,7 +43,7 @@ class SitemapsController extends AdminController
      * XML sitemap object
      * 
      * @var \XMLWriter
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private \XMLWriter $xw;
 
@@ -51,7 +51,7 @@ class SitemapsController extends AdminController
      *
      * @var array  Stores the list of links that have been already included in
      *             the sitemap to avoid duplicated items
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private array $_links;
 
@@ -122,7 +122,7 @@ class SitemapsController extends AdminController
      * Create news sitemap xml file
      * 
      * @return void
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     public function createxmlnews()
     {
@@ -135,7 +135,7 @@ class SitemapsController extends AdminController
      * Create images sitemap xml file
      * 
      * @return void
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     public function createxmlimages()
     {
@@ -148,7 +148,7 @@ class SitemapsController extends AdminController
      * Create sitemap xml file
      * 
      * @return void
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     public function createxml()
     {
@@ -160,7 +160,7 @@ class SitemapsController extends AdminController
      * Create actually the xml file for sitemap, news and images
      * 
      * @return void
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private function createSitemapXml(&$site_sitemap_model)
     {
@@ -260,7 +260,7 @@ class SitemapsController extends AdminController
      * Print Node of XML file
      * 
      * @return void
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private function printNode(&$node, &$site_sitemap_model)
     {

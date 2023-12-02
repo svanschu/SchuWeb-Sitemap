@@ -18,7 +18,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 /**
  * Controller for a single sitemap
  *
- * @since  __BUMP_VERSION__
+ * @since  5.0.0
  */
 class SitemapController extends FormController
 {

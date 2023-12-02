@@ -76,7 +76,7 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
      * @return void
      *
      * @throws \Exception
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     public function postflight($type, $parent)
     {
@@ -88,7 +88,7 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
     /**
      * Upgrade from SchuWeb Sitemap v4 and earlier to v5
      *
-     * @since __BUMP_VERSION__
+     * @since 5.0.0
      */
     private function upgradev4v5()
     {
@@ -148,7 +148,7 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
      *
      * @return  array  An array of ID's of the extension
      *
-     * @since   __BUMP_VERSION__
+     * @since   5.0.0
      */
     public function getInstances($isModule)
     {

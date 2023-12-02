@@ -92,7 +92,7 @@ class SitemapTable extends Table
      *
      * @param   DatabaseDriver  $db  Database connector object
      *
-     * @since   __BUMP_VERSION__
+     * @since   5.0.0
      */
     function __construct(DatabaseDriver $db)
     {

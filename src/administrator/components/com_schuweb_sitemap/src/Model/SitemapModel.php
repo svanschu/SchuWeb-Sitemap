@@ -27,7 +27,7 @@ use Joomla\CMS\Table\Table;
 /**
  * Item Model for a sitemap.
  *
- * @since  __BUMP_VERSION__
+ * @since  5.0.0
  */
 class SitemapModel extends AdminModel
 {
@@ -35,7 +35,7 @@ class SitemapModel extends AdminModel
      * The type alias for this content type.
      *
      * @var    string
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     public $typeAlias = 'com_schuweb_sitemap.sitemap';
 
@@ -43,7 +43,7 @@ class SitemapModel extends AdminModel
      * The context used for the associations table
      *
      * @var    string
-     * @since  __BUMP_VERSION__
+     * @since  5.0.0
      */
     protected $associationsContext = 'com_schuweb_sitemap.item';
 

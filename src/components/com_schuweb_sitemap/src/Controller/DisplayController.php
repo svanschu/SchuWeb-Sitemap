@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 /**
  * Sitemaps Component Controller
  *
- * @since  __BUMP_VERSION__
+ * @since  5.0.0
  */
 class DisplayController extends BaseController
 {
@@ -35,7 +35,7 @@ class DisplayController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   \JInput              $input    Input
      *
-     * @since   __BUMP_VERSION__
+     * @since   5.0.0
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null, ?CMSApplication $app = null, $input = null)
     {
@@ -50,7 +50,7 @@ class DisplayController extends BaseController
      *
      * @return  static  This object to support chaining.
      *
-     * @since   __BUMP_VERSION__
+     * @since   5.0.0
      */
     public function display($cachable = false, $urlparams = [])
     {
