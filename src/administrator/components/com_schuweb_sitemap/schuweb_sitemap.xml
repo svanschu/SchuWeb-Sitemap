@@ -3,11 +3,11 @@
     <name>com_schuweb_sitemap</name>
     <creationDate>sw.build.date</creationDate>
     <author>Sven Schultschik</author>
-    <copyright>This component is released under the GNU/GPL License</copyright>
-    <authorEmail>sven@schultschik.de</authorEmail>
-    <authorUrl>www.schultschik.de</authorUrl>
+    <copyright>Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved</copyright>
+    <authorEmail>extensions@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
-    <license>GNU/GPL</license>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>
     <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
     <namespace path="src/">SchuWeb\Component\Sitemap</namespace>
     <scriptfile>extension.script.php</scriptfile>

@@ -4,11 +4,11 @@
     <libraryname>schuweb_sitemap</libraryname>
     <creationDate>sw.build.date</creationDate>
     <author>Sven Schultschik</author>
-    <copyright>(C) 2023 Sven Schultschik. All rights reserved.</copyright>
-    <authorEmail>sven@schultschik.de</authorEmail>
-    <authorUrl>www.schultschik.de</authorUrl>
+    <copyright>Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved</copyright>
+    <authorEmail>extensions@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
-    <license>GNU/GPLv3 or later</license>	
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>	
     <description>SchuWeb Sitemap - Libraries</description>
     <namespace path="src">SchuWeb\Libraries</namespace>
     <changelogurl></changelogurl>	

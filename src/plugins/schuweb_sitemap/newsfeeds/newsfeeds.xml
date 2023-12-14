@@ -3,8 +3,8 @@
     <name>PLG_SCHUWEB_SITEMAP_NEWSFEEDS</name>
     <author>Sven Schultschik</author>
     <creationDate>sw.build.date</creationDate>
-    <copyright>GNU GPL</copyright>
-    <license>https://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <copyright>Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved</copyright>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>
     <authorEmail>extensions@schultschik.de</authorEmail>
     <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>

@@ -8,7 +8,7 @@
     <url>https://extensions.schultschik.com/</url>
     <packager>SchuWeb Sitemap</packager>
     <packagerurl>https://extensions.schultschik.com/</packagerurl>
-    <license>GNU/GPL</license>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>
     <description>The Site Map generator for Joomla!</description>
     <scriptfile>install.script.php</scriptfile>
     <files folder="packages">
