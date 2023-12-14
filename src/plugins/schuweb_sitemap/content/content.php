@@ -1,11 +1,12 @@
 <?php
 /**
- * @version             sw.build.version
- * @copyright (C)       2010 - 2023 Sven Schultschik. All rights reserved
- * @author              Sven Schultschik
- * @license             http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link                http://www.schultschik.de
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved
+ * @license     GPL-3.0-or-later
+ * @author      Sven Schultschik (extensions@schultschik.de)
+ * @link        extensions.schultschik.de
  */
+
 defined('_JEXEC') or die;
 
 use Joomla\Registry\Registry;

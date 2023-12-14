@@ -1,11 +1,10 @@
 <?php
 /**
- * @package          Joomla
- * @subpackage       SchuWeb_Sitemap
- *
- * @author           Sven Schultschik <extensions@schultschik.com>
- * @copyright    (c) 2019 - 2023 extensions.schultschik.com - All rights reserved
- * @license          GNU General Public License version 3 or later
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved
+ * @license     GPL-3.0-or-later
+ * @author      Sven Schultschik (extensions@schultschik.de)
+ * @link        extensions.schultschik.de
  */
 
 use Joomla\CMS\Factory;

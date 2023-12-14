@@ -1,12 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_schuweb_sitemap
- * 
  * @version     sw.build.version
- * @copyright   Copyright (C) 2023 Sven Schultschik. All rights reserved
- * @license     GNU General Public License version 3; see LICENSE
+ * @copyright   Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved
+ * @license     GPL-3.0-or-later
  * @author      Sven Schultschik (extensions@schultschik.de)
+ * @link        extensions.schultschik.de
  */
 
 namespace SchuWeb\Component\Sitemap\Administrator\View\Sitemaps;

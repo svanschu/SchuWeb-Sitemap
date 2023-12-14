@@ -1,20 +1,16 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2019 - 2022 Sven Schultschik. All rights reserved
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved
+ * @license     GPL-3.0-or-later
  * @author      Sven Schultschik (extensions@schultschik.de)
+ * @link        extensions.schultschik.de
  */
 
-
-// No direct access
 defined('_JEXEC') or die;
 
 /**
- * Xmap component helper.
- *
- * @package     SchuWeb Sitemap
- * @subpackage  com_schuweb_sitemap
+ * 
  * @since       2.0
  */
 class SchuWeb_SitemapHelper
