@@ -18,6 +18,8 @@
         <file type="librarie" id="schuweb_sitemap">lib_schuweb_sitemap_sw.build.version_sw.build.dstamp.zip</file>
     </files>
     <updateservers>
-        <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/master/update/schuweb_sitemap.xml</server>
+        <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">
+            https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/update.xml
+        </server>
     </updateservers>
 </extension>
