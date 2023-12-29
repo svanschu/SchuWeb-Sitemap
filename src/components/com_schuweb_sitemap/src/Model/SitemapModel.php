@@ -210,6 +210,9 @@ class SitemapModel extends ItemModel
         foreach ($nodes as $key => $node) {
             if (isset($node->link)) {
                 $link = $node->link;
+                //TODO find better way for dpcalendar
+                if (str_contains($link, 'option=com_dpcalendar')) continue;
+
                 if ($this->removeDuplicateMenus && str_contains($link, "Itemid"))
                     $link = substr($link, 0, strpos($link, 'Itemid'));
                 if (empty($links[$link])) {
