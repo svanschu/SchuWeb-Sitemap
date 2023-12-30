@@ -180,7 +180,13 @@ class SitemapModel extends ItemModel
         $registry = new Registry('_default');
         $registry->loadString($result->attribs);
         $params = $app->getParams();
-        $params->merge($registry);        
+        $params->merge($registry);
+        if ($params->get('page_heading') == '') {
+            $gparams = ComponentHelper::getParams('com_menus');
+            if ($gparams->get('page_heading') != '') {
+                $params->set('page_heading', $gparams->get('page_heading'));
+            }
+        }
         $this->setState('params', $params);
 
         // TODO: Tune these values based on other permissions.
