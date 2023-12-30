@@ -153,12 +153,22 @@ class SitemapModel extends ItemModel
         $pk = $jinput->getInt('id');
 
         // If not sitemap specified, select the default one
+        $db    = $this->getDbo();
+        $query = $db->getQuery(true);
+        $query->select('attribs')
+            ->from('#__schuweb_sitemap');
         if (!$pk) {
-            $db    = $this->getDbo();
-            $query = $db->getQuery(true);
-            $query->select('id')->from('#__schuweb_sitemap')->where('is_default=1');
-            $db->setQuery($query);
-            $pk = $db->loadResult();
+            $query->select('id')
+                ->where('is_default=1');
+        } else {
+            $query->where($db->qn('id') . '='.$pk);
+        }
+
+        $db->setQuery($query);
+        $result = $db->loadObject();
+
+        if (!$pk) {
+            $pk = $result->id;
         }
 
         $this->setState('sitemap.id', $pk);
@@ -167,7 +177,10 @@ class SitemapModel extends ItemModel
         $this->setState('list.offset', $offset);
 
         // Load the parameters.
+        $registry = new Registry('_default');
+        $registry->loadString($result->attribs);
         $params = $app->getParams();
+        $params->merge($registry);        
         $this->setState('params', $params);
 
         // TODO: Tune these values based on other permissions.
