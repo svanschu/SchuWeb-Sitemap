@@ -22,4 +22,5 @@
             https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/update.xml
         </server>
     </updateservers>
+    <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
 </extension>

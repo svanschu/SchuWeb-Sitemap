@@ -1,0 +1,25 @@
+<changelogs>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
+        <version>5.0.0</version>
+        <fix>
+            <item>HTML page title is also not yet set</item>
+            <item>switch for the backlink does not work</item>
+        </fix>
+        <addition>
+            <item>Joomla 4 namespacing</item>
+            <item>Manual real XML sitemap generation</item>
+            <item>More options to remove duplicates</item>
+        </addition>
+        <change>
+            <item>Complete refactoring of the code</item>
+        </change>
+        <remove>
+            <item>URL for on the fly xml sitemap generation</item>
+        </remove>
+        <note>
+            <item>The XML generation is a B/C break to version 4.x.x and earlier</item>
+        </note>
+    </changelog>
+</changelogs>
