@@ -11,7 +11,7 @@
         <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
     </tstamp>
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
-    <property name="builddir" value="./../../packages/SchuWeb_Sitemap" override="true"/>
+    <property name="builddir" value="./../packages/SchuWeb_Sitemap" override="true"/>
 
     <fileset dir="src/administrator/components/com_schuweb_sitemap" id="schuweb_sitemap_admin">
         <include name="**"/>
