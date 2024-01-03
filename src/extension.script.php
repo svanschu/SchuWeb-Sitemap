@@ -135,6 +135,8 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
                 }
             }
         }
+
+        Factory::getApplication()->enqueueMessage(Text::_('SCHUWEB_SITEMAP_UPGRADE_V4_V5'), 'warning');
     }
 
     /**
