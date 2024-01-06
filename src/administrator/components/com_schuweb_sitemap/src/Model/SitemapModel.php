@@ -109,7 +109,7 @@ class SitemapModel extends AdminModel
 
         // Convert to the JObject before adding other data.
         $value = $table->getProperties(1);
-        $value = ArrayHelper::toObject($value, 'JObject');
+        $value = ArrayHelper::toObject($value, '\Joomla\CMS\Object\CMSObject');
 
         // Convert the params field to an array.
         $registry = new Registry;

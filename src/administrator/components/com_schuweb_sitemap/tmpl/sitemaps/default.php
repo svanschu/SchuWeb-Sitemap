@@ -16,8 +16,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use SchuWeb\Libraries\Button\DefaultButton;
 
-$baseUrl = JUri::root();
-
 $user = Factory::getApplication()->getIdentity();
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn = $this->escape($this->state->get('list.direction'));
@@ -161,7 +159,7 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                 <?php endif; ?>
                 <input type="hidden" name="task" value="" />
                 <input type="hidden" name="boxchecked" value="0" />
-                <?php echo JHtml::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>
     </div>
