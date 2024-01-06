@@ -174,7 +174,7 @@ class SitemapModel extends AdminModel
                 $data['attribs'] = json_decode($data['attribs'], true);
             }
         } else {
-            if (!is_array($data->attribs)) {
+            if (!is_null($data->attribs) && !is_array($data->attribs)) {
                 $data->attribs = json_decode($data->attribs, true);
             }
         }
