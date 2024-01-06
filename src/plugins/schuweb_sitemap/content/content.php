@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 /**
  * Handles standard Joomla's Content articles/categories
@@ -336,7 +337,7 @@ class schuweb_sitemap_content
 						$item->modified = $item->created;
 
 					$node->slug = $item->route ? ($item->id . ':' . $item->route) : $item->id;
-					$node->link = ContentHelperRoute::getCategoryRoute($node->slug);
+					$node->link = RouteHelper::getCategoryRoute($node->slug);
 					if (strpos($node->link, 'Itemid=') === false) {
 						$node->itemid = $itemid;
 						$node->link .= '&Itemid=' . $itemid;
@@ -477,7 +478,7 @@ class schuweb_sitemap_content
 
 				$node->slug = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
 				$node->catslug = $item->catid;
-				$node->link = ContentHelperRoute::getArticleRoute($node->slug, $node->catslug);
+				$node->link = RouteHelper::getArticleRoute($node->slug, $node->catslug);
 
 				// Add images to the article
 				$text = @$item->introtext . @$item->fulltext;
