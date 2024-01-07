@@ -208,7 +208,7 @@ class SitemapsModel extends ListModel
     {
         $db = $this->getDbo();
 
-        $supportedExtensions = array('com_zoo', 'com_weblinks', 'com_kunena');
+        $supportedExtensions = array('com_zoo', 'com_weblinks', 'com_kunena', 'com_dpcalendar');
 
         $query = $db->getQuery(true);
         $query->select($db->quoteName('e.extension_id') . ',' . $db->quoteName('e.element'))
