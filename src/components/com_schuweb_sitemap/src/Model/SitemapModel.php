@@ -618,12 +618,14 @@ class SitemapModel extends ItemModel
                     $item->xmlInsertChangeFreq = $menuOptions['xmlInsertChangeFreq'];
                     $item->xmlInsertPriority   = $menuOptions['xmlInsertPriority'];
 
-                    $element_name = substr($item->option, 4);
-                    if (!empty($extensions[$element_name])) {
-                        $className = 'schuweb_sitemap_' . $element_name;
-                        $obj       = new $className;
-                        if (method_exists($obj, 'prepareMenuItem')) {
-                            $obj->prepareMenuItem($item, $extensions[$element_name]->params);
+                    if (!is_null($item->option)) {
+                        $element_name = substr($item->option, 4);
+                        if (!empty($extensions[$element_name])) {
+                            $className = 'schuweb_sitemap_' . $element_name;
+                            $obj       = new $className;
+                            if (method_exists($obj, 'prepareMenuItem')) {
+                                $obj->prepareMenuItem($item, $extensions[$element_name]->params);
+                            }
                         }
                     }
                 } else {
