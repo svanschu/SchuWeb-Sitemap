@@ -227,7 +227,7 @@ class SitemapModel extends ItemModel
     private function removingDuplicates(&$nodes, &$links = array(), &$mlinks = array())
     {
         foreach ($nodes as $key => $node) {
-            if (isset($node->link) && !in_array($node->type, ["separator", "heading"])) {
+            if (isset($node->link) && !(isset($node->type) && in_array($node->type, ["separator", "heading"]))) {
                 $link = $node->link;
                 //TODO find better way for dpcalendar
                 if (str_contains($link, 'option=com_dpcalendar')) continue;
