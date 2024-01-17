@@ -5,6 +5,44 @@
         <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.0.1</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap 5.0.1">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-1</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/5.0.1/pkg_schuweb_sitemap_5.0.1_20240117.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="5"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
+        <version>5.0.1</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap 5.0.1">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-1</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/5.0.1/pkg_schuweb_sitemap_5.0.1_20240117.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.0.0</version>
         <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
         <infourl title="SchuWeb Sitemap 5.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-0</infourl>

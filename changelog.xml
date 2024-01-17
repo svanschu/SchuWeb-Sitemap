@@ -2,6 +2,28 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.0.1</version>
+        <fix>
+            <item>fix array_key_first(): Argument #1 () must be of type array, null given</item>
+            <item>fix J5 native compatibility</item>
+            <item>fix PHP json deprecate warning</item>
+            <item>fix DPCalendar missing in plugin not installed message</item>
+            <item>fix Deprecated: substr(): Passing null to parameter #1</item>
+            <item>fixes #118 Remove duplicate: removed too much links/menu items</item>
+        </fix>
+        <addition>
+        </addition>
+        <change>
+        </change>
+        <remove>
+        </remove>
+        <note>
+            <item>The XML generation is a B/C break to version 4.x.x and earlier</item>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.0.0</version>
         <fix>
             <item>HTML page title is also not yet set</item>
