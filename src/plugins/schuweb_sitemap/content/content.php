@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 /**
@@ -251,7 +252,7 @@ class schuweb_sitemap_content
 
                     $text = $row->introtext . $row->fulltext;
                     if ($sitemap->isImagesitemap()) {
-                        $parent->images = schuweb_sitemap_content::getImages($text, $row->images);
+                        $parent->images = schuweb_sitemap_content::getImages($text, $row->images, $parent->secure);
                     }
 
                     if ($sitemap->isNewssitemap())
@@ -483,7 +484,7 @@ class schuweb_sitemap_content
 				// Add images to the article
 				$text = @$item->introtext . @$item->fulltext;
 				if ($sitemap->isImagesitemap()) {
-					$node->images = schuweb_sitemap_content::getImages($text, $item->images);
+					$node->images = schuweb_sitemap_content::getImages($text, $item->images, $node->secure);
 				}
 
 				if ($params['add_pagebreaks']) {
@@ -572,10 +573,10 @@ class schuweb_sitemap_content
 		return $orderby;
 	}
 
-	static function getImages($text, $meta_images, $max = 1000)
+	static function getImages($text, $meta_images, $secure, $max = 1000)
 	{
 		if (!isset($urlBase)) {
-			$urlBase = URI::base();
+			$urlBase = URI::root();
 		}
 
 		$urlBaseLen = strlen($urlBase);
@@ -615,7 +616,7 @@ class schuweb_sitemap_content
             if ($mimage != "" && ($k == "image_intro" || $k == "image_fulltext")) {
                 $src = explode('#', $mimage )[0];
                 if (!preg_match('/^https?:\//i', $src)) {
-                    $src = $urlBase . $src;
+                    $src = $urlBase .  $src;
                 }
                 $image = new stdClass;
                 $image->src = $src;
