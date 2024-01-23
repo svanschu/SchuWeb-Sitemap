@@ -13,14 +13,21 @@ namespace SchuWeb\Component\Sitemap\Administrator\Extension;
 
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\Extension\BootableExtensionInterface;
+use Joomla\CMS\Categories\CategoryServiceInterface;
+use Joomla\CMS\Categories\CategoryServiceTrait;
+use Joomla\CMS\Component\Router\RouterServiceInterface;
+use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Psr\Container\ContainerInterface;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 
 class SitemapComponent extends MVCComponent implements
-    BootableExtensionInterface
+    BootableExtensionInterface,
+    CategoryServiceInterface,
+    RouterServiceInterface
 {
-
+    use CategoryServiceTrait;
     use HTMLRegistryAwareTrait;
+    use RouterServiceTrait;
 
     /**
      * Booting the extension. This is the function to set up the environment of the extension like

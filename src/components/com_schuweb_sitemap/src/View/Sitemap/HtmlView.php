@@ -107,7 +107,7 @@ class HtmlView extends BaseHtmlView
      */
     public $canEdit = false;
 
-    var $view = 'html';
+    var $view = 'sitemap';
 
     /**
 	 * Execute and display a template script.
@@ -140,7 +140,7 @@ class HtmlView extends BaseHtmlView
         // Add router helpers.
         $this->item->slug = $this->item->alias ? ($this->item->id . ':' . $this->item->alias) : $this->item->id;
 
-        $this->item->rlink = Route::_('index.php?option=com_schuweb_sitemap&view=html&id=' . $this->item->slug);
+        $this->item->rlink = Route::_('index.php?option=com_schuweb_sitemap&view=sitemap&id=' . $this->item->slug);
 
         // If a guest user, they may be able to log in to view the full article
         // TODO: Does this satisfy the show not auth setting?
@@ -177,7 +177,7 @@ class HtmlView extends BaseHtmlView
         if ($menu = $menus->getActive()) {
             if (isset($menu->query['view']) && isset($menu->query['id'])) {
 
-                if ($menu->query['view'] == 'html' && $menu->query['id'] == $this->item->id) {
+                if ($menu->query['view'] == 'sitemap' && $menu->query['id'] == $this->item->id) {
                     $title = $menu->title;
                     if (empty($title)) {
                         $title = $app->get('sitename');
