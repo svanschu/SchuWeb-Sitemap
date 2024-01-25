@@ -2,6 +2,24 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.0.2</version>
+        <fix>
+            <item>fix image sitemap uses admin URL instead of site</item>
+            <item>fix SEF URLs</item>
+        </fix>
+        <addition>
+        </addition>
+        <change>
+        </change>
+        <remove>
+        </remove>
+        <note>
+            <item>The XML generation is a B/C break to version 4.x.x and earlier</item>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.0.1</version>
         <fix>
             <item>fix array_key_first(): Argument #1 () must be of type array, null given</item>
