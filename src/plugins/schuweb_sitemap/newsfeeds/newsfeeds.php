@@ -110,10 +110,7 @@ class schuweb_sitemap_newsfeeds
 			$node->priority = $params['cat_priority'];
 			$node->changefreq = $params['cat_changefreq'];
 			$node->browserNav = $parent->browserNav;
-			$node->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
-			$node->xmlInsertPriority = $parent->xmlInsertPriority;
 
-			$node->lastmod = $parent->lastmod;
 			$node->modified = $cat->modified_time;
 
 			$node->expandible = true;
@@ -166,11 +163,7 @@ class schuweb_sitemap_newsfeeds
 				$node->priority = $params['newsfeed_priority'];
 				$node->changefreq = $params['newsfeed_changefreq'];
 
-				$node->lastmod = $parent->lastmod;
 				$node->modified = $newsfeed->modified;
-
-				$node->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $parent->xmlInsertPriority;
 
 				$node->expandible = false;
 

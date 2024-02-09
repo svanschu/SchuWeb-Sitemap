@@ -247,7 +247,7 @@
                 type="radio"
                 class="btn-group btn-group-yesno"
                 label="SCHUWEB_SITEMAP_PRIORITY"
-                description="SCHUWEB_SITEMAP_PRIORITY_DESC2"
+                description="SCHUWEB_SITEMAP_PRIORITY_DESC"
                 labelclass="control-label"
                 default="1">
                 <option value="0">No</option>

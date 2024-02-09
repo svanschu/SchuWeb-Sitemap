@@ -302,9 +302,6 @@ class SitemapModel extends ItemModel
             $node->option              = $item->option;
             $node->modified            = @$item->modified;
             $node->secure              = $item->params->get('secure');
-            $node->lastmod             = $item->lastmod;
-            $node->xmlInsertChangeFreq = $item->xmlInsertChangeFreq;
-            $node->xmlInsertPriority   = $item->xmlInsertPriority;
 
             $node->params =& $item->params;
 
@@ -435,6 +432,7 @@ class SitemapModel extends ItemModel
                 $registry->loadString($data->attribs);
                 $data->params = clone $this->getState('params');
                 $data->params->merge($registry);
+                $this->setState('params', $data->params);
 
                 $this->removeDuplicates      = $registry->get('remove_duplicate') == 1 ? true : false;
                 $this->removeDuplicateMenus  = $registry->get('remove_duplicate_menu') == 1 ? true : false;
@@ -445,17 +443,10 @@ class SitemapModel extends ItemModel
                 $registry->loadString($data->selections);
                 $data->selections = $registry->toArray();
 
-                $lastmod             = $data->params->get('xmlLastMod');
-                $xmlInsertChangeFreq = $data->params->get('xmlInsertChangeFreq');
-                $xmlInsertPriority   = $data->params->get('xmlInsertPriority');
                 // only display the Menüs which are activated
                 foreach ($data->selections as $key => $selection) {
                     if (!isset($selection["enabled"]) || is_null($selection["enabled"]) || $selection["enabled"] != 1) {
                         unset($data->selections[$key]);
-                    } else {
-                        $data->selections[$key]["lastmod"]             = $lastmod;
-                        $data->selections[$key]["xmlInsertChangeFreq"] = $xmlInsertChangeFreq;
-                        $data->selections[$key]["xmlInsertPriority"]   = $xmlInsertPriority;
                     }
                 }
 
@@ -614,9 +605,6 @@ class SitemapModel extends ItemModel
                 if ($item->type != 'separator') {
                     $item->priority            = $menuOptions['priority'];
                     $item->changefreq          = $menuOptions['changefreq'];
-                    $item->lastmod             = $menuOptions['lastmod'];
-                    $item->xmlInsertChangeFreq = $menuOptions['xmlInsertChangeFreq'];
-                    $item->xmlInsertPriority   = $menuOptions['xmlInsertPriority'];
 
                     if (!is_null($item->option)) {
                         $element_name = substr($item->option, 4);
@@ -631,9 +619,6 @@ class SitemapModel extends ItemModel
                 } else {
                     $item->priority            = null;
                     $item->changefreq          = null;
-                    $item->lastmod             = null;
-                    $item->xmlInsertChangeFreq = null;
-                    $item->xmlInsertPriority   = null;
                 }
 
                 if ($item->parent_id > 1) {

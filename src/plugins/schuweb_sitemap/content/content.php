@@ -321,13 +321,9 @@ class schuweb_sitemap_content
 					$node->priority = $params['cat_priority'];
 					$node->changefreq = $params['cat_changefreq'];
 
-					$node->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
-					$node->xmlInsertPriority = $parent->xmlInsertPriority;
-
 					$node->name = $item->title;
 					$node->expandible = true;
 					$node->secure = $parent->secure;
-					$node->lastmod = $parent->lastmod;
 					// TODO: Should we include category name or metakey here?
 					// $node->keywords = $item->metakey;
 					$node->newsItem = 0;
@@ -461,16 +457,12 @@ class schuweb_sitemap_content
 				$node->priority = $params['art_priority'];
 				$node->changefreq = $params['art_changefreq'];
 
-				$node->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
-				$node->xmlInsertPriority = $parent->xmlInsertPriority;
-
 				$node->name = $item->title;
 				$node->modified = $item->modified;
 				$node->expandible = false;
 				$node->secure = $parent->secure;
 				$node->newsItem = 1;
 				$node->language = $item->language;
-				$node->lastmod = $parent->lastmod;
 
 				// For the google news we should use te publication date instead
 				// the last modification date. See
@@ -517,11 +509,7 @@ class schuweb_sitemap_content
 			$subnode->priority = $params['art_priority'];
 			$subnode->changefreq = $params['art_changefreq'];
 
-			$subnode->xmlInsertChangeFreq = $parent->xmlInsertChangeFreq;
-			$subnode->xmlInsertPriority = $parent->xmlInsertPriority;
-
 			$subnode->secure = $parent->secure;
-			$subnode->lastmod = $parent->lastmod;
 			if (!isset($parent->subnodes))
 				$parent->subnodes = new \stdClass();
 

@@ -177,6 +177,8 @@ class SitemapsController extends AdminController
 
             $nodes = $site_sitemap_model->getNodes();
 
+            $params = $site_sitemap_model->getState('params');
+
             $sitemapname = $site_sitemap_model->getName();
             if ($site_sitemap_model->isDefault())
                 $sitemapname = 'sitemap';
@@ -262,6 +264,8 @@ class SitemapsController extends AdminController
      */
     private function printNode(&$node, &$site_sitemap_model)
     {
+        $params = $site_sitemap_model->getState('params');
+
         $newssitemap = $site_sitemap_model->isNewssitemap();
         $news_publication_name = $site_sitemap_model->getNewsPublicationName();
         
@@ -299,21 +303,6 @@ class SitemapsController extends AdminController
             xmlwriter_write_raw($this->xw, $node->htmllink);
             xmlwriter_end_element($this->xw);
 
-            $modified = null;
-            if ($node->lastmod != 0) {
-                $modified = (isset($node->modified) && $node->modified != FALSE && $node->modified != -1) ? $node->modified : NULL;
-                if (!$modified && $newssitemap) {
-                    $modified = time();
-                }
-                if ($modified && !is_numeric($modified)) {
-                    $date     = new Date($modified);
-                    $modified = $date->toUnix();
-                }
-                if ($modified) {
-                    $modified = gmdate('Y-m-d\TH:i:s\Z', $modified);
-                }
-            }
-
             if ($newssitemap) {
                 xmlwriter_start_element($this->xw, 'news:news');
                 xmlwriter_start_element($this->xw, 'news:publication');
@@ -346,19 +335,47 @@ class SitemapsController extends AdminController
                 }
             }
 
-            if ($modified && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
-                xmlwriter_start_element($this->xw, 'lastmod');
-                xmlwriter_text($this->xw, $modified);
-                xmlwriter_end_element($this->xw);
+            if ($params->get('xmlLastMod') != 0) {
+                $modified = (isset($node->modified)
+                    && $node->modified != FALSE
+                    && $node->modified != -1)
+                    ? $node->modified : NULL;
+                    
+                if (!$modified && $newssitemap) {
+                    $modified = time();
+                }
+                if ($modified && !is_numeric($modified)) {
+                    $date     = new Date($modified);
+                    $modified = $date->toUnix();
+                }
+                if ($modified) {
+                    $modified = gmdate('Y-m-d\TH:i:s\Z', $modified);
+                }
+
+                if ($modified && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
+                    xmlwriter_start_element($this->xw, 'lastmod');
+                    xmlwriter_text($this->xw, $modified);
+                    xmlwriter_end_element($this->xw);
+                }
             }
 
-            if ($node->changefreq && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
+            if (
+                $params->get('xmlInsertChangeFreq')
+                && $node->changefreq
+                && !$newssitemap
+                && !$site_sitemap_model->isImagesitemap()
+            ) {
                 xmlwriter_start_element($this->xw, 'changefreq');
                 xmlwriter_text($this->xw, $node->changefreq);
                 xmlwriter_end_element($this->xw);
             }
 
-            if ($node->priority && !$newssitemap && !$site_sitemap_model->isImagesitemap()) {
+            if (
+                $params->get('xmlInsertPriority')
+                && $node->priority
+                && !$newssitemap
+                && !$site_sitemap_model->isImagesitemap()
+            ) {
                 xmlwriter_start_element($this->xw, 'priority');
                 xmlwriter_text($this->xw, $node->priority);
                 xmlwriter_end_element($this->xw);
