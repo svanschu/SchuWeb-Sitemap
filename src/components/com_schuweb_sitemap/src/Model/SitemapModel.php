@@ -111,14 +111,6 @@ class SitemapModel extends ItemModel
     private bool $newssitemap = false;
 
     /**
-     *
-     * @var bool Indicates if the xml file should be compressed
-     *
-     * @since 5.0.0
-     */
-    private bool $xmlcompress = false;
-
-    /**
      * @var bool Indicates if the duplicated entries should get removed
      *
      * @since 5.0.0
@@ -467,7 +459,6 @@ class SitemapModel extends ItemModel
 
                 $this->default     = $data->is_default;
                 $this->name        = $data->alias;
-                $this->xmlcompress = $data->params->get('compress_xml');
             } catch (Exception $e) {
                 $app->enqueueMessage(Text::_($e->getMessage()), 'error');
 
@@ -915,14 +906,6 @@ class SitemapModel extends ItemModel
         $this->newssitemap = $newssitemap;
 
         return $this;
-    }
-
-    /**
-     * Get the value of xmlcompress
-     */
-    public function isXmlcompress(): bool
-    {
-        return $this->xmlcompress;
     }
 
     /**

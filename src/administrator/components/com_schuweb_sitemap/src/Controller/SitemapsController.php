@@ -232,7 +232,7 @@ class SitemapsController extends AdminController
 
             $xml = xmlwriter_output_memory($this->xw);
 
-            if ($site_sitemap_model->isXmlcompress()) {
+            if ($params->get('compress_xml')) {
                 $dom = new \DOMDocument("1.0");
 
                 // Preserve redundant spaces (`true` by default)
