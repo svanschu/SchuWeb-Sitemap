@@ -119,6 +119,11 @@ class schuweb_sitemap_content
 		$user = $app->getIdentity();
 		$result = null;
 
+        if (is_null($user))
+            $groups = [0 => 1];
+        else
+            $groups = $user->getAuthorisedViewLevels();
+
 		$link_query = parse_url($parent->link);
 		if (!isset($link_query['query'])) {
 			return;
@@ -200,7 +205,7 @@ class schuweb_sitemap_content
 		$params['nullDate'] = $db->Quote($db->getNullDate());
 
 		$params['nowDate'] = $db->Quote(Factory::getDate()->toSql());
-		$params['groups'] = implode(',', $user->getAuthorisedViewLevels());
+		$params['groups'] = implode(',', (array) $groups);
 
 		// Define the language filter condition for the query
 		$params['language_filter'] = $sitemap->isLanguageFilter();
