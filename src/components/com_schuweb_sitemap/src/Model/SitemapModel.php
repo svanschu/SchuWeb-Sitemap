@@ -448,8 +448,11 @@ class SitemapModel extends ItemModel
                     $data->params->set('access-view', true);
                 } else {
                     // If no access filter is set, the layout takes some responsibility for display of limited information.
-                    $user   = $app->getIdentity();
-                    $groups = $user->getAuthorisedViewLevels();
+                    $user = $app->getIdentity();
+                    if (is_null($user))
+                        $groups = [0 => 1];
+                    else
+                        $groups = $user->getAuthorisedViewLevels();
 
                     $data->params->set('access-view', in_array($data->access, $groups));
                 }
@@ -475,7 +478,11 @@ class SitemapModel extends ItemModel
         $user = $app->getIdentity();
         $db   = $this->getDbo();
 
-        $userLevelsImp = implode(',', (array) $user->getAuthorisedViewLevels());
+        if (is_null($user))
+            $groups = [0 => 1];
+        else
+            $groups = $user->getAuthorisedViewLevels();
+        $userLevelsImp = implode(',', (array) $groups);
 
         $query = $db->getQuery(true);
         $query->select($db->quoteName('title'))
@@ -533,6 +540,10 @@ class SitemapModel extends ItemModel
         $db   = $this->getDBO();
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
+        if (is_null($user))
+            $groups = [0 => 1];
+        else
+            $groups = $user->getAuthorisedViewLevels();
         $list = array();
 
         $extensions = $this->getExtensions();
@@ -557,7 +568,7 @@ class SitemapModel extends ItemModel
 
             // Filter over authorized access levels and publishing state.
             $query->where('n.published = 1');
-            $query->where('n.access IN (' . implode(',', (array) $user->getAuthorisedViewLevels()) . ')');
+            $query->where('n.access IN (' . implode(',', (array) $groups) . ')');
 
             // Filter by language
             if ($this->isLanguageFilter()) {
