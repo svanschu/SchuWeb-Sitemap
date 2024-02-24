@@ -1,0 +1,100 @@
+<?php
+/**
+ * @version     sw.build.version
+ * @copyright   Copyright (C) 2024 Sven Schultschik. All rights reserved
+ * @license     GPL-3.0-or-later
+ * @author      Sven Schultschik (extensions@schultschik.de)
+ * @link        extensions.schultschik.de
+ */
+
+namespace SchuWeb\Plugin\Task\SchuWebSitemap\Extension;
+
+defined('_JEXEC') or die;
+
+use RuntimeException;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
+use Joomla\Component\Scheduler\Administrator\Task\Status;
+use Joomla\Component\Scheduler\Administrator\Task\Task;
+use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
+use Joomla\Event\SubscriberInterface;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\MVC\Factory\MVCFactoryServiceInterface;
+use Joomla\CMS\Application\CMSApplicationInterface;
+
+/**
+ * A task plugin. Offers 1 task routines Update XML SItemap
+ * {@see ExecuteTaskEvent}.
+ *
+ * @since 1.0.0
+ */
+class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
+{
+    use TaskPluginTrait;
+
+    /**
+     * @var string[]
+     * @since 1.0.0
+     */
+    protected const TASKS_MAP = array(
+        'plg_task_update_sitemap' => array(
+            'langConstPrefix' => 'PLG_TASK_UPDATE_SITEMAP',
+            'method'          => 'updateXml',
+            'form'            => 'sitemapupdate'
+        )
+    );
+
+    /**
+     * @var boolean
+     * @since 1.0.0
+     */
+    protected $autoloadLanguage = true;
+
+    /**
+     * @inheritDoc
+     *
+     * @return string[]
+     *
+     * @since 1.0.0
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'onTaskOptionsList'    => 'advertiseRoutines',
+            'onExecuteTask'        => 'standardRoutineHandler',
+            'onContentPrepareForm' => 'enhanceTaskItemForm',
+        ];
+    }
+
+    private function updateXml(ExecuteTaskEvent $event): int
+    {
+        $extension = ComponentHelper::isEnabled('com_schuweb_sitemap')
+            ? $this->getApplication()->bootComponent('com_schuweb_sitemap')
+            : null;
+
+        if (!($extension instanceof MVCFactoryServiceInterface)) {
+            throw new RuntimeException('SchuWeb Sitemap extension is not installed or has been disabled.');
+        }
+
+        $params = $event->getArgument('params');
+
+        $config = ['ignore_request' => true, 'pk' => (int)$params->sitemap];
+        $model  = $extension->getMVCFactory()->createModel('SitemapXml', 'Site', $config);
+
+        foreach ($params->type as $type) {
+            switch ($type) {
+                case 'sitemap':
+                    $model->createxml();
+                    break;
+                case 'images':
+                    $model->createxmlimages();
+                    break;
+                case 'news':
+                    $model->createxmlnews();
+                    break;
+            }
+        }
+
+        return Status::OK;
+    }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="task" method="upgrade">
+    <name>PLG_TASK_SCHUWEB_SITEMAP</name>
+    <author>Sven Schultschik</author>
+    <creationDate>sw.build.date</creationDate>
+    <copyright>Copyright (C) 2024 Sven Schultschik. All rights reserved</copyright>
+    <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>
+    <authorEmail>extensions@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.de</authorUrl>
+    <version>sw.build.version</version>
+    <description>PLG_TASK_SCHUWEB_SITEMAP_DESCRIPTION</description>
+    <namespace path="src">SchuWeb\Plugin\Task\SchuWebSitemap</namespace>
+    <files>
+        <folder plugin="schuwebsitemap">services</folder>
+        <folder>src</folder>
+        <folder>forms</folder>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/plg_task_schuwebsitemap.ini</language>
+        <language tag="en-GB">en-GB/plg_task_schuwebsitemap.sys.ini</language>
+    </languages>
+</extension>
