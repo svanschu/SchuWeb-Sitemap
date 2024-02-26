@@ -21,6 +21,7 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Factory\MVCFactoryServiceInterface;
 use Joomla\CMS\Application\CMSApplicationInterface;
+use Joomla\CMS\Application\ConsoleApplication;
 
 /**
  * A task plugin. Offers 1 task routines Update XML SItemap
@@ -68,6 +69,12 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 
     private function updateXml(ExecuteTaskEvent $event): int
     {
+        $app = $this->getApplication();
+        if ($app instanceof ConsoleApplication){
+            $this->logTask("Due to bugs in Joomla! Route::link() this task currently can't be run on the CLI only as Webtask", 'error');
+            return Status::NO_RUN;
+        }
+
         $extension = ComponentHelper::isEnabled('com_schuweb_sitemap')
             ? $this->getApplication()->bootComponent('com_schuweb_sitemap')
             : null;
