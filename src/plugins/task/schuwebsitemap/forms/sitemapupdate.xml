@@ -5,19 +5,19 @@
             <field
                 name="sitemap"
                 type="sitemaplist"
-                label="PLG_TASK_UPDATE_SITEMAP_SITEMAP"
+                label="PLG_TASK_SCHUWEBSITEMAP_SITEMAP"
                 required="true"
             />
 
             <field 
                 name="type"
                 type="checkboxes"
-                label="PLG_TASK_UPDATE_SITEMAP_TYPE"
+                label="PLG_TASK_SCHUWEBSITEMAP_TYPE"
                 required="true"
                 default="sitemap">
-                    <option value="sitemap">PLG_TASK_UPDATE_SITEMAP_SITEMAP</option>
-                    <option value="images">PLG_TASK_UPDATE_SITEMAP_IMAGEMAP</option>
-                    <option value="news">PLG_TASK_UPDATE_SITEMAP_NEWSMAP</option>
+                    <option value="sitemap">PLG_TASK_SCHUWEBSITEMAP_SITEMAP</option>
+                    <option value="images">PLG_TASK_SCHUWEBSITEMAP_IMAGEMAP</option>
+                    <option value="news">PLG_TASK_SCHUWEBSITEMAP_NEWSMAP</option>
             </field>
         </fieldset>
     </fields>
