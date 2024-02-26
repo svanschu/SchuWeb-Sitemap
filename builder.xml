@@ -47,6 +47,13 @@
                 <include name="**"/>
             </fileset>
         </zip>
+
+        <zip destfile="${builddir}/tmp/packages/plg_task_schuwebsitemap_${build.version}_${build.date.DSTAMP}.zip">
+            <fileset dir="${builddir}/tmp/schuweb_sitemap/plugins/schuwebsitemap">
+                <include name="**"/>
+            </fileset>
+        </zip>
+
         <zip destfile="${builddir}/pkg_schuweb_sitemap_${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp">
                 <include name="packages/*.zip"/>
@@ -91,6 +98,13 @@
                 <include name="newsfeeds/**"/>
             </fileset>
         </copy>
+
+        <copy todir="${builddir}/tmp/schuweb_sitemap/plugins">
+            <fileset dir="src/plugins/task">
+                <include name="schuwebsitemap/**"/>
+            </fileset>
+        </copy>
+
         <echo msg="Copy was successfull"/>
         <!-- insert version, build number and date into files -->
         <reflexive>
