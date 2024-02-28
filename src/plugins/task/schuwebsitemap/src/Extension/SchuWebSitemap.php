@@ -15,19 +15,17 @@ use RuntimeException;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
 use Joomla\Component\Scheduler\Administrator\Task\Status;
-use Joomla\Component\Scheduler\Administrator\Task\Task;
 use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Event\SubscriberInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Factory\MVCFactoryServiceInterface;
-use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Application\ConsoleApplication;
 
 /**
  * A task plugin. Offers 1 task routines Update XML SItemap
  * {@see ExecuteTaskEvent}.
  *
- * @since 1.0.0
+ * @since __BUMP_VERSION__
  */
 class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 {
@@ -35,7 +33,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 
     /**
      * @var string[]
-     * @since 1.0.0
+     * @since __BUMP_VERSION__
      */
     protected const TASKS_MAP = array(
         'PLG_TASK_SCHUWEBSITEMAP' => array(
@@ -47,7 +45,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 
     /**
      * @var boolean
-     * @since 1.0.0
+     * @since __BUMP_VERSION__
      */
     protected $autoloadLanguage = true;
 
@@ -56,7 +54,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
      *
      * @return string[]
      *
-     * @since 1.0.0
+     * @since __BUMP_VERSION__
      */
     public static function getSubscribedEvents(): array
     {
@@ -67,6 +65,11 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
         ];
     }
 
+    /**
+     * update the XML files of a sitemap
+     * 
+     * @since __BUMP_VERSION__
+     */
     private function updateXml(ExecuteTaskEvent $event): int
     {
         $app = $this->getApplication();
