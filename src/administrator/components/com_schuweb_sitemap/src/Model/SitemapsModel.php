@@ -51,7 +51,7 @@ class SitemapsModel extends ListModel
                 'created', 'a.created',
                 'created_by', 'a.created_by',
                 'ordering', 'a.ordering',
-                'featured', 'a.featured',
+                'featured', 'a.is_default',
                 'language', 'a.language',
                 'publish_up', 'a.publish_up',
                 'publish_down', 'a.publish_down',

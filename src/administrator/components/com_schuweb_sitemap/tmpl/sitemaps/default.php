@@ -58,7 +58,7 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="w-1 text-center">
-                                    <?php echo HTMLHelper::_('searchtools.sort', 'SCHUWEB_SITEMAP_HEADING_DEFAULT', 'a.featured', $listDirn, $listOrder); ?>
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'SCHUWEB_SITEMAP_HEADING_DEFAULT', 'a.is_default', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" class="title">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'SCHUWEB_SITEMAP_Heading_Sitemap', 'a.title', $listDirn, $listOrder); ?>
