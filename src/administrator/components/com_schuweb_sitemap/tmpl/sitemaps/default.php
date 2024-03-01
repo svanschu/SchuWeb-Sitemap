@@ -63,6 +63,9 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                 <th scope="col" class="title">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'SCHUWEB_SITEMAP_Heading_Sitemap', 'a.title', $listDirn, $listOrder); ?>
                                 </th>
+                                <th scope="col" class="text-center">
+                                    <?php echo Text::_('SCHUWEB_SITEMAP_TASKS'); ?>
+                                </th>
                                 <th scope="col" class="w-10 d-none d-md-table-cell">
                                     <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'access_level', $listDirn, $listOrder); ?>
                                 </th>
@@ -144,7 +147,17 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                             <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
                                         </div>
                                     </td>
-
+                                    <td class="text-center">
+                                        <?php if (!isset($item->task)) : ?>
+                                            <a href="<?php echo Route::_('index.php?option=com_scheduler&task=task.add&type=PLG_TASK_SCHUWEBSITEMAP');?>">
+                                                <?php echo Text::_('SCHUWEB_SITEMAP_NEW_TASK');?>
+                                            </a>
+                                        <?php else : ?>
+                                            <a href="<?php echo Route::_('index.php?option=com_scheduler&task=task.edit&id=' . $item->task->id); ?>">
+                                                <?php echo $item->task->title; ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    </td>
                                     <td class="small d-none d-md-table-cell">
                                         <?php echo $this->escape($item->access_level); ?>
                                     </td>
