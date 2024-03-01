@@ -15,6 +15,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 jimport('joomla.database.query');
 
@@ -108,6 +109,53 @@ class SitemapsModel extends ListModel
         return parent::getStoreId($id);
     }
 
+    /**
+     * Method to get an array of data items.
+     *
+     * @return  mixed  An array of data items on success, false on failure.
+     *
+     * @since   __BUMP_VERSION__
+     */
+    public function getItems()
+    {
+        $sitemaps = parent::getItems();
+
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
+        $query->select([
+            $db->quoteName('id'),
+            $db->quoteName('title'),
+            $db->quoteName('params')])
+            ->from($db->quoteName('#__scheduler_tasks'))
+            ->where([
+                $db->quoteName('type') . ' = ' . $db->quote('PLG_TASK_SCHUWEBSITEMAP'),
+                $db->quoteName('state') . ' = 1'
+            ]);
+
+        $db->setQuery($query);
+        $tasks = $db->loadObjectList();
+
+        if (empty($tasks))
+            return $sitemaps;
+
+        foreach ($sitemaps as $sitemap) {
+            foreach ($tasks as $k => $task) {
+                if (!($task->params instanceof Registry)) {
+                    $task->params = new Registry($task->params);
+                }
+
+                if ($sitemap->id == (int) $task->params->get('sitemap')) {
+                    unset($task->params);
+                    $sitemap->task = $task;
+                    unset($tasks[$k]);
+                    break;
+                }
+            }
+        }
+
+        return $sitemaps;
+    }
+    
     /**
      *
      * @return  \JDatabaseQuery
