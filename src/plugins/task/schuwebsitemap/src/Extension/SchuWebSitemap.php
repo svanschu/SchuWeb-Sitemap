@@ -25,7 +25,7 @@ use Joomla\CMS\Application\ConsoleApplication;
  * A task plugin. Offers 1 task routines Update XML SItemap
  * {@see ExecuteTaskEvent}.
  *
- * @since __BUMP_VERSION__
+ * @since 5.1.0
  */
 class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 {
@@ -33,7 +33,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 
     /**
      * @var string[]
-     * @since __BUMP_VERSION__
+     * @since 5.1.0
      */
     protected const TASKS_MAP = array(
         'PLG_TASK_SCHUWEBSITEMAP' => array(
@@ -45,7 +45,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 
     /**
      * @var boolean
-     * @since __BUMP_VERSION__
+     * @since 5.1.0
      */
     protected $autoloadLanguage = true;
 
@@ -54,7 +54,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
      *
      * @return string[]
      *
-     * @since __BUMP_VERSION__
+     * @since 5.1.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -68,7 +68,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
     /**
      * update the XML files of a sitemap
      * 
-     * @since __BUMP_VERSION__
+     * @since 5.1.0
      */
     private function updateXml(ExecuteTaskEvent $event): int
     {

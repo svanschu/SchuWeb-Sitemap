@@ -114,7 +114,7 @@ class SitemapsModel extends ListModel
      *
      * @return  mixed  An array of data items on success, false on failure.
      *
-     * @since   __BUMP_VERSION__
+     * @since   5.1.0
      */
     public function getItems()
     {

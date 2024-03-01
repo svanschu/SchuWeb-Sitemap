@@ -19,21 +19,21 @@ defined('_JEXEC') || die();
 /**
  * Create a select list of all available sitemaps
  * 
- * @since __BUMP_VERSION__
+ * @since 5.1.0
  */
 class SitemaplistField extends ListField
 {
     /**
      * Type of the field
      * 
-     * @since __BUMP_VERSION__
+     * @since 5.1.0
      */
     protected $type = 'Sitemaplist';
 
     /**
      * Get the select list field information
      * 
-     * @since __BUMP_VERSION__
+     * @since 5.1.0
      */
     protected function getInput()
     {
