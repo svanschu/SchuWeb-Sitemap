@@ -2,6 +2,26 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.1.0</version>
+        <fix>
+            <item>fix option to remove priority and changefreq</item>
+            <item>fix order by default bug</item>
+        </fix>
+        <addition>
+            <item>Joomla! scheduler task to automatically recreate sitemap xml file</item>
+        </addition>
+        <change>
+            <item>overall code improvements</item>
+        </change>
+        <remove>
+        </remove>
+        <note>
+            <item>The XML generation is a B/C break to version 4.x.x and earlier</item>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.0.2</version>
         <fix>
             <item>fix image sitemap uses admin URL instead of site</item>
