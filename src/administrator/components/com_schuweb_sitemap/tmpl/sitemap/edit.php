@@ -56,7 +56,7 @@ $wa->useScript('keepalive')
                     <fieldset id="fieldset-<?php echo $name; ?>" class="options-form">
 						<?php
 						if (isset($fieldSet->description) && trim($fieldSet->description)) :
-							echo '<legend>' . $this->escape(JText::_($fieldSet->description)) . '</legend>';
+							echo '<legend>' . $this->escape(Text::_($fieldSet->description)) . '</legend>';
 						endif; ?>
                         <div>
 							<?php foreach ($this->form->getFieldset($name) as $field) : ?>

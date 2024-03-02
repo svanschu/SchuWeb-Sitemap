@@ -1,7 +1,7 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2019 - 2024 Sven Schultschik. All rights reserved
+ * @copyright   Copyright (C) 2019 - 2023 Sven Schultschik. All rights reserved
  * @license     GPL-3.0-or-later
  * @author      Sven Schultschik (extensions@schultschik.de)
  * @link        extensions.schultschik.de
@@ -149,11 +149,11 @@ class HtmlView extends BaseHtmlView
                 // Redirect to login
                 $uri = Uri::getInstance();
                 $app->redirect(
-                    'index.php?option=com_users&view=login&return=' . base64_encode($uri), Text::_('SchuWeb_Sitemap_Error_Login_to_view_sitemap')
+                    'index.php?option=com_users&view=login&return=' . base64_encode($uri), Text::_('SCHUWEB_SITEMAP_ERROR_LOGIN_TO_VIEW_SITEMAP')
                 );
                 return;
             } else {
-                $app->enqueueMessage(Text::_('SchuWeb_Sitemap_Error_Not_auth'), 'warning');
+                $app->enqueueMessage(Text::_('SCHUWEB_SITEMAP_ERROR_NOT_AUTH'), 'warning');
                 return;
             }
         }

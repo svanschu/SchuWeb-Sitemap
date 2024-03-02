@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use \Joomla\CMS\Factory;
+
 /**
  * 
  * @since       2.0
@@ -24,7 +26,7 @@ class SchuWeb_SitemapHelper
 	 */
 	public static function getExtensionsList()
 	{
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('e.*')

@@ -41,7 +41,7 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                 <?php else: ?>
                     <table class="table itemList" id="sitemapList">
                         <caption class="visually-hidden">
-                            <?php echo Text::_('COM_SCHUWEB_SITEMAP_TABLE_CAPTION'); ?>,
+                            <?php echo Text::_('SCHUWEB_SITEMAP_TABLE_CAPTION'); ?>,
                             <span id="orderedBy">
                                 <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
                             </span>,

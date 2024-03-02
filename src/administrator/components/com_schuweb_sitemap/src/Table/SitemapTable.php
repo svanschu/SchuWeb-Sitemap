@@ -153,7 +153,7 @@ class SitemapTable extends Table
         $app = Factory::$application;
 
         if (empty($this->title)) {
-            $app->enqueueMessage(Text::_('Sitemap must have a title'), 'error');
+            $app->enqueueMessage(Text::_('SCHUWEB_SITEMAP_MUST_SET_TITLE'), 'error');
             return false;
         }
 
@@ -212,7 +212,7 @@ class SitemapTable extends Table
                 $pks = array($this->$k);
             } // Nothing to set publishing state on, return false.
             else {
-                Factory::$application->enqueueMessage(Text::_('No_Rows_Selected'), 'error');
+                Factory::$application->enqueueMessage(Text::_('SCHUWEB_SITEMAP_NO_ROWS_SELECTED'), 'error');
                 return false;
             }
         }

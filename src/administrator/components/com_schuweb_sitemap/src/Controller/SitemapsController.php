@@ -60,7 +60,7 @@ class SitemapsController extends AdminController
         $id  = @$cid[0];
 
         if (!$id) {
-            $this->enqueueMessage(Text::_('Select an item to set as default'), 'warning');
+            $this->enqueueMessage(Text::_('SCHUWEB_SITEMAP_SELECT_DEFAULT'), 'warning');
         } else {
             // Get the model.
             $model = $this->getModel();

@@ -11,9 +11,8 @@
     <license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>	
     <description>SchuWeb Sitemap - Libraries</description>
     <namespace path="src">SchuWeb\Libraries</namespace>
-    <changelogurl></changelogurl>	
-    <files>	
-        <folder>src</folder>	
-        <filename>schuweb_sitemap.xml</filename>	
-    </files>	
+    <files>
+        <folder>src</folder>
+        <filename>schuweb_sitemap.xml</filename>
+    </files>
 </extension>

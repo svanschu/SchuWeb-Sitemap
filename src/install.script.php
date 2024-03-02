@@ -96,7 +96,7 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 
 			if (!$db->execute())
 			{
-				Factory::getApplication()->enqueueMessage(JText::_('SCHUWEB_SITEMAP_ACTIVATE_PLUGIN_FAILED'), 'error');
+				Factory::getApplication()->enqueueMessage(Text::_('SCHUWEB_SITEMAP_ACTIVATE_PLUGIN_FAILED'), 'error');
 			}
 		}
 	}

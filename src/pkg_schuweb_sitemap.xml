@@ -4,6 +4,9 @@
     <packagename>schuweb_sitemap</packagename>
     <creationDate>sw.build.date</creationDate>
     <author>Sven Schultschik</author>
+    <copyright>Copyright (C) 2019 - 2024 Sven Schultschik. All rights reserved</copyright>
+    <authorEmail>extensions@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <url>https://extensions.schultschik.com/</url>
     <packager>SchuWeb Sitemap</packager>
@@ -16,7 +19,7 @@
         <file type="plugin" id="content" group="schuweb_sitemap">plg_content_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="newsfeeds" group="schuweb_sitemap">plg_newsfeeds_sw.build.version_sw.build.dstamp.zip</file>
         <file type="plugin" id="schuwebsitemap" group="task">plg_task_schuwebsitemap_sw.build.version_sw.build.dstamp.zip</file>
-        <file type="librarie" id="schuweb_sitemap">lib_schuweb_sitemap_sw.build.version_sw.build.dstamp.zip</file>
+        <file type="library" id="schuweb_sitemap">lib_schuweb_sitemap_sw.build.version_sw.build.dstamp.zip</file>
     </files>
     <updateservers>
         <server type="extension" priority="1" name="SchuWeb Sitemap Update Site">

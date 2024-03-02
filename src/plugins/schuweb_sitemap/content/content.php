@@ -253,7 +253,7 @@ class schuweb_sitemap_content
 					$row = $db->loadObject();
 
 					$parent->slug = $row->alias ? ($id . ':' . $row->alias) : $id;
-					$parent->link = ContentHelperRoute::getArticleRoute($parent->slug, $row->catid);
+					$parent->link = RouteHelper::getArticleRoute($parent->slug, $row->catid);
 
                     $text = $row->introtext . $row->fulltext;
                     if ($sitemap->isImagesitemap()) {
@@ -641,7 +641,7 @@ class schuweb_sitemap_content
 					} elseif (@$match['title']) {
 						$title = stripslashes($match['title']);
 					} else {
-						$title = Text::sprintf('Page #', $i);
+						$title = Text::sprintf('SCHUWEB_SITEMAP_PAGE_NUMBER', $i);
 					}
 					$subnode = new stdclass();
 					$subnode->name = $title;
