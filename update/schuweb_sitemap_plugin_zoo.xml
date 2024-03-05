@@ -3,6 +3,63 @@
     <update>
         <name>SchuWeb Sitemap - Zoo Plugin</name>
         <description>Plugin to support extension Zoo in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_zoo</element>
+        <type>plugin</type>
+        <version>5.1.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Zoo/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Zoo Plugin 5.1.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-1-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Zoo/releases/download/5.1.0/plg_zoo_5.1.0_20240302.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="5"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Zoo Plugin</name>
+        <description>Plugin to support extension Zoo in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_zoo</element>
+        <type>plugin</type>
+        <version>5.1.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Zoo/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Zoo Plugin 5.1.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-1-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Zoo/releases/download/5.1.0/plg_zoo_5.1.0_20240302.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Zoo Plugin</name>
+        <description>Plugin to support extension Zoo in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_zoo</element>
+        <type>plugin</type>
+        <version>5.0.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Zoo/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Zoo Plugin 5.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Zoo/releases/download/5.0.0/plg_zoo_5.0.0_20231231.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Zoo Plugin</name>
+        <description>Plugin to support extension Zoo in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>com_zoo</element>
         <type>plugin</type>
         <version>4.0.0</version>

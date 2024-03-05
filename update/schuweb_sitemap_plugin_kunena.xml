@@ -5,6 +5,120 @@
         <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>schuweb_sitemap_kunena</element>
         <type>plugin</type>
+        <version>5.1.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Kunena/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 5.1.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-1-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Kunena/releases/download/5.1.0/plg_kunena_5.1.0_20240302.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="5"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
+        <version>5.1.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Kunena/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 5.1.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-1-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Kunena/releases/download/5.1.0/plg_kunena_5.1.0_20240302.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
+        <version>5.0.1</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Kunena/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 5.0.1">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Kunena/releases/download/5.0.1/plg_kunena_5.0.1_20240110.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="5"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
+        <version>5.0.1</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Kunena/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 5.0.1">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Kunena/releases/download/5.0.1/plg_kunena_5.0.1_20240110.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
+        <version>5.0.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Kunena/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 5.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Kunena/releases/download/5.0.0/plg_kunena_5.0.0_20231231.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="5"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
+        <version>5.0.0</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap-Kunena/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap - Kunena Plugin 5.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-0-0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap-Kunena/releases/download/5.0.0/plg_kunena_5.0.0_20231231.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>rc</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap - Kunena Plugin</name>
+        <description>Plugin to support extension Kunena in SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>schuweb_sitemap_kunena</element>
+        <type>plugin</type>
         <version>4.0.0</version>
         <infourl title="SchuWeb Sitemap - Kunena Plugin 4.0.0">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-4-0-0</infourl>
         <downloads>
