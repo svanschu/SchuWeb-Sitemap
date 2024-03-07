@@ -37,6 +37,7 @@
         <language tag="en-GB">en-GB/com_schuweb_sitemap.ini</language>
         <language tag="es-ES">es-ES/com_schuweb_sitemap.ini</language>
         <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
+        <language tag="fr-FR">fr-FR/com_schuweb_sitemap.ini</language>
         <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
         <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>
         <language tag="ru-RU">ru-RU/com_schuweb_sitemap.ini</language>
@@ -66,6 +67,8 @@
             <language tag="es-ES">es-ES/com_schuweb_sitemap.sys.ini</language>
             <language tag="fa-IR">fa-IR/com_schuweb_sitemap.ini</language>
             <language tag="fa-IR">fa-IR/com_schuweb_sitemap.sys.ini</language>
+            <language tag="fr-FR">fr-FR/com_schuweb_sitemap.ini</language>
+            <language tag="fr-FR">fr-FR/com_schuweb_sitemap.sys.ini</language>
             <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.ini</language>
             <language tag="cs-CZ">cs-CZ/com_schuweb_sitemap.sys.ini</language>
             <language tag="nl-NL">nl-NL/com_schuweb_sitemap.ini</language>

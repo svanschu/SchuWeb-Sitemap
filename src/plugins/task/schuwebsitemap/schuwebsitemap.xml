@@ -19,5 +19,7 @@
     <languages folder="language">
         <language tag="en-GB">en-GB/plg_task_schuwebsitemap.ini</language>
         <language tag="en-GB">en-GB/plg_task_schuwebsitemap.sys.ini</language>
+        <language tag="fr-FR">fr-FR/plg_task_schuwebsitemap.ini</language>
+        <language tag="fr-FR">fr-FR/plg_task_schuwebsitemap.sys.ini</language>
     </languages>
 </extension>
