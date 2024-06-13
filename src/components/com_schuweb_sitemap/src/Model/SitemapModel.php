@@ -263,7 +263,7 @@ class SitemapModel extends ItemModel
                 if (empty($mlinks[$option][$view][$id])) {
                     $mlinks[$option][$view][$id] = true;
                 } else {
-                    if (empty((array) ($node->subnodes))) {
+                    if (!isset($node->subnodes) && empty((array) ($node->subnodes))) {
                         unset($nodes->$key);
                     }
                 }
