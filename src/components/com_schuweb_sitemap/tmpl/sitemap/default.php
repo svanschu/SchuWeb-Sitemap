@@ -14,10 +14,16 @@ $params = $this->params;
 
 ?>
 <div id="SchuWeb_Sitemap">
-<?php if ($params->get('show_page_heading', 1) && $params->get('page_heading') != '') : ?>
-    <h1>
-        <?php echo $this->escape($params->get('page_heading')); ?>
-    </h1>
+<?php if ($params->get('show_page_heading')) : ?>
+    <div class="page-header">
+        <h1>
+            <?php if ($this->escape($params->get('page_heading'))) : ?>
+                <?php echo $this->escape($params->get('page_heading')); ?>
+            <?php else : ?>
+                <?php echo $this->escape($params->get('page_title')); ?>
+            <?php endif; ?>
+        </h1>
+    </div>
 <?php endif; ?>
 
 <?php if ($params->get('showintro', 1) )  : ?>
