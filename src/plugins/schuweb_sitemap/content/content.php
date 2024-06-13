@@ -611,14 +611,34 @@ class schuweb_sitemap_content
                 if (!preg_match('/^https?:\//i', $src)) {
                     $src = $urlBase .  $src;
                 }
-                $image = new stdClass;
-                $image->src = $src;
-                $images[] = $image;
+                if (!self::issetImage($src, $images)) {
+                    $image = new stdClass;
+                    $image->src = $src;
+                    $images[] = $image;
+                }
             }
         }
 
 		return $images;
 	}
+
+    /** Determine if image is already in the array
+    * 
+    * @param string $src The src of the cirrent wanted to be added imagee
+    * @param array $images Array aof allay collected imahes
+    * 
+    * @return bool true if image already exists
+    * @since __BUMP_VERSION__
+    */
+    static private function issetImage($src, &$images) : bool
+    {
+        foreach($images as $image){
+            if (strcmp($src, $image->src) == 0)
+                return true;
+        }
+
+        return false;
+    }
 
 	static function getPagebreaks($text, $baseLink)
 	{
