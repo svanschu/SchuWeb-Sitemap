@@ -580,6 +580,19 @@ class schuweb_sitemap_content
 		preg_match_all('/<img[^>]*?(?:(?:[^>]*src="(?P<src>[^"]+)")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches1, PREG_SET_ORDER);
 		// Loog for <a> tags with href to images
 		preg_match_all('/<a[^>]*?(?:(?:[^>]*href="(?P<src>[^"]+\.(gif|png|jpg|jpeg))")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches2, PREG_SET_ORDER);
+        
+        //Filter out thumbnails from popup image modals
+        foreach ($matches2 as $big_image){
+            foreach($matches1 as $key => $thumb) {
+                $big_img_name_array = explode('/', $big_image['src']);
+                $big_img_name = end($big_img_name_array);
+
+                if (str_ends_with($thumb['src'], $big_img_name)) {
+                    unset($matches1[$key]);
+                }
+            }
+        }
+
 		$matches = array_merge($matches1, $matches2);
 		if (count($matches)) {
 			$images = array();
