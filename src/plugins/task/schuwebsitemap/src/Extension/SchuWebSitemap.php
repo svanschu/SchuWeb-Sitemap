@@ -36,7 +36,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
      * @since 5.1.0
      */
     protected const TASKS_MAP = array(
-        'PLG_TASK_SCHUWEBSITEMAP' => array(
+        'schuweb.sitemap.update' => array(
             'langConstPrefix' => 'PLG_TASK_SCHUWEBSITEMAP',
             'method'          => 'updateXml',
             'form'            => 'sitemapupdate'

@@ -8,6 +8,7 @@
  */
 
 use Joomla\CMS\Application\AdministratorApplication;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
@@ -18,6 +19,7 @@ use Joomla\Filesystem\File;
 use Joomla\Filesystem\Exception\FilesystemException;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -31,6 +33,13 @@ return new class () implements ServiceProviderInterface {
             new class ($container->get(AdministratorApplication::class), $container->get(DatabaseInterface::class)) implements InstallerScriptInterface {
             private AdministratorApplication $app;
             private DatabaseInterface $db;
+
+            /**
+             * The current or old version of the plugin
+             * 
+             * @since __BUMP_VERSION__
+             */
+            private string $oldVersion;
 
             public function __construct(AdministratorApplication $app, DatabaseInterface $db)
             {
@@ -87,8 +96,41 @@ return new class () implements ServiceProviderInterface {
                 return true;
             }
 
+            /**
+             * Function called after the extension is updated.
+             * 
+             * @since __BUMP_VERSION__
+             */
             public function update(InstallerAdapter $parent): bool
             {
+                if (version_compare($this->oldVersion, '5.1.0', '<=')) {
+                    $query = $this->db->getQuery(true)
+                        ->select([
+                            $this->db->quoteName('id'),
+                            $this->db->quoteName('type')])
+                        ->from($this->db->quoteName('#__scheduler_tasks'))
+                        ->where($this->db->quoteName('type') . ' = ' . $this->db->quote('PLG_TASK_SCHUWEBSITEMAP'));
+
+                    $this->db->setQuery($query);
+
+                    $tasks = $this->db->loadObjectList();
+
+                    foreach ($tasks as $task) {
+                        $query = $this->db->getQuery(true)
+                            ->update($this->db->quoteName('#__scheduler_tasks'))
+                            ->set($this->db->quoteName('type') . '=' . $this->db->quote('schuweb.sitemap.update'))
+                            ->where($this->db->quoteName('id') . '=' . $task->id);
+
+                        $this->db->setQuery($query);
+
+                        $result = $this->db->execute();
+
+                        if (!$result) {
+                            $this->app->enqueueMessage('Failed to update Scheduler Task ' . $task->id, CMSApplication::MSG_ERROR);
+                        }
+                    }
+                }
+
                 $this->app->enqueueMessage('Successful updated.');
 
                 return true;
@@ -101,8 +143,21 @@ return new class () implements ServiceProviderInterface {
                 return true;
             }
 
+            /**
+             * Function called before extension installation/update/removal procedure commences.
+             * 
+             * @since __BUMP_VERSION__
+             */
             public function preflight(string $type, InstallerAdapter $parent): bool
             {
+                //workaround for bug https://github.com/joomla/joomla-cms/issues/43668
+                if (!isset($parent->extension) && $parent->currentExtensionId) {
+                    $parent->extension->load(['type' => $parent->type, 'element' => $parent->element, 'folder' => $parent->group]);
+                }
+
+                $cache            = new Registry($parent->extension->manifest_cache);
+                $this->oldVersion = $cache->get('version');
+
                 return true;
             }
 
@@ -112,8 +167,8 @@ return new class () implements ServiceProviderInterface {
 
                 $extension = $this->app->bootComponent('com_installer');
 
-                $config    = ['ignore_request' => true];
-                $model = $extension->getMVCFactory()->createModel('Manage', 'Administrator', $config);
+                $config = ['ignore_request' => true];
+                $model  = $extension->getMVCFactory()->createModel('Manage', 'Administrator', $config);
 
                 $ids = [$parent->extension->extension_id];
                 $model->publish($ids, 1);
