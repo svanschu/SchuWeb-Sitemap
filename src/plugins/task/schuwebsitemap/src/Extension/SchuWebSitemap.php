@@ -83,6 +83,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
             : null;
 
         if (!($extension instanceof MVCFactoryServiceInterface)) {
+            $this->logTask('SchuWeb Sitemap extension is not installed or has been disabled.', 'error');
             throw new RuntimeException('SchuWeb Sitemap extension is not installed or has been disabled.');
         }
 
@@ -91,19 +92,26 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
         $config = ['ignore_request' => true, 'pk' => (int)$params->sitemap];
         $model  = $extension->getMVCFactory()->createModel('SitemapXml', 'Site', $config);
 
+        $this->logTask('Sitemap: ' . $model->getName());
+
         foreach ($params->type as $type) {
             switch ($type) {
                 case 'sitemap':
                     $model->createxml();
+                    $this->logTask('Sitemap XML created.');
                     break;
                 case 'images':
                     $model->createxmlimages();
+                    $this->logTask('Image map XML created.');
                     break;
                 case 'news':
                     $model->createxmlnews();
+                    $this->logTask('News map XML created.');
                     break;
             }
         }
+
+        $this->logTask('Update XML files end');
 
         return Status::OK;
     }
