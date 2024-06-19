@@ -72,7 +72,7 @@ return new class () implements ServiceProviderInterface {
                     $data['cron_rules']['exp']                = 'P1D';
                     $data['state']                            = 1;
                     $data['params']['sitemap']                = $sitemap->id;
-                    $data['params']['type']                   = ["sitemap", "images", "news"];
+                    $data['params']['type']                   = ["sitemap"];
 
                     $extension = ComponentHelper::isEnabled('com_scheduler')
                         ? $this->app->bootComponent('com_scheduler')
