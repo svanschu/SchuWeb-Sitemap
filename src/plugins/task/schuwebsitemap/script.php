@@ -156,7 +156,8 @@ return new class () implements ServiceProviderInterface {
                 }
 
                 $cache            = new Registry($parent->extension->manifest_cache);
-                $this->oldVersion = $cache->get('version');
+                if (!is_null($cache->get('version')))
+                    $this->oldVersion = $cache->get('version');
 
                 return true;
             }
