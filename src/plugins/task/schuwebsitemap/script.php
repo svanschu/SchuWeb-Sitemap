@@ -63,7 +63,7 @@ return new class () implements ServiceProviderInterface {
                 foreach ($sitemaps as $sitemap) {
                     $data['id']                               = 0;
                     $data['title']                            = $sitemap->title;
-                    $data['type']                             = 'PLG_TASK_SCHUWEBSITEMAP';
+                    $data['type']                             = 'schuweb.sitemap.update';
                     $data['execution_rules']['rule-type']     = 'interval-days';
                     $data['execution_rules']['interval-days'] = 1;
                     $data['execution_rules']['exec-day']      = Factory::getDate('now', 'GMT')->__get('day');
