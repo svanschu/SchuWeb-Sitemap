@@ -2,6 +2,30 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.1.1</version>
+        <fix>
+            <item>#135 Problem with Page Title</item>
+            <item>#133 Duplicate images</item>
+            <item>#134 Message: Warning: Undefined property: stdClass::$subnodes</item>
+            <item>#128 Duplicated entries in image map</item>
+            <item>#125 Type ID is PLG_TASK_SCHUWEBSITEMAP is not a translatable</item>
+            <item>#126 add more log entries to task plugin</item>
+        </fix>
+        <addition>
+            <item>#124 Task Scheduler Translation fr-FR</item>
+        </addition>
+        <change>
+            <item>change #127 Only sitemap xml for default task </item>
+        </change>
+        <remove>
+        </remove>
+        <note>
+            <item>The XML generation is a B/C break to version 4.x.x and earlier</item>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.1.0</version>
         <fix>
             <item>fix option to remove priority and changefreq</item>
