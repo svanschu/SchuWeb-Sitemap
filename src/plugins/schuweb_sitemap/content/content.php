@@ -641,7 +641,7 @@ class schuweb_sitemap_content
     * @param array $images Array aof allay collected imahes
     * 
     * @return bool true if image already exists
-    * @since __BUMP_VERSION__
+    * @since 5.1.1
     */
     static private function issetImage($src, &$images) : bool
     {

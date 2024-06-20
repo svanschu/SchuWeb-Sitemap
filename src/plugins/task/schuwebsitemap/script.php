@@ -37,7 +37,7 @@ return new class () implements ServiceProviderInterface {
             /**
              * The current or old version of the plugin
              * 
-             * @since __BUMP_VERSION__
+             * @since 5.1.1
              */
             private string $oldVersion;
 
@@ -99,7 +99,7 @@ return new class () implements ServiceProviderInterface {
             /**
              * Function called after the extension is updated.
              * 
-             * @since __BUMP_VERSION__
+             * @since 5.1.1
              */
             public function update(InstallerAdapter $parent): bool
             {
@@ -146,7 +146,7 @@ return new class () implements ServiceProviderInterface {
             /**
              * Function called before extension installation/update/removal procedure commences.
              * 
-             * @since __BUMP_VERSION__
+             * @since 5.1.1
              */
             public function preflight(string $type, InstallerAdapter $parent): bool
             {
