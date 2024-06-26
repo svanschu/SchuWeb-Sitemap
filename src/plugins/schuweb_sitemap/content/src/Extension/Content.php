@@ -7,7 +7,9 @@
  * @link        extensions.schultschik.de
  */
 
-defined('_JEXEC') or die;
+namespace SchuWeb\Plugin\SchuWeb_Sitemap\Content\Extension;
+
+\defined('_JEXEC') or die;
 
 use Joomla\Registry\Registry;
 use Joomla\Component\Content\Site\Helper\QueryHelper;
@@ -16,8 +18,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Event\SubscriberInterface;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
+use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
+use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
 
 /**
  * Handles standard Joomla's Content articles/categories
@@ -29,92 +36,115 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
  * for other component, I suggest you to take a look to another plugis as
  * they are usually most simple. ;)
  */
-class schuweb_sitemap_content
+class Content extends CMSPlugin implements SubscriberInterface
 {
-	/**
-	 * This function is called before a menu item is printed. We use it to set the
-	 * proper uniqueid for the item
-	 *
-	 * @param   object  Menu item to be "prepared"
-	 * @param   array   The extension params
-	 *
-	 * @return void
-	 * @since  1.2
-	 */
-	static function prepareMenuItem(&$node, &$params)
-	{
-		$db = Factory::getDbo();
-		$link_query = parse_url($node->link);
-		if (!isset($link_query['query'])) {
-			return;
-		}
+    /**
+     * @since __BUMP_VERSION__
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'onGetMenus' => 'onGetMenus',
+            'onGetTree'  => 'onGetTree',
+        ];
+    }
 
-		parse_str(html_entity_decode($link_query['query']), $link_vars);
-		$view = ArrayHelper::getValue($link_vars, 'view', '');
-		$layout = ArrayHelper::getValue($link_vars, 'layout', '');
-		$id = ArrayHelper::getValue($link_vars, 'id', 0);
+    /**
+     * This function is called before a menu item is printed. We use it to set the
+     * proper uniqueid for the item
+     *
+     * @param   MenuItemPrepareEvent  Event object
+     *
+     * @return void
+     * @since  __BUMP_VERSION__
+     */
+    public function onGetMenus(MenuItemPrepareEvent $event)
+    {
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		//----- Set add pagebreaks param
-		$params['add_pagebreaks'] = ArrayHelper::getValue($params, 'add_pagebreaks', 1);
+        $menu_item  = $event->getMenuItem();
+        $link_query = parse_url($menu_item->link);
+        if (!isset($link_query['query'])) {
+            return;
+        }
 
-		switch ($view) {
-			case 'category':
-				if ($id) {
-					$node->uid = 'com_contentc' . $id;
-				} else {
-					$node->uid = 'com_content' . $layout;
-				}
-				$node->expandible = true;
-				break;
-			case 'article':
-				$node->uid = 'com_contenta' . $id;
-				$node->expandible = false;
+        parse_str(html_entity_decode($link_query['query']), $link_vars);
+        $view   = ArrayHelper::getValue($link_vars, 'view', '');
+        $layout = ArrayHelper::getValue($link_vars, 'layout', '');
+        $id     = ArrayHelper::getValue($link_vars, 'id', 0);
 
-				$query = $db->getQuery(true);
+        //----- Set add pagebreaks param
+        $add_pagebreaks = $this->params->get('add_pagebreaks', 1);
 
-				$query->select($db->quoteName('created'))
-					->select($db->quoteName('modified'))
-					->from($db->quoteName('#__content'))
-					->where($db->quoteName('id') . '=' . intval($id));
+        switch ($view) {
+            case 'category':
+                if ($id) {
+                    $menu_item->uid = 'com_contentc' . $id;
+                } else {
+                    $menu_item->uid = 'com_content' . $layout;
+                }
+                $menu_item->expandible = true;
+                break;
+            case 'article':
+                $menu_item->uid = 'com_contenta' . $id;
+                $menu_item->expandible = false;
 
-				if ($params['add_pagebreaks']) {
-					$query->select($db->quoteName('introtext'))
-						->select($db->quoteName('fulltext'));
-				}
+                $query = $db->getQuery(true);
+
+                $query->select($db->quoteName('created'))
+                    ->select($db->quoteName('modified'))
+                    ->from($db->quoteName('#__content'))
+                    ->where($db->quoteName('id') . '=' . intval($id));
+
+                if ($add_pagebreaks) {
+                    $query->select($db->quoteName('introtext'))
+                        ->select($db->quoteName('fulltext'));
+                }
 
 
-				$db->setQuery($query);
-				$row = $db->loadObject();
+                $db->setQuery($query);
+                $row = $db->loadObject();
 
-				if ($row != null) {
-					$node->modified = $row->modified;
+                if ($row != null) {
+                    $menu_item->modified = $row->modified;
 
-					$text = $row->introtext . $row->fulltext;
+                    $text = $row->introtext . $row->fulltext;
 
-					if ($params['add_pagebreaks']) {
-						$node->subnodes = schuweb_sitemap_content::getPagebreaks($text, $node->link);
-						$node->expandible = (count($node->subnodes) > 0); // This article has children
-					}
-				}
-				break;
-			case 'archive':
-				$node->expandible = true;
-				break;
-			case 'featured':
-				$node->uid = 'com_contentfeatured';
-				$node->expandible = false;
-		}
-	}
+                    if ($add_pagebreaks) {
+                        $menu_item->subnodes   = self::getPagebreaks($text, $menu_item->link);
+                        $menu_item->expandible = (count($menu_item->subnodes) > 0); // This article has children
+                    }
+                }
+                break;
+            case 'archive':
+                $menu_item->expandible = true;
+                break;
+            case 'featured':
+                $menu_item->uid = 'com_contentfeatured';
+                $menu_item->expandible = false;
+        }
+    }
 
-	/**
-	 * Expands a com_content menu item
-	 *
-	 * @return void
-	 * @since  1.0
-	 */
-	static function getTree(&$sitemap, &$parent, &$params)
-	{
-		$db = Factory::getDBO();
+    /**
+     * Expands a com_content menu item
+     *
+     * @param   TreePrepareEvent  Event object
+     *
+     * @return void
+     * @since  __BUMP_VERSION__
+     */
+    public function onGetTree(TreePrepareEvent $event)
+    {
+        $sitemap = $event->getSitemap();
+        $parent  = $event->getNode();
+
+        if ($parent->option != "com_content")
+            return null;
+
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
 		$result = null;
@@ -137,107 +167,107 @@ class schuweb_sitemap_content
 		 * Parameters Initialitation
 		 * */
 		//----- Set expand_categories param
-		$expand_categories = ArrayHelper::getValue($params, 'expand_categories', 1);
+        $expand_categories = $this->params->get('expand_categories', 1);
 		$expand_categories = ($expand_categories == 1
 			|| ($expand_categories == 2 && $sitemap->isXmlsitemap())
 			|| ($expand_categories == 3 && !$sitemap->isXmlsitemap()));
-		$params['expand_categories'] = $expand_categories;
+        $this->params->set('expand_categories', $expand_categories);
 
 		//----- Set expand_featured param
-		$expand_featured = ArrayHelper::getValue($params, 'expand_featured', 1);
+        $expand_featured = $this->params->get('expand_featured', 1);
 		$expand_featured = ($expand_featured == 1
 			|| ($expand_featured == 2 && $sitemap->isXmlsitemap())
 			|| ($expand_featured == 3 && !$sitemap->isXmlsitemap()));
-		$params['expand_featured'] = $expand_featured;
+        $this->params->set('expand_featured', $expand_featured);
 
 		//----- Set expand_featured param
-		$include_archived = ArrayHelper::getValue($params, 'include_archived', 2);
+        $include_archived = $this->params->get('include_archived', 2);
 		$include_archived = ($include_archived == 1
 			|| ($include_archived == 2 && $sitemap->isXmlsitemap())
 			|| ($include_archived == 3 && !$sitemap->isXmlsitemap()));
-		$params['include_archived'] = $include_archived;
+        $this->params->set('include_archived', $include_archived);
 
 		//----- Set show_unauth param
-		$show_unauth = ArrayHelper::getValue($params, 'show_unauth', 1);
+        $show_unauth = $this->params->get('show_unauth', 1);
 		$show_unauth = ($show_unauth == 1
 			|| ($show_unauth == 2 && $sitemap->isXmlsitemap())
 			|| ($show_unauth == 3 && !$sitemap->isXmlsitemap()));
-		$params['show_unauth'] = $show_unauth;
+        $this->params->set('show_unauth', $show_unauth);
 
 		//----- Set add pagebreaks param
-		$add_pagebreaks = ArrayHelper::getValue($params, 'add_pagebreaks', 1);
+        $add_pagebreaks = $this->params->get('add_pagebreaks', 1);
 		$add_pagebreaks = ($add_pagebreaks == 1
 			|| ($add_pagebreaks == 2 && $sitemap->isXmlsitemap())
 			|| ($add_pagebreaks == 3 && !$sitemap->isXmlsitemap()));
-		$params['add_pagebreaks'] = $add_pagebreaks;
+        $this->params->set('add_pagebreaks', $add_pagebreaks);
 
-		if ($params['add_pagebreaks'] && !defined('_SCHUWEBSITEMAP_COM_CONTENT_LOADED')) {
+        if ($this->params->get('add_pagebreaks') && !defined('_SCHUWEBSITEMAP_COM_CONTENT_LOADED')) {
 			define('_SCHUWEBSITEMAP_COM_CONTENT_LOADED', 1); // Load it just once
 			$lang = $app->getLanguage();
 			$lang->load('plg_content_pagebreak');
 		}
 
 		//----- Set cat_priority and cat_changefreq params
-		$priority = ArrayHelper::getValue($params, 'cat_priority', $parent->priority);
-		$changefreq = ArrayHelper::getValue($params, 'cat_changefreq', $parent->changefreq);
+        $priority   = $this->params->get('cat_priority', $parent->priority);
+        $changefreq = $this->params->get('cat_changefreq', $parent->changefreq);
 		if ($priority == '-1')
 			$priority = $parent->priority;
 		if ($changefreq == '-1')
 			$changefreq = $parent->changefreq;
 
-		$params['cat_priority'] = $priority;
-		$params['cat_changefreq'] = $changefreq;
+        $this->params->set('cat_priority', $priority);
+        $this->params->set('cat_changefreq', $changefreq);
 
-		//----- Set art_priority and art_changefreq params
-		$priority = ArrayHelper::getValue($params, 'art_priority', $parent->priority);
-		$changefreq = ArrayHelper::getValue($params, 'art_changefreq', $parent->changefreq);
+        //----- Set art_priority and art_changefreq params
+        $priority   = $this->params->get('art_priority', $parent->priority);
+        $changefreq = $this->params->get('art_changefreq', $parent->changefreq);
 		if ($priority == '-1')
 			$priority = $parent->priority;
 		if ($changefreq == '-1')
 			$changefreq = $parent->changefreq;
 
-		$params['art_priority'] = $priority;
-		$params['art_changefreq'] = $changefreq;
+        $this->params->set('art_priority', $priority);
+        $this->params->set('art_changefreq', $changefreq);
 
-		$params['max_art'] = intval(ArrayHelper::getValue($params, 'max_art', 0));
-		$params['max_art_age'] = intval(ArrayHelper::getValue($params, 'max_art_age', 0));
+        $this->params->set('max_art', intval($this->params->get('max_art', 0)));
+        $this->params->set('max_art_age', intval($this->params->get('max_art_age', 0)));
 
-		$params['nullDate'] = $db->Quote($db->getNullDate());
+        $this->params->set('nullDate', $db->Quote($db->getNullDate()));
 
-		$params['nowDate'] = $db->Quote(Factory::getDate()->toSql());
-		$params['groups'] = implode(',', (array) $groups);
+        $this->params->set('nowDate', $db->Quote(Factory::getDate()->toSql()));
+        $this->params->set('groups', implode(',', (array) $groups));
 
-		// Define the language filter condition for the query
-		$params['language_filter'] = $sitemap->isLanguageFilter();
+        // Define the language filter condition for the query
+        $this->params->set('language_filter', $sitemap->isLanguageFilter());
 
 		switch ($view) {
 			case 'category':
 				if (!$id) {
-					$id = intval(ArrayHelper::getValue($params, 'id', 0));
+                    $id = intval($this->params->get('id', 0));
 				}
-				if ($params['expand_categories'] && $id) {
+                if ($this->params->get('expand_categories') && $id) {
 					$result = self::expandCategory($sitemap, $parent, $id, $params, $parent->id, 0);
 				}
 				break;
 			case 'featured':
-				if ($params['expand_featured']) {
+                if ($this->params->get('expand_featured')) {
 					$result = self::includeCategoryContent($sitemap, $parent, 'featured', $params, $parent->id);
 				}
 				break;
 			case 'categories':
-				if ($params['expand_categories']) {
+                if ($this->params->get('expand_categories')) {
 					$result = self::expandCategory($sitemap, $parent, ($id ?: 1), $params, $parent->id, 0);
 				}
 				break;
 			case 'archive':
-				if ($params['expand_featured']) {
+                if ($this->params->get('expand_featured')) {
 					$result = self::includeCategoryContent($sitemap, $parent, 'archived', $params, $parent->id);
 				}
 				break;
 			case 'article':
 				// if it's an article menu item, we have to check if we have to expand the
 				// article's page breaks
-				if ($params['add_pagebreaks']) {
+                if ($this->params->get('add_pagebreaks')) {
 					$query = $db->getQuery(true);
 
 					$query->select($db->quoteName('introtext'))
@@ -257,14 +287,14 @@ class schuweb_sitemap_content
 
                     $text = $row->introtext . $row->fulltext;
                     if ($sitemap->isImagesitemap()) {
-                        $parent->images = schuweb_sitemap_content::getImages($text, $row->images, $parent->secure);
+                        $parent->images = $this->getImages($text, $row->images, $parent->secure);
                     }
 
                     if ($sitemap->isNewssitemap())
                         $parent->modified = $row->created;
 
-					$subnodes = schuweb_sitemap_content::getPagebreaks($row->introtext . $row->fulltext, $parent->link);
-					self::printNodes($sitemap, $parent, $params, $subnodes);
+                    $subnodes = $this->getPagebreaks($row->introtext . $row->fulltext, $parent->link);
+                    $this->printNodes($sitemap, $parent, $subnodes);
 				}
 
 		}
@@ -281,23 +311,26 @@ class schuweb_sitemap_content
 	 * @param   array   $params  an assoc array with the params for this plugin on Xmap
 	 * @param   int     $itemid  the itemid to use for this category's children
 	 */
-	static function expandCategory(&$sitemap, &$parent, $catid, &$params, $itemid, $level)
+    function expandCategory(&$sitemap, &$parent, $catid, &$params, $itemid, $level)
 	{
 		$maxlevel = $parent->params->get('maxLevel');
 		if ($maxlevel == -1 || $level < $maxlevel) {
-			$db = Factory::getDBO();
-			$app = Factory::getApplication();
+
+            /** @var DatabaseDriver $db */
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+            $app = Factory::getApplication();
 			$query = $db->getQuery(true);
 
 			$where = array('a.parent_id = ' . $catid . ' AND a.published = 1 AND a.extension=\'com_content\'');
 
-			if ($params['language_filter']) {
+            if ($this->params->get('language_filter')) {
 				$where[] = 'a.language in (' . $db->quote($app->getLanguage()->getTag()) . ',' . $db->quote('*') . ')';
 			}
 
-			if (!$params['show_unauth']) {
-				$where[] = 'a.access IN (' . $params['groups'] . ') ';
-			}
+            if (!$this->params->get('show_unauth')) {
+                $where[] = 'a.access IN (' . $this->params->get('groups') . ') ';
+            }
 
 			$columns = array(
 				$db->quoteName('a.id'),
@@ -319,12 +352,12 @@ class schuweb_sitemap_content
 
 			if (count($items) > 0) {
 				foreach ($items as $item) {
-					$node = new stdclass();
+                    $node             = new \stdclass();
 					$node->id = $parent->id;
 					$id = $node->uid = $parent->uid . 'c' . $item->id;
 					$node->browserNav = $parent->browserNav;
-					$node->priority = $params['cat_priority'];
-					$node->changefreq = $params['cat_changefreq'];
+                    $node->priority   = $this->params->get('cat_priority');
+                    $node->changefreq = $this->params->get('cat_changefreq');
 
 					$node->name = $item->title;
 					$node->expandible = true;
@@ -361,7 +394,7 @@ class schuweb_sitemap_content
 		}
 
 		// Include Category's content
-		self::includeCategoryContent($sitemap, $parent, $catid, $params, $itemid);
+        $this->includeCategoryContent($sitemap, $parent, $catid, $params, $itemid);
 
 		return true;
 	}
@@ -370,12 +403,13 @@ class schuweb_sitemap_content
 	 * Get all content items within a content category.
 	 * Returns an array of all contained content items.
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since 2.0
 	 */
-	static function includeCategoryContent(&$sitemap, &$parent, $catid, &$params, $Itemid)
+    function includeCategoryContent(&$sitemap, &$parent, $catid, &$params, $Itemid)
 	{
-		$db = Factory::getDBO();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
 		$query = $db->getQuery(true);
 
@@ -390,7 +424,7 @@ class schuweb_sitemap_content
             $db->qn('a.images')
 		);
 
-		if ($sitemap->isImagesitemap() || $params['add_pagebreaks']) {
+        if ($sitemap->isImagesitemap() || $this->params->get('add_pagebreaks')) {
 			$columns[] = $db->quoteName('a.introtext');
 			$columns[] = $db->quoteName('a.fulltext');
 		}
@@ -402,11 +436,11 @@ class schuweb_sitemap_content
 		$categoryNodes = $categories->get($catid);
 
 		# if categorie is archived and include archive is false just return
-		if ($categoryNodes->published == 2 && !$params['include_archived'])
+        if ($categoryNodes->published == 2 && !$this->params->get('include_archived'))
 			return true;
 
 		if ($catid != 'archived')
-			if ($params['include_archived']) {
+            if ($this->params->get('include_archived')) {
 				$query->where('(' . $db->qn('a.state') . ' = 1 or ' . $db->qn('a.state') . '= 2 )');
 			} else {
 				$query->where($db->quoteName('a.state') . ' = 1');
@@ -420,21 +454,43 @@ class schuweb_sitemap_content
 			$query->where($db->qn('a.catid') . '=' . (int) $catid);
 		}
 
-		if ($params['max_art_age'] || $sitemap->isNewssitemap()) {
-			$days = (($sitemap->isNewssitemap() && ($params['max_art_age'] > 3 || !$params['max_art_age'])) ? 3 : $params['max_art_age']);
+        if ($this->params->get('max_art_age') || $sitemap->isNewssitemap()) {
+            $days = (
+                (
+                    $sitemap->isNewssitemap()
+                    && ($this->params->get('max_art_age') > 3 || !$this->params->get('max_art_age'))
+                ) ? 3 : $this->params->get('max_art_age')
+            );
 			$query->where($db->qn('a.created') . '>=' . $db->q(date('Y-m-d H:i:s', time() - $days * 86400)));
 		}
 
-		if ($params['language_filter']) {
-			$query->where($db->qn('a.language') . ' in (' . $db->quote(Factory::getApplication()->getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
-		}
+        if ($this->params->get('language_filter')) {
+            $query->where(
+                $db->qn('a.language')
+                . ' in (' .
+                $db->quote(Factory::getApplication()->getLanguage()->getTag())
+                . ',' . $db->quote('*') . ')'
+            );
+        }
 
-		if (!$params['show_unauth']) {
-			$query->where($db->qn('a.access') . 'IN (' . $params['groups'] . ')');
-		}
+        if (!$this->params->get('show_unauth')) {
+            $query->where(
+                $db->qn('a.access') . 'IN (' . $this->params->get('groups') . ')'
+            );
+        }
 
-		$query->andWhere(array($db->quoteName('a.publish_up') . 'IS NULL', $db->quoteName('a.publish_up') . '<=' . $params['nowDate']))
-			->andWhere(array($db->quoteName('a.publish_down') . 'IS NULL', $db->quoteName('a.publish_down') . '>=' . $params['nowDate']));
+        $query->andWhere(
+            array(
+                $db->quoteName('a.publish_up') . 'IS NULL',
+                $db->quoteName('a.publish_up') . '<=' . $this->params->get('nowDate')
+            )
+        )
+            ->andWhere(
+                array(
+                    $db->quoteName('a.publish_down') . 'IS NULL',
+                    $db->quoteName('a.publish_down') . '>=' . $this->params->get('nowDate')
+                )
+            );
 
 		$isFp = false;
 		if (!$sitemap->isXmlsitemap()) {
@@ -446,8 +502,8 @@ class schuweb_sitemap_content
 		if ($catid == 'featured' || $isFp)
 			$query->leftJoin($db->quoteName('#__content_frontpage') . ' AS fp ON ' . $db->quoteName('a.id') . ' = ' . $db->quoteName('fp.content_id'));
 
-		if ($params['max_art'])
-			$query->setLimit($params['max_art']);
+        if ($this->params->get('max_art'))
+            $query->setLimit($this->params->get('max_art'));
 
 		$db->setQuery($query);
 
@@ -455,12 +511,12 @@ class schuweb_sitemap_content
 
 		if (count($items) > 0) {
 			foreach ($items as $item) {
-				$node = new stdclass();
+                $node             = new \stdclass();
 				$node->id = $parent->id;
 				$id = $node->uid = $parent->uid . 'a' . $item->id;
 				$node->browserNav = $parent->browserNav;
-				$node->priority = $params['art_priority'];
-				$node->changefreq = $params['art_changefreq'];
+                $node->priority   = $this->params->get('art_priority');
+                $node->changefreq = $this->params->get('art_changefreq');
 
 				$node->name = $item->title;
 				$node->modified = $item->modified;
@@ -481,11 +537,11 @@ class schuweb_sitemap_content
 				// Add images to the article
 				$text = @$item->introtext . @$item->fulltext;
 				if ($sitemap->isImagesitemap()) {
-					$node->images = schuweb_sitemap_content::getImages($text, $item->images, $node->secure);
+                    $node->images = $this->getImages($text, $item->images, $node->secure);
 				}
 
-				if ($params['add_pagebreaks']) {
-					$subnodes = schuweb_sitemap_content::getPagebreaks($text, $node->link);
+                if ($this->params->get('add_pagebreaks')) {
+                    $subnodes         = $this->getPagebreaks($text, $node->link);
 					$node->expandible = (count($subnodes) > 0); // This article has children
 				}
 
@@ -495,7 +551,7 @@ class schuweb_sitemap_content
 				$parent->subnodes->$id = $node;
 
 				if ($node->expandible) {
-					self::printNodes($sitemap, $parent->subnodes->$id, $params, $subnodes);
+                    $this->printNodes($sitemap, $parent->subnodes->$id, $subnodes);
 				}
 			}
 		}
@@ -503,7 +559,7 @@ class schuweb_sitemap_content
 		return true;
 	}
 
-	static private function printNodes(&$sitemap, &$parent, &$params, &$subnodes)
+    private function printNodes(&$sitemap, &$parent, &$subnodes)
 	{
 		$i = 0;
 		foreach ($subnodes as $subnode) {
@@ -511,8 +567,8 @@ class schuweb_sitemap_content
 			$subnode->id = $parent->id;
 			$id = $subnode->uid = $parent->uid . 'p' . $i;
 			$subnode->browserNav = $parent->browserNav;
-			$subnode->priority = $params['art_priority'];
-			$subnode->changefreq = $params['art_changefreq'];
+            $subnode->priority   = $this->params->get('art_priority');
+            $subnode->changefreq = $this->params->get('art_changefreq');
 
 			$subnode->secure = $parent->secure;
 			if (!isset($parent->subnodes))
@@ -608,7 +664,7 @@ class schuweb_sitemap_content
 					if (!preg_match('/^https?:\//i', $src)) {
 						$src = $urlBase . $src;
 					}
-					$image = new stdClass;
+					$image = new \stdClass;
 					$image->src = $src;
 					$image->title = (isset($matches[$i]['title']) ? $matches[$i]['title'] : @$matches[$i]['alt']);
 					$images[] = $image;
@@ -625,7 +681,7 @@ class schuweb_sitemap_content
                     $src = $urlBase .  $src;
                 }
                 if (!self::issetImage($src, $images)) {
-                    $image = new stdClass;
+                    $image = new \stdClass;
                     $image->src = $src;
                     $images[] = $image;
                 }
@@ -676,7 +732,7 @@ class schuweb_sitemap_content
 					} else {
 						$title = Text::sprintf('SCHUWEB_SITEMAP_PAGE_NUMBER', $i);
 					}
-					$subnode = new stdclass();
+					$subnode = new \stdclass();
 					$subnode->name = $title;
 					$subnode->expandible = false;
 					$subnode->link = $link;

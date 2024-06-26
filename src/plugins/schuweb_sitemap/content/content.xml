@@ -9,9 +9,10 @@
     <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>SCHUWEB_SITEMAP_CONTENT_PLUGIN_DESCRIPTION</description>
+    <namespace path="src">SchuWeb\Plugin\SchuWeb_Sitemap\Content</namespace>
     <files>
-        <filename plugin="content">content.php</filename>
-        <folder>language</folder>
+        <folder plugin="content">services</folder>
+        <folder>src</folder>
     </files>
     <scriptfile>script.php</scriptfile>
     <languages folder="language">
