@@ -22,6 +22,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Language\Text;
 use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
+use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
 
 /**
  * SchuWeb_Sitemap Component Sitemap Model
@@ -339,6 +340,7 @@ class SitemapModel extends ItemModel
                 $node->name = htmlspecialchars($node->name);
 
                 if ($node->option) {
+                    //@deprecated will be removed with v6
                     $element_name = substr($node->option, 4);
                     if (!empty($extensions[$element_name])) {
                         $node->uid = $element_name;
@@ -346,6 +348,16 @@ class SitemapModel extends ItemModel
                         //TODO use Joomla dispatcher event based instead
                         call_user_func_array(array($className, 'getTree'), array(&$this, &$node, &$extensions[$element_name]->params));
                     }
+                    //end @deprecated will be removed with v6
+
+                    //include the plugins for schuweb_sitemap
+                    PluginHelper::importPlugin('schuweb_sitemap', null, true, $this->getDispatcher());
+
+                    // Trigger the onGetTree event.
+                    $this->getDispatcher()->dispatch('onGetTree', new TreePrepareEvent('onGetTree', [
+                        'sitemap' => $this,
+                        'node'    => $node
+                    ]));
                 }
 
                 if (!isset($pathref->subnodes))
