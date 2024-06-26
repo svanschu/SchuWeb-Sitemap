@@ -9,6 +9,8 @@
 
 namespace SchuWeb\Component\Sitemap\Site\Model;
 
+defined('_JEXEC') or die;
+
 use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -16,11 +18,10 @@ use Joomla\CMS\Language\Language;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
-
-defined('_JEXEC') or die;
-
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Language\Text;
+use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
 
 /**
  * SchuWeb_Sitemap Component Sitemap Model
@@ -610,6 +611,7 @@ class SitemapModel extends ItemModel
 
                     if (!is_null($item->option)) {
                         $element_name = substr($item->option, 4);
+                        //@deprecated will be removed with v6
                         if (!empty($extensions[$element_name])) {
                             $className = 'schuweb_sitemap_' . $element_name;
                             $obj       = new $className;
@@ -617,6 +619,15 @@ class SitemapModel extends ItemModel
                                 $obj->prepareMenuItem($item, $extensions[$element_name]->params);
                             }
                         }
+                        //end @deprecated will be removed with v6
+
+                        //include the plugins for schuweb_sitemap
+                        PluginHelper::importPlugin('schuweb_sitemap', null, true, $this->getDispatcher());
+
+                        // Trigger the onGetMenus event.
+                        $this->getDispatcher()->dispatch('onGetMenus', new MenuItemPrepareEvent('onGetMenus', [
+                            'menu_item' => $item,
+                        ]));
                     }
                 } else {
                     $item->priority            = null;
