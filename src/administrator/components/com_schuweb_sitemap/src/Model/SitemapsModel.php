@@ -128,7 +128,7 @@ class SitemapsModel extends ListModel
             $db->quoteName('params')])
             ->from($db->quoteName('#__scheduler_tasks'))
             ->where([
-                $db->quoteName('type') . ' = ' . $db->quote('PLG_TASK_SCHUWEBSITEMAP'),
+                $db->quoteName('type') . ' = ' . $db->quote('schuweb.sitemap.update'),
                 $db->quoteName('state') . ' = 1'
             ]);
 

@@ -149,7 +149,7 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                     </td>
                                     <td class="text-center">
                                         <?php if (!isset($item->task)) : ?>
-                                            <a href="<?php echo Route::_('index.php?option=com_scheduler&task=task.add&type=PLG_TASK_SCHUWEBSITEMAP');?>">
+                                            <a href="<?php echo Route::_('index.php?option=com_scheduler&task=task.add&type=schuweb.sitemap.update');?>">
                                                 <?php echo Text::_('SCHUWEB_SITEMAP_NEW_TASK');?>
                                             </a>
                                         <?php else : ?>
