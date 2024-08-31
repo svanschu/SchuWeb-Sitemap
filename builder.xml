@@ -8,7 +8,7 @@
     <property name="build.version" value="0.0.0" override="true"/>
     <!-- get the date for build -->
     <tstamp prefix="build.date">
-        <format property="DATE" pattern="%d. %B %Y" locale="en_GB"/>
+        <format property="DATE" pattern="dd. MMMM yyyy" locale="en_GB"/>
     </tstamp>
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
     <property name="builddir" value="./../packages/SchuWeb_Sitemap" override="true"/>
