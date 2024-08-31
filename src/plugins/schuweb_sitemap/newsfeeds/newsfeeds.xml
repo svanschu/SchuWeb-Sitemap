@@ -9,9 +9,10 @@
     <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
     <description>PLG_SCHUWEB_SITEMAP_NEWSFEEDS_DESCRIPTION</description>
+    <namespace path="src">SchuWeb\Plugin\SchuWeb_Sitemap\Newsfeeds</namespace>
     <files>
         <filename plugin="newsfeeds">newsfeeds.php</filename>
-        <folder>language</folder>
+        <folder>src</folder>
     </files>
     <scriptfile>script.php</scriptfile>
     <languages folder="language">
