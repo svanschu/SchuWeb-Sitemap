@@ -93,11 +93,13 @@ class HtmlView extends BaseHtmlView
                 $this->item->selections[$menu->menutype]['selected'] = true;
                 $this->item->selections[$menu->menutype]['title'] = $menu->title;
                 $this->item->selections[$menu->menutype]['menutype'] = $menu->menutype;
+                $this->item->selections[$menu->menutype]['order'] = isset($menu->order) ?: 0;
             } else {
                 $this->item->selections[$menu->menutype] = (array)$menu;
                 $this->item->selections[$menu->menutype]['selected'] = false;
                 $this->item->selections[$menu->menutype]['priority'] = 0.5;
                 $this->item->selections[$menu->menutype]['changefreq'] = 'weekly';
+                $this->item->selections[$menu->menutype]['order'] = 0;
             }
         }
     }
