@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 
 $prio_options = array();
 for ($i=0.1; $i<=1;$i+=0.1) {
@@ -24,12 +25,19 @@ $changefreq_options[] = HTMLHelper::_('select.option','monthly','monthly');
 $changefreq_options[] = HTMLHelper::_('select.option','yearly','yearly');
 $changefreq_options[] = HTMLHelper::_('select.option','never','never');
 
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+Factory::getApplication()->getDocument()->getWebAssetManager()
+    ->useScript('com_schuweb_sitemap.admin-sitemap-menusort');
+
 ?>
 <table class="table" id="menuList">
     <thead>
     <tr>
         <th class="w-1 text-center">
             <?php echo HTMLHelper::_('grid.checkall'); ?>
+        </th>
+        <th scope="col" class="w-1 text-center">
+            <?php echo Text::_('SCHUWEB_SITEMAP_ORDERING'); ?>
         </th>
         <th scope="col">
             <?php echo Text::_('JGLOBAL_TITLE'); ?>
@@ -51,6 +59,12 @@ $changefreq_options[] = HTMLHelper::_('select.option','never','never');
                 <input type="checkbox" id="cb<?php echo $i; ?>"
                        name="jform[selections][<?php echo $menu['menutype']; ?>][enabled]"
                        value="1" <?php if (isset($menu['enabled'])) {echo $menu['enabled'] ? 'checked="checked"' : '';} ?> />
+            </td>
+            <td class="text-center">
+                <span class="icon-ellipsis-v" aria-hidden="true"></span>
+                <input class="sortID" type="hidden" 
+                    name="jform[selections][<?php echo $menu['menutype']; ?>][order]" 
+                    value="<?php echo $menu['order'] ?>" />
             </td>
             <td>
                 <label for="cb<?php echo $i; ?>"><?php echo $this->escape($menu['title']); ?></label>
