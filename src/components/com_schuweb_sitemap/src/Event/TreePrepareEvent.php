@@ -18,7 +18,7 @@ use SchuWeb\Component\Sitemap\Site\Model\SitemapModel;
  * This class gives a concrete implementation of the AbstractEvent class.
  *
  * @see    \Joomla\CMS\Event\AbstractEvent
- * @since  __BUMP_VERSION__
+ * @since  5.2.0
  */
 class TreePrepareEvent extends AbstractEvent
 {
@@ -28,7 +28,7 @@ class TreePrepareEvent extends AbstractEvent
      *
      * @return  SitemapModel
      *
-     * @since  __BUMP_VERSION__
+     * @since  5.2.0
      */
     public function getSitemap(): SitemapModel
     {
@@ -40,7 +40,7 @@ class TreePrepareEvent extends AbstractEvent
      *
      * @return  \stdClass
      *
-     * @since  __BUMP_VERSION__
+     * @since  5.2.0
      */
     public function getNode(): \stdClass
     {
