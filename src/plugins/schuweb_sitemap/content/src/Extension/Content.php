@@ -39,7 +39,7 @@ use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
 class Content extends CMSPlugin implements SubscriberInterface
 {
     /**
-     * @since __BUMP_VERSION__
+     * @since 5.2.0
      */
     public static function getSubscribedEvents(): array
     {
@@ -56,7 +56,7 @@ class Content extends CMSPlugin implements SubscriberInterface
      * @param   MenuItemPrepareEvent  Event object
      *
      * @return void
-     * @since  __BUMP_VERSION__
+     * @since  5.2.0
      */
     public function onGetMenus(MenuItemPrepareEvent $event)
     {
@@ -132,7 +132,7 @@ class Content extends CMSPlugin implements SubscriberInterface
      * @param   TreePrepareEvent  Event object
      *
      * @return void
-     * @since  __BUMP_VERSION__
+     * @since  5.2.0
      */
     public function onGetTree(TreePrepareEvent $event)
     {
