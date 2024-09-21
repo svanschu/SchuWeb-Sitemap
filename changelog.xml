@@ -2,6 +2,25 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.2.0</version>
+        <fix>
+            <item>#143 wrong scheduler type used for link and db request</item>
+        </fix>
+        <addition>
+            <item>#132 use namespacing and eventpatcher for plugins</item>
+            <item>#87 Ordering of menus inside sitemap</item>
+        </addition>
+        <change>
+        </change>
+        <remove>
+        </remove>
+        <note>
+            <item>The XML generation is a B/C break to version 4.x.x and earlier</item>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.1.1</version>
         <fix>
             <item>#135 Problem with Page Title</item>
