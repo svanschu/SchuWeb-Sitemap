@@ -716,7 +716,7 @@ class SitemapModel extends ItemModel
 
         try {
             $this->_db->execute();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage(Text::_($e->getMessage()), 'error');
             return false;
         }

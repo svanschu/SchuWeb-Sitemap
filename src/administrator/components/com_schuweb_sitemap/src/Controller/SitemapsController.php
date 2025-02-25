@@ -60,14 +60,14 @@ class SitemapsController extends AdminController
         $id  = @$cid[0];
 
         if (!$id) {
-            $this->enqueueMessage(Text::_('SCHUWEB_SITEMAP_SELECT_DEFAULT'), 'warning');
+            $this->app->enqueueMessage(Text::_('SCHUWEB_SITEMAP_SELECT_DEFAULT'), 'warning');
         } else {
             // Get the model.
             $model = $this->getModel();
 
             // Publish the items.
             if (!$model->setDefault($id)) {
-                $this->enqueueMessage($model->getError(), 'warning');
+                $this->app->enqueueMessage($model->getError(), 'warning');
             } else {
                 $config   = ['ignore_request' => true, 'pk' => $id];
                 $xmlModel = $this->getModel('SitemapXml', 'Site', $config);

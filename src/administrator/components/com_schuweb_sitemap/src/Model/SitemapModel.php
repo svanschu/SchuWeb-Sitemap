@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Helper\TagsHelper;
@@ -87,8 +88,8 @@ class SitemapModel extends AdminModel
      *
      * @param integer    The id of the primary key.
      *
-     * @return   mixed      Object on success, false on failure.
-     * @throws Exception
+     * @return  mixed      Object on success, false on failure.
+     * @throws  \Exception
      * @since 1
      */
     public function getItem($pk = null)
