@@ -10,6 +10,8 @@
 defined('_JEXEC') or die;
 
 use \Joomla\CMS\Factory;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * 
@@ -26,7 +28,9 @@ class SchuWeb_SitemapHelper
 	 */
 	public static function getExtensionsList()
 	{
-		$db    = Factory::getDbo();
+		/** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
 		$query = $db->getQuery(true);
 
 		$query->select('e.*')

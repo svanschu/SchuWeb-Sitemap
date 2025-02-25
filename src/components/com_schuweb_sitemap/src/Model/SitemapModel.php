@@ -21,6 +21,8 @@ use Joomla\Registry\Registry;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
 use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
 
@@ -147,7 +149,9 @@ class SitemapModel extends ItemModel
         $pk = $jinput->getInt('id');
 
         // If not sitemap specified, select the default one
-        $db    = $this->getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        
         $query = $db->getQuery(true);
         $query->select('attribs')
             ->from('#__schuweb_sitemap');
@@ -390,8 +394,10 @@ class SitemapModel extends ItemModel
      */
     public function getItem($pk = null)
     {
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         // Initialize variables.
-        $db  = $this->getDbo();
         $app = Factory::getApplication();
         $pk  = (!empty($pk)) ? $pk : (int) $this->getState('sitemap.id');
 
@@ -495,7 +501,9 @@ class SitemapModel extends ItemModel
     {
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
-        $db   = $this->getDbo();
+        
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         if (is_null($user))
             $groups = [0 => 1];
@@ -556,7 +564,9 @@ class SitemapModel extends ItemModel
 
         $selections = $item->selections;
 
-        $db   = $this->getDBO();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
         if (is_null($user))
@@ -665,7 +675,8 @@ class SitemapModel extends ItemModel
     private function getExtensions()
     {
         if (empty($this->extensions)) {
-            $db = $this->getDBO();
+            /** @var DatabaseDriver $db */
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $this->extensions = array();
             // Get the menu items as a tree.
@@ -730,7 +741,9 @@ class SitemapModel extends ItemModel
             $view = Factory::getApplication()->input->getCmd('view');
         }
 
-        $db = $this->getDBO();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         $pk = (int) $this->getState('sitemap.id');
 
         if (self::$items !== NULL && isset(self::$items[$view])) {
@@ -757,7 +770,10 @@ class SitemapModel extends ItemModel
     function chageItemPropery($uid, $itemid, $view, $property, $value)
     {
         $items = $this->getSitemapItems($view);
-        $db    = $this->getDBO();
+        
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         $pk    = (int) $this->getState('sitemap.id');
 
         $isNew = false;
@@ -811,7 +827,9 @@ class SitemapModel extends ItemModel
         $registry->loadArray($excludedItems);
         $str = $registry->toString();
 
-        $db    = $this->getDBO();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        
         $query = "UPDATE #__schuweb_sitemap set excluded_items='" . $db->escape($str) . "' where id=" . $sitemap->id;
         $db->setQuery($query);
         $db->execute();

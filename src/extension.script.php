@@ -14,6 +14,8 @@ use Joomla\CMS\Installer\InstallerScript;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 class com_schuweb_sitemapInstallerScript extends InstallerScript
 {
@@ -87,7 +89,8 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
 			return;
 		}
 
-        $db = Factory::getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         
         // Get all menus
 		$query = $db->getQuery(true);
@@ -161,7 +164,9 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
 
         $extensionId = $this->getInstances(false);
 
-        $db = Factory::getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         $query = $db->getQuery(true);
 
         $query->select(array($db->quoteName('id'), $db->quoteName('link')))
@@ -219,7 +224,9 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
     {
         $extension = $this->extension;
 
-        $db = Factory::getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        
         $query = $db->getQuery(true);
 
         // Select the item(s) and retrieve the id

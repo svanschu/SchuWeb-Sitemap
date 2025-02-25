@@ -16,6 +16,8 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 jimport('joomla.database.query');
 
@@ -164,7 +166,9 @@ class SitemapsModel extends ListModel
      */
     protected function getListQuery()
     {
-        $db = $this->getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         // Create a new query object.
         $query = $db->getQuery(true);
 
@@ -219,7 +223,9 @@ class SitemapsModel extends ListModel
      */
     public function getExtensionsMessage(): string
     {
-        $db = $this->getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         $query = $db->getQuery(true)
             ->select('e.*')
             ->from($db->quoteName('#__extensions') . 'AS e')
@@ -254,7 +260,8 @@ class SitemapsModel extends ListModel
      */
     public function getNotInstalledMessage(): string
     {
-        $db = $this->getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $supportedExtensions = array('com_zoo', 'com_weblinks', 'com_kunena', 'com_dpcalendar');
 

@@ -11,6 +11,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\Installer;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -71,7 +73,8 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 
 		$extensions = SchuWeb_SitemapHelper::getExtensionsList();
 
-		$db = Factory::getDbo();
+		/** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
 		// Activate the fitting plugins
 		foreach ($extensions as $extension)
@@ -115,7 +118,9 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 			$unsupported = array('com_sobipro', 'com_virtuemart');
 			foreach ($unsupported as $componentName)
 			{
-				$db    = Factory::getDbo();
+				/** @var DatabaseDriver $db */
+                $db = Factory::getContainer()->get(DatabaseInterface::class);
+
 				$query = $db->getQuery(true);
 
 				$query->select('*')

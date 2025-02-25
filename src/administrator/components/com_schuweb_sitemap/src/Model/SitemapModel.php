@@ -22,6 +22,8 @@ use Joomla\CMS\Language\LanguageHelper;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Item Model for a sitemap.
@@ -129,7 +131,8 @@ class SitemapModel extends AdminModel
 
     public function getMenus()
     {
-        $db = Factory::getDbo();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
             ->select('m.*')
             ->from('#__menu_types AS m')
@@ -233,7 +236,9 @@ class SitemapModel extends AdminModel
         }
 
         if ($table->is_default) {
-            $db = Factory::getDbo();
+            /** @var DatabaseDriver $db */
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
             $query = $db->getQuery(true)
                 ->update($db->quoteName('#__schuweb_sitemap'))
                 ->set($db->quoteName('is_default') . ' = 0')
@@ -256,7 +261,9 @@ class SitemapModel extends AdminModel
     {
         $table = $this->getTable();
         if ($table->load($id)) {
-            $db = Factory::getDbo();
+            /** @var DatabaseDriver $db */
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
             $query = $db->getQuery(true)
                 ->update($db->quoteName('#__schuweb_sitemap'))
                 ->set($db->quoteName('is_default') . ' = 0')
@@ -277,7 +284,9 @@ class SitemapModel extends AdminModel
 
     private function getDefaultSitemapId()
     {
-        $db = Factory::getDBO();
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        
         $query = $db->getQuery(true);
         $query->select('id');
         $query->from($db->quoteName('#__schuweb_sitemap'));

@@ -11,6 +11,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Installation class to perform additional changes during install/uninstall/update
@@ -49,7 +51,9 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
     public function postflight($type, $parent)
     {
         $app = Factory::getApplication();
-        $db = Factory::getDbo();
+        
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db->getQuery(true);
         $query->select(
