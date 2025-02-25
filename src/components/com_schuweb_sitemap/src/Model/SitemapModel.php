@@ -172,7 +172,9 @@ class SitemapModel extends ItemModel
 
         // Load the parameters.
         $registry = new Registry('_default');
-        $registry->loadString($result->attribs);
+        if (!is_null($result) && !empty($result->attribs)) {
+            $registry->loadString($result->attribs);
+        }
         $params = $app->getParams();
         $params->merge($registry);
         if ($params->get('page_heading') == '') {
@@ -434,7 +436,9 @@ class SitemapModel extends ItemModel
 
                 // Convert parameter fields to objects.
                 $registry = new Registry('_default');
-                $registry->loadString($data->attribs);
+                if (!is_null($data) && !empty($data->attribs)) {
+                    $registry->loadString($data->attribs);
+                }
                 $data->params = clone $this->getState('params');
                 $data->params->merge($registry);
                 $this->setState('params', $data->params);
@@ -445,7 +449,9 @@ class SitemapModel extends ItemModel
 
                 // Convert the selections field to an array.
                 $registry = new Registry('_default');
-                $registry->loadString($data->selections);
+                if (!is_null($data) && !empty($data->selections)) {
+                    $registry->loadString($data->selections);
+                }
                 $data->selections = $registry->toArray();
 
                 // only display the Menüs which are activated
@@ -816,9 +822,17 @@ class SitemapModel extends ItemModel
     {
         static $_excluded_items;
         if (!isset($_excluded_items)) {
-            $_excluded_items = array();
+            $_excluded_items = [];
             $registry        = new Registry('_default');
-            $registry->loadString($this->getItem()->excluded_items);
+            
+            $item = $this->getItem();
+            if ($item) {
+               $excluded_items = $item->excluded_items;
+                if (!empty($excluded_items)) {
+                    $registry->loadString($excluded_items);
+                }
+            }
+            
             $_excluded_items = $registry->toArray();
         }
         return $_excluded_items;

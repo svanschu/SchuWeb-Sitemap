@@ -113,7 +113,9 @@ class SitemapModel extends AdminModel
 
         // Convert the params field to an array.
         $registry = new Registry;
-        $registry->loadString($table->attribs);
+        if (!is_null($table) && !empty($table->attribs)) {
+            $registry->loadString($table->attribs);
+        }
         $value->attribs = $registry->toArray();
 
         $item = parent::getItem($pk);
