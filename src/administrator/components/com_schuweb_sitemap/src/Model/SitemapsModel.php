@@ -19,8 +19,6 @@ use Joomla\Registry\Registry;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 
-jimport('joomla.database.query');
-
 /**
  * Sitemaps Model Class
  *
