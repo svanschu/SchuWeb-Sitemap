@@ -110,13 +110,15 @@ class HtmlView extends BaseHtmlView
     var $view = 'sitemap';
 
     /**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
-    function display($tpl = null)
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  void
+     *
+     * @throws  \Exception
+     */
+    public function display($tpl = null)
     {
         $this->item = $this->get('Item');
 
@@ -134,7 +136,7 @@ class HtmlView extends BaseHtmlView
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             $app->enqueueMessage(implode("\n", $errors), 'warning');
-            return null;
+            return;
         }
 
         // Add router helpers.
@@ -200,13 +202,11 @@ class HtmlView extends BaseHtmlView
             $this->document->setMetaData('title', $title);
         }
 
-        $ret = parent::display($tpl);
+        parent::display($tpl);
 
         $model = $this->getModel();
         //TODO does not work, realy needed?
         $model->hit($this->count);
-
-        return $ret;
     }
 
     /**
