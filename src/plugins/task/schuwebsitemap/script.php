@@ -126,7 +126,7 @@ return new class () implements ServiceProviderInterface {
                         $result = $this->db->execute();
 
                         if (!$result) {
-                            $this->app->enqueueMessage('Failed to update Scheduler Task ' . $task->id, CMSApplication::MSG_ERROR);
+                            $this->app->enqueueMessage('Failed to update Scheduler Task ' . $task->id, Joomla\CMS\Application\CMSApplicationInterface::MSG_ERROR);
                         }
                     }
                 }

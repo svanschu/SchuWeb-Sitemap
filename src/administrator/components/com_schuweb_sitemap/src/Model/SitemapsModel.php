@@ -32,7 +32,7 @@ class SitemapsModel extends ListModel
      * Constructor.
      *
      * @param   array    An optional associative array of configuration settings.
-     * @throws  Exception
+     * @throws  \Exception
      * @since   1.6
      * @see     JController
      */

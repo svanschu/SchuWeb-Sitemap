@@ -588,7 +588,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 	 * @param   int        $itemid
 	 *
 	 * @return string
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	static function buildContentOrderBy(&$params, $parentId, $itemid)
 	{
