@@ -248,10 +248,6 @@ class SitemapModel extends AdminModel
             $db->execute();
         }
 
-        // Clean the cache.
-        $cache = Factory::getCache('com_schuweb_sitemap');
-        $cache->clean();
-
         $this->setState('sitemap.id', $table->id);
 
         return true;
@@ -273,9 +269,6 @@ class SitemapModel extends AdminModel
             $table->is_default = 1;
             $table->store();
 
-            // Clean the cache.
-            $cache = Factory::getCache('com_schuweb_sitemap');
-            $cache->clean();
             return true;
         }
 
