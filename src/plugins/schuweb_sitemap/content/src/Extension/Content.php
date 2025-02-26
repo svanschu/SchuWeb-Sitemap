@@ -432,7 +432,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 		$query->select($columns)
 			->from($db->quoteName('#__content') . ' AS a');
 
-		$categories = Categories::getInstance("content", array("access" => false, "published" => 0));
+        $categories = Factory::getApplication()->bootComponent("content")->getCategory(["access" => false, "published" => 0]);
 		$categoryNodes = $categories->get($catid);
 
 		# if categorie is archived and include archive is false just return
