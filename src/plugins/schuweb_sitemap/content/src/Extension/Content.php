@@ -598,8 +598,8 @@ class Content extends CMSPlugin implements SubscriberInterface
 		if ($parentId != $itemid) {
 			$menu = $app->getMenu();
 			$item = $menu->getItem($itemid);
-			$menuParams = clone ($params);
-			$itemParams = new Registry($item->params);
+            $menuParams = clone $params;
+            $itemParams = $item->getParams();
 			$menuParams->merge($itemParams);
 		} else {
 			$menuParams =& $params;
