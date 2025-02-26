@@ -1,7 +1,7 @@
 <?php
 /**
  * @version     sw.build.version
- * @copyright   Copyright (C) 2019 - 2024 Sven Schultschik. All rights reserved
+ * @copyright   Copyright (C) 2019 - 2025 Sven Schultschik. All rights reserved
  * @license     GPL-3.0-or-later
  * @author      Sven Schultschik (extensions@schultschik.de)
  * @link        extensions.schultschik.de
@@ -286,7 +286,7 @@ class SitemapModel extends AdminModel
     {
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        
+
         $query = $db->getQuery(true);
         $query->select('id');
         $query->from($db->quoteName('#__schuweb_sitemap'));
