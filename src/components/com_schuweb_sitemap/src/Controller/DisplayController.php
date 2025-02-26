@@ -46,7 +46,7 @@ class DisplayController extends BaseController
      * @param   boolean  $cachable   If true, the view output will be cached
      * @param   array    $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link \JFilterInput::clean()}.
      *
-     * @return  static  This object to support chaining.
+     * @return  static  A \JControllerLegacy object to support chaining.
      *
      * @since   5.0.0
      */
@@ -79,5 +79,7 @@ class DisplayController extends BaseController
         $safeurlparams = array('id' => 'INT', 'itemid' => 'INT', 'uid' => 'CMD', 'action' => 'CMD', 'property' => 'CMD', 'value' => 'CMD');
 
         parent::display($cachable, $safeurlparams);
+
+        return $this;
     }
 }

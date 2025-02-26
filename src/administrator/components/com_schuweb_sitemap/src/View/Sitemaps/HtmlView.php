@@ -42,7 +42,7 @@ class HtmlView extends BaseHtmlView
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      * @return  void
      */
-    function display($tpl = null)
+    public function display($tpl = null)
     {
         $this->filterForm = $this->get('FilterForm');
 
@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             Factory::$application->enqueueMessage(implode("\n", $errors), 'error');
-            return false;
+            return;
         }
 
         // We don't need toolbar in the modal window.
