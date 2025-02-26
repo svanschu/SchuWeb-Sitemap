@@ -112,7 +112,7 @@ class HtmlView extends BaseHtmlView
     {
         $state = $this->get('State');
 
-        $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         $toolbar->addNew('sitemap.add');
 

@@ -144,7 +144,7 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
         $options               = [];
         $options['countItems'] = false;
         $options['catid']      = rand();
-        $categories            = Categories::getInstance('Newsfeeds', $options);
+        $categories            = Factory::getApplication()->bootComponent('Newsfeeds')->getCategory($options);
         $category              = $categories->get($catid ?: 'root', true);
 
         self::getCategoryTree($sitemap, $parent, $params, $category);
