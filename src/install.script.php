@@ -71,7 +71,7 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 			. DIRECTORY_SEPARATOR . 'helpers'
 			. DIRECTORY_SEPARATOR . 'schuweb_sitemap.php';
 
-		$extensions = SchuWeb_SitemapHelper::getExtensionsList();
+        $extensions = self::getExtensionsList();
 
 		/** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -103,6 +103,29 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
 			}
 		}
 	}
+
+    /**
+     * Returns a list of installed extension, where SchuWeb sitemap has the fitting plugin installed
+     *
+     * @return mixed
+     *
+     * @since
+     */
+    public static function getExtensionsList()
+    {
+        /** @var DatabaseDriver $db */
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+        $query = $db->getQuery(true);
+
+        $query->select('e.*')
+            ->from($db->quoteName('#__extensions') . 'AS e')
+            ->join('INNER', '#__extensions AS p ON SUBSTRING(e.element,5)=p.element and p.enabled=0 and p.type=\'plugin\' and p.folder=\'schuweb_sitemap\'')
+            ->where('e.type=\'component\' and e.enabled=1');
+
+        $db->setQuery($query);
+        return $db->loadObjectList();
+    }
 
 	/**
 	 * This method should handle the steps if some has upgrade from J3 to J4
