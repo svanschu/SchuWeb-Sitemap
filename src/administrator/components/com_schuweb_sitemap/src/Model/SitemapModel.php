@@ -43,22 +43,6 @@ class SitemapModel extends AdminModel
      */
     protected $associationsContext = 'com_schuweb_sitemap.item';
 
-    //protected $_context = 'com_schuweb_sitemap';
-
-    /**
-     * Constructor.
-     *
-     * @param    array An optional associative array of configuration settings.
-     * @see      JController
-     */
-    // public function __construct($config = array())
-    // {
-    //     parent::__construct($config);
-
-    //     $this->_item = 'sitemap';
-    //     $this->_option = 'com_schuweb_sitemap';
-    // }
-
     /**
      * Method to auto-populate the model state.
      */
