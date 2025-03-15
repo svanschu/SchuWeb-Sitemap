@@ -40,21 +40,38 @@ class SitemapsModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
-                'id', 'a.id',
-                'title', 'a.title',
-                'alias', 'a.alias',
-                'checked_out', 'a.checked_out',
-                'checked_out_time', 'a.checked_out_time',
-                'catid', 'a.catid', 'category_title',
-                'state', 'a.state',
-                'access', 'a.access', 'access_level',
-                'created', 'a.created',
-                'created_by', 'a.created_by',
-                'ordering', 'a.ordering',
-                'featured', 'a.is_default',
-                'language', 'a.language',
-                'publish_up', 'a.publish_up',
-                'publish_down', 'a.publish_down',
+                'id',
+                'a.id',
+                'title',
+                'a.title',
+                'alias',
+                'a.alias',
+                'checked_out',
+                'a.checked_out',
+                'checked_out_time',
+                'a.checked_out_time',
+                'catid',
+                'a.catid',
+                'category_title',
+                'state',
+                'a.state',
+                'access',
+                'a.access',
+                'access_level',
+                'created',
+                'a.created',
+                'created_by',
+                'a.created_by',
+                'ordering',
+                'a.ordering',
+                'featured',
+                'a.is_default',
+                'language',
+                'a.language',
+                'publish_up',
+                'a.publish_up',
+                'publish_down',
+                'a.publish_down',
             );
         }
 
@@ -125,7 +142,8 @@ class SitemapsModel extends ListModel
         $query->select([
             $db->quoteName('id'),
             $db->quoteName('title'),
-            $db->quoteName('params')])
+            $db->quoteName('params')
+        ])
             ->from($db->quoteName('#__scheduler_tasks'))
             ->where([
                 $db->quoteName('type') . ' = ' . $db->quote('schuweb.sitemap.update'),
@@ -155,7 +173,7 @@ class SitemapsModel extends ListModel
 
         return $sitemaps;
     }
-    
+
     /**
      *
      * @return  \JDatabaseQuery
@@ -174,7 +192,8 @@ class SitemapsModel extends ListModel
         $query->select(
             $this->getState(
                 'list.select',
-                'a.*')
+                'a.*'
+            )
         );
         $query->from('#__schuweb_sitemap AS a');
 
@@ -184,13 +203,13 @@ class SitemapsModel extends ListModel
 
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
-            $query->where('a.access = ' . (int)$access);
+            $query->where('a.access = ' . (int) $access);
         }
 
         // Filter by published state
         $published = $this->getState('filter.published');
         if (is_numeric($published)) {
-            $query->where('a.state = ' . (int)$published);
+            $query->where('a.state = ' . (int) $published);
         } else if ($published === '') {
             $query->where('(a.state = 0 OR a.state = 1)');
         }
@@ -199,7 +218,7 @@ class SitemapsModel extends ListModel
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             if (stripos($search, 'id:') === 0) {
-                $query->where('a.id = ' . (int)substr($search, 3));
+                $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
                 $query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ')');
@@ -238,7 +257,7 @@ class SitemapsModel extends ListModel
             $sep = $extensionsNameList = '';
             foreach ($extensions as $extension) {
                 $extensionsNameList .= "$sep$extension->element";
-                $sep = ', ';
+                $sep                = ', ';
             }
 
             $url = 'index.php?option=com_plugins&view=plugins&filter[folder]=schuweb_sitemap';
@@ -290,7 +309,7 @@ class SitemapsModel extends ListModel
             foreach ($extensions as $extension) {
                 if (!in_array(substr($extension->element, 4), $pluginList)) {
                     $extensionsNameList .= "$sep$extension->element";
-                    $sep = ', ';
+                    $sep                = ', ';
                 }
             }
         }

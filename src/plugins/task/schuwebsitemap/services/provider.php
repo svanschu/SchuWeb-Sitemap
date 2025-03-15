@@ -31,10 +31,9 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
-        if (!ComponentHelper::isEnabled('com_schuweb_sitemap'))
-		{
-			return;
-		}
+        if (!ComponentHelper::isEnabled('com_schuweb_sitemap')) {
+            return;
+        }
 
         $container->registerServiceProvider(new MVCFactory('SchuWeb\\Component\\Sitemap'));
 

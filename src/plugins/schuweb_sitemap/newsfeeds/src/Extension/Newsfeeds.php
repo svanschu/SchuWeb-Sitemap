@@ -150,81 +150,81 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
     }
 
     private static function getCategoryTree(&$sitemap, &$parent, &$params, &$category)
-	{
-		$children = $category->getChildren();
+    {
+        $children = $category->getChildren();
 
-		foreach ($children as $cat) {
-			$node = new \stdClass;
-			$node->id = $parent->id;
-			$id = $node->uid = $parent->uid . 'c' . $cat->id;
-			$node->name = $cat->title;
-			$node->link = RouteHelper::getCategoryRoute($cat);
-			$node->priority = $params['cat_priority'];
-			$node->changefreq = $params['cat_changefreq'];
-			$node->browserNav = $parent->browserNav;
+        foreach ($children as $cat) {
+            $node             = new \stdClass;
+            $node->id         = $parent->id;
+            $id               = $node->uid = $parent->uid . 'c' . $cat->id;
+            $node->name       = $cat->title;
+            $node->link       = RouteHelper::getCategoryRoute($cat);
+            $node->priority   = $params['cat_priority'];
+            $node->changefreq = $params['cat_changefreq'];
+            $node->browserNav = $parent->browserNav;
 
-			$node->modified = $cat->modified_time;
+            $node->modified = $cat->modified_time;
 
-			$node->expandible = true;
+            $node->expandible = true;
 
-			if (!isset($parent->subnodes))
-				$parent->subnodes = new \stdClass();
+            if (!isset($parent->subnodes))
+                $parent->subnodes = new \stdClass();
 
-			$node->params = &$parent->params;
+            $node->params = &$parent->params;
 
-			$parent->subnodes->$id = $node;
+            $parent->subnodes->$id = $node;
 
 
-			self::getCategoryTree($sitemap, $parent->subnodes->$id, $params, $cat);
+            self::getCategoryTree($sitemap, $parent->subnodes->$id, $params, $cat);
 
-		}
+        }
 
-		if ($params['include_newsfeeds']) {
+        if ($params['include_newsfeeds']) {
             /** @var DatabaseDriver $db */
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true);
-			$query->select(
-				array(
-					$db->qn('id'),
-					$db->qn('name'),
-					$db->qn('link'),
-					$db->qn('params'),
-					$db->qn('modified')
-				)
-			)
-				->from($db->qn('#__newsfeeds'))
-				->setLimit(ArrayHelper::getValue($params, 'max_newsfeeds', null, 'INT'))
-				->order($db->escape('ordering') . ' ' . $db->escape('ASC'))
-				->where($db->qn('catid') . ' = ' . $db->q($category->id));
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true);
+            $query->select(
+                array(
+                    $db->qn('id'),
+                    $db->qn('name'),
+                    $db->qn('link'),
+                    $db->qn('params'),
+                    $db->qn('modified')
+                )
+            )
+                ->from($db->qn('#__newsfeeds'))
+                ->setLimit(ArrayHelper::getValue($params, 'max_newsfeeds', null, 'INT'))
+                ->order($db->escape('ordering') . ' ' . $db->escape('ASC'))
+                ->where($db->qn('catid') . ' = ' . $db->q($category->id));
 
-			$db->setQuery($query);
+            $db->setQuery($query);
 
-			$newsfeeds = $db->loadObjectList();
+            $newsfeeds = $db->loadObjectList();
 
-			foreach ($newsfeeds as $newsfeed) {
-				$item_params = new Registry;
-				$item_params->loadString($newsfeed->params);
+            foreach ($newsfeeds as $newsfeed) {
+                $item_params = new Registry;
+                $item_params->loadString($newsfeed->params);
 
-				$node = new \stdClass;
-				$node->id = $parent->id;
-				$id = $node->uid = $parent->uid . 'i' . $newsfeed->id;
-				$node->name = $newsfeed->name;
+                $node       = new \stdClass;
+                $node->id   = $parent->id;
+                $id         = $node->uid = $parent->uid . 'i' . $newsfeed->id;
+                $node->name = $newsfeed->name;
 
-				$node->browserNav = $parent->browserNav;
+                $node->browserNav = $parent->browserNav;
 
-				$node->link = $newsfeed->link;
-				$node->priority = $params['newsfeed_priority'];
-				$node->changefreq = $params['newsfeed_changefreq'];
+                $node->link       = $newsfeed->link;
+                $node->priority   = $params['newsfeed_priority'];
+                $node->changefreq = $params['newsfeed_changefreq'];
 
-				$node->modified = $newsfeed->modified;
+                $node->modified = $newsfeed->modified;
 
-				$node->expandible = false;
+                $node->expandible = false;
 
-				if (!isset($parent->subnodes))
-					$parent->subnodes = new \stdClass();
+                if (!isset($parent->subnodes))
+                    $parent->subnodes = new \stdClass();
 
-				$parent->subnodes->$id = $node;
-			}
-		}
-	}
+                $parent->subnodes->$id = $node;
+            }
+        }
+    }
 }

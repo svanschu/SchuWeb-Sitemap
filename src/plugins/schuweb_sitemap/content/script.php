@@ -30,7 +30,7 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
     {
         // Define the minumum versions to be supported.
         $this->minimumJoomla = '4.0';
-        $this->minimumPhp = '8';
+        $this->minimumPhp    = '8';
     }
 
     /**
@@ -51,7 +51,7 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
     public function postflight($type, $parent)
     {
         $app = Factory::getApplication();
-        
+
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
@@ -60,7 +60,8 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
             $db->quoteName('enabled') . ','
             . $db->quoteName('access') . ','
             . $db->quoteName('protected') . ','
-            . $db->quoteName('params'))
+            . $db->quoteName('params')
+        )
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('element') . '=' . $db->quote('com_content'))
             ->where($db->quoteName('type') . '=' . $db->quote('plugin'))
@@ -78,7 +79,7 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
                     $db->quoteName('protected') . '=' . $plugin['protected'],
                     $db->quoteName('params') . '=' . $db->quote($plugin['params'])
                 );
-                $query = $db->getQuery(true);
+                $query   = $db->getQuery(true);
                 $query->update($db->quoteName('#__extensions'))
                     ->set($columns)
                     ->where($db->quoteName('element') . '=' . $db->quote('content'))
@@ -88,7 +89,7 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
                 try {
                     $db->execute();
                 } catch (\RuntimeException $ex) {
-                    $app->enqueueMessage("Could not copy settings from old SchuWeb Sitemap plugin content. You need to do it manually.",$app::MSG_ERROR);
+                    $app->enqueueMessage("Could not copy settings from old SchuWeb Sitemap plugin content. You need to do it manually.", $app::MSG_ERROR);
                 }
 
                 $query = $db->getQuery(true);
@@ -98,7 +99,7 @@ class Plgschuweb_sitemapcontentInstallerScript extends InstallerScript
                     ->where($db->quoteName('type') . '=' . $db->quote('plugin'))
                     ->where($db->quoteName('folder') . '=' . $db->quote('schuweb_sitemap'));
                 $db->setQuery($query);
-                try{
+                try {
                     $db->execute();
                 } catch (\RuntimeException $ex) {
                     $app->enqueueMessage("Could not disable old SchuWeb Sitemap Plugin com_content. Please check and disable manually.");

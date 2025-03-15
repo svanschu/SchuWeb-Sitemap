@@ -73,7 +73,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
     private function updateXml(ExecuteTaskEvent $event): int
     {
         $app = $this->getApplication();
-        if ($app instanceof ConsoleApplication){
+        if ($app instanceof ConsoleApplication) {
             $this->logTask("Due to bugs in Joomla! Route::link() this task currently can't be run on the CLI only as Webtask", 'error');
             return Status::NO_RUN;
         }
@@ -89,7 +89,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
 
         $params = $event->getArgument('params');
 
-        $config = ['ignore_request' => true, 'pk' => (int)$params->sitemap];
+        $config = ['ignore_request' => true, 'pk' => (int) $params->sitemap];
         $model  = $extension->getMVCFactory()->createModel('SitemapXml', 'Site', $config);
 
         $this->logTask('Sitemap: ' . $model->getName());

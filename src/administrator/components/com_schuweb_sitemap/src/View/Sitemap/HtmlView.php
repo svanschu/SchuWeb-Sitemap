@@ -26,45 +26,45 @@ use Joomla\CMS\HTML\HTMLHelper;
 class HtmlView extends BaseHtmlView
 {
     /**
-	 * The \JForm object
-	 *
-	 * @var  \JForm
-	 */
+     * The \JForm object
+     *
+     * @var  \JForm
+     */
     protected $form;
 
     /**
-	 * The active item
-	 *
-	 * @var  object
-	 */
+     * The active item
+     *
+     * @var  object
+     */
     protected $item;
 
     protected $list;
-    
+
     protected $state;
 
     /**
-	 * Display the view.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+     * Display the view.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
      * 
      * @since  5.0.0
-	 */
+     */
     public function display($tpl = null)
     {
-        $app = Factory::getApplication();
+        $app         = Factory::getApplication();
         $this->state = $this->get('State');
-        $this->item = $this->get('Item');
-        $this->form = $this->get('Form');
+        $this->item  = $this->get('Item');
+        $this->form  = $this->get('Form');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             $app->enqueueMessage(implode("\n", $errors), 'error');
             return false;
         }
-        
+
         // Convert dates from UTC
         $offset = $app->get('offset');
         if (intval($this->item->created)) {
@@ -91,28 +91,28 @@ class HtmlView extends BaseHtmlView
         foreach ($menus as $menu) {
             if (isset($this->item->selections[$menu->menutype])) {
                 $this->item->selections[$menu->menutype]['selected'] = true;
-                $this->item->selections[$menu->menutype]['title'] = $menu->title;
+                $this->item->selections[$menu->menutype]['title']    = $menu->title;
                 $this->item->selections[$menu->menutype]['menutype'] = $menu->menutype;
-                $this->item->selections[$menu->menutype]['order'] = isset($menu->order) ?: 0;
+                $this->item->selections[$menu->menutype]['order']    = isset($menu->order) ?: 0;
             } else {
-                $this->item->selections[$menu->menutype] = (array)$menu;
-                $this->item->selections[$menu->menutype]['selected'] = false;
-                $this->item->selections[$menu->menutype]['priority'] = 0.5;
+                $this->item->selections[$menu->menutype]               = (array) $menu;
+                $this->item->selections[$menu->menutype]['selected']   = false;
+                $this->item->selections[$menu->menutype]['priority']   = 0.5;
                 $this->item->selections[$menu->menutype]['changefreq'] = 'weekly';
-                $this->item->selections[$menu->menutype]['order'] = 0;
+                $this->item->selections[$menu->menutype]['order']      = 0;
             }
         }
     }
 
     /**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since   5.0.0
-	 */
-	public function addToolbar()
-	{
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since   5.0.0
+     */
+    public function addToolbar()
+    {
         $isNew = ($this->item->id == 0);
 
 
@@ -132,5 +132,5 @@ class HtmlView extends BaseHtmlView
         } else {
             ToolbarHelper::cancel('sitemap.cancel', 'JTOOLBAR_CLOSE');
         }
-	}
+    }
 }

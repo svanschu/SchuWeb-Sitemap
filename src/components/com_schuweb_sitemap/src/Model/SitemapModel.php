@@ -151,7 +151,7 @@ class SitemapModel extends ItemModel
         // If not sitemap specified, select the default one
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        
+
         $query = $db->getQuery(true);
         $query->select('attribs')
             ->from('#__schuweb_sitemap');
@@ -159,7 +159,7 @@ class SitemapModel extends ItemModel
             $query->select('id')
                 ->where('is_default=1');
         } else {
-            $query->where($db->qn('id') . '='.$pk);
+            $query->where($db->qn('id') . '=' . $pk);
         }
 
         $db->setQuery($query);
@@ -230,7 +230,8 @@ class SitemapModel extends ItemModel
             if (isset($node->link) && !(isset($node->type) && in_array($node->type, ["separator", "heading"]))) {
                 $link = $node->link;
                 //TODO find better way for dpcalendar
-                if (str_contains($link, 'option=com_dpcalendar')) continue;
+                if (str_contains($link, 'option=com_dpcalendar'))
+                    continue;
 
                 if ($this->removeDuplicateMenus && str_contains($link, "Itemid"))
                     $link = substr($link, 0, strpos($link, 'Itemid'));
@@ -289,19 +290,19 @@ class SitemapModel extends ItemModel
 
             $node = new \stdClass;
 
-            $id                        = $node->id = $item->id;
-            $node->uid                 = $item->uid;
-            $node->name                = $item->title; // displayed name of node
-            $node->browserNav          = $item->browserNav; // how to open link
-            $node->priority            = $item->priority;
-            $node->changefreq          = $item->changefreq;
-            $node->type                = $item->type; // menuentry-type
-            $node->menutype            = $menu->menutype; // menuentry-type
-            $node->home                = $item->home; // If it's a home menu entry
-            $node->htmllink            = $node->link = $item->link;
-            $node->option              = $item->option;
-            $node->modified            = @$item->modified;
-            $node->secure              = $item->params->get('secure');
+            $id               = $node->id = $item->id;
+            $node->uid        = $item->uid;
+            $node->name       = $item->title; // displayed name of node
+            $node->browserNav = $item->browserNav; // how to open link
+            $node->priority   = $item->priority;
+            $node->changefreq = $item->changefreq;
+            $node->type       = $item->type; // menuentry-type
+            $node->menutype   = $menu->menutype; // menuentry-type
+            $node->home       = $item->home; // If it's a home menu entry
+            $node->htmllink   = $node->link = $item->link;
+            $node->option   = $item->option;
+            $node->modified = @$item->modified;
+            $node->secure   = $item->params->get('secure');
 
             $node->params =& $item->params;
 
@@ -485,8 +486,8 @@ class SitemapModel extends ItemModel
 
                 $this->_item[$pk] = $data;
 
-                $this->default     = $data->is_default;
-                $this->name        = $data->alias;
+                $this->default = $data->is_default;
+                $this->name    = $data->alias;
             } catch (Exception $e) {
                 $app->enqueueMessage(Text::_($e->getMessage()), 'error');
 
@@ -501,7 +502,7 @@ class SitemapModel extends ItemModel
     {
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
-        
+
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
@@ -634,8 +635,8 @@ class SitemapModel extends ItemModel
                 $item->params = $params;
 
                 if ($item->type != 'separator') {
-                    $item->priority            = $menuOptions['priority'];
-                    $item->changefreq          = $menuOptions['changefreq'];
+                    $item->priority   = $menuOptions['priority'];
+                    $item->changefreq = $menuOptions['changefreq'];
 
                     if (!is_null($item->option)) {
                         $element_name = substr($item->option, 4);
@@ -658,8 +659,8 @@ class SitemapModel extends ItemModel
                         ]));
                     }
                 } else {
-                    $item->priority            = null;
-                    $item->changefreq          = null;
+                    $item->priority   = null;
+                    $item->changefreq = null;
                 }
 
                 if ($item->parent_id > 1) {
@@ -770,11 +771,11 @@ class SitemapModel extends ItemModel
     public function chageItemPropery($uid, $itemid, $view, $property, $value)
     {
         $items = $this->getSitemapItems($view);
-        
+
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        $pk    = (int) $this->getState('sitemap.id');
+        $pk = (int) $this->getState('sitemap.id');
 
         $isNew = false;
         if (empty($items[$view][$itemid][$uid])) {
@@ -829,7 +830,7 @@ class SitemapModel extends ItemModel
 
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        
+
         $query = "UPDATE #__schuweb_sitemap set excluded_items='" . $db->escape($str) . "' where id=" . $sitemap->id;
         $db->setQuery($query);
         $db->execute();
@@ -842,15 +843,15 @@ class SitemapModel extends ItemModel
         if (!isset($_excluded_items)) {
             $_excluded_items = [];
             $registry        = new Registry('_default');
-            
+
             $item = $this->getItem();
             if ($item) {
-               $excluded_items = $item->excluded_items;
+                $excluded_items = $item->excluded_items;
                 if (!empty($excluded_items)) {
                     $registry->loadString($excluded_items);
                 }
             }
-            
+
             $_excluded_items = $registry->toArray();
         }
         return $_excluded_items;

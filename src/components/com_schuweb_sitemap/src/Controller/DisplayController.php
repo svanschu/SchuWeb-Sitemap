@@ -56,7 +56,7 @@ class DisplayController extends BaseController
 
         $app = Factory::getApplication();
 
-        $viewName = $this->input->get('view');
+        $viewName   = $this->input->get('view');
         $viewLayout = $this->input->get('layout', 'default');
 
         $user = $app->getIdentity();

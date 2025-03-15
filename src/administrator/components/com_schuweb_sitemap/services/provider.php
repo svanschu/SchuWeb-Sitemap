@@ -28,24 +28,23 @@ use Joomla\CMS\HTML\Registry;
  *
  * @since   5.0.0
  */
-return new class implements ServiceProviderInterface
-{
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 *
-	 * @since    5.0.0
-	 */
-	public function register(Container $container) : void
+return new class implements ServiceProviderInterface {
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     *
+     * @since    5.0.0
+     */
+    public function register(Container $container): void
     {
         $container->registerServiceProvider(new CategoryFactory('\\SchuWeb\\Component\\Sitemap'));
         $container->registerServiceProvider(new MVCFactory('\\SchuWeb\\Component\\Sitemap'));
         $container->registerServiceProvider(new ComponentDispatcherFactory('\\SchuWeb\\Component\\Sitemap'));
         $container->registerServiceProvider(new RouterFactory('\\SchuWeb\\Component\\Sitemap'));
-        
+
         $container->set(
             ComponentInterface::class,
             function (Container $container) {

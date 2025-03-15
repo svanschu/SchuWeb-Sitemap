@@ -31,7 +31,7 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
     {
         // Define the minumum versions to be supported.
         $this->minimumJoomla = '4.0';
-        $this->minimumPhp = '8';
+        $this->minimumPhp    = '8';
 
         $this->_oldRelease = $this->getParam('version');
         if (version_compare($this->_oldRelease, "3.2.0", "lt")) {
@@ -84,71 +84,69 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
             $this->upgradev4v5();
         }
 
-        if ($type != "install")
-		{
-			return;
-		}
+        if ($type != "install") {
+            return;
+        }
 
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        
+
         // Get all menus
-		$query = $db->getQuery(true);
+        $query = $db->getQuery(true);
 
-		$query->select($db->quoteName('menutype'))
-			->from($db->quoteName('#__menu_types'));
+        $query->select($db->quoteName('menutype'))
+            ->from($db->quoteName('#__menu_types'));
 
-		$db->setQuery($query);
-		$menus = $db->loadObjectList();
+        $db->setQuery($query);
+        $menus = $db->loadObjectList();
 
-		// Create a default sitemap with all needed components and all menus
-		$columns = array(
-			'title',
-			'alias',
-			'attribs',
-			'selections',
-			'is_default',
-			'state',
-			'access',
-		);
+        // Create a default sitemap with all needed components and all menus
+        $columns = array(
+            'title',
+            'alias',
+            'attribs',
+            'selections',
+            'is_default',
+            'state',
+            'access',
+        );
 
-		// {"mainmenu":{"enabled":"1","priority":"0.5","changefreq":"weekly"}}
-		$selections = array();
+        // {"mainmenu":{"enabled":"1","priority":"0.5","changefreq":"weekly"}}
+        $selections = array();
 
-		foreach ($menus as $menu)
-		{
-			$selections[$menu->menutype] = array(
-				"enabled"    => 1,
-				"priority"   => 1,
-				"changefreq" => "weekly",
-			);
-		}
+        foreach ($menus as $menu) {
+            $selections[$menu->menutype] = array(
+                "enabled"    => 1,
+                "priority"   => 1,
+                "changefreq" => "weekly",
+            );
+        }
 
-		$attribs = '{"showintro":"1","show_menutitle":"1","classname":"",'
-			. '"columns":"","compress_xml":"1",'
-			. '"include_link":"1","xmlLastMod":"1",'
-			. '"xmlInsertChangeFreq":"1","xmlInsertPriority":"1",'
-			. '"news_publication_name":""}';
+        $attribs = '{"showintro":"1","show_menutitle":"1","classname":"",'
+            . '"columns":"","compress_xml":"1",'
+            . '"include_link":"1","xmlLastMod":"1",'
+            . '"xmlInsertChangeFreq":"1","xmlInsertPriority":"1",'
+            . '"news_publication_name":""}';
 
-		$values = array(
-			$db->quote('Sitemap'),
-			$db->quote('sitemap'),
-			$db->quote($attribs),
-			$db->quote(json_encode($selections)),
-			1,
-			1,
-			1,
-		);
+        $values = array(
+            $db->quote('Sitemap'),
+            $db->quote('sitemap'),
+            $db->quote($attribs),
+            $db->quote(json_encode($selections)),
+            1,
+            1,
+            1,
+        );
 
-		$query = $db->getQuery(true);
+        $query = $db->getQuery(true);
 
-		$query->insert($db->quoteName('#__schuweb_sitemap'))
-			->columns($db->quoteName($columns))
-			->values(implode(',', $values));
+        $query->insert($db->quoteName('#__schuweb_sitemap'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
 
-		// Set the query using our newly populated query object and execute it.
-		$db->setQuery($query);
-		$db->execute();
+        // Set the query using our newly populated query object and execute it.
+        $db->setQuery($query);
+        $db->execute();
     }
 
     /**
@@ -226,7 +224,7 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
 
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        
+
         $query = $db->getQuery(true);
 
         // Select the item(s) and retrieve the id

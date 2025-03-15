@@ -45,8 +45,8 @@ class HtmlView extends BaseHtmlView
     {
         $this->filterForm = $this->get('FilterForm');
 
-        $this->state = $this->get('State');
-        $this->items = $this->get('Items');
+        $this->state      = $this->get('State');
+        $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 
         foreach ($this->items as $item) {
@@ -59,19 +59,19 @@ class HtmlView extends BaseHtmlView
             if (file_exists(JPATH_SITE . '/' . $path))
                 $this->xml_links[$item->id]['sitemap'] = Uri::root() . $path;
 
-                if ($item->is_default) {
-                    $path = 'sitemap_news.xml';
-                } else {
-                    $path = $item->alias . '_news.xml';
-                }
+            if ($item->is_default) {
+                $path = 'sitemap_news.xml';
+            } else {
+                $path = $item->alias . '_news.xml';
+            }
             if (file_exists(JPATH_SITE . '/' . $path))
                 $this->xml_links[$item->id]['news'] = Uri::root() . $path;
 
-                if ($item->is_default) {
-                    $path = 'sitemap_images.xml';
-                } else {
-                    $path = $item->alias . '_images.xml';
-                }
+            if ($item->is_default) {
+                $path = 'sitemap_images.xml';
+            } else {
+                $path = $item->alias . '_images.xml';
+            }
             if (file_exists(JPATH_SITE . '/' . $path))
                 $this->xml_links[$item->id]['images'] = Uri::root() . $path;
         }

@@ -28,11 +28,11 @@ $wa->useScript('core')
     ->useScript('multiselect')
     ->useScript('com_schuweb_sitemap.admin-sitemaps-modal');
 
-$function = $app->getInput()->getCmd('function', 'jSelectSitemap');
-$editor = $app->getInput()->getCmd('editor', '');
+$function  = $app->getInput()->getCmd('function', 'jSelectSitemap');
+$editor    = $app->getInput()->getCmd('editor', '');
 $listOrder = $this->escape($this->state->get('list.ordering'));
-$listDirn = $this->escape($this->state->get('list.direction'));
-$onclick = $this->escape($function);
+$listDirn  = $this->escape($this->state->get('list.direction'));
+$onclick   = $this->escape($function);
 
 if (!empty($editor)) {
     // This view is used also in com_menus. Load the xtd script only if the editor is set!
@@ -87,8 +87,8 @@ if (!empty($editor)) {
                     <?php
                     $iconStates = [
                         -2 => 'icon-trash',
-                        0 => 'icon-times',
-                        1 => 'icon-check',
+                        0  => 'icon-times',
+                        1  => 'icon-check',
                     ];
                     ?>
                     <?php

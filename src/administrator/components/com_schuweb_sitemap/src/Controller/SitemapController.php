@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class SitemapController extends FormController
 {
-     /**
+    /**
      * The URL option for the component.
      *
      * @var    string

@@ -121,7 +121,7 @@ class SitemapTable extends Table
             $selections = array();
             foreach ($array['selections'] as $i => $menu) {
                 $selections[$menu] = array(
-                    'priority' => $array['selections_priority'][$i],
+                    'priority'   => $array['selections_priority'][$i],
                     'changefreq' => $array['selections_changefreq'][$i],
                 );
             }
@@ -163,7 +163,7 @@ class SitemapTable extends Table
         $this->alias = ApplicationHelper::stringURLSafe($this->alias);
 
         if (trim(str_replace('-', '', $this->alias)) == '') {
-            $datenow = Factory::getDate();
+            $datenow     = Factory::getDate();
             $this->alias = $datenow->format("Y-m-d-H-i-s");
         }
 

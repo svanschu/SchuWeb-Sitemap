@@ -31,7 +31,7 @@ return new class () implements ServiceProviderInterface {
             InstallerScriptInterface::class,
             new class ($container->get(AdministratorApplication::class), $container->get(DatabaseInterface::class)) implements InstallerScriptInterface {
             private AdministratorApplication $app;
-            private DatabaseInterface $db;
+            private DatabaseInterface        $db;
 
             /**
              * The current or old version of the plugin
@@ -52,7 +52,8 @@ return new class () implements ServiceProviderInterface {
                 $query = $this->db->getQuery(true)
                     ->select([
                         $this->db->quoteName('id'),
-                        $this->db->quoteName('title')])
+                        $this->db->quoteName('title')
+                    ])
                     ->from($this->db->quoteName('#__schuweb_sitemap'));
 
                 $this->db->setQuery($query);
@@ -106,7 +107,8 @@ return new class () implements ServiceProviderInterface {
                     $query = $this->db->getQuery(true)
                         ->select([
                             $this->db->quoteName('id'),
-                            $this->db->quoteName('type')])
+                            $this->db->quoteName('type')
+                        ])
                         ->from($this->db->quoteName('#__scheduler_tasks'))
                         ->where($this->db->quoteName('type') . ' = ' . $this->db->quote('PLG_TASK_SCHUWEBSITEMAP'));
 
@@ -154,7 +156,7 @@ return new class () implements ServiceProviderInterface {
                     $parent->extension->load(['type' => $parent->type, 'element' => $parent->element, 'folder' => $parent->group]);
                 }
 
-                $cache            = new Registry($parent->extension->manifest_cache);
+                $cache = new Registry($parent->extension->manifest_cache);
                 if (!is_null($cache->get('version')))
                     $this->oldVersion = $cache->get('version');
 

@@ -111,7 +111,7 @@ class SitemapModel extends AdminModel
     public function getMenus()
     {
         /** @var DatabaseDriver $db */
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
             ->select('m.*')
             ->from('#__menu_types AS m')
@@ -181,7 +181,7 @@ class SitemapModel extends AdminModel
 
         // Initialise variables;
         $table = $this->getTable();
-        $pk = (!empty($data['id'])) ? $data['id'] : (int) $this->getState('sitemap.id');
+        $pk    = (!empty($data['id'])) ? $data['id'] : (int) $this->getState('sitemap.id');
 
         // Load the row if saving an existing record.
         if ($pk > 0) {
