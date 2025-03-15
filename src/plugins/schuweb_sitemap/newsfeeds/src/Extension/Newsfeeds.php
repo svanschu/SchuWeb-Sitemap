@@ -149,7 +149,7 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
         self::getCategoryTree($sitemap, $parent, $params, $category);
     }
 
-	static function getCategoryTree(&$sitemap, &$parent, &$params, &$category)
+    private static function getCategoryTree(&$sitemap, &$parent, &$params, &$category)
 	{
 		$children = $category->getChildren();
 

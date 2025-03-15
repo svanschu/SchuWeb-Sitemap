@@ -52,7 +52,7 @@ class HtmlView extends BaseHtmlView
      * 
      * @since  5.0.0
 	 */
-    function display($tpl = null)
+    public function display($tpl = null)
     {
         $app = Factory::getApplication();
         $this->state = $this->get('State');
@@ -111,7 +111,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   5.0.0
 	 */
-	function addToolbar()
+	public function addToolbar()
 	{
         $isNew = ($this->item->id == 0);
 

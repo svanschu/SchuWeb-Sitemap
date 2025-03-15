@@ -30,55 +30,55 @@ class SitemapTable extends Table
     /**
      * @var int Primary key
      */
-    var $id = null;
+    public $id = null;
     /**
      * @var string
      */
-    var $title = null;
+    public $title = null;
     /**
      * @var string
      */
-    var $alias = null;
+    public $alias = null;
     /**
      * @var string
      */
-    var $introtext = null;
+    public $introtext = null;
     /**
      * @var string
      */
-    var $metakey = null;
+    public $metakey = null;
     /**
      * @var string
      */
-    var $attribs = null;
+    public $attribs = null;
     /**
      * @var string
      */
-    var $selections = null;
+    public $selections = null;
     /**
      * @var string
      */
-    var $created = null;
+    public $created = null;
     /**
      * @var string
      */
-    var $metadesc = null;
+    public $metadesc = null;
     /**
      * @var string
      */
-    var $excluded_items = null;
+    public $excluded_items = null;
     /**
      * @var int
      */
-    var $is_default = 0;
+    public $is_default = 0;
     /**
      * @var int
      */
-    var $state = 0;
+    public $state = 0;
     /**
      * @var int
      */
-    var int $access = 0;
+    public int $access = 0;
 
     /**
      * @var array
@@ -92,7 +92,7 @@ class SitemapTable extends Table
      *
      * @since   5.0.0
      */
-    function __construct(DatabaseDriver $db)
+    public function __construct(DatabaseDriver $db)
     {
         parent::__construct('#__schuweb_sitemap', 'id', $db);
     }
@@ -109,7 +109,7 @@ class SitemapTable extends Table
      * @see         JTable:bind
      * @since       2.0
      */
-    function bind($array, $ignore = '')
+    public function bind($array, $ignore = '')
     {
         if (isset($array['attribs']) && is_array($array['attribs'])) {
             $registry = new Registry();
@@ -148,7 +148,7 @@ class SitemapTable extends Table
      * @see         JTable::check
      * @since       2.0
      */
-    function check()
+    public function check()
     {
         $app = Factory::$application;
 

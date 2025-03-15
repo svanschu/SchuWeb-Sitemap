@@ -47,7 +47,7 @@ class SitemapModel extends ItemModel
      */
     private $extensions = null;
 
-    static $items = array();
+    public static $items = [];
 
     /**
      * Is the sitemap the default sitemap?
@@ -767,7 +767,7 @@ class SitemapModel extends ItemModel
         return self::$items;
     }
 
-    function chageItemPropery($uid, $itemid, $view, $property, $value)
+    public function chageItemPropery($uid, $itemid, $view, $property, $value)
     {
         $items = $this->getSitemapItems($view);
         
@@ -801,7 +801,7 @@ class SitemapModel extends ItemModel
         }
     }
 
-    function toggleItem($uid, $itemid)
+    public function toggleItem($uid, $itemid)
     {
         $sitemap = $this->getItem();
 

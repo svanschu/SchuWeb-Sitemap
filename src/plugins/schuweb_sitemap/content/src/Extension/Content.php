@@ -310,7 +310,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 	 * @param   array   $params  an assoc array with the params for this plugin on Xmap
 	 * @param   int     $itemid  the itemid to use for this category's children
 	 */
-    function expandCategory(&$sitemap, &$parent, $catid, &$params, $itemid, $level)
+    private function expandCategory(&$sitemap, &$parent, $catid, &$params, $itemid, $level)
 	{
 		$maxlevel = $parent->params->get('maxLevel');
 		if ($maxlevel == -1 || $level < $maxlevel) {
@@ -405,7 +405,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 	 * @throws \Exception
 	 * @since 2.0
 	 */
-    function includeCategoryContent(&$sitemap, &$parent, $catid, &$params, $Itemid)
+    private function includeCategoryContent(&$sitemap, &$parent, $catid, &$params, $Itemid)
 	{
         /** @var DatabaseDriver $db */
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -589,7 +589,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 	 * @return string
 	 * @throws \Exception
 	 */
-	static function buildContentOrderBy(&$params, $parentId, $itemid)
+	private static function buildContentOrderBy(&$params, $parentId, $itemid)
 	{
 		$app = Factory::getApplication();
 
@@ -621,7 +621,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 		return $orderby;
 	}
 
-	static function getImages($text, $meta_images, $secure, $max = 1000)
+	private static function getImages($text, $meta_images, $secure, $max = 1000)
 	{
 		if (!isset($urlBase)) {
 			$urlBase = URI::root();
@@ -698,7 +698,7 @@ class Content extends CMSPlugin implements SubscriberInterface
     * @return bool true if image already exists
     * @since 5.1.1
     */
-    static private function issetImage($src, &$images) : bool
+    private static function issetImage($src, &$images) : bool
     {
         foreach($images as $image){
             if (strcmp($src, $image->src) == 0)
@@ -708,7 +708,7 @@ class Content extends CMSPlugin implements SubscriberInterface
         return false;
     }
 
-	static function getPagebreaks($text, $baseLink)
+    private static function getPagebreaks($text, $baseLink)
 	{
 		$matches = $subnodes = array();
 		if (

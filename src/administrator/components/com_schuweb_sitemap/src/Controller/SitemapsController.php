@@ -50,7 +50,7 @@ class SitemapsController extends AdminController
      * @return      void
      * @since       2.0
      */
-    function setDefault()
+    public function setDefault()
     {
         // Check for request forgeries
         $this->checkToken();

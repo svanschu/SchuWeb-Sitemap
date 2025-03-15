@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
      * @since  5.0.0
      */
 
-    var bool $isImages = false;
+    public bool $isImages = false;
     /**
      *
      * @var int  Counter for the number of links on the sitemap
@@ -106,7 +106,7 @@ class HtmlView extends BaseHtmlView
      */
     public $canEdit = false;
 
-    var $view = 'sitemap';
+    public $view = 'sitemap';
 
     /**
      * Execute and display a template script.
