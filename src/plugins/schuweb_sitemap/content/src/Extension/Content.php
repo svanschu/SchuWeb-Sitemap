@@ -15,7 +15,6 @@ use Joomla\Registry\Registry;
 use Joomla\Component\Content\Site\Helper\QueryHelper;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Site\Helper\RouteHelper;

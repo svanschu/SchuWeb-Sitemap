@@ -11,7 +11,6 @@ namespace SchuWeb\Plugin\SchuWeb_Sitemap\Newsfeeds\Extension;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;

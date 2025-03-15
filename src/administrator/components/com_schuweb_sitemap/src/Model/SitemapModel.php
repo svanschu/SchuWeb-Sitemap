@@ -14,14 +14,9 @@ namespace SchuWeb\Component\Sitemap\Administrator\Model;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Language\LanguageHelper;
-use Joomla\Database\ParameterType;
-use Joomla\CMS\Helper\TagsHelper;
-use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
 

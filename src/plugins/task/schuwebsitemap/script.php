@@ -8,7 +8,6 @@
  */
 
 use Joomla\CMS\Application\AdministratorApplication;
-use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;

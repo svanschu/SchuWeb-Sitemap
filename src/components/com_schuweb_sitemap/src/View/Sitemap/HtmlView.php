@@ -12,7 +12,6 @@ namespace SchuWeb\Component\Sitemap\Site\View\Sitemap;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
