@@ -23,22 +23,6 @@ use Joomla\DI\ServiceProviderInterface;
 use SchuWeb\Component\Sitemap\Administrator\Extension\SitemapComponent;
 use Joomla\CMS\HTML\Registry;
 
-
-#JTable::addIncludePath( JPATH_COMPONENT.'/tables' );
-
-#jimport('joomla.form.form');
-#JForm::addFieldPath( JPATH_COMPONENT.'/models/fields' );
-
-// Register helper class
-#JLoader::register('SchuWeb_SitemapHelper', dirname(__FILE__) . '/helpers/schuweb_sitemap.php');
-
-// Include dependancies
-#jimport('joomla.application.component.controller');
-
-#$controller = JControllerLegacy::getInstance('SchuWeb_Sitemap');
-#$controller->execute(JFactory::getApplication()->input->get('task'));
-#$controller->redirect();
-
 /**
  * The content service provider.
  *
