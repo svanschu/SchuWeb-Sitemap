@@ -2,6 +2,33 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.2.1</version>
+        <fix>
+            <item>fix #147 Passing null to parameter</item>
+            <item>fix call of unknown method</item>
+            <item>fix deprecated warnings</item>
+            <item>fix namespacing</item>
+            <item>fix code smells</item>
+            <item>fix use of protected parameter</item>
+            <item>fix wrong return value for display method</item>
+            <item>fix missing visibility identifier</item>
+        </fix>
+        <addition>
+        </addition>
+        <change>
+            <item>PSR-12 formatting</item>
+            <item>move helper function due it is used at one spot</item>
+        </change>
+        <remove>
+            <item>remove obsolete clean cache code</item>
+            <item>remove commented out code</item>
+        </remove>
+        <note>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.2.0</version>
         <fix>
             <item>#143 wrong scheduler type used for link and db request</item>
