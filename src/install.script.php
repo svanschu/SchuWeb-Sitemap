@@ -64,12 +64,6 @@ class pkg_schuweb_sitemapInstallerScript extends InstallerScript
         }
 
         // Which components are installed?
-        require_once JPATH_ADMINISTRATOR
-            . DIRECTORY_SEPARATOR . 'components'
-            . DIRECTORY_SEPARATOR . 'com_schuweb_sitemap'
-            . DIRECTORY_SEPARATOR . 'helpers'
-            . DIRECTORY_SEPARATOR . 'schuweb_sitemap.php';
-
         $extensions = self::getExtensionsList();
 
         /** @var DatabaseDriver $db */
