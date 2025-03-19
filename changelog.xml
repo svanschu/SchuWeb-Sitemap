@@ -2,6 +2,23 @@
     <changelog>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.2.2</version>
+        <fix>
+            <item>fix Failed opening required</item>
+            <item>fix Call to undefined method in J4</item>
+        </fix>
+        <addition>
+        </addition>
+        <change>
+        </change>
+        <remove>
+        </remove>
+        <note>
+        </note>
+    </changelog>
+    <changelog>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.2.1</version>
         <fix>
             <item>fix #147 Passing null to parameter</item>
