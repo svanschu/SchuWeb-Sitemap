@@ -17,6 +17,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+## J4
+use Joomla\CMS\Toolbar\Toolbar;
 
 /**
  * Main "SchuWeb Sitemap" Admin View
@@ -107,11 +109,12 @@ class HtmlView extends BaseHtmlView
      *
      * @access      private
      */
-    protected function addToolbar()
+    private function addToolbar()
     {
         $state = $this->get('State');
 
-        $toolbar = $this->getDocument()->getToolbar();
+        $toolbar = (version_compare(JVERSION, '5.0', '>=')) ?
+            $this->getDocument()->getToolbar() : Toolbar::getInstance();
 
         $toolbar->addNew('sitemap.add');
 
