@@ -22,8 +22,10 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Plugin\PluginHelper;
 use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
 use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
+use SchuWeb\Component\Sitemap\Site\Event\ImagesPrepareEvent;
 
 /**
  * Handles standard Joomla's Content articles/categories
@@ -624,7 +626,7 @@ class Content extends CMSPlugin implements SubscriberInterface
         return $orderby;
     }
 
-    private static function getImages($text, $meta_images, $secure, $max = 1000)
+    private function getImages($text, $meta_images, $secure, $max = 1000)
     {
         if (!isset($urlBase)) {
             $urlBase = URI::root();
@@ -632,7 +634,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 
         $urlBaseLen = strlen($urlBase);
 
-        $images   = null;
+        $images = [];
         $matches1 = $matches2 = array();
         // Look <img> tags
         preg_match_all('/<img[^>]*?(?:(?:[^>]*src="(?P<src>[^"]+)")|(?:[^>]*alt="(?P<alt>[^"]+)")|(?:[^>]*title="(?P<title>[^"]+)"))+[^>]*>/i', $text, $matches1, PREG_SET_ORDER);
@@ -653,7 +655,6 @@ class Content extends CMSPlugin implements SubscriberInterface
 
         $matches = array_merge($matches1, $matches2);
         if (count($matches)) {
-            $images = array();
 
             $count = count($matches);
             $j     = 0;
@@ -689,6 +690,28 @@ class Content extends CMSPlugin implements SubscriberInterface
                 }
             }
         }
+
+        // Create a plugin event to support plugins for supporting gallery
+        // extensions in the content plugin
+        
+        //include the plugins for schuweb_sitemap
+        PluginHelper::importPlugin(
+            type: 'schuweb_sitemap', 
+            plugin: null, 
+            autocreate: true, 
+            dispatcher: $this->getDispatcher());
+
+        // Trigger the onGetImages event.
+        $results = $this->getDispatcher()->dispatch(
+            name: 'onGetImages', 
+            event: new ImagesPrepareEvent(name: 'onGetImages', arguments: [
+                'text'   => $text
+            ])
+        );
+
+        $result_images = $results['arguments']['result'][0];
+
+        $images = array_merge($images, $result_images);
 
         return $images;
     }
