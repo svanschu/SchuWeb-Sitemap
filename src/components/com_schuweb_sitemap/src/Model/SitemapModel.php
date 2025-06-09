@@ -23,6 +23,7 @@ use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Language\Multilanguage;
 use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
 use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
 
@@ -582,16 +583,28 @@ class SitemapModel extends ItemModel
             // Initialize variables.
             // Get the menu items as a tree.
             $query = $db->getQuery(true);
-            $query->select(
-                'n.id, n.title, n.alias, n.path, n.level, n.link, '
-                . 'n.type, n.params, n.home, n.parent_id'
-                . ',n.' . $db->quoteName('browserNav')
-            );
-            $query->from('#__menu AS n');
-            $query->join('INNER', ' #__menu AS p ON p.lft = 0');
-            $query->where('n.lft > p.lft');
-            $query->where('n.lft < p.rgt');
-            $query->order('n.lft');
+
+            $columns = [
+                $db->quoteName('n.id'),
+                $db->quoteName('n.title'),
+                $db->quoteName('n.alias'),
+                $db->quoteName('n.path'),
+                $db->quoteName('n.level'),
+                $db->quoteName('n.link'),
+                $db->quoteName('n.type'),
+                $db->quoteName('n.params'),
+                $db->quoteName('n.home'),
+                $db->quoteName('n.parent_id'),
+                $db->quoteName('n.browserNav'),
+                $db->quoteName('n.language')
+            ];
+
+            $query->select($columns)
+                ->from($db->quoteName('#__menu') . 'AS n')
+                ->join('INNER', ' #__menu AS p ON p.lft = 0')
+                ->where('n.lft > p.lft')
+                ->where('n.lft < p.rgt')
+                ->order('n.lft');
 
             // Filter over the appropriate menu.
             $query->where('n.menutype = ' . $db->quote($menutype));
@@ -630,6 +643,10 @@ class SitemapModel extends ItemModel
                     $params = $componentParams;
                 } else {
                     $item->option = null;
+                }
+
+                if ($item->language && $item->language !== '*' && Multilanguage::isEnabled()) {
+                    $item->link .= "&lang={$item->language}";
                 }
 
                 $item->params = $params;

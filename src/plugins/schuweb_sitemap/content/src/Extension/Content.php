@@ -275,6 +275,7 @@ class Content extends CMSPlugin implements SubscriberInterface
                         ->select($db->quoteName('catid'))
                         ->select($db->qn('images'))
                         ->select($db->qn('created'))
+                        ->select($db->qn('language'))
                         ->from($db->quoteName('#__content'))
                         ->where($db->quoteName('id') . '=' . intval($id));
                     $db->setQuery($query);
@@ -282,7 +283,7 @@ class Content extends CMSPlugin implements SubscriberInterface
                     $row = $db->loadObject();
 
                     $parent->slug = $row->alias ? ($id . ':' . $row->alias) : $id;
-                    $parent->link = RouteHelper::getArticleRoute($parent->slug, $row->catid);
+                    $parent->link = RouteHelper::getArticleRoute($parent->slug, $row->catid, $row->language);
 
                     $text = $row->introtext . $row->fulltext;
                     if ($sitemap->isImagesitemap()) {
@@ -338,7 +339,8 @@ class Content extends CMSPlugin implements SubscriberInterface
                 $db->quoteName('a.access'),
                 $db->quoteName('a.path') . 'AS route',
                 $db->quoteName('a.created_time') . 'AS created',
-                $db->quoteName('a.modified_time') . 'AS modified'
+                $db->quoteName('a.modified_time') . 'AS modified',
+                $db->quoteName('language')
             );
             $query->select($columns)
                 ->from($db->quoteName('#__categories') . 'AS a')
@@ -364,6 +366,7 @@ class Content extends CMSPlugin implements SubscriberInterface
                     // TODO: Should we include category name or metakey here?
                     // $node->keywords = $item->metakey;
                     $node->newsItem = 0;
+                    $node->language = $item->language;
 
                     // For the google news we should use te publication date instead
                     // the last modification date. See
@@ -371,7 +374,7 @@ class Content extends CMSPlugin implements SubscriberInterface
                         $item->modified = $item->created;
 
                     $node->slug = $item->route ? ($item->id . ':' . $item->route) : $item->id;
-                    $node->link = RouteHelper::getCategoryRoute($node->slug);
+                    $node->link = RouteHelper::getCategoryRoute($node->slug, $node->language);
                     if (strpos($node->link, 'Itemid=') === false) {
                         $node->itemid = $itemid;
                         $node->link .= '&Itemid=' . $itemid;
@@ -531,7 +534,7 @@ class Content extends CMSPlugin implements SubscriberInterface
 
                 $node->slug    = $item->alias ? ($item->id . ':' . $item->alias) : $item->id;
                 $node->catslug = $item->catid;
-                $node->link    = RouteHelper::getArticleRoute($node->slug, $node->catslug);
+                $node->link    = RouteHelper::getArticleRoute($node->slug, $node->catslug, $node->language);
 
                 // Add images to the article
                 $text = @$item->introtext . @$item->fulltext;

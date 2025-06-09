@@ -158,7 +158,7 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
             $node->id         = $parent->id;
             $id               = $node->uid = $parent->uid . 'c' . $cat->id;
             $node->name       = $cat->title;
-            $node->link       = RouteHelper::getCategoryRoute($cat);
+            $node->link       = RouteHelper::getCategoryRoute($cat->id, $cat->language);
             $node->priority   = $params['cat_priority'];
             $node->changefreq = $params['cat_changefreq'];
             $node->browserNav = $parent->browserNav;
