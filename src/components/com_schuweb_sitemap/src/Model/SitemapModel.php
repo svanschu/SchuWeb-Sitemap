@@ -319,7 +319,9 @@ class SitemapModel extends ItemModel
                 case 'url':
                     if ((strpos($item->link, 'index.php?') === 0) && (strpos($item->link, 'Itemid=') === false)) {
                         // If this is an internal Joomla link, ensure the Itemid is set.
-                        $node->htmllink = $node->htmllink . '&Itemid=' . $node->id;
+                        $node->htmllink = "{$node->htmllink}&Itemid={$node->id}";
+                    } else if (strpos($item->link, '#') === 0) {
+                        $node->htmllink = "index.php?{$node->htmllink}";
                     } else {
                         $excludeExternal = $this->xmlsitemap;
                     }
