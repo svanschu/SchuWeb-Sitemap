@@ -90,6 +90,9 @@ class HtmlView extends BaseHtmlView
             Factory::getApplication()->enqueueMessage($message);
         }
 
+
+        Factory::getApplication()->enqueueMessage(Text::sprintf('SCHUWEB_SITEMAP_DONATE', 'https://extensions.schultschik.com/sponsor'), \Joomla\CMS\Application\CMSApplicationInterface::MSG_WARNING);
+
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             Factory::$application->enqueueMessage(implode("\n", $errors), 'error');

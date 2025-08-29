@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Application\CMSApplicationInterface;
 
 class com_schuweb_sitemapInstallerScript extends InstallerScript
 {
@@ -83,6 +84,8 @@ class com_schuweb_sitemapInstallerScript extends InstallerScript
         if ($type == "update") {
             $this->upgradev4v5();
         }
+
+        Factory::getApplication()->enqueueMessage(Text::sprintf('SCHUWEB_SITEMAP_DONATE', 'https://extensions.schultschik.com/sponsor'), CMSApplicationInterface::MSG_WARNING);
 
         if ($type != "install") {
             return;
