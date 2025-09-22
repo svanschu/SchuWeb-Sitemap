@@ -711,7 +711,9 @@ class Content extends CMSPlugin implements SubscriberInterface
 
         $result_images = $results['arguments']['result'][0];
 
-        $images = array_merge($images, $result_images);
+        if (is_array($result_images) && count($result_images) > 0) {
+            $images = array_merge($images, $result_images);
+        }
 
         return $images;
     }
