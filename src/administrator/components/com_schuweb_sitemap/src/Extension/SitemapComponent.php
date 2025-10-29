@@ -9,7 +9,7 @@
 
 namespace SchuWeb\Component\Sitemap\Administrator\Extension;
 
-\defined('JPATH_PLATFORM') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\Extension\BootableExtensionInterface;
