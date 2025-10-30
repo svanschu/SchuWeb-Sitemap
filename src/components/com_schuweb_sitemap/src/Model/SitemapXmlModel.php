@@ -10,12 +10,14 @@
 namespace SchuWeb\Component\Sitemap\Site\Model;
 
 use Exception;
+use Joomla\CMS\Application\CMSApplicationInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -208,6 +210,11 @@ class SitemapXmlModel extends BaseDatabaseModel
 
         $path    = JPATH_SITE . '/' . $sitemapname . '.xml';
         $xmlfile = fopen($path, "w");
+        if (!$xmlfile) {
+            Factory::getApplication()->enqueueMessage(
+                Text::sprintf('SCHUWEB_SITEMAP_XML_ERROR_OPEN_FILE', $path), CMSApplicationInterface::MSG_CRITICAL);
+            return;
+        }
         fwrite($xmlfile, $xml);
         fclose($xmlfile);
     }
