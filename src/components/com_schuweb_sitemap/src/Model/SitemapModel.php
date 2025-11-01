@@ -683,7 +683,9 @@ class SitemapModel extends ItemModel
                 }
 
                 if ($item->parent_id > 1) {
-                    $tmpList[$item->parent_id]->items[$item->id] = $item;
+                    if (isset($tmpList[$item->parent_id])) {
+                        $tmpList[$item->parent_id]->items[$item->id] = $item;
+                    }
                 } else {
                     $list[$menutype][$item->id] = $item;
                 }
