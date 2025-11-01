@@ -573,8 +573,8 @@ class SitemapModel extends ItemModel
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
-        if (is_null($user))
-            $groups = [0 => 1];
+        if ($this->isXmlsitemap() || $this->isNewssitemap() || $this->isImagesitemap() || is_null($user))
+            $groups = [0 => 1, 1 => 5];
         else
             $groups = $user->getAuthorisedViewLevels();
         $list = array();
