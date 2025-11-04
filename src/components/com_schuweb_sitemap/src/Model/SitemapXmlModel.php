@@ -263,7 +263,9 @@ class SitemapXmlModel extends BaseDatabaseModel
 
             xmlwriter_start_element($this->xw, 'url');
             xmlwriter_start_element($this->xw, 'loc');
-            xmlwriter_write_raw($this->xw, $node->htmllink);
+            xmlwriter_write_raw($this->xw, 
+            htmlspecialchars($node->htmllink, ENT_QUOTES | ENT_XML1, 'UTF-8')
+            );
             xmlwriter_end_element($this->xw);
 
             if ($newssitemap) {
