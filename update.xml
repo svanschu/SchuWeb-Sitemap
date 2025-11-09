@@ -5,6 +5,66 @@
         <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
         <element>com_schuweb_sitemap</element>
         <type>component</type>
+        <version>5.3.2</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap 5.3.2">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-3-2</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/5.3.2/pkg_schuweb_sitemap_5.3.2_20251109.zip</downloadurl>
+        </downloads>
+        <sha512>584ec83a291b001cf264362d9c2a73f3f61a3efbbf07e329cd4e07f82b2f30cfa674644ebc9911d5c0eb456fe5eaf7392b0ceb5383b9e013994693d81896a389</sha512>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="6"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
+        <version>5.3.2</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap 5.3.2">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-3-2</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/5.3.2/pkg_schuweb_sitemap_5.3.2_20251109.zip</downloadurl>
+        </downloads>
+        <sha512>584ec83a291b001cf264362d9c2a73f3f61a3efbbf07e329cd4e07f82b2f30cfa674644ebc9911d5c0eb456fe5eaf7392b0ceb5383b9e013994693d81896a389</sha512>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="5"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
+        <version>5.3.2</version>
+        <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
+        <infourl title="SchuWeb Sitemap 5.3.2">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-3-2</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/svanschu/SchuWeb-Sitemap/releases/download/5.3.2/pkg_schuweb_sitemap_5.3.2_20251109.zip</downloadurl>
+        </downloads>
+        <sha512>584ec83a291b001cf264362d9c2a73f3f61a3efbbf07e329cd4e07f82b2f30cfa674644ebc9911d5c0eb456fe5eaf7392b0ceb5383b9e013994693d81896a389</sha512>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Sven Schultschik</maintainer>
+        <maintainerurl>http://www.schultschik.de</maintainerurl>
+        <targetplatform name="joomla" version="4"/>
+        <php_minimum>8.0.0</php_minimum>
+    </update>
+    <update>
+        <name>SchuWeb Sitemap</name>
+        <description>SchuWeb Sitemap - Sitemap Generator for Joomla!</description>
+        <element>com_schuweb_sitemap</element>
+        <type>component</type>
         <version>5.3.1</version>
         <changelogurl>https://raw.githubusercontent.com/svanschu/SchuWeb-Sitemap/main/changelog.xml</changelogurl>
         <infourl title="SchuWeb Sitemap 5.3.1">https://extensions.schultschik.com/products/schuweb-sitemap/schuweb-sitemap-5-3-1</infourl>
