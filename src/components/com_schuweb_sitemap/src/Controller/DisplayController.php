@@ -15,6 +15,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Factory;
+use Joomla\Input\Input;
 
 /**
  * Sitemaps Component Controller
@@ -29,13 +30,13 @@ class DisplayController extends BaseController
      * @param   array                $config   An optional associative array of configuration settings.
      * Recognized key values include 'name', 'default_task', 'model_path', and
      * 'view_path' (this list is not meant to be comprehensive).
-     * @param   MVCFactoryInterface  $factory  The factory.
-     * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   ?MVCFactoryInterface  $factory  The factory.
+     * @param   ?CMSApplication       $app      The JApplication for the dispatcher
+     * @param   ?Input              $input    Input
      *
      * @since   5.0.0
      */
-    public function __construct($config = [], MVCFactoryInterface $factory = null, ?CMSApplication $app = null, $input = null)
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null, ?CMSApplication $app = null, ?Input $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
     }
