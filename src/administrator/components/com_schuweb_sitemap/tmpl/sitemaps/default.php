@@ -140,12 +140,13 @@ $saveOrderCheck = $saveOrder && !empty($this->items);
                                                 <small>[
                                                     <?php echo Text::_('SCHUWEB_SITEMAP_NO_IMAGES_XML', true); ?>]
                                                 </small>
-                                            <?php endif;
+                                            <?php endif; 
                                         endif; ?>
-                                        <br />
-                                        <div class="small">
-                                            <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-                                        </div>
+                                        <small>[
+											<a target="_blank" href="#" onclick="window.open('<?php echo Route::link('site','index.php?option=com_schuweb_sitemap&tmpl=component&view=sitemap&id='.$item->id); ?>', 'yourWindowName', 'width=1000,height=1000');">
+											<?php echo Text::_('SCHUWEB_SITEMAP_HTML_LINK'); ?>
+											</a>]
+                                        </small>
                                     </td>
                                     <td class="text-center">
                                         <?php if (!isset($item->task)) : ?>
