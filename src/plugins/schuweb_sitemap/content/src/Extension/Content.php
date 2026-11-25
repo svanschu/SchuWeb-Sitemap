@@ -709,10 +709,17 @@ class Content extends CMSPlugin implements SubscriberInterface
             ])
         );
 
-        $result_images = $results['arguments']['result'][0];
+        // Every subscribed plugin adds its own result array
+        foreach ($results->getArgument('result', []) as $result_images) {
+            if (!is_array($result_images)) {
+                continue;
+            }
 
-        if (is_array($result_images) && count($result_images) > 0) {
-            $images = array_merge($images, $result_images);
+            foreach ($result_images as $image) {
+                if (isset($image->src) && !self::issetImage($image->src, $images)) {
+                    $images[] = $image;
+                }
+            }
         }
 
         return $images;
