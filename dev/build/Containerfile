@@ -1,0 +1,19 @@
+# Build image for SchuWeb extensions: PHP CLI + pinned Phing 3.
+# Built and used by dev/build.sh - no need to build it by hand.
+FROM docker.io/library/php:8.3-cli
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libzip-dev libicu-dev \
+    && docker-php-ext-install zip intl \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG PHING_VERSION=3.1.2
+RUN set -eu; \
+    base="https://github.com/phingofficial/phing/releases/download/${PHING_VERSION}"; \
+    curl -fsSL -o /usr/local/bin/phing "$base/phing-${PHING_VERSION}.phar"; \
+    expected="$(curl -fsSL "$base/phing-${PHING_VERSION}.phar.sha512" | cut -d' ' -f1)"; \
+    echo "$expected  /usr/local/bin/phing" | sha512sum -c -; \
+    chmod +x /usr/local/bin/phing
+
+ENV TZ=Europe/Berlin
+ENTRYPOINT ["phing"]
