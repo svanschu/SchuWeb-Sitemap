@@ -249,7 +249,7 @@ class SitemapXmlModel extends BaseDatabaseModel
             // Ignore nodes without modified date on news sitemap
             && !($newssitemap && (!isset($node->modified) || $diff < 0))
             // Ignore nodes without images on image sitemap
-            && !($site_sitemap_model->isImagesitemap() && !isset($node->images))
+            && !($site_sitemap_model->isImagesitemap() && empty($node->images))
         ) {
 
             if (isset($node->alias) && !$node->alias)
