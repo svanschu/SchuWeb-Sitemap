@@ -86,7 +86,10 @@ When adding a string, add it to en-GB; also register new language files in the m
 
 ## Dev environment (podman)
 
-`~/container/sitemap-dev/podman-compose.yml` – containers are **not** always running; ask before starting them.
+`~/container/sitemap-dev/podman-compose.yml`. The containers are **not** always running; ask before starting them.
+The stack runs **rootful**: `sudo podman-compose up -d db-j5 php-j5` (the data dirs are owned by host uid 999/33).
+Rootless podman fails on the DB data dir, and Claude cannot `sudo`, so ask the user to start or stop it.
+With the DB port published, Claude can still query it from the host: `mariadb -h127.0.0.1 -P43011 -ujdev -pjdevpw jdevdb`.
 
 | Joomla | Web | MariaDB (host) | Xdebug port | Web root on host |
 |--------|-----|----------------|-------------|------------------|
