@@ -343,7 +343,12 @@ class SitemapModel extends ItemModel
                     break;
             }
 
-            if ($excludeExternal || $this->proceed($node)) {
+            if ($excludeExternal) {
+                // External URLs don't belong into a XML sitemap, but their child menu items do
+                $node->browserNav = 3;
+            }
+
+            if ($this->proceed($node)) {
 
                 if (!isset($node->browserNav))
                     $node->browserNav = 0;
