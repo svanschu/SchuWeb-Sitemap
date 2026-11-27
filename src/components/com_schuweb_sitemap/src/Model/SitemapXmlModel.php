@@ -70,7 +70,7 @@ class SitemapXmlModel extends BaseDatabaseModel
      * @since   5.1.0
      * @throws  \Exception
      */
-    public function __construct($config = [], MVCFactoryInterface $factory = null)
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null)
     {
         parent::__construct($config, $factory);
 
