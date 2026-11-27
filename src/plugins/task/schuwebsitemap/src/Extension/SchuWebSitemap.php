@@ -92,7 +92,7 @@ class SchuWebSitemap extends CMSPlugin implements SubscriberInterface
         $config = ['ignore_request' => true, 'pk' => (int) $params->sitemap];
         $model  = $extension->getMVCFactory()->createModel('SitemapXml', 'Site', $config);
 
-        $this->logTask('Sitemap: ' . $model->getName());
+        $this->logTask('Sitemap ID: ' . (int) $params->sitemap);
 
         foreach ($params->type as $type) {
             switch ($type) {
