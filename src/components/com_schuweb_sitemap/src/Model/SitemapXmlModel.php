@@ -44,7 +44,7 @@ class SitemapXmlModel extends BaseDatabaseModel
      *             the sitemap to avoid duplicated items
      * @since 5.1.0
      */
-    private array $_links;
+    private array $_links = [];
 
     /**
      * @var int id of the sitemap to be created
@@ -126,6 +126,9 @@ class SitemapXmlModel extends BaseDatabaseModel
      */
     private function createSitemapXml(&$site_sitemap_model)
     {
+        // Every XML file has its own list of already included links
+        $this->_links = [];
+
         $site_sitemap_model->setState('sitemap.id', $this->_pk);
 
         $params = ComponentHelper::getParams('com_schuweb_sitemap');
@@ -252,7 +255,8 @@ class SitemapXmlModel extends BaseDatabaseModel
             && !($site_sitemap_model->isImagesitemap() && empty($node->images))
         ) {
 
-            if (isset($node->alias) && !$node->alias)
+            // Aliases point to another menu item, so they must not block the URL of the real item
+            if (empty($node->alias))
                 $this->_links[$node->htmllink] = 1;
 
             if (!isset($node->priority))
