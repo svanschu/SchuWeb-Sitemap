@@ -308,8 +308,13 @@ class SitemapModel extends ItemModel
             $node->params =& $item->params;
 
             if ($node->home == 1) {
-                // Correct the URL for the home page.
-                $node->htmllink = Uri::root();
+                if ($item->language && $item->language !== '*' && Multilanguage::isEnabled()) {
+                    // Language specific home page: let the router add the SEF language prefix
+                    $node->htmllink = 'index.php?Itemid=' . (int) $node->id . '&lang=' . $item->language;
+                } else {
+                    // Correct the URL for the home page.
+                    $node->htmllink = Uri::root();
+                }
             }
             switch ($item->type) {
                 case 'separator':
@@ -345,6 +350,11 @@ class SitemapModel extends ItemModel
 
                 if ($node->browserNav != 3) {
                     $node->htmllink = Route::link('site', $node->htmllink, true, @$node->secure, $this->isXmlsitemap());
+
+                    if ($node->home == 1) {
+                        // A home page without language prefix is the site root, also without URL rewriting
+                        $node->htmllink = preg_replace('#index\.php/?$#', '', $node->htmllink);
+                    }
                 }
 
                 $node->name = htmlspecialchars($node->name);
