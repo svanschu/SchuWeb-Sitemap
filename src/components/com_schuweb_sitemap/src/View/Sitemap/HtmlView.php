@@ -172,29 +172,37 @@ class HtmlView extends BaseHtmlView
         }
 
         $menus = $app->getMenu();
-        $title = null;
+        // Without a menu item for this sitemap, use the title of the sitemap
+        $title = (string) $this->item->title;
 
         // Because the application sets a default page title, we need to get it from the menu item itself
         if ($menu = $menus->getActive()) {
             if (isset($menu->query['view']) && isset($menu->query['id'])) {
 
                 if ($menu->query['view'] == 'sitemap' && $menu->query['id'] == $this->item->id) {
-                    $title = $menu->title;
-                    if (empty($title)) {
-                        $title = $app->get('sitename');
-                    } else if ($app->get('sitename_pagetitles', 0) == 1) {
-                        $title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);
-                    } else if ($app->get('sitename_pagetitles', 0) == 2) {
-                        $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
-                    }
+                    $title = (string) $menu->title;
+
                     // set meta description and keywords from menu item's params
                     $params = new Registry();
                     $params->loadString($menu->getParams());
-                    $this->document->setDescription($params->get('menu-meta_description'));
-                    $this->document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+                    if ($description = $params->get('menu-meta_description')) {
+                        $this->document->setDescription($description);
+                    }
+                    if ($keywords = $params->get('menu-meta_keywords')) {
+                        $this->document->setMetaData('keywords', $keywords);
+                    }
                 }
             }
         }
+
+        if (empty($title)) {
+            $title = $app->get('sitename');
+        } else if ($app->get('sitename_pagetitles', 0) == 1) {
+            $title = Text::sprintf('JPAGETITLE', $app->get('sitename'), $title);
+        } else if ($app->get('sitename_pagetitles', 0) == 2) {
+            $title = Text::sprintf('JPAGETITLE', $title, $app->get('sitename'));
+        }
+
         $this->document->setTitle($title);
 
         if ($app->get('MetaTitle') == '1') {
