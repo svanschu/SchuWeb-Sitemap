@@ -236,7 +236,7 @@ class SitemapXmlModel extends BaseDatabaseModel
         $news_publication_name = $site_sitemap_model->getNewsPublicationName();
 
         if ($node->browserNav != 3 && !isset($node->htmllink)) {
-            $node->htmllink = Route::link('site', $node->link, true, @$node->secure, true);
+            $node->htmllink = Route::link('site', $node->link, false, @$node->secure, true);
         }
 
         $diff = -1;

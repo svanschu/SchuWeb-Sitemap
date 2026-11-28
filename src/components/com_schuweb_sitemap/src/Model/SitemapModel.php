@@ -354,7 +354,7 @@ class SitemapModel extends ItemModel
                     $node->browserNav = 0;
 
                 if ($node->browserNav != 3) {
-                    $node->htmllink = Route::link('site', $node->htmllink, true, @$node->secure, $this->isXmlsitemap());
+                    $node->htmllink = Route::link('site', $node->htmllink, !$this->isXmlsitemap(), @$node->secure, $this->isXmlsitemap());
 
                     if ($node->home == 1) {
                         // A home page without language prefix is the site root, also without URL rewriting
