@@ -206,7 +206,8 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
                 array(
                     $db->qn('id'),
                     $db->qn('name'),
-                    $db->qn('link'),
+                    $db->qn('alias'),
+                    $db->qn('language'),
                     $db->qn('params'),
                     $db->qn('modified')
                 )
@@ -241,7 +242,13 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
 
                 $node->browserNav = $parent->browserNav;
 
-                $node->link       = $newsfeed->link;
+                // Link the Joomla page showing the feed, not the external feed itself: a sitemap may
+                // only contain URLs of this site, and a feed is no HTML page
+                $node->link       = RouteHelper::getNewsfeedRoute(
+                    $newsfeed->id . ':' . $newsfeed->alias,
+                    $category->id,
+                    $newsfeed->language
+                );
                 $node->priority   = $params['newsfeed_priority'];
                 $node->changefreq = $params['newsfeed_changefreq'];
 
