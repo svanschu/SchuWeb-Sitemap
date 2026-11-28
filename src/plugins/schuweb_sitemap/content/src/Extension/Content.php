@@ -623,8 +623,16 @@ class Content extends CMSPlugin implements SubscriberInterface
         $filter_order_Dir = $app->getUserStateFromRequest('com_content.category.list.' . $itemid . '.filter_order_Dir', 'filter_order_Dir', '', 'cmd');
         $orderby          = ' ';
 
-        if ($filter_order && $filter_order_Dir) {
-            $orderby .= $filter_order . ' ' . $filter_order_Dir . ', ';
+        // The values come from the request: only accept known columns and directions
+        $allowedOrder = [
+            'id', 'title', 'alias', 'catid', 'state', 'access', 'created', 'created_by',
+            'modified', 'ordering', 'featured', 'language', 'hits', 'publish_up', 'publish_down',
+        ];
+        $filter_order     = preg_replace('/^a\./', '', (string) $filter_order);
+        $filter_order_Dir = strtoupper((string) $filter_order_Dir);
+
+        if (in_array($filter_order, $allowedOrder, true) && in_array($filter_order_Dir, ['ASC', 'DESC'], true)) {
+            $orderby .= 'a.' . $filter_order . ' ' . $filter_order_Dir . ', ';
         }
 
         $articleOrderby   = $menuParams->get('orderby_sec', 'rdate');
