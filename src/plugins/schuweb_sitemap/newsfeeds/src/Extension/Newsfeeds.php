@@ -21,6 +21,7 @@ use SchuWeb\Component\Sitemap\Site\Event\MenuItemPrepareEvent;
 use SchuWeb\Component\Sitemap\Site\Event\TreePrepareEvent;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 
 class Newsfeeds extends CMSPlugin implements SubscriberInterface
 {
@@ -140,9 +141,22 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
         $params['newsfeed_priority']   = $priority;
         $params['newsfeed_changefreq'] = $changefreq;
 
+        // The XML sitemap is public: only public view levels, independent of the user
+        // who creates the file (e.g. an admin in the backend)
+        $user = Factory::getApplication()->getIdentity();
+        if ($sitemap->isXmlsitemap() || is_null($user)) {
+            $params['groups'] = [1, 5];
+        } else {
+            $params['groups'] = $user->getAuthorisedViewLevels();
+        }
+        $params['language_filter'] = $sitemap->isLanguageFilter();
+        $params['language']        = Factory::getApplication()->getLanguage()->getTag();
+
         $options               = [];
         $options['countItems'] = false;
         $options['catid']      = rand();
+        // Access is checked below with the view levels of the sitemap, not of the current user
+        $options['access']     = false;
         $categories            = Factory::getApplication()->bootComponent('Newsfeeds')->getCategory($options);
         $category              = $categories->get($catid ?: 'root', true);
 
@@ -154,6 +168,10 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
         $children = $category->getChildren();
 
         foreach ($children as $cat) {
+            if (!in_array((int) $cat->access, $params['groups'])) {
+                continue;
+            }
+
             $node             = new \stdClass;
             $node->id         = $parent->id;
             $id               = $node->uid = $parent->uid . 'c' . $cat->id;
@@ -183,6 +201,7 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
             /** @var DatabaseDriver $db */
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
+            $now   = Factory::getDate()->toSql();
             $query->select(
                 array(
                     $db->qn('id'),
@@ -195,7 +214,17 @@ class Newsfeeds extends CMSPlugin implements SubscriberInterface
                 ->from($db->qn('#__newsfeeds'))
                 ->setLimit(ArrayHelper::getValue($params, 'max_newsfeeds', null, 'INT'))
                 ->order($db->escape('ordering') . ' ' . $db->escape('ASC'))
-                ->where($db->qn('catid') . ' = ' . $db->q($category->id));
+                ->where($db->qn('catid') . ' = ' . (int) $category->id)
+                ->where($db->qn('published') . ' = 1')
+                ->whereIn($db->qn('access'), array_map('intval', $params['groups']))
+                ->where('(' . $db->qn('publish_up') . ' IS NULL OR ' . $db->qn('publish_up') . ' <= :nowUp)')
+                ->where('(' . $db->qn('publish_down') . ' IS NULL OR ' . $db->qn('publish_down') . ' >= :nowDown)')
+                ->bind(':nowUp', $now)
+                ->bind(':nowDown', $now);
+
+            if ($params['language_filter']) {
+                $query->whereIn($db->qn('language'), [$params['language'], '*'], ParameterType::STRING);
+            }
 
             $db->setQuery($query);
 
