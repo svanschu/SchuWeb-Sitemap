@@ -150,10 +150,13 @@ class Content extends CMSPlugin implements SubscriberInterface
         $user   = $app->getIdentity();
         $result = null;
 
-        if (is_null($user))
-            $groups = [0 => 1];
-        else
+        if ($sitemap->isXmlsitemap() || is_null($user)) {
+            // The XML sitemap is public: only public view levels, independent of the user
+            // who creates the file (e.g. an admin in the backend)
+            $groups = [1, 5];
+        } else {
             $groups = $user->getAuthorisedViewLevels();
+        }
 
         $link_query = parse_url($parent->link);
         if (!isset($link_query['query'])) {
@@ -434,7 +437,10 @@ class Content extends CMSPlugin implements SubscriberInterface
         }
 
         $query->select($columns)
-            ->from($db->quoteName('#__content') . ' AS a');
+            ->from($db->quoteName('#__content') . ' AS a')
+            // Articles of unpublished categories can't be shown
+            ->join('INNER', $db->quoteName('#__categories', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('a.catid'))
+            ->where($db->quoteName('c.published') . ' > 0');
 
         $categories    = Factory::getApplication()->bootComponent("content")->getCategory(["access" => false, "published" => 0]);
         $categoryNodes = $categories->get($catid);
@@ -480,6 +486,10 @@ class Content extends CMSPlugin implements SubscriberInterface
         if (!$this->params->get('show_unauth')) {
             $query->where(
                 $db->qn('a.access') . 'IN (' . $this->params->get('groups') . ')'
+            );
+            // An article is only accessible if its category is accessible as well
+            $query->where(
+                $db->qn('c.access') . 'IN (' . $this->params->get('groups') . ')'
             );
         }
 
